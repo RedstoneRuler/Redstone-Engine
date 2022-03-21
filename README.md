@@ -19,4 +19,4 @@ A modification of Friday Night Funkin's engine, designed to tweak little details
 ## Build instructions
 The compilation process for this engine is the same as compiling the base game. Just follow those ones!
 
-https://ninja-muffin24.itch.io/friday-night-funkin
+https://github.com/ninjamuffin99/Funkin#compiling-game

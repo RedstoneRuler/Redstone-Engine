@@ -3,8 +3,7 @@
 A modification of Friday Night Funkin's engine, designed to tweak little details and add small features to make the game feel a bit more polished.
 ## Engine Credits
 - [RedstoneRuler](https://twitter.com/redstoneruler2) - Programming
-The various other FNF projects that I sto- er, "borrowed" artwork/code from
-(Hey listen they're open source too so anything goes)
+- The various other FNF projects that I sto- er, "borrowed" artwork/code from. (Hey listen they're open source too so anything goes)
  
 ## OG FNF Credits
 

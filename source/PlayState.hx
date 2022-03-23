@@ -1889,7 +1889,7 @@ class PlayState extends MusicBeatState
 			if(Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10 > 5) {
 				accuracy -= ((Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10));
 			} else {
-				accuracy += ((Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10) + accuracy / 10);
+				accuracy += (Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10);
 			}
 			
 		}

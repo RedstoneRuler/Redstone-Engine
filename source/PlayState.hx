@@ -124,6 +124,9 @@ class PlayState extends MusicBeatState
 
 	var firstHit:Bool = true;
 
+	var goneUnder:Bool = false; //FOR ACCURACY
+	var goneUnder100:Bool = false; //THIS ONE TOO!
+
 	public static var campaignScore:Int = 0;
 
 	var defaultCamZoom:Float = 1.05;
@@ -1658,6 +1661,7 @@ class PlayState extends MusicBeatState
 						if (daNote.tooLate || !daNote.wasGoodHit)
 						{
 							if(FlxG.save.data.ghost){noteMiss(1);}else{
+							accuracy -= 0.5;
 							missCount += 1;
 							health -= 0.0475;
 							vocals.volume = 0;
@@ -1791,22 +1795,64 @@ class PlayState extends MusicBeatState
 		{
 			daRating = 'shit';
 			score = 50;
+			if(firstHit == true) {
+				accuracy = 85;
+			}
+			else {
+				accuracy -= 10.5;
+			}
 		}
 		else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.75)
 		{
 			daRating = 'bad';
 			score = 100;
+			if(firstHit == true) {
+				accuracy = 85;
+			}
+			else {
+				accuracy -= 5;
+			}
 		}
 		else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.2)
 		{
 			daRating = 'good';
 			score = 200;
+			if(firstHit == true) {
+				accuracy = 85;
+			}
+			else {
+				accuracy += 0.5;
+			}
+		}
+		if (daRating = 'sick')
+		{
+			if(firstHit == true) {
+				accuracy = 100;
+			}
+			else {
+				accuracy += 5;
+			}
+		}
+		if(accuracy > 100) {
+			accuracy = 100;
+		}
+		if(goneUnder100 && accuracy > 99) {
+			accuracy = 99;
+		}
+		else if(!goneUnder100 && accuracy < 100)
+		{
+			goneUnder100 = true;
+		}
+		if(goneUnder && accuracy > 95) {
+			accuracy = 95;
 		}
 		// LMFAO I DON'T KNOW HOW TO MAKE PUBLIC VARS I'M AN IDIOT
 		FlxG.save.data.lastscore = daRating;
 		songScore += score;
-		//THIS ACCURACY SCRIPT SUCKS
+
+		//THIS ACCURACY SCRIPT SUCKS DON'T USE IT RIGHT NOW!!!!!!
 		//TODO: IMPROVE THIS!!!!!!
+		/*
 		if(firstHit == true) {
 			if(daRating == 'sick') {
 				accuracy = 100;
@@ -1816,17 +1862,32 @@ class PlayState extends MusicBeatState
 			}
 		}
 		else if(daRating == 'shit' || daRating == 'bad' || daRating == 'good') {
-			accuracy -= Math.round(noteDiff);
+			accuracy -= Math.round(noteDiff / 50);
 		}
 		else {
-			accuracy += Math.round(noteDiff);
+			accuracy += Math.round(noteDiff / 50);
 		}
 		if(accuracy > 100) {
 			accuracy = 100;
 		}
+		if(goneUnder100 && accuracy > 99) {
+			accuracy = 99;
+		}
+		else if(!goneUnder100 && accuracy < 100)
+		{
+			goneUnder100 = true;
+		}
+		if(goneUnder && accuracy > 95) {
+			accuracy = 95;
+		}
+		else if(!goneUnder && accuracy < 95)
+		{
+			goneUnder = true;
+		}
 		if(accuracy < 0) {
 			accuracy = 0;
 		}
+		*/
 		firstHit = false;
 		/* if (combo > 60)
 				daRating = 'sick';
@@ -2145,7 +2206,7 @@ class PlayState extends MusicBeatState
 		{
 			missCount += 1;
 			health -= 0.04;
-			accuracy -= 0.05;
+			accuracy -= 0.5;
 			if (combo > 5)
 			{
 					gf.playAnim('sad');

@@ -1930,7 +1930,7 @@ class PlayState extends MusicBeatState
 	}
 	function updateAccuracy(strumtime:Float, daRating:String, noteDiff:Float):Void
 	{
-		// A LOT OF THIS STUFF IS UNNECESSARY DON'T UNCOMMENT IT
+		// A LOT OF THIS COMMENTED STUFF IS UNNECESSARY SO DON'T UNCOMMENT IT
 
 		//starting you off relatively high
 		if(firstHit == true) {
@@ -1959,7 +1959,7 @@ class PlayState extends MusicBeatState
 		}
 		else {
 		*/
-			if(Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10 > 10) {
+			if(Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10 > 7) {
 				accuracy -= ((Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10));
 			} else {
 				accuracy += (Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10);

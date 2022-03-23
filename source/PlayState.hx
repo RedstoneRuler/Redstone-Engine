@@ -113,12 +113,16 @@ class PlayState extends MusicBeatState
 	var talking:Bool = true;
 
 	var songScore:Int = 0;
+	var missCount:Int = 0;
+	var accuracy:Float = 0;
+
 	var scoreTxt:FlxText;
 	var missTxt:FlxText;
-	var missCount:Int = 0;
+	var accuracyTxt:FlxText;
 
 	var wasSickHit:Bool = false;
 
+	var firstHit:Bool = true;
 
 	public static var campaignScore:Int = 0;
 
@@ -695,10 +699,15 @@ class PlayState extends MusicBeatState
 		scoreTxt.scrollFactor.set();
 		add(scoreTxt);
 
-		missTxt = new FlxText(healthBarBG.x + healthBarBG.width - 200, healthBarBG.y + 30, 0, "", 20);
+		missTxt = new FlxText(healthBarBG.x + healthBarBG.width - 350, healthBarBG.y + 30, 0, "", 20);
 		missTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		missTxt.scrollFactor.set();
 		add(missTxt);
+
+		accuracyTxt = new FlxText(healthBarBG.x + healthBarBG.width - 200, healthBarBG.y + 30, 0, "", 20);
+		accuracyTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		accuracyTxt.scrollFactor.set();
+		add(accuracyTxt);
 
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
@@ -716,6 +725,7 @@ class PlayState extends MusicBeatState
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		missTxt.cameras = [camHUD];
+		accuracyTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
@@ -1324,6 +1334,7 @@ class PlayState extends MusicBeatState
 
 		scoreTxt.text = "Score: " + songScore;
 		missTxt.text = "Misses: " + missCount;
+		accuracyTxt.text = "Accuracy: " + accuracy + "%";
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
@@ -1775,7 +1786,7 @@ class PlayState extends MusicBeatState
 		//
 		var rating:FlxSprite = new FlxSprite();
 		var score:Int = 350;
-
+		FlxG.log.add(noteDiff);
 		if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.9)
 		{
 			daRating = 'shit';
@@ -1794,7 +1805,29 @@ class PlayState extends MusicBeatState
 		// LMFAO I DON'T KNOW HOW TO MAKE PUBLIC VARS I'M AN IDIOT
 		FlxG.save.data.lastscore = daRating;
 		songScore += score;
-
+		//THIS ACCURACY SCRIPT SUCKS
+		//TODO: IMPROVE THIS!!!!!!
+		if(firstHit == true) {
+			if(daRating == 'sick') {
+				accuracy = 100;
+			}
+			else {
+				accuracy = Math.round(noteDiff / 50);
+			}
+		}
+		else if(daRating == 'shit' || daRating == 'bad' || daRating == 'good') {
+			accuracy -= Math.round(noteDiff);
+		}
+		else {
+			accuracy += Math.round(noteDiff);
+		}
+		if(accuracy > 100) {
+			accuracy = 100;
+		}
+		if(accuracy < 0) {
+			accuracy = 0;
+		}
+		firstHit = false;
 		/* if (combo > 60)
 				daRating = 'sick';
 			else if (combo > 12)
@@ -2112,6 +2145,7 @@ class PlayState extends MusicBeatState
 		{
 			missCount += 1;
 			health -= 0.04;
+			accuracy -= 0.05;
 			if (combo > 5)
 			{
 					gf.playAnim('sad');

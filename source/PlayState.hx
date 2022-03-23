@@ -1882,11 +1882,11 @@ class PlayState extends MusicBeatState
 				accuracy -= Math.round(noteDiff / 70);
 			}
 			else {
-				accuracy += ((Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10) * accuracy / 2);
+				accuracy += ((Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10) + accuracy / 10);
 			}
 		}
 		else {
-			accuracy += ((Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10) * accuracy / 2);
+			accuracy += ((Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10) + accuracy / 10);
 		}
 		if(accuracy > 100) {
 			accuracy = 100;

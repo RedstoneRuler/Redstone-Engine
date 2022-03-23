@@ -1795,35 +1795,42 @@ class PlayState extends MusicBeatState
 		{
 			daRating = 'shit';
 			score = 50;
+			/*
 			if(firstHit == true) {
 				accuracy = 85;
 			}
 			else {
 				accuracy -= 10.5;
 			}
+			*/
 		}
 		else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.75)
 		{
 			daRating = 'bad';
 			score = 100;
+			/*
 			if(firstHit == true) {
 				accuracy = 85;
 			}
 			else {
 				accuracy -= 5;
 			}
+			*/
 		}
 		else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.2)
 		{
 			daRating = 'good';
 			score = 200;
+			/*
 			if(firstHit == true) {
 				accuracy = 85;
 			}
 			else {
 				accuracy += 0.5;
 			}
+			*/
 		}
+		/*
 		if (daRating == 'sick')
 		{
 			if(firstHit == true) {
@@ -1846,22 +1853,28 @@ class PlayState extends MusicBeatState
 		if(goneUnder && accuracy > 95) {
 			accuracy = 95;
 		}
+		*/
 		// LMFAO I DON'T KNOW HOW TO MAKE PUBLIC VARS I'M AN IDIOT
 		FlxG.save.data.lastscore = daRating;
 		songScore += score;
 
-		//THIS ACCURACY SCRIPT SUCKS DON'T USE IT RIGHT NOW!!!!!!
+		//THIS ACCURACY SCRIPT SUCKS!!!!!!
 		//TODO: IMPROVE THIS!!!!!!
-		/*
+
+		//starting you off relatively high
 		if(firstHit == true) {
 			if(daRating == 'sick') {
 				accuracy = 100;
+			}
+			else if(daRating == 'good') {
+				accuracy = Math.round(70 + (noteDiff / 50));
 			}
 			else {
 				accuracy = Math.round(noteDiff / 50);
 			}
 		}
-		else if(daRating == 'shit' || daRating == 'bad' || daRating == 'good') {
+		//accuracy will improve if note was hit good or sick, otherwise it will lower
+		else if(daRating == 'shit' || daRating == 'bad') {
 			accuracy -= Math.round(noteDiff / 50);
 		}
 		else {
@@ -1870,6 +1883,7 @@ class PlayState extends MusicBeatState
 		if(accuracy > 100) {
 			accuracy = 100;
 		}
+		// accuracy can't go back to 100 after going lower
 		if(goneUnder100 && accuracy > 99) {
 			accuracy = 99;
 		}
@@ -1877,6 +1891,7 @@ class PlayState extends MusicBeatState
 		{
 			goneUnder100 = true;
 		}
+		// same deal but for 95+ instead
 		if(goneUnder && accuracy > 95) {
 			accuracy = 95;
 		}
@@ -1884,10 +1899,10 @@ class PlayState extends MusicBeatState
 		{
 			goneUnder = true;
 		}
+		//negative accuracy makes no sense
 		if(accuracy < 0) {
 			accuracy = 0;
 		}
-		*/
 		firstHit = false;
 		/* if (combo > 60)
 				daRating = 'sick';

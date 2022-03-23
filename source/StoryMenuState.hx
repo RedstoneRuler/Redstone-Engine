@@ -70,6 +70,7 @@ class StoryMenuState extends MusicBeatState
 
 	override function create()
 	{
+		FlxG.save.data.deathCount = 0;
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 

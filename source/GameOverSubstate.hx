@@ -6,6 +6,7 @@ import flixel.FlxSubState;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+using StringTools;
 
 class GameOverSubstate extends MusicBeatSubstate
 {
@@ -16,6 +17,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	public function new(x:Float, y:Float)
 	{
+		FlxG.save.data.deathCount += 1;
 		var daStage = PlayState.curStage;
 		var daBf:String = '';
 		if(FlxG.save.data.optimize == true && daStage != 'school' && daStage != 'schoolEvil') {

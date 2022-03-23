@@ -12,7 +12,6 @@ class GameOverState extends FlxTransitionableState
 {
 	var bfX:Float = 0;
 	var bfY:Float = 0;
-
 	public function new(x:Float, y:Float)
 	{
 		super();

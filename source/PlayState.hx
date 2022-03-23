@@ -697,7 +697,7 @@ class PlayState extends MusicBeatState
 		// healthBar
 		add(healthBar);
 
-		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 500, healthBarBG.y + 30, 0, "", 20);
+		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 550, healthBarBG.y + 30, 0, "", 20);
 		scoreTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		add(scoreTxt);
@@ -1877,8 +1877,11 @@ class PlayState extends MusicBeatState
 		else if(daRating == 'shit' || daRating == 'bad') {
 			accuracy -= Math.round(noteDiff / 50);
 		}
+		else if(daRating == 'good') {
+			accuracy += Math.round(noteDiff / 70);
+		}
 		else {
-			accuracy += Math.round(noteDiff / 50);
+			accuracy += Math.round(noteDiff / 40);
 		}
 		if(accuracy > 100) {
 			accuracy = 100;

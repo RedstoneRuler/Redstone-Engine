@@ -1878,11 +1878,11 @@ class PlayState extends MusicBeatState
 			accuracy -= Math.round(noteDiff / 50);
 		}
 		else if(daRating == 'good') {
-			if(FlxG.save.data.noteframe > 12) {
+			if(FlxG.save.data.noteframe > 7) {
 				accuracy -= Math.round(noteDiff / 70);
 			}
 			else {
-				accuracy += ((Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10) + accuracy / 10);
+				accuracy += ((Math.abs(Math.round(strumtime - Conductor.songPosition)) / 6));
 			}
 		}
 		else {

@@ -1824,7 +1824,7 @@ class PlayState extends MusicBeatState
 				accuracy += 0.5;
 			}
 		}
-		if (daRating = 'sick')
+		if (daRating == 'sick')
 		{
 			if(firstHit == true) {
 				accuracy = 100;

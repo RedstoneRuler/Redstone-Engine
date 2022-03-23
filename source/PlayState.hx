@@ -697,17 +697,17 @@ class PlayState extends MusicBeatState
 		// healthBar
 		add(healthBar);
 
-		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 525, healthBarBG.y + 30, 0, "", 20);
+		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 525, healthBarBG.y + 40, 0, "", 20);
 		scoreTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		add(scoreTxt);
 
-		missTxt = new FlxText(healthBarBG.x + healthBarBG.width - 350, healthBarBG.y + 30, 0, "", 20);
+		missTxt = new FlxText(healthBarBG.x + healthBarBG.width - 350, healthBarBG.y + 40, 0, "", 20);
 		missTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		missTxt.scrollFactor.set();
 		add(missTxt);
 
-		accuracyTxt = new FlxText(healthBarBG.x + healthBarBG.width - 200, healthBarBG.y + 30, 0, "", 20);
+		accuracyTxt = new FlxText(healthBarBG.x + healthBarBG.width - 200, healthBarBG.y + 40, 0, "", 20);
 		accuracyTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		accuracyTxt.scrollFactor.set();
 		add(accuracyTxt);
@@ -1878,10 +1878,15 @@ class PlayState extends MusicBeatState
 			accuracy -= Math.round(noteDiff / 50);
 		}
 		else if(daRating == 'good') {
-			accuracy += Math.round(noteDiff / 70);
+			if(FlxG.save.data.noteframe > 12) {
+				accuracy -= Math.round(noteDiff / 70);
+			}
+			else {
+				accuracy += Math.round(strumtime - Conductor.songPosition);
+			}
 		}
 		else {
-			accuracy += Math.round(noteDiff / 40);
+			accuracy += Math.round(strumtime - Conductor.songPosition);
 		}
 		if(accuracy > 100) {
 			accuracy = 100;

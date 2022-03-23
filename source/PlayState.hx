@@ -1660,8 +1660,8 @@ class PlayState extends MusicBeatState
 					{
 						if (daNote.tooLate || !daNote.wasGoodHit)
 						{
-							if(FlxG.save.data.ghost){noteMiss(1);}else{
-							accuracy -= 0.5;
+							if(FlxG.save.data.ghost){noteMiss(1, true);}else{
+							accuracy -= 5;
 							missCount += 1;
 							health -= 0.0475;
 							vocals.volume = 0;
@@ -2217,14 +2217,20 @@ class PlayState extends MusicBeatState
 		});
 	}
 
-	function noteMiss(direction:Int = 1):Void
+	function noteMiss(direction:Int = 1, wasPassedNote:Bool = false):Void
 	{
 		vocals.volume = 0;
 		if (!boyfriend.stunned)
 		{
 			missCount += 1;
-			health -= 0.04;
-			accuracy -= 0.5;
+			if(wasPassedNote)
+			{
+				accuracy -= 5; //missing a note is a blow to your accuracy
+			} else {
+				accuracy -= 0.5;
+			}
+			
+			
 			if (combo > 5)
 			{
 					gf.playAnim('sad');

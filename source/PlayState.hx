@@ -1662,6 +1662,7 @@ class PlayState extends MusicBeatState
 						{
 							if(FlxG.save.data.ghost){noteMiss(1, true);}else{
 							accuracy -= 5;
+							accuracyLogic();
 							missCount += 1;
 							health -= 0.0475;
 							vocals.volume = 0;
@@ -1692,7 +1693,6 @@ class PlayState extends MusicBeatState
 			endSong();
 		#end
 	}
-
 	function endSong():Void
 	{
 		canPause = false;
@@ -1795,128 +1795,22 @@ class PlayState extends MusicBeatState
 		{
 			daRating = 'shit';
 			score = 50;
-			/*
-			if(firstHit == true) {
-				accuracy = 85;
-			}
-			else {
-				accuracy -= 10.5;
-			}
-			*/
 		}
 		else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.75)
 		{
 			daRating = 'bad';
 			score = 100;
-			/*
-			if(firstHit == true) {
-				accuracy = 85;
-			}
-			else {
-				accuracy -= 5;
-			}
-			*/
 		}
 		else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.2)
 		{
 			daRating = 'good';
 			score = 200;
-			/*
-			if(firstHit == true) {
-				accuracy = 85;
-			}
-			else {
-				accuracy += 0.5;
-			}
-			*/
 		}
-		/*
-		if (daRating == 'sick')
-		{
-			if(firstHit == true) {
-				accuracy = 100;
-			}
-			else {
-				accuracy += 5;
-			}
-		}
-		if(accuracy > 100) {
-			accuracy = 100;
-		}
-		if(goneUnder100 && accuracy > 99) {
-			accuracy = 99;
-		}
-		else if(!goneUnder100 && accuracy < 100)
-		{
-			goneUnder100 = true;
-		}
-		if(goneUnder && accuracy > 95) {
-			accuracy = 95;
-		}
-		*/
 		// LMFAO I DON'T KNOW HOW TO MAKE PUBLIC VARS I'M AN IDIOT
 		FlxG.save.data.lastscore = daRating;
 		songScore += score;
+		updateAccuracy(strumtime, daRating, noteDiff);
 
-		//THIS ACCURACY SCRIPT SUCKS!!!!!!
-		//TODO: IMPROVE THIS!!!!!!
-
-		//starting you off relatively high
-		if(firstHit == true) {
-			if(daRating == 'sick') {
-				accuracy = 100;
-			}
-			else if(daRating == 'good') {
-				accuracy = Math.round(70 + (noteDiff / 50));
-			}
-			else {
-				accuracy = Math.round(noteDiff / 50);
-			}
-		}
-		//accuracy will improve if note was hit good or sick, otherwise it will lower
-		else if(daRating == 'shit' || daRating == 'bad') {
-			accuracy -= Math.round(noteDiff / 50);
-		}
-		else if(daRating == 'good') {
-			if(FlxG.save.data.noteframe > 7) {
-				accuracy -= Math.round(noteDiff / 70);
-			}
-			else {
-				accuracy += ((Math.abs(Math.round(strumtime - Conductor.songPosition)) / 6));
-			}
-		}
-		else {
-			if(Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10 > 5) {
-				accuracy -= ((Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10));
-			} else {
-				accuracy += (Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10);
-			}
-			
-		}
-		if(accuracy > 100) {
-			accuracy = 100;
-		}
-		// accuracy can't go back to 100 after going lower
-		if(goneUnder100 && accuracy > 99) {
-			accuracy = 99;
-		}
-		else if(!goneUnder100 && accuracy < 100)
-		{
-			goneUnder100 = true;
-		}
-		// same deal but for 95+ instead
-		if(goneUnder && accuracy > 95) {
-			accuracy = 95;
-		}
-		else if(!goneUnder && accuracy < 95)
-		{
-			goneUnder = true;
-		}
-		//negative accuracy makes no sense
-		if(accuracy < 0) {
-			accuracy = 0;
-		}
-		firstHit = false;
 		/* if (combo > 60)
 				daRating = 'sick';
 			else if (combo > 12)
@@ -2034,7 +1928,73 @@ class PlayState extends MusicBeatState
 
 		curSection += 1;
 	}
+	function updateAccuracy(strumtime:Float, daRating:String, noteDiff:Float):Void
+	{
+		// A LOT OF THIS STUFF IS UNNECESSARY DON'T UNCOMMENT IT
 
+		//starting you off relatively high
+		if(firstHit == true) {
+			if(daRating == 'sick') {
+				accuracy = 100;
+			}
+			else if(daRating == 'good') {
+				accuracy = Math.round(70 + (noteDiff / 50));
+			}
+			else {
+				accuracy = Math.round(noteDiff / 50);
+			}
+		}
+		/*
+		//accuracy will improve if note was hit good or sick, otherwise it will lower
+		else if(daRating == 'shit' || daRating == 'bad') {
+			accuracy -= Math.round(noteDiff / 50);
+		}
+		else if(daRating == 'good') {
+			if(FlxG.save.data.noteframe > 7) {
+				accuracy -= Math.round(noteDiff / 70);
+			}
+			else {
+				accuracy += ((Math.abs(Math.round(strumtime - Conductor.songPosition)) / 6));
+			}
+		}
+		else {
+		*/
+			if(Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10 > 10) {
+				accuracy -= ((Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10));
+			} else {
+				accuracy += (Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10);
+			}
+			
+		//}
+		firstHit = false;
+		accuracyLogic();
+	}
+	function accuracyLogic():Void
+	{
+		if(accuracy > 100) {
+			accuracy = 100;
+		}
+		// accuracy can't go back to 100 after going lower
+		if(goneUnder100 && accuracy > 99) {
+			accuracy = 99;
+		}
+		else if(!goneUnder100 && accuracy < 100)
+		{
+			goneUnder100 = true;
+		}
+		// same deal but for 95+ instead
+		if(goneUnder && accuracy > 95) {
+			accuracy = 95;
+		}
+		else if(!goneUnder && accuracy < 95)
+		{
+			goneUnder = true;
+		}
+		//negative accuracy makes no sense
+		if(accuracy < 0) {
+			accuracy = 0;
+		}
+	}
 	private function keyShit():Void
 	{
 		// HOLDING
@@ -2239,7 +2199,7 @@ class PlayState extends MusicBeatState
 			} else {
 				accuracy -= 0.5;
 			}
-			
+			accuracyLogic();
 			
 			if (combo > 5)
 			{

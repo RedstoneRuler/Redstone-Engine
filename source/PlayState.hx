@@ -1961,9 +1961,9 @@ class PlayState extends MusicBeatState
 		else {
 		*/
 			if(Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10 > 7) {
-				accuracy -= ((Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10));
+				accuracy -= Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10;
 			} else {
-				accuracy += (Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10);
+				accuracy += Math.round(Math.abs(strumtime - Conductor.songPosition) / 10) / (accuracy / 20);
 			}
 			
 		//}
@@ -1975,6 +1975,13 @@ class PlayState extends MusicBeatState
 		if(accuracy > 100) {
 			accuracy = 100;
 		}
+		//negative accuracy makes no sense
+		if(accuracy < 0) {
+			accuracy = 0;
+		}
+		if(accuracy.length > 5)
+			accuracy = Math.round(accuracy);
+		/*
 		// accuracy can't go back to 100 after going lower
 		if(goneUnder100 && accuracy > 99) {
 			accuracy = 99;
@@ -1991,10 +1998,7 @@ class PlayState extends MusicBeatState
 		{
 			goneUnder = true;
 		}
-		//negative accuracy makes no sense
-		if(accuracy < 0) {
-			accuracy = 0;
-		}
+		*/
 	}
 	private function keyShit():Void
 	{

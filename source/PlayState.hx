@@ -1184,7 +1184,7 @@ class PlayState extends MusicBeatState
 					noteSplash.animation.addByPrefix('splashLEFT2', 'note impact 2 purple');
 					noteSplash.animation.addByPrefix('splashDOWN2', 'note impact 2 blue');
 					noteSplash.animation.addByPrefix('splashUP2', 'note impact 2 green');
-					noteSplash.animation.addByPrefix('splashRIGHT1', 'note impact 2 red');
+					noteSplash.animation.addByPrefix('splashRIGHT2', 'note impact 2 red');
 					//Yeah... Eventually.
 
 					babyArrow.antialiasing = true;
@@ -1230,7 +1230,7 @@ class PlayState extends MusicBeatState
 				FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 			}
 			noteSplash.y = 0;
-			noteSplash.alpha = 1;
+			//noteSplash.alpha = 1;
 			babyArrow.ID = i;
 			noteSplash.ID = i;
 			noteSplash.x += 50;

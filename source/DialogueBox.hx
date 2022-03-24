@@ -106,7 +106,9 @@ class DialogueBox extends FlxSpriteGroup
 		}
 
 		// no warnings today
-		//box.animation.play('normalOpen');
+		if(box.animation.getByName("normalOpen") != null) {
+			box.animation.play('normalOpen');
+		}
 		box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 		box.updateHitbox();
 		add(box);

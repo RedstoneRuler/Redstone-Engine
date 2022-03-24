@@ -167,8 +167,13 @@ class Note extends FlxSprite
 					case 3:
 						prevNote.animation.play('redhold');
 				}
-
-				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed;
+				//Fixing hold note clipping
+				if (PlayState.curStage.startsWith('school')) {
+					prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * (PlayState.SONG.speed / 1.2);
+				}
+				else {
+					prevNote.scale.y *= Conductor.stepCrochet / 100 * (1.5 * PlayState.SONG.speed) - 0.005;
+				}
 				prevNote.updateHitbox();
 				// prevNote.setGraphicSize();
 			}
@@ -177,6 +182,7 @@ class Note extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
+		var hitBox:Float;
 		super.update(elapsed);
 		if (mustPress && !FlxG.save.data.bot == true)
 		{
@@ -211,16 +217,23 @@ class Note extends FlxSprite
 				}
 			}
 			// The * 0.5 us so that its easier to hit them too late, instead of too early
-			if (strumTime > Conductor.songPosition - (FlxG.save.data.noteframe / 60) * 1000 &&
-				strumTime < Conductor.songPosition + ((FlxG.save.data.noteframe / 60) * 1000 * 0.5))
-			{
-				canBeHit = true;
+			if(isSustainNote) {
+				hitBox = 12;
 			}
+			else {
+				hitBox = FlxG.save.data.noteframe;
+			}
+			
+				if (strumTime > Conductor.songPosition - (hitBox / 60) * 1000 &&
+					strumTime < Conductor.songPosition + ((hitBox / 60) * 1000 * 0.5))
+				{
+					canBeHit = true;
+				}
 			else
 			{
 				canBeHit = false;
 			}
-			if (strumTime < Conductor.songPosition - (FlxG.save.data.noteframe / 60) * 1000)
+			if (strumTime < Conductor.songPosition - (hitBox / 60) * 1000)
 			{
 				tooLate = true;
 			}
@@ -239,7 +252,7 @@ class Note extends FlxSprite
 		{
 			if (alpha > 0.3) {
 				alpha = 0.3;
-		}
+			}
 		}
 	}
 }

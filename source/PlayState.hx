@@ -114,18 +114,18 @@ class PlayState extends MusicBeatState
 
 	var songScore:Int = 0;
 	var missCount:Int = 0;
+
 	var accuracy:Float = 0;
+	var totalNotes:Float = 0;
+	var firstHit:Bool = true;
+	var goneUnder:Bool = false;
+	var goneUnder100:Bool = false;
 
 	var scoreTxt:FlxText;
 	var missTxt:FlxText;
 	var accuracyTxt:FlxText;
 
 	var wasSickHit:Bool = false;
-
-	var firstHit:Bool = true;
-
-	var goneUnder:Bool = false; //FOR ACCURACY
-	var goneUnder100:Bool = false; //THIS ONE TOO!
 
 	public static var campaignScore:Int = 0;
 
@@ -1933,6 +1933,7 @@ class PlayState extends MusicBeatState
 	{
 		// A LOT OF THIS COMMENTED STUFF IS UNNECESSARY SO DON'T UNCOMMENT IT
 
+		/*
 		//starting you off relatively high
 		if(firstHit == true) {
 			if(daRating == 'sick') {
@@ -1945,7 +1946,6 @@ class PlayState extends MusicBeatState
 				accuracy = Math.round(noteDiff / 50);
 			}
 		}
-		/*
 		//accuracy will improve if note was hit good or sick, otherwise it will lower
 		else if(daRating == 'shit' || daRating == 'bad') {
 			accuracy -= Math.round(noteDiff / 50);
@@ -1960,10 +1960,10 @@ class PlayState extends MusicBeatState
 		}
 		else {
 		*/
-			if(Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10 > 7) {
-				accuracy -= Math.abs(Math.round(strumtime - Conductor.songPosition)) / 10;
+			if(Math.abs(strumtime - Conductor.songPosition) / 10 > 7) {
+				accuracy -= Math.abs(strumtime - Conductor.songPosition) / 10;
 			} else {
-				accuracy += Math.round(Math.abs(strumtime - Conductor.songPosition) / 10) / (accuracy / 20);
+				accuracy += Math.abs(strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25);
 			}
 			
 		//}
@@ -1979,8 +1979,7 @@ class PlayState extends MusicBeatState
 		if(accuracy < 0) {
 			accuracy = 0;
 		}
-		if(accuracy.length > 5)
-			accuracy = Math.round(accuracy);
+		accuracy = FlxMath.roundDecimal(accuracy, 2);
 		/*
 		// accuracy can't go back to 100 after going lower
 		if(goneUnder100 && accuracy > 99) {
@@ -2266,6 +2265,7 @@ class PlayState extends MusicBeatState
 
 	function noteCheck(keyP:Bool, note:Note):Void
 	{
+		totalNotes += 1;
 		if (keyP)
 			goodNoteHit(note);
 		else

@@ -1661,6 +1661,7 @@ class PlayState extends MusicBeatState
 						if (daNote.tooLate || !daNote.wasGoodHit)
 						{
 							if(FlxG.save.data.ghost){noteMiss(1, true);}else{
+							firstHit = false;
 							accuracy -= 5;
 							accuracyLogic();
 							missCount += 1;
@@ -2193,12 +2194,14 @@ class PlayState extends MusicBeatState
 		if (!boyfriend.stunned)
 		{
 			missCount += 1;
-			if(wasPassedNote)
-			{
+			if(wasPassedNote) {
+				health -= 0.0475;
 				accuracy -= 5; //missing a note is a blow to your accuracy
 			} else {
+				health -= 0.04;
 				accuracy -= 0.5;
 			}
+			firstHit = false;
 			accuracyLogic();
 			
 			if (combo > 5)

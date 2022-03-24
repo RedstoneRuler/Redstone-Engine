@@ -1986,10 +1986,9 @@ class PlayState extends MusicBeatState
 
 		
 		// accuracy can't go back to 100 after going lower
-		if(goneUnder100 && accuracy > 99.99) {
-			accuracy = 99.99;
+		if(goneUnder100 && accuracy > 99) {
+			accuracy = 99;
 		}
-		//using this value cuz it's funny
 		else if(!goneUnder100 && accuracy < 100)
 		{
 			goneUnder100 = true;

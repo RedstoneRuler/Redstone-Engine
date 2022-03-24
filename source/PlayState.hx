@@ -1791,7 +1791,6 @@ class PlayState extends MusicBeatState
 		//
 		var rating:FlxSprite = new FlxSprite();
 		var score:Int = 350;
-		FlxG.log.add(noteDiff);
 		if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.9)
 		{
 			daRating = 'shit';
@@ -1931,8 +1930,8 @@ class PlayState extends MusicBeatState
 	}
 	function updateAccuracy(strumtime:Float, daRating:String, noteDiff:Float):Void
 	{
-		// A LOT OF THIS COMMENTED STUFF IS UNNECESSARY SO DON'T UNCOMMENT IT
-
+		// ALL OF THIS COMMENTED SHIT IS JUST ME GOING IN WAY OVER MY HEAD
+		// I SHOULD PROBABLY JUST REMOVE IT BUT I MIGHT AS WELL LET ALL OF YOU LAUGH AT ME
 		/*
 		//starting you off relatively high
 		if(firstHit == true) {
@@ -1960,35 +1959,42 @@ class PlayState extends MusicBeatState
 		}
 		else {
 		*/
-			if(Math.abs(strumtime - Conductor.songPosition) / 10 > 7) {
-				accuracy -= Math.abs(strumtime - Conductor.songPosition) / 10;
+			FlxG.watch.addQuick('Hit', Math.abs(strumtime - Conductor.songPosition) / 10);
+			FlxG.watch.addQuick('Accuracy Increment', (strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25));
+
+			//some leniency to make 100% accuracy actually possible
+			if(Math.abs(strumtime - Conductor.songPosition) / 10 > 6.5) {
+				accuracy += (strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25);
 			} else {
 				accuracy += Math.abs(strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25);
 			}
-			
 		//}
-		firstHit = false;
+		//firstHit = false;
 		accuracyLogic();
 	}
 	function accuracyLogic():Void
 	{
+		//For some reason FlxMath.bound causes it to turn into infinity?
+		//idk what's going on there but whatever lmfao
 		if(accuracy > 100) {
 			accuracy = 100;
 		}
-		//negative accuracy makes no sense
 		if(accuracy < 0) {
 			accuracy = 0;
 		}
 		accuracy = FlxMath.roundDecimal(accuracy, 2);
-		/*
+
+		
 		// accuracy can't go back to 100 after going lower
-		if(goneUnder100 && accuracy > 99) {
-			accuracy = 99;
+		if(goneUnder100 && accuracy > 99.99) {
+			accuracy = 99.99;
 		}
+		//using this value cuz it's funny
 		else if(!goneUnder100 && accuracy < 100)
 		{
 			goneUnder100 = true;
 		}
+		/*
 		// same deal but for 95+ instead
 		if(goneUnder && accuracy > 95) {
 			accuracy = 95;

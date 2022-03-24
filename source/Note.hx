@@ -83,7 +83,12 @@ class Note extends FlxSprite
 				updateHitbox();
 
 			default:
-				frames = FlxAtlasFrames.fromSparrow('assets/images/NOTE_assets.png', 'assets/images/NOTE_assets.xml');
+				if(FlxG.save.data.optimize == true) {
+					frames = FlxAtlasFrames.fromSparrow('assets/images/notes-optimized.png', 'assets/images/notes-optimized.xml');
+				}
+				else {
+					frames = FlxAtlasFrames.fromSparrow('assets/images/NOTE_assets.png', 'assets/images/NOTE_assets.xml');
+				}
 
 				animation.addByPrefix('greenScroll', 'green0');
 				animation.addByPrefix('redScroll', 'red0');

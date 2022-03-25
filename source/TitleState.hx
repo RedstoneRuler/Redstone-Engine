@@ -24,7 +24,10 @@ import io.newgrounds.NG;
 import lime.app.Application;
 import openfl.Assets;
 import polymod.Polymod;
-
+import openfl.Lib;
+import lime.media.openal.AL;
+import openfl.media.Sound;
+import openfl.events.Event;
 using StringTools;
 
 class TitleState extends MusicBeatState
@@ -37,7 +40,8 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
-
+	var speed:Float = 1;
+	var bpmModifier:Float = 0;
 	var curWacky:Array<String> = [];
 
 	var wackyImage:FlxSprite;
@@ -269,7 +273,18 @@ class TitleState extends MusicBeatState
 				pressedEnter = true;
 			#end
 		}
-
+		if(FlxG.keys.pressed.LEFT) {
+			speed -= 0.1;
+			bpmModifier -= 0.1;
+			Conductor.changeBPM(102 + bpmModifier);
+			//set_pitch(speed);
+		}
+		if(FlxG.keys.pressed.RIGHT) {
+			speed += 0.1;
+			bpmModifier += 0.1;
+			Conductor.changeBPM(102 + bpmModifier);
+			//set_pitch(speed);
+		}
 		if (pressedEnter && !transitioning && skippedIntro)
 		{
 			#if !switch

@@ -1987,9 +1987,9 @@ class PlayState extends MusicBeatState
 		if(accuracy < 0) {
 			accuracy = 0;
 		}
-		accuracy = FlxMath.roundDecimal(accuracy, 2);
+		accuracy = Math.max(0, FlxMath.roundDecimal(accuracy, 2));
 
-		
+		/*
 		// accuracy can't go back to 100 after going lower
 		if(goneUnder100 && accuracy > 99) {
 			accuracy = 99;
@@ -1998,7 +1998,7 @@ class PlayState extends MusicBeatState
 		{
 			goneUnder100 = true;
 		}
-		/*
+		
 		// same deal but for 95+ instead
 		if(goneUnder && accuracy > 95) {
 			accuracy = 95;

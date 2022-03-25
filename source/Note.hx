@@ -189,7 +189,7 @@ class Note extends FlxSprite
 	{
 		var hitBox:Float;
 		super.update(elapsed);
-		if (mustPress && !FlxG.save.data.bot == true)
+		if (mustPress)
 		{
 			if(FlxG.save.data.glow) {
 				if(!isSustainNote) {

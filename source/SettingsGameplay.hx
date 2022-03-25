@@ -36,7 +36,7 @@ class SettingsGameplay extends MusicBeatState
 			FlxG.save.data.noteframe = 10;
 		}
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
-		controlsStrings = CoolUtil.coolStringFile((FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off") + "\n" + (FlxG.save.data.bot ? "Autoplay on" : "Autoplay off") + "\n" + "Configure Note Offset");
+		controlsStrings = CoolUtil.coolStringFile((FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off") + "\n" + "Configure Note Offset");
 		
 		trace(controlsStrings);
 		versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe + " (Left, Right, Shift, Higher value = Bigger hitbox)";
@@ -121,13 +121,15 @@ class SettingsGameplay extends MusicBeatState
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected;
 						grpControls.add(ctrl);
+					/*
 					case 1:
 						FlxG.save.data.bot = !FlxG.save.data.bot;
 						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.bot ? 'autoplay on' : 'autoplay off'), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 1;
 						grpControls.add(ctrl);
-					case 2:
+					*/
+					case 1:
 						FlxG.switchState(new LatencyState());
 				}
 			}

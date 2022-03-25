@@ -95,7 +95,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	override function beatHit()
 	{
 		super.beatHit();
-
+		bf.playAnim('deathLoop', true);
 		FlxG.log.add('beat');
 	}
 

@@ -119,32 +119,33 @@ class PauseSubState extends MusicBeatSubstate
 		#if !html5
 		if (FlxG.keys.pressed.SHIFT) {
 			if(FlxG.keys.pressed.RIGHT)
-				{
-					FlxG.updateFramerate += 1;
-					if (FlxG.updateFramerate >= 360) { FlxG.updateFramerate = 360; }
-					FlxG.drawFramerate = (FlxG.updateFramerate);
-					FlxG.save.data.fps = FlxG.drawFramerate;
-					versionShit.text = "Framerate: " + FlxG.save.data.fps;
-				}
-			
-				if(FlxG.keys.pressed.LEFT)
-				{
-					FlxG.updateFramerate -= 1;
-					if (FlxG.updateFramerate <= 10) { FlxG.updateFramerate = 10; }
-					FlxG.drawFramerate = (FlxG.updateFramerate);
-					FlxG.save.data.fps = FlxG.drawFramerate;
-					versionShit.text = "Framerate: " + FlxG.save.data.fps;
-				}
-		}
-		else {
-		if(FlxG.keys.justPressed.RIGHT)
 			{
 				FlxG.updateFramerate += 1;
 				if (FlxG.updateFramerate >= 360) { FlxG.updateFramerate = 360; }
 				FlxG.drawFramerate = (FlxG.updateFramerate);
 				FlxG.save.data.fps = FlxG.drawFramerate;
 				versionShit.text = "Framerate: " + FlxG.save.data.fps;
-			}	
+			}
+			
+			if(FlxG.keys.pressed.LEFT)
+			{
+				FlxG.updateFramerate -= 1;
+				if (FlxG.updateFramerate <= 10) { FlxG.updateFramerate = 10; }
+				FlxG.drawFramerate = (FlxG.updateFramerate);
+				FlxG.save.data.fps = FlxG.drawFramerate;
+				versionShit.text = "Framerate: " + FlxG.save.data.fps;
+			}
+		}
+		else {
+			if(FlxG.keys.justPressed.RIGHT)
+			{
+				FlxG.updateFramerate += 1;
+				if (FlxG.updateFramerate >= 360) { FlxG.updateFramerate = 360; }
+				FlxG.drawFramerate = (FlxG.updateFramerate);
+				FlxG.save.data.fps = FlxG.drawFramerate;
+				versionShit.text = "Framerate: " + FlxG.save.data.fps;
+			}
+
 			if(FlxG.keys.justPressed.LEFT)
 			{
 				FlxG.updateFramerate -= 1;

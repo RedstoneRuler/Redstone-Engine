@@ -1235,7 +1235,7 @@ class PlayState extends MusicBeatState
 				FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 			}
 			noteSplash.y = 0;
-			//noteSplash.alpha = 1;
+			noteSplash.alpha = 1;
 			babyArrow.ID = i;
 			noteSplash.ID = i;
 			noteSplash.x += 50;
@@ -1490,7 +1490,7 @@ class PlayState extends MusicBeatState
 		if (camZooming)
 		{
 			/*
-			if(FlxG.drawFramerate >= 60) {
+			if(FlxG.drawFramerate > 60) {
 				FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95 * (60 / FlxG.drawFramerate));
 				camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95 * (60 / FlxG.drawFramerate));
 			}
@@ -1968,7 +1968,7 @@ class PlayState extends MusicBeatState
 			FlxG.watch.addQuick('Accuracy Increment', (strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25));
 
 			//some leniency to make 100% accuracy actually possible
-			if(Math.abs(strumtime - Conductor.songPosition) / 10 > 6.5) {
+			if(Math.abs(strumtime - Conductor.songPosition) / 10 > 5.6 || Math.abs(strumtime - Conductor.songPosition) / 10 < -5.6) {
 				accuracy += (strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25);
 			} else {
 				accuracy += Math.abs(strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25);
@@ -2288,16 +2288,17 @@ class PlayState extends MusicBeatState
 	{
 		playerSplashes.forEach(function(spr:FlxSprite)
 		{
-				switch (dir) {
-					case 0:
-						spr.animation.play("splashLEFT" + FlxG.random.int(1,2));
-					case 1:
-						spr.animation.play("splashDOWN" + FlxG.random.int(1,2));
-					case 2:
-						spr.animation.play("splashUP" + FlxG.random.int(1,2));
-					case 3:
-						spr.animation.play("splashRIGHT" + FlxG.random.int(1,2));
-				}
+			switch (dir) {
+				case 0:
+					spr.animation.play("splashLEFT" + FlxG.random.int(1,2));
+				case 1:
+					spr.animation.play("splashDOWN" + FlxG.random.int(1,2));
+				case 2:
+					spr.animation.play("splashUP" + FlxG.random.int(1,2));
+				case 3:
+					spr.animation.play("splashRIGHT" + FlxG.random.int(1,2));
+			}
+			spr.centerOffsets();
 		});
 	}
 

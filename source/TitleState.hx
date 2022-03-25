@@ -274,14 +274,14 @@ class TitleState extends MusicBeatState
 			#end
 		}
 		if(FlxG.keys.pressed.LEFT) {
-			speed -= 0.1;
-			bpmModifier -= 0.1;
+			speed -= 1;
+			bpmModifier -= 1;
 			Conductor.changeBPM(102 + bpmModifier);
 			//set_pitch(speed);
 		}
 		if(FlxG.keys.pressed.RIGHT) {
-			speed += 0.1;
-			bpmModifier += 0.1;
+			speed += 1;
+			bpmModifier += 1;
 			Conductor.changeBPM(102 + bpmModifier);
 			//set_pitch(speed);
 		}
@@ -364,7 +364,7 @@ class TitleState extends MusicBeatState
 	{
 		super.beatHit();
 
-		logoBl.animation.play('bump');
+		logoBl.animation.play('bump', true);
 		danceLeft = !danceLeft;
 
 		if (danceLeft)

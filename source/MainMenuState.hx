@@ -178,7 +178,8 @@ class MainMenuState extends MusicBeatState
 					FlxG.drawFramerate = (FlxG.updateFramerate);
 					FlxG.save.data.fps = FlxG.drawFramerate;
 					versionShit.text = "Framerate: " + FlxG.save.data.fps;
-				}	
+				}
+
 				if(FlxG.keys.justPressed.LEFT)
 				{
 					FlxG.updateFramerate -= 1;
@@ -270,7 +271,7 @@ class MainMenuState extends MusicBeatState
 			if (spr.ID == curSelected)
 			{
 				spr.animation.play('selected');
-				if(FlxG.drawFramerate >= 60) {
+				if(FlxG.drawFramerate > 60) {
 					FlxG.camera.follow(camFollow, null, 0.06 * (60 / FlxG.drawFramerate));
 				}
 				else {

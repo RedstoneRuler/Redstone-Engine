@@ -1935,6 +1935,7 @@ class PlayState extends MusicBeatState
 	}
 	function updateAccuracy(strumtime:Float, daRating:String, noteDiff:Float):Void
 	{
+		var hit:Float;
 		// ALL OF THIS COMMENTED SHIT IS JUST ME GOING IN WAY OVER MY HEAD
 		// I SHOULD PROBABLY JUST REMOVE IT BUT I MIGHT AS WELL LET ALL OF YOU LAUGH AT ME
 		/*
@@ -1964,11 +1965,12 @@ class PlayState extends MusicBeatState
 		}
 		else {
 		*/
-			FlxG.watch.addQuick('Hit', Math.abs(strumtime - Conductor.songPosition) / 10);
+			hit = Math.abs(strumtime - Conductor.songPosition / 10);
+			FlxG.watch.addQuick('Hit', hit);
 			FlxG.watch.addQuick('Accuracy Increment', (strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25));
 
 			//some leniency to make 100% accuracy actually possible
-			if(Math.abs(strumtime - Conductor.songPosition / 10) > 1 || Math.abs(strumtime - Conductor.songPosition / 10) < 10) {
+			if(hit > 1 || hit < 6.5) {
 				accuracy += Math.abs(strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25);
 			} else {
 				accuracy += (strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25);

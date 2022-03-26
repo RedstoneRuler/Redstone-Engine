@@ -48,6 +48,7 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		FlxG.save.data.deathCount = 0;
 		if (FlxG.save.data.noteframe == null) {
 			FlxG.save.data.noteframe = 10;
 		}

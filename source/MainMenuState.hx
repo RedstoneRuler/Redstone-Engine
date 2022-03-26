@@ -37,6 +37,7 @@ class MainMenuState extends MusicBeatState
 	override function create()
 	{
 		FlxG.save.data.practice = false;
+		FlxG.save.data.deathCount = 0;
 		/* MOVED TO TITLESTATE!
 		#if !html5
 		if (FlxG.save.data.fps == null) {

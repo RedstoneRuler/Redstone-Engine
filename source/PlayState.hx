@@ -1935,7 +1935,6 @@ class PlayState extends MusicBeatState
 	}
 	function updateAccuracy(strumtime:Float, daRating:String, noteDiff:Float):Void
 	{
-		var hit:Float;
 		// ALL OF THIS COMMENTED SHIT IS JUST ME GOING IN WAY OVER MY HEAD
 		// I SHOULD PROBABLY JUST REMOVE IT BUT I MIGHT AS WELL LET ALL OF YOU LAUGH AT ME
 		/*
@@ -1969,10 +1968,10 @@ class PlayState extends MusicBeatState
 			FlxG.watch.addQuick('Accuracy Increment', (strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25));
 
 			//some leniency to make 100% accuracy actually possible
-			if(Math.abs(strumtime - Conductor.songPosition / 10) >= 1 || Math.abs(strumtime - Conductor.songPosition / 10) <= 6.5) {
-				accuracy += Math.abs((strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25));
+			if(Math.abs(strumtime - Conductor.songPosition / 10) > 3 || Math.abs(strumtime - Conductor.songPosition / 10) > 6.5) {
+				accuracy += (strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25);
 			} else {
-				accuracy -= Math.abs((strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25));
+				accuracy += Math.abs(strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25);
 			}
 		//}
 		//firstHit = false;
@@ -1988,7 +1987,7 @@ class PlayState extends MusicBeatState
 		if(accuracy < 0) {
 			accuracy = 0;
 		}
-		accuracy = Math.max(0, FlxMath.roundDecimal(accuracy, 2));
+		accuracy = FlxMath.roundDecimal(accuracy, 2);
 
 		/*
 		// accuracy can't go back to 100 after going lower

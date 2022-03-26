@@ -1988,7 +1988,6 @@ class PlayState extends MusicBeatState
 			accuracy = 0;
 		}
 		accuracy = FlxMath.roundDecimal(accuracy, 2);
-
 		/*
 		// accuracy can't go back to 100 after going lower
 		if(goneUnder100 && accuracy > 99) {

@@ -1970,10 +1970,10 @@ class PlayState extends MusicBeatState
 			FlxG.watch.addQuick('Accuracy Increment', (strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25));
 
 			//some leniency to make 100% accuracy actually possible
-			if(Math.abs(strumtime - Conductor.songPosition / 10) > 1 || Math.abs(strumtime - Conductor.songPosition / 10) < 6.5) {
+			if(Math.abs(strumtime - Conductor.songPosition / 10) >= 1 || Math.abs(strumtime - Conductor.songPosition / 10) <= 6.5) {
 				accuracy += Math.abs(strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25);
 			} else {
-				accuracy += (strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25);
+				accuracy -= Math.abs(strumtime - Conductor.songPosition) / 10 / (accuracy / 20) / (totalNotes / 25);
 			}
 		//}
 		//firstHit = false;

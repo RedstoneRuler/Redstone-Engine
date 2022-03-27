@@ -2334,7 +2334,8 @@ class PlayState extends MusicBeatState
 			goodNoteHit(note);
 		else
 		{
-			badNoteCheck();
+			//This. This right here is what causes the input dropping.
+			//badNoteCheck();
 		}
 	}
 	/*

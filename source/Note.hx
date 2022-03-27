@@ -223,11 +223,7 @@ class Note extends FlxSprite
 			}
 			// The * 0.5 us so that its easier to hit them too late, instead of too early
 			if(isSustainNote) {
-				if(FlxG.save.data.ghost == true) {
-					hitBox = 15;
-				} else {
-					hitBox = 20;
-				}
+				hitBox = 10;
 			}
 			else {
 				hitBox = FlxG.save.data.noteframe;

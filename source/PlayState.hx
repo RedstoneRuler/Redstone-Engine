@@ -1023,7 +1023,6 @@ class PlayState extends MusicBeatState
 
 		if (!paused)
 			FlxG.sound.playMusic("assets/music/" + SONG.song + "_Inst" + TitleState.soundExt, 1, false);
-		FlxG.sound.music.onComplete = endSong;
 		vocals.play();
 	}
 
@@ -1314,6 +1313,11 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
+		if(wasPractice) {
+			FlxG.sound.music.onComplete = gameOverPractice;
+		} else {
+			FlxG.sound.music.onComplete = endSong;
+		}
 		#if !debug
 		perfectMode = false;
 		#end
@@ -1683,10 +1687,14 @@ class PlayState extends MusicBeatState
 
 		#if debug
 		if (FlxG.keys.justPressed.ONE)
-			endSong();
+			if(wasPractice) {
+				gameOver(false);
+			} else {
+				endSong;
+			}
 		#end
 	}
-	function gameOver(gitaroo:Bool):Void
+	function gameOver(gitaroo:Bool = false):Void
 	{
 		boyfriend.stunned = true;
 
@@ -1708,11 +1716,21 @@ class PlayState extends MusicBeatState
 
 		// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 	}
+	function gameOverPractice():Void
+	{
+			boyfriend.stunned = true;
+	
+			persistentUpdate = false;
+			persistentDraw = false;
+			paused = true;
+	
+			vocals.stop();
+			FlxG.sound.music.stop();
+	
+			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+	}
 	function endSong():Void
 	{
-		if(wasPractice) {
-			gameOver(false);
-		}
 		canPause = false;
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;

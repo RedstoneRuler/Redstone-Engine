@@ -165,7 +165,9 @@ class DialogueBox extends FlxSpriteGroup
 		{
 			if (box.animation.curAnim.name == 'normalOpen' && box.animation.curAnim.finished)
 			{
-				box.animation.play('normal');
+				if(box.animation.getByName("normal") != null) {
+					box.animation.play('normal');
+				}
 				dialogueOpened = true;
 			}
 		}
@@ -176,7 +178,7 @@ class DialogueBox extends FlxSpriteGroup
 			dialogueStarted = true;
 		}
 
-		if (FlxG.keys.justPressed.ANY  && dialogueStarted == true)
+		if (FlxG.keys.justPressed.ANY && dialogueStarted == true)
 		{
 			remove(dialogue);
 				

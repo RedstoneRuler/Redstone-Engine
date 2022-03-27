@@ -805,6 +805,8 @@ class PlayState extends MusicBeatState
 		var senpaiEvil:FlxSprite = new FlxSprite();
 		senpaiEvil.frames = FlxAtlasFrames.fromSparrow('assets/images/weeb/senpaiCrazy.png', 'assets/images/weeb/senpaiCrazy.xml');
 		senpaiEvil.animation.addByPrefix('idle', 'Senpai Pre Explosion', 24, false);
+		senpaiEvil.x = 0;
+		senpaiEvil.y = 0;
 		senpaiEvil.setGraphicSize(Std.int(senpaiEvil.width * 6));
 		senpaiEvil.scrollFactor.set();
 		senpaiEvil.updateHitbox();
@@ -2529,12 +2531,12 @@ class PlayState extends MusicBeatState
 		if(Conductor.bpm > 150)
 		{
 			if(altbeat == true && dad.animation.getByName('danceLeft') == null) {
-				if(!dad.animation.curAnim.name.startsWith("sing") || dad.animation.curAnim.name.contains('-loop')) {
+				if(dad.animation.curAnim.name.contains("idle") || dad.animation.curAnim.name.contains("dance") || dad.animation.curAnim.name.contains('-loop')) {
 					dad.dance();
 				}
 			}
 			else if(dad.animation.getByName('danceLeft') != null) {
-				if(!dad.animation.curAnim.name.startsWith("sing") || dad.animation.curAnim.name.contains('-loop')) {
+				if(dad.animation.curAnim.name.contains("idle") || dad.animation.curAnim.name.contains("dance") || dad.animation.curAnim.name.contains('-loop')) {
 					dad.dance();
 				}
 			}

@@ -10,7 +10,7 @@ class NoteSplash extends FlxSprite {
     //Then I took that minified JavaScript code from Funkin.js and turned it back into Haxe code.
     //That was fun.
 
-    //I got so desprate I once even made an attempt to code it in myself at one point.
+    //I got so desprate I once even made an attempt to code it in myself.
     //That went well.
     public function new(xPos:Float,yPos:Float,?c:Int) {
         if (c == null) c = 0;

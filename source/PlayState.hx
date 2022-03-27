@@ -1983,11 +1983,9 @@ class PlayState extends MusicBeatState
 
 			//some leniency to make 100% accuracy actually possible
 			if(Math.abs(strumtime - Conductor.songPosition) / 10 <= 5.5) {
-				FlxG.log.add("UP");
-				accuracy += Math.abs(strumtime - Conductor.songPosition) / 10 / (accuracyDivide / 25) / (totalNotes / 25);
+				accuracy += Math.abs(strumtime - Conductor.songPosition) / 10 / (accuracy / 25) / (totalNotes / 25);
 			} else {
-				FlxG.log.add("DOWN");
-				accuracy -= Math.abs(strumtime - Conductor.songPosition) / 10 / (accuracyDivide / 25) / (totalNotes / 25);
+				accuracy -= Math.abs(strumtime - Conductor.songPosition) / 10 / (accuracy / 25) / (totalNotes / 25);
 			}
 		//}
 		//firstHit = false;

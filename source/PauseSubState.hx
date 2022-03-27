@@ -18,14 +18,16 @@ class PauseSubState extends MusicBeatSubstate
 	#if !html5
 	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Framerate: " + FlxG.save.data.fps + " (Left, Right, Shift)", 12);
 	#end
-	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Toggle Practice Mode', 'Exit to menu'];
+	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Exit to menu'];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
-
+	var menuItemsOG:Array<String>;
 	var updatedPractice:Bool = true;
 	var practice:FlxText = new FlxText(20, 15 + 96, 0, "", 32);
-	
+	var difficultyChoices = [
+		"Easy", "Normal", "Hard"
+	];
 	public function new(x:Float, y:Float)
 	{
 		super();
@@ -39,7 +41,7 @@ class PauseSubState extends MusicBeatSubstate
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
 
 		FlxG.sound.list.add(pauseMusic);
-
+		difficultyChoices.push('BACK');
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg.alpha = 0;
 		bg.scrollFactor.set();
@@ -180,7 +182,22 @@ class PauseSubState extends MusicBeatSubstate
 		if (accepted)
 		{
 			var daSelected:String = menuItems[curSelected];
-
+			if (menuItems == difficultyChoices)
+				{
+					if(menuItems.length - 1 != curSelected && difficultyChoices.contains(daSelected)) {
+						var name:String = PlayState.SONG.song;
+						var poop = Highscore.formatSong(name, curSelected);
+						PlayState.SONG = Song.loadFromJson(poop, name);
+						PlayState.storyDifficulty = curSelected;
+						FlxG.resetState();
+						FlxG.sound.music.volume = 0;
+						PlayState.changedDifficulty = true;
+						return;
+					}
+	
+					menuItems = menuItemsOG;
+					regenMenu();
+				}
 			switch (daSelected)
 			{
 				case "Resume":
@@ -189,6 +206,10 @@ class PauseSubState extends MusicBeatSubstate
 					FlxG.resetState();
 				case "Options":
 					openSubState(new OptionsMenuSubstate());
+				case "Change Difficulty":
+					menuItemsOG = menuItems;
+					menuItems = difficultyChoices;
+					regenMenu();	
 				case "Toggle Practice Mode":
 					// makin this save data cuz i don't know how to define a public var lmfao
 					FlxG.save.data.practice = !FlxG.save.data.practice;
@@ -211,7 +232,23 @@ class PauseSubState extends MusicBeatSubstate
 
 		super.destroy();
 	}
+	function regenMenu():Void {
+		for (i in 0...grpMenuShit.members.length) {
+			var obj = grpMenuShit.members[0];
+			obj.kill();
+			grpMenuShit.remove(obj, true);
+			obj.destroy();
+		}
 
+		for (i in 0...menuItems.length) {
+			var item = new Alphabet(0, 70 * i + 30, menuItems[i], true, false);
+			item.isMenuItem = true;
+			item.targetY = i;
+			grpMenuShit.add(item);
+		}
+		curSelected = 0;
+		changeSelection();
+	}
 	function changeSelection(change:Int = 0):Void
 	{
 		FlxG.sound.play('assets/sounds/scrollMenu' + TitleState.soundExt);

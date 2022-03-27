@@ -114,7 +114,7 @@ class PlayState extends MusicBeatState
 
 	var songScore:Int = 0;
 	var missCount:Int = 0;
-
+	public static var changedDifficulty:Bool = false;
 	var accuracy:Float = 0;
 	var totalNotes:Float = 0;
 	var firstHit:Bool = true;

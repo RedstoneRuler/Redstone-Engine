@@ -127,6 +127,7 @@ class PlayState extends MusicBeatState
 
 	var wasSickHit:Bool = false;
 
+	var accuracyRating:String = '?';
 	public static var campaignScore:Int = 0;
 
 	var defaultCamZoom:Float = 1.05;
@@ -1329,7 +1330,7 @@ class PlayState extends MusicBeatState
 		}
 		scoreTxt.text = "Score: " + songScore;
 		missTxt.text = "Misses: " + missCount;
-		accuracyTxt.text = "Accuracy: " + accuracy + "%";
+		accuracyTxt.text = "Accuracy: " + accuracy + "% - " + accuracyRating;
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
@@ -1820,7 +1821,6 @@ class PlayState extends MusicBeatState
 		}
 		songScore += score;
 		updateAccuracy(strumtime, daRating, noteDiff);
-
 		/* if (combo > 60)
 				daRating = 'sick';
 			else if (combo > 12)
@@ -2003,6 +2003,7 @@ class PlayState extends MusicBeatState
 			accuracy = 0;
 		}
 		accuracy = FlxMath.roundDecimal(accuracy, 2);
+		updateRating();
 		/*
 		// accuracy can't go back to 100 after going lower
 		if(goneUnder100 && accuracy > 99) {
@@ -2022,6 +2023,46 @@ class PlayState extends MusicBeatState
 			goneUnder = true;
 		}
 		*/
+	}
+	function updateRating():Void
+	{ 
+		var accuracyRound:Int = Math.round(accuracy);
+		var ratingList:Array<String> = [
+			"Perfect!!!",
+			"Sick!!",
+			"Great!",
+			"Good",
+			"Average",
+			"Bad",
+			"Shit",
+			"Awful",
+			"Open your eyes, man!",
+		];
+		// Why can't you use '..' for switch statements
+		// I'm trying to make this look nicer and instead I gotta do this
+			if(accuracy == 100)
+				accuracyRating = ratingList[0];
+			else if(accuracy >= 90.00 && accuracy <= 99.99)
+				accuracyRating = ratingList[1];
+			else if(accuracy >= 80.00 && accuracy <= 89.99)
+				accuracyRating = ratingList[2];
+			else if(accuracy >= 75.00 && accuracy <= 79.99)
+				accuracyRating = ratingList[3];
+			else if(accuracy >= 70.00 && accuracy <= 74.99)
+				accuracyRating = ratingList[4];
+			else if(accuracy >= 50.00 && accuracy <= 69.99)
+				accuracyRating = ratingList[5];
+			else if(accuracy >= 40.00 && accuracy <= 49.99)
+				accuracyRating = ratingList[6];
+			else if(accuracy >= 20.00 && accuracy <= 39.99)
+				accuracyRating = ratingList[7];
+			else if(accuracy >= 0.99 && accuracy <= 19.99)
+				accuracyRating = ratingList[8];
+			else if(accuracy > 0.99)
+				accuracyRating = ratingList[9];
+			if(accuracyRating == null) //Probably means it didn't meet any of these criteria
+				accuracyRating = ratingList[9];
+		// I'm so sorry for this script
 	}
 	private function keyShit():Void
 	{

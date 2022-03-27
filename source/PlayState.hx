@@ -1291,11 +1291,6 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
-		if(wasPractice) {
-			FlxG.sound.music.onComplete = gameOverPractice;
-		} else {
-			FlxG.sound.music.onComplete = endSong;
-		}
 		#if !debug
 		perfectMode = false;
 		#end
@@ -2515,6 +2510,12 @@ class PlayState extends MusicBeatState
 
 	override function beatHit()
 	{
+		//Putting this here so it doesn't count the opening theme for week 6
+		if(wasPractice) {
+			FlxG.sound.music.onComplete = gameOverPractice;
+		} else {
+			FlxG.sound.music.onComplete = endSong;
+		}
 		altbeat = !altbeat;
 		super.beatHit();
 

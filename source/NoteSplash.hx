@@ -6,7 +6,11 @@ import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
 class NoteSplash extends FlxSprite {
     //You do not want to know how long I was going through Week 7's code to find all this.
-    //I even made an attempt to code it in myself at one point.
+    //I used a JS beautifier and a lot of CTRL-F to get everything I needed.
+    //Then I took that minified JavaScript code from Funkin.js and turned it back into Haxe code.
+    //That was fun.
+
+    //I got so desprate I once even made an attempt to code it in myself at one point.
     //That went well.
     public function new(xPos:Float,yPos:Float,?c:Int) {
         if (c == null) c = 0;

@@ -1555,28 +1555,9 @@ class PlayState extends MusicBeatState
 			health += 1;
 			trace("User is cheating!");
 		}
-
 		if (health <= 0 && FlxG.save.data.practice == false)
 		{
-			boyfriend.stunned = true;
-
-			persistentUpdate = false;
-			persistentDraw = false;
-			paused = true;
-
-			vocals.stop();
-			FlxG.sound.music.stop();
-
-			// 1 / 1000 chance for Gitaroo Man easter egg
-			if (FlxG.random.bool(0.1))
-			{
-				// gitaroo man easter egg
-				FlxG.switchState(new GitarooPause());
-			}
-			else
-				openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
-
-			// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+			gameOver(true);
 		}
 
 		if (unspawnNotes[0] != null)
@@ -1705,10 +1686,32 @@ class PlayState extends MusicBeatState
 			endSong();
 		#end
 	}
+	function gameOver(gitaroo:Bool):Void
+	{
+		boyfriend.stunned = true;
+
+		persistentUpdate = false;
+		persistentDraw = false;
+		paused = true;
+
+		vocals.stop();
+		FlxG.sound.music.stop();
+
+		// 1 / 1000 chance for Gitaroo Man easter egg
+		if (FlxG.random.bool(0.1) && gitaroo == true)
+		{
+			// gitaroo man easter egg
+			FlxG.switchState(new GitarooPause());
+		}
+		else
+			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+
+		// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+	}
 	function endSong():Void
 	{
 		if(wasPractice) {
-			health = 0;
+			gameOver(false);
 		}
 		canPause = false;
 		FlxG.sound.music.volume = 0;

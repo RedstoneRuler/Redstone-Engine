@@ -137,6 +137,8 @@ class PlayState extends MusicBeatState
 	var inCutscene:Bool = false;
 
 	var altbeat:Bool;
+
+	var wasPractice:Bool = false;
 	override public function create()
 	{
 		// Formatting save data for important values
@@ -1341,7 +1343,9 @@ class PlayState extends MusicBeatState
 		}
 
 		super.update(elapsed);
-
+		if(FlxG.save.data.practice == true) {
+			wasPractice = true;
+		}
 		scoreTxt.text = "Score: " + songScore;
 		missTxt.text = "Misses: " + missCount;
 		accuracyTxt.text = "Accuracy: " + accuracy + "%";
@@ -1703,6 +1707,9 @@ class PlayState extends MusicBeatState
 	}
 	function endSong():Void
 	{
+		if(wasPractice) {
+			health = 0;
+		}
 		canPause = false;
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;

@@ -23,6 +23,9 @@ class PauseSubState extends MusicBeatSubstate
 
 	var pauseMusic:FlxSound;
 
+	var updatedPractice:Bool = true;
+	var practice:FlxText = new FlxText(20, 15 + 96, 0, "", 32);
+	
 	public function new(x:Float, y:Float)
 	{
 		super();
@@ -63,19 +66,29 @@ class PauseSubState extends MusicBeatSubstate
 		deathCount.updateHitbox();
 		add(deathCount);
 
+		practice.text = "PRACTICE MODE";
+		practice.scrollFactor.set();
+		practice.setFormat('assets/fonts/vcr.ttf', 32);
+		practice.updateHitbox();
+		add(practice);
+
 		levelDifficulty.alpha = 0;
 		levelInfo.alpha = 0;
 		deathCount.alpha = 0;
+		practice.alpha = 0;
 
 		levelInfo.x = FlxG.width - (levelInfo.width + 20);
 		levelDifficulty.x = FlxG.width - (levelDifficulty.width + 20);
 		deathCount.x = FlxG.width - (deathCount.width + 20);
+		practice.x = FlxG.width - (practice.width + 20);
 
 		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
 		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
 		FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
 		FlxTween.tween(deathCount, {alpha: 1, y: deathCount.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.7});
-
+		if(FlxG.save.data.practice = true) {
+			FlxTween.tween(practice, {alpha: 1, y: practice.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.9});
+		}
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
 
@@ -103,7 +116,15 @@ class PauseSubState extends MusicBeatSubstate
 			pauseMusic.volume += 0.01 * elapsed;
 
 		super.update(elapsed);
-
+		if(!updatedPractice) {
+			if(FlxG.save.data.practice == true) {
+				FlxTween.tween(practice, {alpha: 1, y: practice.y + 5}, 0.4, {ease: FlxEase.quartInOut});
+			}
+			else {
+				FlxTween.tween(practice, {alpha: 0, y: practice.y - 5}, 0.4, {ease: FlxEase.quartInOut});
+			}
+			updatedPractice = true;
+		}
 		var upP = controls.UP_P;
 		var downP = controls.DOWN_P;
 		var accepted = controls.ACCEPT;
@@ -171,6 +192,7 @@ class PauseSubState extends MusicBeatSubstate
 				case "Toggle Practice Mode":
 					// makin this save data cuz i don't know how to define a public var lmfao
 					FlxG.save.data.practice = !FlxG.save.data.practice;
+					updatedPractice = false;
 				case "Exit to menu":
 					FlxG.switchState(new MainMenuState());
 			}

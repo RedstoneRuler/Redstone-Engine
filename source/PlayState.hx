@@ -1972,17 +1972,22 @@ class PlayState extends MusicBeatState
 		}
 		else {
 		*/
+			var accuracyDivide:Float;
+			if(accuracy < 1)
+				accuracyDivide = 25; //avoids divide by zero overflows
+			else
+				accuracyDivide = accuracy;
 			FlxG.watch.addQuick('Hit', (strumtime - Conductor.songPosition) / 10);
 			FlxG.watch.addQuick('Hit ABS', Math.abs(strumtime - Conductor.songPosition) / 10);
-			FlxG.watch.addQuick('Accuracy Increment', (((strumtime - Conductor.songPosition) / 10) * 2) / (totalNotes / 25));
+			FlxG.watch.addQuick('Accuracy Increment', (strumtime - Conductor.songPosition) / 10 / (accuracyDivide / 25) / (totalNotes / 25));
 
 			//some leniency to make 100% accuracy actually possible
 			if(Math.abs(strumtime - Conductor.songPosition) / 10 <= 5.5) {
 				FlxG.log.add("UP");
-				accuracy += Math.abs(((strumtime - Conductor.songPosition) / 10) / (totalNotes / 25)* 2);
+				accuracy += Math.abs(strumtime - Conductor.songPosition) / 10 / (accuracyDivide / 25) / (totalNotes / 25);
 			} else {
 				FlxG.log.add("DOWN");
-				accuracy -= Math.abs(((strumtime - Conductor.songPosition) / 10) / (totalNotes / 25)* 2);
+				accuracy -= Math.abs(strumtime - Conductor.songPosition) / 10 / (accuracyDivide / 25) / (totalNotes / 25);
 			}
 		//}
 		//firstHit = false;

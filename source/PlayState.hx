@@ -70,7 +70,7 @@ class PlayState extends MusicBeatState
 
 	private var strumLineNotes:FlxTypedGroup<FlxSprite>;
 	private var playerStrums:FlxTypedGroup<FlxSprite>;
-	private var playerSplashes:FlxTypedGroup<FlxSprite>;
+	var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
 
 	private var camZooming:Bool = false;
 	private var curSong:String = "";
@@ -165,9 +165,13 @@ class PlayState extends MusicBeatState
 		persistentUpdate = true;
 		persistentDraw = true;
 
-		if (SONG == null)
+		if (SONG == null) {
 			SONG = Song.loadFromJson('tutorial');
-
+		}
+		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
+		var sploosh = new NoteSplash(100, 100, 0);
+		sploosh.alpha = 0.1;
+		grpNoteSplashes.add(sploosh);
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
 		switch (SONG.song.toLowerCase())
@@ -656,9 +660,8 @@ class PlayState extends MusicBeatState
 
 		strumLineNotes = new FlxTypedGroup<FlxSprite>();
 		add(strumLineNotes);
-
+		add(grpNoteSplashes);
 		playerStrums = new FlxTypedGroup<FlxSprite>();
-		playerSplashes = new FlxTypedGroup<FlxSprite>();
 
 		// startCountdown();
 
@@ -721,7 +724,7 @@ class PlayState extends MusicBeatState
 		iconP2 = new HealthIcon(SONG.player2, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
-
+		grpNoteSplashes.cameras = [camHUD];
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
@@ -1133,7 +1136,6 @@ class PlayState extends MusicBeatState
 		{
 			// FlxG.log.add(i);
 			var babyArrow:FlxSprite = new FlxSprite(0, strumLine.y);
-			var noteSplash:FlxSprite = new FlxSprite(0, strumLine.y);
 			switch (curStage)
 			{
 				case 'school' | 'schoolEvil':
@@ -1182,24 +1184,9 @@ class PlayState extends MusicBeatState
 					babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
 					babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
 					babyArrow.animation.addByPrefix('red', 'arrowRIGHT');
-					//I'll eventually set this up.
-					noteSplash.frames = FlxAtlasFrames.fromSparrow('assets/images/noteSplashes.png', 'assets/images/noteSplashes.xml');
-					noteSplash.animation.addByPrefix('splashLEFT1', 'note impact 1 purple');
-					noteSplash.animation.addByPrefix('splashDOWN1', 'note impact 1  blue');
-					noteSplash.animation.addByPrefix('splashUP1', 'note impact 1 green');
-					noteSplash.animation.addByPrefix('splashRIGHT1', 'note impact 1 red');
-		
-					noteSplash.animation.addByPrefix('splashLEFT2', 'note impact 2 purple');
-					noteSplash.animation.addByPrefix('splashDOWN2', 'note impact 2 blue');
-					noteSplash.animation.addByPrefix('splashUP2', 'note impact 2 green');
-					noteSplash.animation.addByPrefix('splashRIGHT2', 'note impact 2 red');
-					//Yeah... Eventually.
 
 					babyArrow.antialiasing = true;
 					babyArrow.setGraphicSize(Std.int(babyArrow.width * 0.7));
-
-					noteSplash.antialiasing = true;
-					noteSplash.setGraphicSize(Std.int(babyArrow.width * 0.7));
 					switch (Math.abs(i))
 					{
 						case 0:
@@ -1228,21 +1215,13 @@ class PlayState extends MusicBeatState
 			babyArrow.updateHitbox();
 			babyArrow.scrollFactor.set();
 
-			noteSplash.updateHitbox();
-			noteSplash.scrollFactor.set();
-
 			if (!isStoryMode)
 			{
 				babyArrow.y -= 10;
 				babyArrow.alpha = 0;
 				FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
 			}
-			noteSplash.y = 0;
-			noteSplash.alpha = 1;
 			babyArrow.ID = i;
-			noteSplash.ID = i;
-			noteSplash.x += 50;
-			noteSplash.x += ((FlxG.width / 2) * player);
 
 			if (player == 1)
 			{
@@ -1253,7 +1232,6 @@ class PlayState extends MusicBeatState
 			babyArrow.x += 50;
 			babyArrow.x += ((FlxG.width / 2) * player);
 
-			playerSplashes.add(noteSplash);
 			strumLineNotes.add(babyArrow);
 		}
 	}
@@ -1811,7 +1789,7 @@ class PlayState extends MusicBeatState
 
 	var endingSong:Bool = false;
 
-	private function popUpScore(strumtime:Float):Void
+	private function popUpScore(strumtime:Float, daNote:Note):Void
 	{
 		var daRating:String = "sick";
 		var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
@@ -1841,8 +1819,6 @@ class PlayState extends MusicBeatState
 			daRating = 'good';
 			score = 200;
 		}
-		// LMFAO I DON'T KNOW HOW TO MAKE PUBLIC VARS I'M AN IDIOT
-		FlxG.save.data.lastscore = daRating;
 		songScore += score;
 		updateAccuracy(strumtime, daRating, noteDiff);
 
@@ -1853,7 +1829,14 @@ class PlayState extends MusicBeatState
 			else if (combo > 4)
 				daRating = 'bad';
 		 */
-
+		if(daRating == 'sick') {
+			if (!daNote.isSustainNote)
+			{
+				var recycledNote = grpNoteSplashes.recycle(NoteSplash);
+				recycledNote.setupNoteSplash(daNote.x, daNote.y, daNote.noteData);
+				grpNoteSplashes.add(recycledNote);
+			}
+		}
 		var pixelShitPart1:String = "";
 		var pixelShitPart2:String = '';
 
@@ -2315,10 +2298,10 @@ class PlayState extends MusicBeatState
 			badNoteCheck();
 		}
 	}
-
+	/*
 	function showSplash(dir:Int):Void
 	{
-		playerSplashes.forEach(function(spr:FlxSprite)
+		grpNoteSplashes.forEach(function(spr:FlxSprite)
 		{
 			switch (dir) {
 				case 0:
@@ -2333,14 +2316,14 @@ class PlayState extends MusicBeatState
 			spr.centerOffsets();
 		});
 	}
-
+	*/
 	function goodNoteHit(note:Note):Void
 	{
 		if (!note.wasGoodHit)
 		{
 			if (!note.isSustainNote)
 			{
-				popUpScore(note.strumTime);
+				popUpScore(note.strumTime, note);
 				combo += 1;
 			}
 			if (note.noteData >= 0) {
@@ -2353,24 +2336,12 @@ class PlayState extends MusicBeatState
 			switch (note.noteData)
 			{
 				case 0:
-					if(FlxG.save.data.lastscore = 'sick') {
-						showSplash(0);
-					}
 					boyfriend.playAnim('singLEFT', true);
 				case 1:
-					if(FlxG.save.data.lastscore = 'sick') {
-						showSplash(1);
-					}
 					boyfriend.playAnim('singDOWN', true);
 				case 2:
-					if(FlxG.save.data.lastscore = 'sick') {
-						showSplash(2);
-					}
 					boyfriend.playAnim('singUP', true);
 				case 3:
-					if(FlxG.save.data.lastscore = 'sick') {
-						showSplash(3);
-					}
 					boyfriend.playAnim('singRIGHT', true);
 			}
 

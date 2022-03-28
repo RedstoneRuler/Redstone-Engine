@@ -58,7 +58,6 @@ class Conductor
 
 	public static function changeBPM(newBpm:Float)
 	{
-		FlxG.log.add("CHANGING BPM FROM " + bpm + " TO " + newBpm);
 		bpm = newBpm;
 		crochet = ((60 / bpm) * 1000);
 		stepCrochet = crochet / 4;

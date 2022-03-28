@@ -49,7 +49,8 @@ class PlayState extends MusicBeatState
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
-
+	public static var curSong:String = "";
+	
 	var halloweenLevel:Bool = false;
 
 	private var vocals:FlxSound;
@@ -73,7 +74,6 @@ class PlayState extends MusicBeatState
 	var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
 
 	private var camZooming:Bool = false;
-	private var curSong:String = "";
 
 	private var gfSpeed:Int = 1;
 	private var health:Float = 1;

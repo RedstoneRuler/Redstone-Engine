@@ -15,7 +15,10 @@ class NoteSplash extends FlxSprite {
     public function new(xPos:Float,yPos:Float,?splashType:Int) {
         if (splashType == null) splashType = 0;
         super(xPos, yPos);
-		frames = FlxAtlasFrames.fromSparrow('assets/images/noteSplashes.png', 'assets/images/noteSplashes.xml');
+        if(PlayState.curStage == ('school') || PlayState.curStage == ('schoolEvil'))
+            frames = FlxAtlasFrames.fromSparrow('assets/images/weeb/pixelUI/noteSplashes-pixel.png', 'assets/images/noteSplashes-pixel.xml');
+        else
+            frames = FlxAtlasFrames.fromSparrow('assets/images/noteSplashes.png', 'assets/images/noteSplashes.xml');
         animation.addByPrefix("splash0-0", "note impact 1 purple", 24, false);
         animation.addByPrefix("splash1-0", "note impact 1  blue", 24, false);
 		animation.addByPrefix("splash2-0", "note impact 1 green", 24, false);

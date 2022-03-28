@@ -34,17 +34,12 @@ class NoteSplash extends FlxSprite {
         else
             alpha = 0.6;
         antialiasing = true;
-        animation.play("splash" + splashType + "-" + FlxG.random.int(0,1), true);
+        animation.play("splash" + splashType + "-" + FlxG.random.int(0,1) + animAdd, true);
 		animation.curAnim.frameRate = FlxG.random.int(22, 26);
         updateHitbox();
         offset.set(0.3 * width, 0.3 * height);
     }
     override public function update(elapsed) {
-        if(PlayState.curSong == 'senpai' || PlayState.curSong == 'roses' || PlayState.curSong == 'thorns')
-            animAdd = "-pixel";
-        else {
-            animAdd = "";
-        }
         if (animation.curAnim.finished) {
             kill();
             isFirstSplash = false;

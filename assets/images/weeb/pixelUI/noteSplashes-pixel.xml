@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<TextureAtlas imagePath="noteSplashes.png"><SubTexture name="note impact 1  blue0000" x="0" y="596" width="189" height="270" frameX="-32" frameY="-12" frameWidth="260" frameHeight="298" />
+<TextureAtlas imagePath="noteSplashes-pixel.png"><SubTexture name="note impact 1  blue0000" x="0" y="596" width="189" height="270" frameX="-32" frameY="-12" frameWidth="260" frameHeight="298" />
 <SubTexture name="note impact 1  blue0001" x="756" y="596" width="213" height="265" frameX="-27" frameY="-22" frameWidth="260" frameHeight="298" />
 <SubTexture name="note impact 1  blue0002" x="260" y="298" width="252" height="291" frameX="-4" frameY="-6" frameWidth="260" frameHeight="298" />
 <SubTexture name="note impact 1  blue0003" x="0" y="0" width="260" height="298" frameX="0" frameY="0" frameWidth="260" frameHeight="298" />

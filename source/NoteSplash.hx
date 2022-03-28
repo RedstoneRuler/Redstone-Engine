@@ -5,6 +5,7 @@ import flixel.FlxG;
 import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
 class NoteSplash extends FlxSprite {
+    var isFirstSplash:Bool = true;
     //You do not want to know how long I was going through Week 7's code to find all this.
     //I used a JS beautifier and a lot of CTRL-F to get everything I needed.
     //Then I took that minified JavaScript code from Funkin.js and turned it back into Haxe code.
@@ -34,12 +35,16 @@ class NoteSplash extends FlxSprite {
     public function setupNoteSplash(xPos:Float, yPos:Float, ?splashType:Int) {
         if (splashType == null) splashType = 0;
         setPosition(xPos, yPos);
-        alpha = 0.6;
+        if(isFirstSplash)
+            alpha = 0;
+        else
+            alpha = 0.6;
         antialiasing = true;
         animation.play("splash" + splashType + "-" + FlxG.random.int(0,1), true);
 		animation.curAnim.frameRate = FlxG.random.int(22, 26);
         updateHitbox();
         offset.set(0.3 * width, 0.3 * height);
+        isFirstSplash = false;
     }
     override public function update(elapsed) {
         if (animation.curAnim.finished) {

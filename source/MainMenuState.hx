@@ -36,8 +36,8 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
-		FlxG.save.data.practice = false;
 		FlxG.save.data.deathCount = 0;
+		FlxG.save.data.practice = false;
 		/* MOVED TO TITLESTATE!
 		#if !html5
 		if (FlxG.save.data.fps == null) {
@@ -268,6 +268,7 @@ class MainMenuState extends MusicBeatState
 		menuItems.forEach(function(spr:FlxSprite)
 		{
 			spr.animation.play('idle');
+
 			if (spr.ID == curSelected)
 			{
 				spr.animation.play('selected');
@@ -277,8 +278,9 @@ class MainMenuState extends MusicBeatState
 				else {
 					FlxG.camera.follow(camFollow, null, 0.06);
 				}
+				camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y);
 			}
-			camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y);
+
 			spr.updateHitbox();
 		});
 	}

@@ -278,7 +278,7 @@ class MainMenuState extends MusicBeatState
 					FlxG.camera.follow(camFollow, null, 0.06);
 				}
 			}
-
+			camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y);
 			spr.updateHitbox();
 		});
 	}

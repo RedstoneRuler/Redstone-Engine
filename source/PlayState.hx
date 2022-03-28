@@ -682,7 +682,7 @@ class PlayState extends MusicBeatState
 
 		add(camFollow);
 
-		FlxG.camera.follow(camFollow, LOCKON, 0.04 * (60 / FlxG.drawFramerate));
+		FlxG.camera.follow(camFollow, LOCKON, 0.04 * (65 / FlxG.drawFramerate));
 		// FlxG.camera.setScrollBounds(0, FlxG.width, 0, FlxG.height);
 		FlxG.camera.zoom = defaultCamZoom;
 		FlxG.camera.focusOn(camFollow.getPosition());
@@ -1420,7 +1420,7 @@ class PlayState extends MusicBeatState
 
 			if (camFollow.x != dad.getMidpoint().x + 150 && !PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection)
 			{
-				FlxG.camera.follow(camFollow, LOCKON, 0.04 * (60 / FlxG.drawFramerate));
+				FlxG.camera.follow(camFollow, LOCKON, 0.04 * (65 / FlxG.drawFramerate));
 				camFollow.setPosition(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
 				// camFollow.setPosition(lucky.getMidpoint().x - 120, lucky.getMidpoint().y + 210);
 
@@ -1447,7 +1447,7 @@ class PlayState extends MusicBeatState
 
 			if (PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection && camFollow.x != boyfriend.getMidpoint().x - 100)
 			{
-				FlxG.camera.follow(camFollow, LOCKON, 0.04 * (60 / FlxG.drawFramerate));
+				FlxG.camera.follow(camFollow, LOCKON, 0.04 * (65 / FlxG.drawFramerate));
 				camFollow.setPosition(boyfriend.getMidpoint().x - 100, boyfriend.getMidpoint().y - 100);
 
 				switch (curStage)

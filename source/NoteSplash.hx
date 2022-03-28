@@ -12,9 +12,9 @@ class NoteSplash extends FlxSprite {
 
     //I got so desprate I once even made an attempt to code it in myself.
     //That went well.
-    public function new(xPos:Float,yPos:Float,?c:Int) {
-        if (c == null) c = 0;
-        super(xPos,yPos);
+    public function new(xPos:Float,yPos:Float,?splashType:Int) {
+        if (splashType == null) splashType = 0;
+        super(xPos, yPos);
 		frames = FlxAtlasFrames.fromSparrow('assets/images/noteSplashes.png', 'assets/images/noteSplashes.xml');
         animation.addByPrefix("splash0-0", "note impact 1 purple", 24, false);
         animation.addByPrefix("splash1-0", "note impact 1  blue", 24, false);
@@ -25,14 +25,14 @@ class NoteSplash extends FlxSprite {
 		animation.addByPrefix("splash1-1", "note impact 2 blue", 24, false);
 		animation.addByPrefix("splash2-1", "note impact 2 green", 24, false);
 		animation.addByPrefix("splash3-1", "note impact 2 red", 24, false);
-        setupNoteSplash(xPos,xPos,c);
+        setupNoteSplash(xPos, xPos, splashType);
     }
-    public function setupNoteSplash(xPos:Float, yPos:Float, ?c:Int) {
-        if (c == null) c = 0;
+    public function setupNoteSplash(xPos:Float, yPos:Float, ?splashType:Int) {
+        if (splashType == null) splashType = 0;
         setPosition(xPos, yPos);
         alpha = 0.6;
         antialiasing = true;
-        animation.play("splash"+c+"-"+FlxG.random.int(0,1), true);
+        animation.play("splash" + splashType + "-" + FlxG.random.int(0,1), true);
 		animation.curAnim.frameRate = FlxG.random.int(22, 26);
         updateHitbox();
         offset.set(0.3 * width, 0.3 * height);

@@ -2111,6 +2111,7 @@ class PlayState extends MusicBeatState
 				if (perfectMode)
 					noteCheck(true, daNote);
 
+				
 				// Jump notes
 				if (possibleNotes.length >= 2)
 				{
@@ -2183,7 +2184,7 @@ class PlayState extends MusicBeatState
 				badNoteCheck();
 			}
 		}
-
+		
 		if ((up || right || down || left) && !boyfriend.stunned && generatedMusic)
 		{
 			notes.forEachAlive(function(daNote:Note)

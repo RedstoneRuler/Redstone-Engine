@@ -16,23 +16,16 @@ class NoteSplash extends FlxSprite {
     public function new(xPos:Float,yPos:Float,?splashType:Int) {
         if (splashType == null) splashType = 0;
         super(xPos, yPos);
-        if(PlayState.curStage == ('school') || PlayState.curStage == ('schoolEvil')) {
-            frames = FlxAtlasFrames.fromSparrow('assets/images/weeb/pixelUI/noteSplashes-pixel.png', 'assets/images/noteSplashes-pixel.xml');
-        } else {
-            frames = FlxAtlasFrames.fromSparrow('assets/images/noteSplashes.png', 'assets/images/noteSplashes.xml');
-        }
-        animation.addByPrefix("splash0-0", "note impact 1 purple", 24, false);
-        animation.addByPrefix("splash1-0", "note impact 1  blue", 24, false);
-		animation.addByPrefix("splash2-0", "note impact 1 green", 24, false);
-		animation.addByPrefix("splash3-0", "note impact 1 red", 24, false);
-
-		animation.addByPrefix("splash0-1", "note impact 2 purple", 24, false);
-		animation.addByPrefix("splash1-1", "note impact 2 blue", 24, false);
-		animation.addByPrefix("splash2-1", "note impact 2 green", 24, false);
-		animation.addByPrefix("splash3-1", "note impact 2 red", 24, false);
+        setupSprites();
         setupNoteSplash(xPos, xPos, splashType);
     }
     public function setupNoteSplash(xPos:Float, yPos:Float, ?splashType:Int) {
+        var animAdd:String;
+        if(PlayState.curStage == 'school' || PlayState.curStage == 'schoolEvil')
+            animAdd = "-pixel";
+        else {
+            animAdd = "";
+        }
         if (splashType == null) splashType = 0;
         setPosition(xPos, yPos);
         if(isFirstSplash)
@@ -40,7 +33,7 @@ class NoteSplash extends FlxSprite {
         else
             alpha = 0.6;
         antialiasing = true;
-        animation.play("splash" + splashType + "-" + FlxG.random.int(0,1), true);
+        animation.play("splash" + splashType + "-" + FlxG.random.int(0,1) + animAdd, true);
 		animation.curAnim.frameRate = FlxG.random.int(22, 26);
         updateHitbox();
         offset.set(0.3 * width, 0.3 * height);
@@ -51,5 +44,29 @@ class NoteSplash extends FlxSprite {
             kill();
         }
         super.update(elapsed);
+    }
+    function setupSprites():Void
+    {
+            frames = FlxAtlasFrames.fromSparrow('assets/images/weeb/pixelUI/noteSplashes-pixel.png', 'assets/images/weeb/pixelUI/noteSplashes-pixel.xml');
+            animation.addByPrefix("splash0-0-pixel", "note impact 1 purple", 24, false);
+            animation.addByPrefix("splash1-0-pixel", "note impact 1  blue", 24, false);
+            animation.addByPrefix("splash2-0-pixel", "note impact 1 green", 24, false);
+            animation.addByPrefix("splash3-0-pixel", "note impact 1 red", 24, false);
+    
+            animation.addByPrefix("splash0-1-pixel", "note impact 2 purple", 24, false);
+            animation.addByPrefix("splash1-1-pixel", "note impact 2 blue", 24, false);
+            animation.addByPrefix("splash2-1-pixel", "note impact 2 green", 24, false);
+            animation.addByPrefix("splash3-1-pixel", "note impact 2 red", 24, false);
+
+            frames = FlxAtlasFrames.fromSparrow('assets/images/noteSplashes.png', 'assets/images/noteSplashes.xml');
+            animation.addByPrefix("splash0-0", "note impact 1 purple", 24, false);
+            animation.addByPrefix("splash1-0", "note impact 1  blue", 24, false);
+            animation.addByPrefix("splash2-0", "note impact 1 green", 24, false);
+            animation.addByPrefix("splash3-0", "note impact 1 red", 24, false);
+    
+            animation.addByPrefix("splash0-1", "note impact 2 purple", 24, false);
+            animation.addByPrefix("splash1-1", "note impact 2 blue", 24, false);
+            animation.addByPrefix("splash2-1", "note impact 2 green", 24, false);
+            animation.addByPrefix("splash3-1", "note impact 2 red", 24, false);
     }
 }

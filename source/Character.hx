@@ -182,7 +182,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'singRIGHT0', 16, false);
 				animation.addByPrefix('singUP', 'singUP0', 16, false);
 
-				addOffset('idle');
+				addOffset('idle',);
 				addOffset("singLEFT");
 				addOffset("singDOWN");
 				addOffset("singUP");
@@ -202,13 +202,12 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'kdog right', 24, false);
 				animation.addByPrefix('singUP', 'kdog up', 24, false);
 	
-				addOffset('idle');
-				addOffset("singLEFT");
-				addOffset("singDOWN");
-				addOffset("singUP");
-				addOffset("singRIGHT");
+				addOffset('idle', 0, -1);
+				addOffset("singLEFT", 0, 0);
+				addOffset("singDOWN", -90, 0);
+				addOffset("singUP", -170, 0);
+				addOffset("singRIGHT", -103, -3);
 	
-				//His sprite sheet is a liiiiiiiitle small
 				setGraphicSize(Std.int(width * 3.5));
 				updateHitbox();
 	

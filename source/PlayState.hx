@@ -600,6 +600,10 @@ class PlayState extends MusicBeatState
 				dad.x -= 150;
 				dad.y += 100;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
+			case 'kdog':
+				dad.x += 0;
+				dad.y += 300;
+				camPos.set(dad.getGraphicMidpoint().x + 550, dad.getGraphicMidpoint().y - 900);
 		}
 
 		boyfriend = new Boyfriend(770, 450, SONG.player1);
@@ -1429,6 +1433,9 @@ class PlayState extends MusicBeatState
 					case 'mom':
 						camFollow.y = dad.getMidpoint().y;
 					case 'senpai':
+						camFollow.y = dad.getMidpoint().y - 430;
+						camFollow.x = dad.getMidpoint().x - 100;
+					case 'kdog':
 						camFollow.y = dad.getMidpoint().y - 430;
 						camFollow.x = dad.getMidpoint().x - 100;
 					case 'senpai-angry':

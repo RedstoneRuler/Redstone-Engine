@@ -209,7 +209,7 @@ class Character extends FlxSprite
 				addOffset("singRIGHT");
 	
 				//His sprite sheet is a liiiiiiiitle small
-				setGraphicSize(Std.int(width * 4));
+				setGraphicSize(Std.int(width * 3.5));
 				updateHitbox();
 	
 				playAnim('idle');

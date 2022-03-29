@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="kdog.png"><SubTexture name="kdog down0000" x="459" y="512" width="154" height="102" frameX="-160" frameY="-201" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog down0001" x="153" y="620" width="151" height="100" frameX="-159" frameY="-201" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog down0002" x="308" y="512" width="151" height="104" frameX="-170" frameY="-196" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog down0003" x="0" y="512" width="148" height="108" frameX="-159" frameY="-201" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog down0004" x="0" y="620" width="153" height="102" frameX="-156" frameY="-201" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog idle0000" x="148" y="512" width="160" height="106" frameX="-174" frameY="-198" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog idle0001" x="595" y="0" width="147" height="113" frameX="-182" frameY="-191" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog idle0002" x="334" y="383" width="141" height="121" frameX="-186" frameY="-184" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog idle0003" x="107" y="383" width="133" height="128" frameX="-189" frameY="-176" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog idle0004" x="467" y="0" width="128" height="131" frameX="-193" frameY="-173" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog left0000" x="0" y="383" width="107" height="129" frameX="-158" frameY="-172" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog left0001" x="386" y="0" width="81" height="151" frameX="-164" frameY="-148" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog left0002" x="128" y="0" width="129" height="156" frameX="-143" frameY="-142" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog left0003" x="257" y="0" width="129" height="156" frameX="-134" frameY="-142" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog left0004" x="86" y="238" width="115" height="144" frameX="-116" frameY="-157" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog right0000" x="467" y="131" width="101" height="131" frameX="-220" frameY="-173" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog right0001" x="201" y="238" width="106" height="132" frameX="-213" frameY="-176" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog right0002" x="307" y="238" width="106" height="132" frameX="-213" frameY="-176" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog right0003" x="0" y="238" width="86" height="145" frameX="-232" frameY="-159" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog right0004" x="240" y="383" width="94" height="128" frameX="-232" frameY="-176" frameWidth="500" frameHeight="500" />
+<SubTexture name="kdog up0000" x="0" y="0" width="128" height="238" frameX="-162" frameY="-67" frameWidth="500" frameHeight="500" />
+</TextureAtlas>

@@ -193,6 +193,26 @@ class Character extends FlxSprite
 				updateHitbox();
 
 				playAnim('idle');
+			case 'kdog':
+				tex = FlxAtlasFrames.fromSparrow('assets/images/kdog.png', 'assets/images/kdog.xml');
+				frames = tex;
+				animation.addByPrefix('idle', 'kdog idle', 12, false);
+				animation.addByPrefix('singLEFT', 'kdog left', 24, false);
+				animation.addByPrefix('singDOWN', 'kdog down', 24, false);
+				animation.addByPrefix('singRIGHT', 'kdog right', 24, false);
+				animation.addByPrefix('singUP', 'kdog up', 24, false);
+	
+				addOffset('idle');
+				addOffset("singLEFT");
+				addOffset("singDOWN");
+				addOffset("singUP");
+				addOffset("singRIGHT");
+	
+				//His sprite sheet is a liiiiiiiitle small
+				setGraphicSize(Std.int(width * 4));
+				updateHitbox();
+	
+				playAnim('idle');
 			case 'spooky':
 				tex = FlxAtlasFrames.fromSparrow('assets/images/spooky_kids_assets.png', 'assets/images/spooky_kids_assets.xml');
 				frames = tex;

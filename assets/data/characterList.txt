@@ -19,3 +19,4 @@ senpai
 senpai-angry
 spirit
 tylo
+kdog

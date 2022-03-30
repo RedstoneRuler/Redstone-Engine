@@ -141,8 +141,10 @@ class TitleState extends MusicBeatState
 			//FlxG.sound.music.fadeIn(4, 0, 0.7);
 		}
 		#if !html5
-		FlxG.updateFramerate = FlxG.save.data.fps;
-		FlxG.drawFramerate = FlxG.updateFramerate;
+		if(FlxG.save.data.fps != null) {
+			FlxG.updateFramerate = FlxG.save.data.fps;
+			FlxG.drawFramerate = FlxG.updateFramerate;
+		}
 		#end
 		#if html5
 		if(FlxG.save.data.optimize == true) {

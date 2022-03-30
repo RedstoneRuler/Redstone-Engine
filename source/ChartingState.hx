@@ -469,13 +469,15 @@ class ChartingState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		var playedSound:Bool = false;
 		curStep = recalculateSteps();
 
 		Conductor.songPosition = FlxG.sound.music.time;
 		_song.song = typingShit.text;
-
+		if(FlxG.sound != null) {
+			playedSound = false;
+		}
 		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
-
 		if (curBeat % 4 == 0 && curStep >= 16 * (curSection + 1))
 		{
 			trace(curStep);

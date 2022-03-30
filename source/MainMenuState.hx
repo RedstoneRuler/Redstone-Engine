@@ -20,9 +20,6 @@ using StringTools;
 class MainMenuState extends MusicBeatState
 {
 	var curSelected:Int = 0;
-	#if !html5
-	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Framerate: " + FlxG.save.data.fps + " (Left, Right, Shift)", 12);
-	#end
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
 	#if !switch
@@ -99,11 +96,6 @@ class MainMenuState extends MusicBeatState
 			menuItem.scrollFactor.set();
 			menuItem.antialiasing = true;
 		}
-		#if !html5
-		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(versionShit);
-		#end
 		if(FlxG.drawFramerate >= 60) {
 			FlxG.camera.follow(camFollow, null, 0.06 * (60 / FlxG.drawFramerate));
 		}
@@ -124,10 +116,6 @@ class MainMenuState extends MusicBeatState
 	{
 		if (FlxG.keys.justPressed.F){FlxG.fullscreen = !FlxG.fullscreen;}
 		super.update(elapsed);
-		#if !html5
-		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		#end
 		if (FlxG.sound.music.volume < 0.8)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -151,46 +139,6 @@ class MainMenuState extends MusicBeatState
 			{
 				FlxG.switchState(new TitleState());
 			}
-			#if !html5
-			if (FlxG.keys.pressed.SHIFT) {
-				if(FlxG.keys.pressed.RIGHT)
-					{
-						FlxG.updateFramerate += 1;
-						if (FlxG.updateFramerate >= 360) { FlxG.updateFramerate = 360; }
-						FlxG.drawFramerate = (FlxG.updateFramerate);
-						FlxG.save.data.fps = FlxG.drawFramerate;
-						versionShit.text = "Framerate: " + FlxG.save.data.fps;
-					}
-				
-					if(FlxG.keys.pressed.LEFT)
-					{
-						FlxG.updateFramerate -= 1;
-						if (FlxG.updateFramerate <= 10) { FlxG.updateFramerate = 10; }
-						FlxG.drawFramerate = (FlxG.updateFramerate);
-						FlxG.save.data.fps = FlxG.drawFramerate;
-						versionShit.text = "Framerate: " + FlxG.save.data.fps;
-					}
-			}
-			else {
-				if(FlxG.keys.justPressed.RIGHT)
-				{
-					FlxG.updateFramerate += 1;
-					if (FlxG.updateFramerate >= 360) { FlxG.updateFramerate = 360; }
-					FlxG.drawFramerate = (FlxG.updateFramerate);
-					FlxG.save.data.fps = FlxG.drawFramerate;
-					versionShit.text = "Framerate: " + FlxG.save.data.fps;
-				}
-
-				if(FlxG.keys.justPressed.LEFT)
-				{
-					FlxG.updateFramerate -= 1;
-					if (FlxG.updateFramerate <= 10) { FlxG.updateFramerate = 10; }
-					FlxG.drawFramerate = (FlxG.updateFramerate);
-					FlxG.save.data.fps = FlxG.drawFramerate;
-					versionShit.text = "Framerate: " + FlxG.save.data.fps;
-				}
-			}
-			#end
 			if (controls.ACCEPT)
 			{
 				if (optionShit[curSelected] == 'options')

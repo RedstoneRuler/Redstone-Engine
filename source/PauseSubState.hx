@@ -206,7 +206,6 @@ class PauseSubState extends MusicBeatSubstate
 					menuItems = difficultyChoices;
 					regenMenu();	
 				case "Toggle Practice Mode":
-					// makin this save data cuz i don't know how to define a public var lmfao
 					PlayState.practiceMode = !PlayState.practiceMode;
 					updatedPractice = false;
 				case "Exit to menu":

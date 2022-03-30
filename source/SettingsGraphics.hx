@@ -33,6 +33,9 @@ class SettingsGraphics extends MusicBeatState
 		if (FlxG.save.data.glow == null) {
 			FlxG.save.data.glow = false;
 		}
+		if (FlxG.save.data.fps == null) {
+			FlxG.save.data.fps = 60;
+		}
 		// this used to be an integer but i couldn't get it to work so... yeah
 		switch(FlxG.save.data.zoom) {
 			case false:

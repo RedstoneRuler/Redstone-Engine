@@ -30,7 +30,6 @@ class MainMenuState extends MusicBeatState
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
-
 	override function create()
 	{
 		FlxG.save.data.deathCount = 0;
@@ -106,7 +105,11 @@ class MainMenuState extends MusicBeatState
 		// NG.core.calls.event.logEvent('swag').send();
 
 		changeItem();
-
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Redstone Engine Version " + CoolUtil.version, 12);
+		versionShit.scrollFactor.set();
+		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(versionShit);
+		
 		super.create();
 	}
 

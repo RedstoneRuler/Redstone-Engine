@@ -50,7 +50,9 @@ class PlayState extends MusicBeatState
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
 	public static var curSong:String = "";
-	
+	public static var deathCount:Int = 0;
+	public static var practiceMode:Bool = false;
+
 	var halloweenLevel:Bool = false;
 
 	private var vocals:FlxSound;
@@ -142,7 +144,6 @@ class PlayState extends MusicBeatState
 	var wasPractice:Bool = false;
 	override public function create()
 	{
-		FlxG.save.data.practice = false;
 		// Formatting save data for important values
 		if (FlxG.save.data.noteframe == null) {
 			FlxG.save.data.noteframe = 10;
@@ -1325,7 +1326,7 @@ class PlayState extends MusicBeatState
 		}
 
 		super.update(elapsed);
-		if(FlxG.save.data.practice == true) {
+		if(practiceMode == true) {
 			wasPractice = true;
 		}
 		scoreTxt.text = "Score: " + songScore;
@@ -1540,7 +1541,7 @@ class PlayState extends MusicBeatState
 			health += 1;
 			trace("User is cheating!");
 		}
-		if (health <= 0 && FlxG.save.data.practice == false)
+		if (health <= 0 && practiceMode == false)
 		{
 			gameOver(true);
 		}

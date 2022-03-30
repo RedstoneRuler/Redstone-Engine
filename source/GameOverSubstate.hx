@@ -17,7 +17,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	public function new(x:Float, y:Float)
 	{
-		FlxG.save.data.deathCount += 1;
+		PlayState.deathCount += 1;
 		var daStage = PlayState.curStage;
 		var daBf:String = '';
 		if(FlxG.save.data.optimize == true && daStage != 'school' && daStage != 'schoolEvil') {

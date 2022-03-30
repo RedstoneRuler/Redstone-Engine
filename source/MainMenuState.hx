@@ -32,8 +32,6 @@ class MainMenuState extends MusicBeatState
 	var camFollow:FlxObject;
 	override function create()
 	{
-		FlxG.save.data.deathCount = 0;
-		FlxG.save.data.practice = false;
 		/* MOVED TO TITLESTATE!
 		#if !html5
 		if (FlxG.save.data.fps == null) {

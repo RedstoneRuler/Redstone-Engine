@@ -30,8 +30,6 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{
-		FlxG.save.data.practice = false;
-		FlxG.save.data.deathCount = 0;
 		songs = CoolUtil.coolTextFile('assets/data/freeplaySonglist.txt');
 
 		/* 

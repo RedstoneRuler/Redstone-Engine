@@ -17,6 +17,7 @@ import Note;
 class SettingsGraphics extends MusicBeatState
 {
 	var zoomText:String;
+	var splashText:String;
 	var selector:FlxText;
 	var curSelected:Int = 0;
 	var controlsStrings:Array<String> = [];

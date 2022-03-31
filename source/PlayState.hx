@@ -156,7 +156,7 @@ class PlayState extends MusicBeatState
 			FlxG.save.data.offset = 0;
 		}
 		if (FlxG.save.data.splash == true) {
-			FlxG.save.data.splash = true
+			FlxG.save.data.splash = true;
 		}
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();

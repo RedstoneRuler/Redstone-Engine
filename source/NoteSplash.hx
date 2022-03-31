@@ -23,6 +23,7 @@ class NoteSplash extends FlxSprite {
         }
     }
     public function setupNoteSplash(xPos:Float, yPos:Float, ?splashType:Int) {
+        if(FlxG.save.data.splash == true) {
         if(PlayState.curSong.toLowerCase() == 'senpai' || PlayState.curSong.toLowerCase() == 'roses' || PlayState.curSong.toLowerCase() == 'thorns')
             animAdd = "-pixel";
         else {
@@ -41,6 +42,7 @@ class NoteSplash extends FlxSprite {
 		animation.curAnim.frameRate = FlxG.random.int(22, 26);
         updateHitbox();
         offset.set(0.3 * width, 0.3 * height);
+        }
     }
     override public function update(elapsed) {
         if(FlxG.save.data.splash == true) {
@@ -52,6 +54,7 @@ class NoteSplash extends FlxSprite {
     }
     function setupSprites():Void
     {
+        if(FlxG.save.data.splash == true) {
         frames = FlxAtlasFrames.fromSparrow('assets/images/noteSplashesFull.png', 'assets/images/noteSplashesFull.xml');
         animation.addByPrefix("splash0-0", "note impact 1 purple0", 24, false);
         animation.addByPrefix("splash1-0", "note impact 1  blue0", 24, false);
@@ -72,5 +75,6 @@ class NoteSplash extends FlxSprite {
         animation.addByPrefix("splash1-1-pixel", "note impact 2 blue pixel", 24, false);
         animation.addByPrefix("splash2-1-pixel", "note impact 2 green pixel", 24, false);
         animation.addByPrefix("splash3-1-pixel", "note impact 2 red pixel", 24, false);
+        }
     }
 }

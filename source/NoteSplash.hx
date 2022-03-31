@@ -43,8 +43,10 @@ class NoteSplash extends FlxSprite {
         offset.set(0.3 * width, 0.3 * height);
     }
     override public function update(elapsed) {
-        if (animation.curAnim.finished) {
-            kill();
+        if(FlxG.save.data.splash == true) {
+            if (animation.curAnim.finished) {
+                kill();
+            }
         }
         super.update(elapsed);
     }

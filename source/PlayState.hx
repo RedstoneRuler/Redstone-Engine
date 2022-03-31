@@ -155,7 +155,7 @@ class PlayState extends MusicBeatState
 		if (FlxG.save.data.offset == null) {
 			FlxG.save.data.offset = 0;
 		}
-		if (FlxG.save.data.splash == true) {
+		if (FlxG.save.data.splash == null) {
 			FlxG.save.data.splash = true;
 		}
 		// var gameCam:FlxCamera = FlxG.camera;

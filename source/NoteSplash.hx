@@ -15,10 +15,12 @@ class NoteSplash extends FlxSprite {
     //I got so desprate I once even made an attempt to code it in myself.
     //That went well.
     public function new(xPos:Float,yPos:Float,?splashType:Int) {
-        if (splashType == null) splashType = 0;
-        super(xPos, yPos);
-        setupSprites();
-        setupNoteSplash(xPos, xPos, splashType);
+        if(FlxG.save.data.splash == true) {
+            if (splashType == null) splashType = 0;
+            super(xPos, yPos);
+            setupSprites();
+            setupNoteSplash(xPos, xPos, splashType);
+        }
     }
     public function setupNoteSplash(xPos:Float, yPos:Float, ?splashType:Int) {
         if(PlayState.curSong.toLowerCase() == 'senpai' || PlayState.curSong.toLowerCase() == 'roses' || PlayState.curSong.toLowerCase() == 'thorns')

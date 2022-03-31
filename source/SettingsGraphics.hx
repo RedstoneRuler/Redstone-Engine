@@ -36,15 +36,24 @@ class SettingsGraphics extends MusicBeatState
 		if (FlxG.save.data.fps == null) {
 			FlxG.save.data.fps = 60;
 		}
+		if (FlxG.save.data.splash == true) {
+			FlxG.save.data.splash = true;
+		}
+		switch(FlxG.save.data.splash) {
+			case false:
+				splashText = "Note Splashes off";
+			case true:
+				splashText = "Note Splashes on";
+		}
 		// this used to be an integer but i couldn't get it to work so... yeah
-		switch(FlxG.save.data.zoom) {
+		switch(FlxG.save.data.splash) {
 			case false:
 				zoomText = "Camera zooms per measure";
 			case true:
 				zoomText = "Camera zooms per beat";
 		}
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
-		controlsStrings = CoolUtil.coolStringFile((FlxG.save.data.glow ? "Note Glow On" : "Note Glow Off") + "\n" + (zoomText));
+		controlsStrings = CoolUtil.coolStringFile((FlxG.save.data.glow ? "Note Glow On" : "Note Glow Off") + "\n" + (zoomText) + (splashText));
 		
 		trace(controlsStrings);
 		menuBG.color = 0xFFea71fd;
@@ -143,6 +152,12 @@ class SettingsGraphics extends MusicBeatState
 					case 1:
 						FlxG.save.data.zoom = !FlxG.save.data.zoom;
 						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.zoom ? 'camera zooms per beat' : 'camera zooms per measure'), true, false);
+						ctrl.isMenuItem = true;
+						ctrl.targetY = curSelected - 1;
+						grpControls.add(ctrl);
+					case 2:
+						FlxG.save.data.splash = !FlxG.save.data.splash;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.splash ? 'note splashes on' : 'note splashes off'), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 1;
 						grpControls.add(ctrl);

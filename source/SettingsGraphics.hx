@@ -160,7 +160,7 @@ class SettingsGraphics extends MusicBeatState
 						FlxG.save.data.splash = !FlxG.save.data.splash;
 						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.splash ? 'note splashes on' : 'note splashes off'), true, false);
 						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 1;
+						ctrl.targetY = curSelected - 2;
 						grpControls.add(ctrl);
 				}
 			}

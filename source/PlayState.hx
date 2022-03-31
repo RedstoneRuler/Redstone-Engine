@@ -117,7 +117,7 @@ class PlayState extends MusicBeatState
 	var songScore:Int = 0;
 	var missCount:Int = 0;
 	public static var changedDifficulty:Bool = false;
-	var accuracy:Float = 100.00;
+	var accuracy:Float = 0;
 	var totalNotes:Float = 0;
 	var firstHit:Bool = true;
 	var goneUnder:Bool = false;
@@ -1979,20 +1979,24 @@ class PlayState extends MusicBeatState
 		}
 		else {
 		*/
+			var greaterThan20:Bool = true;
 			var accuracyDivide:Float;
 			if(accuracy < 1)
 				accuracyDivide = 25; //avoids divide by zero overflows
 			else
 				accuracyDivide = accuracy;
+			if(accuracy > 20)
+				greaterThan20 = false;
+				
 			FlxG.watch.addQuick('Hit', (strumtime - Conductor.songPosition) / 10);
 			FlxG.watch.addQuick('Hit ABS', Math.abs(strumtime - Conductor.songPosition) / 10);
-			FlxG.watch.addQuick('Accuracy Increment', (strumtime - Conductor.songPosition) / 10 / (totalNotes / 25));
+			FlxG.watch.addQuick('Accuracy Increment', (strumtime - Conductor.songPosition) / 10 / (accuracyDivide / 25) / (totalNotes / 25));
 
 			//some leniency to make 100% accuracy actually possible
 			if(Math.abs(strumtime - Conductor.songPosition) / 10 <= 5.5) {
-				accuracy += Math.abs(strumtime - Conductor.songPosition) / 10 / (totalNotes / 25);
+				accuracy += Math.abs(strumtime - Conductor.songPosition) / 10 / (greaterThan20 ?  (accuracy / 25) : 1) / (totalNotes / 25);
 			} else {
-				accuracy -= Math.abs(strumtime - Conductor.songPosition) / 10 / (totalNotes / 25);
+				accuracy -= Math.abs(strumtime - Conductor.songPosition) / 10 / (greaterThan20 ?  (accuracy / 25) : 1) / (totalNotes / 25);
 			}
 		//}
 		//firstHit = false;

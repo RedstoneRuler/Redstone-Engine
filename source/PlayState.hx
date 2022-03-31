@@ -1985,7 +1985,7 @@ class PlayState extends MusicBeatState
 				accuracyDivide = 25; //avoids divide by zero overflows
 			else
 				accuracyDivide = accuracy;
-			if(accuracy > 20)
+			if(accuracy < 20)
 				greaterThan20 = false;
 				
 			FlxG.watch.addQuick('Hit', (strumtime - Conductor.songPosition) / 10);
@@ -1994,9 +1994,9 @@ class PlayState extends MusicBeatState
 
 			//some leniency to make 100% accuracy actually possible
 			if(Math.abs(strumtime - Conductor.songPosition) / 10 <= 5.5) {
-				accuracy += Math.abs(strumtime - Conductor.songPosition) / 10 / (greaterThan20 ?  (accuracy / 25) : 1) / (totalNotes / 25);
+				accuracy += Math.abs(strumtime - Conductor.songPosition) / 10 / (greaterThan20 ? (accuracy / 25) : (1)) / (totalNotes / 25);
 			} else {
-				accuracy -= Math.abs(strumtime - Conductor.songPosition) / 10 / (greaterThan20 ?  (accuracy / 25) : 1) / (totalNotes / 25);
+				accuracy -= Math.abs(strumtime - Conductor.songPosition) / 10 / (greaterThan20 ? (accuracy / 25) : (1)) / (totalNotes / 25);
 			}
 		//}
 		//firstHit = false;

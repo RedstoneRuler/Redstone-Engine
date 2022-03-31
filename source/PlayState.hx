@@ -118,6 +118,7 @@ class PlayState extends MusicBeatState
 	var missCount:Int = 0;
 	public static var changedDifficulty:Bool = false;
 	var accuracy:Float = 100.00;
+	var displayAccuracy:String = '?';
 	var totalNotes:Float = 0;
 	var firstHit:Bool = true;
 	var goneUnder:Bool = false;
@@ -1331,7 +1332,10 @@ class PlayState extends MusicBeatState
 		}
 		scoreTxt.text = "Score: " + songScore;
 		missTxt.text = "Misses: " + missCount;
-		accuracyTxt.text = "Accuracy: " + accuracy + "% - " + accuracyRating;
+		if(displayAccuracy == '?')
+			accuracyTxt.text = "Accuracy: " + displayAccuracy;
+		else
+			accuracyTxt.text = "Accuracy: " + displayAccuracy + "% - " + accuracyRating;
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
 			persistentUpdate = false;
@@ -2073,6 +2077,7 @@ class PlayState extends MusicBeatState
 			if(accuracyRating == null) //Probably means it didn't meet any of these criteria
 				accuracyRating = ratingList[9];
 		// I'm so sorry for this script
+		displayAccuracy = ("" + accuracy); // makin sure the game knows it's converting it into a string
 	}
 	private function keyShit():Void
 	{

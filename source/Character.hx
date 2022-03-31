@@ -205,9 +205,9 @@ class Character extends FlxSprite
 				addOffset('idle', 0, -1);
 				addOffset("singLEFT", -103, -3);
 				addOffset("singDOWN", -90, 0);
-				addOffset("singUP", -140, 0);
+				addOffset("singUP", -110, -8);
 				addOffset("singRIGHT");
-	
+				
 				setGraphicSize(Std.int(width * 3.5));
 				updateHitbox();
 	

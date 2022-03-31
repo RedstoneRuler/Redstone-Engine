@@ -174,10 +174,12 @@ class PlayState extends MusicBeatState
 		if (SONG == null) {
 			SONG = Song.loadFromJson('tutorial');
 		}
-		grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
-		var sploosh = new NoteSplash(100, 100, 0);
-		sploosh.alpha = 0.1;
-		grpNoteSplashes.add(sploosh);
+		if(FlxG.save.data.splash) {
+			grpNoteSplashes = new FlxTypedGroup<NoteSplash>();
+			var sploosh = new NoteSplash(100, 100, 0);
+			sploosh.alpha = 0.1;
+			grpNoteSplashes.add(sploosh);
+		}
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
 		switch (SONG.song.toLowerCase())
@@ -670,7 +672,8 @@ class PlayState extends MusicBeatState
 
 		strumLineNotes = new FlxTypedGroup<FlxSprite>();
 		add(strumLineNotes);
-		add(grpNoteSplashes);
+		if(FlxG.save.data.splash)
+			add(grpNoteSplashes);
 		playerStrums = new FlxTypedGroup<FlxSprite>();
 
 		// startCountdown();
@@ -734,7 +737,8 @@ class PlayState extends MusicBeatState
 		iconP2 = new HealthIcon(SONG.player2, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
-		grpNoteSplashes.cameras = [camHUD];
+		if(FlxG.save.data.splash)
+			grpNoteSplashes.cameras = [camHUD];
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
@@ -1840,7 +1844,7 @@ class PlayState extends MusicBeatState
 				daRating = 'bad';
 		 */
 		if(daRating == 'sick') {
-			if (!daNote.isSustainNote)
+			if (!daNote.isSustainNote && FlxG.save.data.splash)
 			{
 				var recycledNote = grpNoteSplashes.recycle(NoteSplash);
 				recycledNote.setupNoteSplash(daNote.x, daNote.y, daNote.noteData);

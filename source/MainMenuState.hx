@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.math.FlxMath;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -30,8 +31,10 @@ class MainMenuState extends MusicBeatState
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
+	var defaultCamZoom:Float = 1;
 	override function create()
 	{
+		Conductor.changeBPM(102);
 		/* MOVED TO TITLESTATE!
 		#if !html5
 		if (FlxG.save.data.fps == null) {
@@ -115,6 +118,7 @@ class MainMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
 		if (FlxG.keys.justPressed.F){FlxG.fullscreen = !FlxG.fullscreen;}
 		super.update(elapsed);
 		if (FlxG.sound.music.volume < 0.8)
@@ -232,5 +236,9 @@ class MainMenuState extends MusicBeatState
 
 			spr.updateHitbox();
 		});
+	}
+	override function beatHit()
+	{
+		FlxG.camera.zoom += 0.015;
 	}
 }

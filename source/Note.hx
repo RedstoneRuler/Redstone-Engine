@@ -223,14 +223,13 @@ class Note extends FlxSprite
 			}
 			// The * 0.5 us so that its easier to hit them too late, instead of too early
 			if(isSustainNote) {
-				hitBox = 17; // Held notes end earlier than the visual, to fix input dropping caused by 'em
+				hitBox = 13; // Held notes end earlier than the visual, to fix input dropping caused by 'em
 			}
 			else {
-				hitBox = FlxG.save.data.noteframe;
+				hitBox = FlxG.save.data.noteframe + 5;
 			}
 			
-				if (strumTime > Conductor.songPosition - (hitBox / 60) * 1000 &&
-					strumTime < Conductor.songPosition + ((hitBox / 60) * 1000 * 0.5))
+				if (strumTime > Conductor.songPosition - (hitBox / 60) * 1000 && strumTime < Conductor.songPosition + ((hitBox / 60) * 1000 * 0.5))
 				{
 					canBeHit = true;
 				}

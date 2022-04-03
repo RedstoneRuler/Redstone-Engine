@@ -119,7 +119,7 @@ class PlayState extends MusicBeatState
 	public static var changedDifficulty:Bool = false;
 	var accuracy:Float = 100.00;
 	var displayAccuracy:String = '?';
-	var totalNotes:Int = 1;
+	var totalNotes:Int = 0;
 	var firstHit:Bool = true;
 	var goneUnder:Bool = false;
 	var goneUnder100:Bool = false;

@@ -1844,7 +1844,7 @@ class PlayState extends MusicBeatState
 			hitRate += 0.50;
 		}
 		songScore += score;
-		updateAccuracy(strumtime, daRating, noteDiff);
+		updateAccuracy(strumtime = 0, daRating = 0, noteDiff = 0); //Not having any arguments means that it's using the modern accuracy system, so no need to account for them.
 		/* if (combo > 60)
 				daRating = 'sick';
 			else if (combo > 12)

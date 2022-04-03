@@ -1844,7 +1844,7 @@ class PlayState extends MusicBeatState
 			hitRate += 0.50;
 		}
 		songScore += score;
-		updateAccuracy(strumtime = 0, daRating = '', noteDiff = 0); //Not having any arguments means that it's using the modern accuracy system, so no need to account for them.
+		updateAccuracy(strumtime, daRating, noteDiff);
 		/* if (combo > 60)
 				daRating = 'sick';
 			else if (combo > 12)
@@ -1969,7 +1969,7 @@ class PlayState extends MusicBeatState
 
 		curSection += 1;
 	}
-	function updateAccuracy(strumtime:Float, daRating:String, noteDiff:Float):Void
+	function updateAccuracy(strumtime:Float = 0, daRating:String = '', noteDiff:Float = 0):Void //Not having any arguments means that it's using the modern accuracy system, so no need to account for them.
 	{
 		// ALL OF THIS COMMENTED SHIT IS JUST ME GOING IN WAY OVER MY HEAD
 		// I SHOULD PROBABLY JUST REMOVE IT BUT I MIGHT AS WELL LET ALL OF YOU LAUGH AT ME

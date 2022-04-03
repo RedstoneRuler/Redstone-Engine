@@ -32,11 +32,14 @@ class SettingsGameplay extends MusicBeatState
 		if (FlxG.save.data.ghost == null) {
 			FlxG.save.data.ghost = false;
 		}
+		if (FlxG.save.data.accuracy == null) {
+			FlxG.save.data.accuracy = true;
+		}
 		if (FlxG.save.data.noteframe == null) {
 			FlxG.save.data.noteframe = 10;
 		}
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
-		controlsStrings = CoolUtil.coolStringFile((FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off") + "\n" + "Configure Note Offset");
+		controlsStrings = CoolUtil.coolStringFile((FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off") + "\n" + (FlxG.save.data.accuracy ? "Modern Accuracy System" : "Legacy Accuracy System") + "\n" + "Configure Note Offset");
 		
 		trace(controlsStrings);
 		versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe + " (Left, Right, Shift, Higher value = Bigger hitbox)";
@@ -110,7 +113,7 @@ class SettingsGameplay extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if(curSelected != 2) {
+				if(curSelected != 3) {
 					grpControls.remove(grpControls.members[curSelected]);
 				}
 				switch(curSelected)
@@ -121,6 +124,17 @@ class SettingsGameplay extends MusicBeatState
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected;
 						grpControls.add(ctrl);
+					case 1:
+						FlxG.save.data.accuracy = !FlxG.save.data.accuracy;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.ghost ? 'modern accuracy system' : 'legacy accuracy system'), true, false);
+						ctrl.isMenuItem = true;
+						ctrl.targetY = curSelected - 1;
+						grpControls.add(ctrl);
+					case 2:
+						FlxG.switchState(new LatencyState());
+				}
+			}
+	}
 					/*
 					case 1:
 						FlxG.save.data.bot = !FlxG.save.data.bot;
@@ -129,12 +143,6 @@ class SettingsGameplay extends MusicBeatState
 						ctrl.targetY = curSelected - 1;
 						grpControls.add(ctrl);
 					*/
-					case 1:
-						FlxG.switchState(new LatencyState());
-				}
-			}
-	}
-
 	var isSettingControl:Bool = false;
 
 	function changeSelection(change:Int = 0)

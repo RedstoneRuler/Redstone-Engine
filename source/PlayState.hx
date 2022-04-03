@@ -119,7 +119,7 @@ class PlayState extends MusicBeatState
 	public static var changedDifficulty:Bool = false;
 	var accuracy:Float = 100.00;
 	var displayAccuracy:String = '?';
-	var totalNotes:Float = 0;
+	public static var totalNotes:Float = 0;
 	var firstHit:Bool = true;
 	var goneUnder:Bool = false;
 	var goneUnder100:Bool = false;
@@ -131,6 +131,7 @@ class PlayState extends MusicBeatState
 	var wasSickHit:Bool = false;
 
 	var accuracyRating:String = '?';
+	var hitRate:Float = 0;
 	public static var campaignScore:Int = 0;
 
 	var defaultCamZoom:Float = 1.05;
@@ -1824,16 +1825,19 @@ class PlayState extends MusicBeatState
 		{
 			daRating = 'shit';
 			score = 50;
+			hitRate -= 1;
 		}
 		else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.75)
 		{
 			daRating = 'bad';
 			score = 100;
+			hitRate -= 0.50;
 		}
 		else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.2)
 		{
 			daRating = 'good';
 			score = 200;
+			hitRate += 0.50;
 		}
 		songScore += score;
 		updateAccuracy(strumtime, daRating, noteDiff);
@@ -1845,6 +1849,7 @@ class PlayState extends MusicBeatState
 				daRating = 'bad';
 		 */
 		if(daRating == 'sick') {
+			hitRate += 1;
 			if (!daNote.isSustainNote && FlxG.save.data.splash)
 			{
 				var recycledNote = grpNoteSplashes.recycle(NoteSplash);
@@ -1991,6 +1996,9 @@ class PlayState extends MusicBeatState
 		}
 		else {
 		*/
+		PlayState.totalNotes += 1;
+		FlxG.watch.addQuick('totalNotes', PlayState.totalNotes);
+		if(FlxG.save.data.accuracy == false) {
 			var greaterThan20:Bool = true;
 			var accuracyDivide:Float;
 			if(accuracy < 1)
@@ -2010,6 +2018,9 @@ class PlayState extends MusicBeatState
 			} else {
 				accuracy -= Math.abs(strumtime - Conductor.songPosition) / 10 / (greaterThan20 ? (accuracy / 25) : (1)) / (totalNotes / 25);
 			}
+		} else {
+			accuracy = Math.max(hitRate / totalNotes  * 100);
+		}
 		//}
 		//firstHit = false;
 		accuracyLogic();
@@ -2106,9 +2117,8 @@ class PlayState extends MusicBeatState
 		var leftR = controls.LEFT_R;
 
 		var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
-
 		// FlxG.watch.addQuick('asdfa', upP);
-		if ((upP || rightP || downP || leftP) && !boyfriend.stunned && generatedMusic)
+		if ((upP || rightP || downP || leftP) && generatedMusic)
 		{
 			boyfriend.holdTimer = 0;
 
@@ -2215,22 +2225,7 @@ class PlayState extends MusicBeatState
 			{
 				if (daNote.canBeHit && daNote.mustPress && daNote.isSustainNote)
 				{
-					switch (daNote.noteData)
-					{
-						// NOTES YOU ARE HOLDING
-						case 0:
-							if (left)
-								goodNoteHit(daNote);
-						case 1:
-							if (down)
-								goodNoteHit(daNote);
-						case 2:
-							if (up)
-								goodNoteHit(daNote);
-						case 3:
-							if (right)
-								goodNoteHit(daNote);
-					}
+					goodNoteHit(daNote);
 				}
 			});
 		}
@@ -2354,7 +2349,6 @@ class PlayState extends MusicBeatState
 
 	function noteCheck(keyP:Bool, note:Note):Void
 	{
-		totalNotes += 1;
 		if (keyP)
 			goodNoteHit(note);
 		else

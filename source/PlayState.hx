@@ -119,7 +119,7 @@ class PlayState extends MusicBeatState
 	public static var changedDifficulty:Bool = false;
 	var accuracy:Float = 100.00;
 	var displayAccuracy:String = '?';
-	public static var totalNotes:Int = 0;
+	var totalNotes:Int = 1;
 	var firstHit:Bool = true;
 	var goneUnder:Bool = false;
 	var goneUnder100:Bool = false;
@@ -2000,8 +2000,8 @@ class PlayState extends MusicBeatState
 		}
 		else {
 		*/
-		PlayState.totalNotes += 1;
-		FlxG.watch.addQuick('totalNotes', PlayState.totalNotes);
+		totalNotes += 1;
+		FlxG.watch.addQuick('totalNotes', totalNotes);
 		if(FlxG.save.data.accuracy == false) {
 			var greaterThan20:Bool = true;
 			var accuracyDivide:Float;

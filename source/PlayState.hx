@@ -131,7 +131,7 @@ class PlayState extends MusicBeatState
 	var wasSickHit:Bool = false;
 
 	var accuracyRating:String = '?';
-	var hitRate:Float = 0;
+	var hitRate:Float = 1; //Making sure you start at 100% accuracy if you hit a sick note
 	public static var campaignScore:Int = 0;
 
 	var defaultCamZoom:Float = 1.05;

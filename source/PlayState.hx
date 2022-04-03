@@ -2019,7 +2019,7 @@ class PlayState extends MusicBeatState
 				accuracy -= Math.abs(strumtime - Conductor.songPosition) / 10 / (greaterThan20 ? (accuracy / 25) : (1)) / (totalNotes / 25);
 			}
 		} else {
-			accuracy = Math.max(hitRate / totalNotes  * 100);
+			accuracy = Math.max(hitRate / totalNotes * 100);
 		}
 		//}
 		//firstHit = false;

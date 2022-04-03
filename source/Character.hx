@@ -236,18 +236,28 @@ class Character extends FlxSprite
 				frames = tex;
 
 				animation.addByPrefix('idle', "Mom Idle", 24, false);
+				animation.addByIndices('idle-loop', 'Mom Idle', [10, 11, 12, 13], "", 24, true);
 				animation.addByPrefix('singUP', "Mom Up Pose", 24, false);
+				animation.addByIndices('singUP-loop', 'Mom Up Pose', [11, 12, 13, 14], "", 24, true);
 				animation.addByPrefix('singDOWN', "MOM DOWN POSE", 24, false);
+				animation.addByIndices('singDOWN-loop', "MOM DOWN POSE", [11, 12, 13, 14], "", 24, true);
 				animation.addByPrefix('singLEFT', 'Mom Left Pose', 24, false);
-				// ANIMATION IS CALLED MOM LEFT POSE BUT ITS FOR THE RIGHT
+				animation.addByIndices('singLEFT-loop', "Mom Left Pose", [6, 7, 8, 9], "", 24, true);
+				// ANIMATION IS CALLED MOM POSE LEFT BUT IT'S FOR THE RIGHT
 				// CUZ DAVE IS DUMB!
 				animation.addByPrefix('singRIGHT', 'Mom Pose Left', 24, false);
+				animation.addByIndices('singRIGHT-loop', "Mom Pose Left", [7, 8, 9], "", 24, true);
 
 				addOffset('idle');
+				addOffset('idle-loop');
 				addOffset("singUP", 14, 71);
+				addOffset("singUP-loop", 14, 71);
 				addOffset("singRIGHT", 10, -60);
+				addOffset("singRIGHT-loop", 10, -60);
 				addOffset("singLEFT", 250, -23);
+				addOffset("singLEFT-loop", 250, -23);
 				addOffset("singDOWN", 20, -160);
+				addOffset("singDOWN-loop", 20, -160);
 
 				playAnim('idle');
 
@@ -546,7 +556,7 @@ class Character extends FlxSprite
 
 			case 'senpai':
 				frames = FlxAtlasFrames.fromSparrow('assets/images/weeb/senpai.png', 'assets/images/weeb/senpai.xml');
-				animation.addByPrefix('idle', 'Senpai Idle', 24, false);
+				animation.addByPrefix('idle', 'Senpai Idle', 24, true);
 				animation.addByPrefix('singUP', 'SENPAI UP NOTE', 24, false);
 				animation.addByPrefix('singLEFT', 'SENPAI LEFT NOTE', 24, false);
 				animation.addByPrefix('singRIGHT', 'SENPAI RIGHT NOTE', 24, false);

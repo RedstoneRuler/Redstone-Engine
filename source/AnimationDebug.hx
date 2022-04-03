@@ -112,7 +112,7 @@ class AnimationDebug extends FlxState
 	override function update(elapsed:Float)
 	{
 		if (FlxG.keys.justPressed.BACKSPACE)
-			FlxG.switchState(new MainMenuState());
+			FlxG.switchState(new PlayState());
 		textAnim.text = char.animation.curAnim.name;
 
 		if (FlxG.keys.justPressed.E)
@@ -189,7 +189,7 @@ class AnimationDebug extends FlxState
 
 			updateTexts();
 			genBoyOffsets(false);
-			char.playAnim(animList[curAnim]);
+			char.playAnim(animList[curAnim], true);
 		}
 
 		super.update(elapsed);

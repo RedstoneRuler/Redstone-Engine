@@ -126,7 +126,7 @@ class SettingsGameplay extends MusicBeatState
 						grpControls.add(ctrl);
 					case 1:
 						FlxG.save.data.accuracy = !FlxG.save.data.accuracy;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.ghost ? 'modern accuracy system' : 'legacy accuracy system'), true, false);
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.accuracy ? 'modern accuracy system' : 'legacy accuracy system'), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 1;
 						grpControls.add(ctrl);

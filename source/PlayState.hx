@@ -1653,7 +1653,11 @@ class PlayState extends MusicBeatState
 						{
 							if(FlxG.save.data.ghost){noteMiss(1, true);}else{
 							firstHit = false;
-							accuracy -= 5;
+							if(FlxG.save.data.accuracy == false)
+								accuracy -= 5;
+							else
+								hitRate -= 2;
+								updateAccuracy();
 							accuracyLogic();
 							missCount += 1;
 							health -= 0.0475;
@@ -2128,7 +2132,7 @@ class PlayState extends MusicBeatState
 
 			notes.forEachAlive(function(daNote:Note)
 			{
-				if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate)
+				if (daNote.canBeHit && daNote.mustPress)
 				{
 					// the sorting probably doesn't need to be in here? who cares lol
 					possibleNotes.push(daNote);
@@ -2283,10 +2287,18 @@ class PlayState extends MusicBeatState
 			missCount += 1;
 			if(wasPassedNote) {
 				health -= 0.0475;
-				accuracy -= 5; //missing a note is a blow to your accuracy
+				if(FlxG.save.data.accuracy == false)
+					accuracy -= 5; //missing a note is a blow to your accuracy
+				else
+					hitRate -= 2;
+					updateAccuracy();
 			} else {
 				health -= 0.04;
-				accuracy -= 0.5;
+				if(FlxG.save.data.accuracy == false)
+					accuracy -= 0.5; //missing a note is a blow to your accuracy
+				else
+					hitRate -= 1;
+					updateAccuracy();
 			}
 			firstHit = false;
 			accuracyLogic();

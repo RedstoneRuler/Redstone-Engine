@@ -113,7 +113,7 @@ class SettingsGameplay extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if(curSelected != 3) {
+				if(curSelected != 2) {
 					grpControls.remove(grpControls.members[curSelected]);
 				}
 				switch(curSelected)

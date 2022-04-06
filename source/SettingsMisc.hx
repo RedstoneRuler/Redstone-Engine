@@ -72,12 +72,12 @@ class SettingsMisc extends MusicBeatState
 				//	case 0:
 						FlxG.save.data.optimize = !FlxG.save.data.optimize;
 						#if html5
-						if(FlxG.save.data.optimize == true) {
-							FlxG.updateFramerate = 30;
-							FlxG.drawFramerate = (FlxG.updateFramerate);
-						}
 						if(FlxG.save.data.optimize == false) {
 							FlxG.updateFramerate = 60;
+							FlxG.drawFramerate = (FlxG.updateFramerate);
+						}
+						else if(FlxG.save.data.optimize == true) {
+							FlxG.updateFramerate = 30;
 							FlxG.drawFramerate = (FlxG.updateFramerate);
 						}
 						#end
@@ -85,6 +85,7 @@ class SettingsMisc extends MusicBeatState
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected;
 						grpControls.add(ctrl);
+						FlxG.log.add(FlxG.save.data.optimize);
 				//}
 			}
 	}

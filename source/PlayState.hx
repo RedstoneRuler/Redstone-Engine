@@ -73,6 +73,7 @@ class PlayState extends MusicBeatState
 
 	private var strumLineNotes:FlxTypedGroup<FlxSprite>;
 	private var playerStrums:FlxTypedGroup<FlxSprite>;
+	private var opponentStrums:FlxTypedGroup<FlxSprite>;
 	var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
 
 	private var camZooming:Bool = false;
@@ -676,6 +677,7 @@ class PlayState extends MusicBeatState
 		if(FlxG.save.data.splash)
 			add(grpNoteSplashes);
 		playerStrums = new FlxTypedGroup<FlxSprite>();
+		opponentStrums = new FlxTypedGroup<FlxSprite>();
 
 		// startCountdown();
 
@@ -1243,6 +1245,9 @@ class PlayState extends MusicBeatState
 			{
 				playerStrums.add(babyArrow);
 			}
+			else {
+				opponentStrums.add(babyArrow);
+			}
 
 			babyArrow.animation.play('static');
 			babyArrow.x += 50;
@@ -1305,12 +1310,24 @@ class PlayState extends MusicBeatState
 	var startedCountdown:Bool = false;
 	var canPause:Bool = true;
 
+	function dadNoteShit(daNote:Note):Void
+	{
+		opponentStrums.forEach(function(spr:FlxSprite)
+		{
+			if (Math.abs(daNote.noteData) == spr.ID)
+			{
+				spr.animation.play('confirm', true);
+				spr.centerOffsets();
+				spr.offset.x -= 13;
+				spr.offset.y -= 13;
+			}
+			});
+	}
 	override public function update(elapsed:Float)
 	{
 		#if !debug
 		perfectMode = false;
 		#end
-
 		if (FlxG.keys.justPressed.NINE)
 		{
 			if (iconP1.animation.curAnim.name == 'bf-old')
@@ -1602,6 +1619,7 @@ class PlayState extends MusicBeatState
 
 				if (!daNote.mustPress && daNote.wasGoodHit)
 				{
+					dadNoteShit(daNote);
 					if (SONG.song != 'Tutorial')
 						camZooming = true;
 
@@ -1625,7 +1643,6 @@ class PlayState extends MusicBeatState
 						case 3:
 							dad.playAnim('singRIGHT' + altAnim, true);
 					}
-
 					dad.holdTimer = 0;
 
 					if (SONG.needsVoices)
@@ -1635,7 +1652,6 @@ class PlayState extends MusicBeatState
 					notes.remove(daNote, true);
 					daNote.destroy();
 				}
-
 				// WIP interpolation shit? Need to fix the pause issue
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
 
@@ -1681,8 +1697,16 @@ class PlayState extends MusicBeatState
 			});
 		}
 
-		if (!inCutscene)
+		if (!inCutscene) {
 			keyShit();
+			opponentStrums.forEach(function(spr:FlxSprite)
+			{
+				if(spr.animation.curAnim.finished) {
+					spr.animation.play('static');
+					spr.centerOffsets();
+				}
+			});
+		}
 
 		#if debug
 		if (FlxG.keys.justPressed.ONE)
@@ -2624,7 +2648,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 		else {
-			if(!dad.animation.curAnim.name.startsWith("sing") || dad.animation.curAnim.name.contains('-loop')) {
+			if(dad.animation.curAnim.name.contains("idle") || dad.animation.curAnim.name.contains("dance") || dad.animation.curAnim.name.contains('-loop')) {
 				dad.dance();
 			}
 			if (!boyfriend.animation.curAnim.name.startsWith("sing"))

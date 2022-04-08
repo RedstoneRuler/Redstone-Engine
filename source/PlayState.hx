@@ -1106,7 +1106,7 @@ class PlayState extends MusicBeatState
 				var susLength:Float = swagNote.sustainLength;
 
 				susLength = (susLength / Conductor.stepCrochet);
-				if(!SONG.song.toLowerCase() == 'bopeebo') // for bf's v sign
+				if(SONG.song.toLowerCase() != 'bopeebo') // for bf's v sign
 					susLength = susLength + susLength / (5 * (2 / SONG.speed)); // fixing the issue where held notes are shorter than intended
 				unspawnNotes.push(swagNote);
 
@@ -1651,9 +1651,10 @@ class PlayState extends MusicBeatState
 					if (SONG.needsVoices)
 						vocals.volume = 1;
 
-					daNote.kill();
-					notes.remove(daNote, true);
-					daNote.destroy();
+					if(!daNote.isSustainNote)
+						daNote.kill();
+						notes.remove(daNote, true);
+						daNote.destroy();
 				}
 				// WIP interpolation shit? Need to fix the pause issue
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));

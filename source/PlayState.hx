@@ -1317,9 +1317,11 @@ class PlayState extends MusicBeatState
 			if (Math.abs(daNote.noteData) == spr.ID)
 			{
 				spr.animation.play('confirm', true);
-				spr.centerOffsets();
-				spr.offset.x -= 13;
-				spr.offset.y -= 13;
+				if(!curStage.startsWith('school')) {
+					spr.centerOffsets();
+					spr.offset.x -= 13;
+					spr.offset.y -= 13;
+				}
 			}
 			});
 	}

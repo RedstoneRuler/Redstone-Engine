@@ -9,7 +9,6 @@ A modification of Friday Night Funkin's engine, designed to tweak little details
 - Powerful optimization system featuring almost no noticeable visual changes
 - Improved animations
 - And more!
-
 ## Feature requests
 - Is there something you want in the engine? Open an issue or a pull request to increase your chances of it being added!
 ## Engine Credits
@@ -22,5 +21,9 @@ A modification of Friday Night Funkin's engine, designed to tweak little details
 ## Build instructions
 The compilation process for this engine is the same as compiling the base game. Just follow those ones!
 https://github.com/ninjamuffin99/Funkin#build-instructions
+## HTML5
+Don't feel like downloading the engine? Play a browser build here!
+This version is updated more frequently than the downloadable counterparts.
+https://redstoneruler.github.io/redstoneengine/
 ## Other notes
 This repository probably looks much smaller than what you're used to. Don't worry, I just gitignored a lot of unnecessary files. This will not affect compilation.

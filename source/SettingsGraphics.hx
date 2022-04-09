@@ -21,9 +21,7 @@ class SettingsGraphics extends MusicBeatState
 	var selector:FlxText;
 	var curSelected:Int = 0;
 	var controlsStrings:Array<String> = [];
-	#if !html5
 	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Framerate: " + FlxG.save.data.fps + " (Left, Right, Shift)", 12);
-	#end
 	private var grpControls:FlxTypedGroup<Alphabet>;
 
 	override function create()
@@ -67,11 +65,9 @@ class SettingsGraphics extends MusicBeatState
 		grpControls = new FlxTypedGroup<Alphabet>();
 		add(grpControls);
 
-		#if !html5
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
-		#end
 		for (i in 0...controlsStrings.length)
 		{
 				var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i], true, false);
@@ -86,17 +82,21 @@ class SettingsGraphics extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		#if !html5
+		var minFPS:Int = 10;
+		var maxFPS:Int;
+		#if html5
+		maxFPS = 60;
+		#else
+		maxFPS = 360;
+		#end
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		#end
 		super.update(elapsed);
-		#if !html5
 		if (FlxG.keys.pressed.SHIFT) {
 			if(FlxG.keys.pressed.RIGHT)
 				{
 					FlxG.updateFramerate += 1;
-					if (FlxG.updateFramerate >= 360) { FlxG.updateFramerate = 360; }
+					if (FlxG.updateFramerate >= maxFPS) { FlxG.updateFramerate = maxFPS; }
 					FlxG.drawFramerate = (FlxG.updateFramerate);
 					FlxG.save.data.fps = FlxG.drawFramerate;
 					versionShit.text = "Framerate: " + FlxG.save.data.fps;
@@ -105,7 +105,7 @@ class SettingsGraphics extends MusicBeatState
 				if(FlxG.keys.pressed.LEFT)
 				{
 					FlxG.updateFramerate -= 1;
-					if (FlxG.updateFramerate <= 10) { FlxG.updateFramerate = 10; }
+					if (FlxG.updateFramerate <= minFPS) { FlxG.updateFramerate = minFPS; }
 					FlxG.drawFramerate = (FlxG.updateFramerate);
 					FlxG.save.data.fps = FlxG.drawFramerate;
 					versionShit.text = "Framerate: " + FlxG.save.data.fps;
@@ -115,7 +115,7 @@ class SettingsGraphics extends MusicBeatState
 			if(FlxG.keys.justPressed.RIGHT)
 			{
 				FlxG.updateFramerate += 1;
-				if (FlxG.updateFramerate >= 360) { FlxG.updateFramerate = 360; }
+				if (FlxG.updateFramerate >= maxFPS) { FlxG.updateFramerate = maxFPS; }
 				FlxG.drawFramerate = (FlxG.updateFramerate);
 				FlxG.save.data.fps = FlxG.drawFramerate;
 				versionShit.text = "Framerate: " + FlxG.save.data.fps;
@@ -124,13 +124,12 @@ class SettingsGraphics extends MusicBeatState
 			if(FlxG.keys.justPressed.LEFT)
 			{
 				FlxG.updateFramerate -= 1;
-				if (FlxG.updateFramerate <= 10) { FlxG.updateFramerate = 10; }
+				if (FlxG.updateFramerate <= minFPS) { FlxG.updateFramerate = minFPS; }
 				FlxG.drawFramerate = (FlxG.updateFramerate);
 				FlxG.save.data.fps = FlxG.drawFramerate;
 				versionShit.text = "Framerate: " + FlxG.save.data.fps;
 			}
 		}
-		#end
 		if (controls.BACK) {
 			FlxG.switchState(new SettingsCategories());
 		}

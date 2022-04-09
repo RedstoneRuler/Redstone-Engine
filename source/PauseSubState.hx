@@ -15,11 +15,12 @@ import flixel.tweens.FlxEase;
 class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
-	#if !html5
 	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Framerate: " + FlxG.save.data.fps + " (Left, Right, Shift)", 12);
-	#end
 	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Exit to menu'];
 	var curSelected:Int = 0;
+
+	var minFPS:Int = 10;
+	var maxFPS:Int;
 
 	var pauseMusic:FlxSound;
 	var menuItemsOG:Array<String>;
@@ -100,11 +101,9 @@ class PauseSubState extends MusicBeatSubstate
 		changeSelection();
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
-		#if !html5
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
-		#end
 	}
 
 	override function update(elapsed:Float)
@@ -134,31 +133,38 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			changeSelection(1);
 		}
-		#if !html5
+		#if html5
+		maxFPS = 60;
+		#else
+		maxFPS = 360;
+		#end
+		versionShit.scrollFactor.set();
+		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		super.update(elapsed);
 		if (FlxG.keys.pressed.SHIFT) {
 			if(FlxG.keys.pressed.RIGHT)
-			{
-				FlxG.updateFramerate += 1;
-				if (FlxG.updateFramerate >= 360) { FlxG.updateFramerate = 360; }
-				FlxG.drawFramerate = (FlxG.updateFramerate);
-				FlxG.save.data.fps = FlxG.drawFramerate;
-				versionShit.text = "Framerate: " + FlxG.save.data.fps;
-			}
+				{
+					FlxG.updateFramerate += 1;
+					if (FlxG.updateFramerate >= maxFPS) { FlxG.updateFramerate = maxFPS; }
+					FlxG.drawFramerate = (FlxG.updateFramerate);
+					FlxG.save.data.fps = FlxG.drawFramerate;
+					versionShit.text = "Framerate: " + FlxG.save.data.fps;
+				}
 			
-			if(FlxG.keys.pressed.LEFT)
-			{
-				FlxG.updateFramerate -= 1;
-				if (FlxG.updateFramerate <= 10) { FlxG.updateFramerate = 10; }
-				FlxG.drawFramerate = (FlxG.updateFramerate);
-				FlxG.save.data.fps = FlxG.drawFramerate;
-				versionShit.text = "Framerate: " + FlxG.save.data.fps;
-			}
+				if(FlxG.keys.pressed.LEFT)
+				{
+					FlxG.updateFramerate -= 1;
+					if (FlxG.updateFramerate <= minFPS) { FlxG.updateFramerate = minFPS; }
+					FlxG.drawFramerate = (FlxG.updateFramerate);
+					FlxG.save.data.fps = FlxG.drawFramerate;
+					versionShit.text = "Framerate: " + FlxG.save.data.fps;
+				}
 		}
 		else {
 			if(FlxG.keys.justPressed.RIGHT)
 			{
 				FlxG.updateFramerate += 1;
-				if (FlxG.updateFramerate >= 360) { FlxG.updateFramerate = 360; }
+				if (FlxG.updateFramerate >= maxFPS) { FlxG.updateFramerate = maxFPS; }
 				FlxG.drawFramerate = (FlxG.updateFramerate);
 				FlxG.save.data.fps = FlxG.drawFramerate;
 				versionShit.text = "Framerate: " + FlxG.save.data.fps;
@@ -167,13 +173,12 @@ class PauseSubState extends MusicBeatSubstate
 			if(FlxG.keys.justPressed.LEFT)
 			{
 				FlxG.updateFramerate -= 1;
-				if (FlxG.updateFramerate <= 10) { FlxG.updateFramerate = 10; }
+				if (FlxG.updateFramerate <= minFPS) { FlxG.updateFramerate = minFPS; }
 				FlxG.drawFramerate = (FlxG.updateFramerate);
 				FlxG.save.data.fps = FlxG.drawFramerate;
 				versionShit.text = "Framerate: " + FlxG.save.data.fps;
 			}
 		}
-		#end
 		if (accepted)
 		{
 			var daSelected:String = menuItems[curSelected];

@@ -147,6 +147,7 @@ class PlayState extends MusicBeatState
 	var wasPractice:Bool = false;
 	override public function create()
 	{
+		Paths.clearStoredMemory(true);
 		// Formatting save data for important values
 		if (FlxG.save.data.noteframe == null) {
 			FlxG.save.data.noteframe = 10;

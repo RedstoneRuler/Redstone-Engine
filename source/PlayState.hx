@@ -2279,7 +2279,22 @@ class PlayState extends MusicBeatState
 			{
 				if (daNote.canBeHit && daNote.mustPress && daNote.isSustainNote)
 				{
-					goodNoteHit(daNote);
+					switch (daNote.noteData)
+					{
+						// NOTES YOU ARE HOLDING
+						case 0:
+							if (left)
+								goodNoteHit(daNote);
+						case 1:
+							if (down)
+								goodNoteHit(daNote);
+						case 2:
+							if (up)
+								goodNoteHit(daNote);
+						case 3:
+							if (right)
+								goodNoteHit(daNote);
+					}
 				}
 			});
 		}

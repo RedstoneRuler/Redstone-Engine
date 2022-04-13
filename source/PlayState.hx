@@ -1458,7 +1458,7 @@ class PlayState extends MusicBeatState
 		{
 			if (curBeat % 4 == 0)
 			{
-				trace(PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection);
+				//trace(PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection);
 			}
 
 			if (camFollow.x != dad.getMidpoint().x + 150 && !PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection)
@@ -1621,10 +1621,12 @@ class PlayState extends MusicBeatState
 					swagRect.height -= swagRect.y;
 
 					daNote.clipRect = swagRect;
-					if(daNote.mustPress && swagRect.height < 6)
+					trace(daNote.clipRect);
+					if(daNote.mustPress) {
 						daNote.kill();
 						notes.remove(daNote, true);
 						daNote.destroy();
+					}
 				}
 
 				if (!daNote.mustPress && daNote.wasGoodHit)

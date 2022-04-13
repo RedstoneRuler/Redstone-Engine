@@ -147,7 +147,6 @@ class PlayState extends MusicBeatState
 	var wasPractice:Bool = false;
 	override public function create()
 	{
-		Paths.clearStoredMemory(true);
 		// Formatting save data for important values
 		if (FlxG.save.data.noteframe == null) {
 			FlxG.save.data.noteframe = 10;
@@ -1657,7 +1656,7 @@ class PlayState extends MusicBeatState
 					if (SONG.needsVoices)
 						vocals.volume = 1;
 
-					if(!daNote.isSustainNote)
+					//if(!daNote.isSustainNote)
 						daNote.kill();
 						notes.remove(daNote, true);
 						daNote.destroy();
@@ -1843,7 +1842,21 @@ class PlayState extends MusicBeatState
 	}
 
 	var endingSong:Bool = false;
-
+	function setupNumbers():Void
+	{
+		var rating = new FlxSprite();
+		rating.frames = FlxAtlasFrames.fromSparrow('assets/images/numberSheet.png', 'assets/images/numberSheet.xml');
+		rating.animation.addByPrefix("num0", "0-", 24, false);
+		rating.animation.addByPrefix("num1", "1-", 24, false);
+		rating.animation.addByPrefix("num2", "2-", 24, false);
+		rating.animation.addByPrefix("num3", "3-", 24, false);
+		rating.animation.addByPrefix("num4", "4-", 24, false);
+		rating.animation.addByPrefix("num5", "5-", 24, false);
+		rating.animation.addByPrefix("num6", "6-", 24, false);
+		rating.animation.addByPrefix("num7", "7-", 24, false);
+		rating.animation.addByPrefix("num8", "8-", 24, false);
+		rating.animation.addByPrefix("num9", "9-", 24, false);
+	}
 	private function popUpScore(strumtime:Float, daNote:Note):Void
 	{
 		var daRating:String = "sick";
@@ -1903,7 +1916,7 @@ class PlayState extends MusicBeatState
 			pixelShitPart1 = 'weeb/pixelUI/';
 			pixelShitPart2 = '-pixel';
 		}
-
+		setupNumbers();
 		rating.loadGraphic('assets/images/' + pixelShitPart1 + daRating + pixelShitPart2 + ".png");
 		rating.screenCenter();
 		rating.x = coolText.x - 40;

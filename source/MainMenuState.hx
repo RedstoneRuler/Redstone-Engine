@@ -34,7 +34,6 @@ class MainMenuState extends MusicBeatState
 	var defaultCamZoom:Float = 1;
 	override function create()
 	{
-		Paths.clearStoredMemory(true);
 		Conductor.changeBPM(102);
 		/* MOVED TO TITLESTATE!
 		#if !html5

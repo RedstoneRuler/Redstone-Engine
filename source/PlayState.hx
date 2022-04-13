@@ -1614,15 +1614,17 @@ class PlayState extends MusicBeatState
 				daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
 
 				// i am so fucking sorry for this if condition
-				if (daNote.isSustainNote
-					&& daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2
-					&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
+				if (daNote.isSustainNote && daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2 && (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 				{
 					var swagRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
 					swagRect.y /= daNote.scale.y;
 					swagRect.height -= swagRect.y;
 
 					daNote.clipRect = swagRect;
+					if(daNote.mustPress && swagRect.height < 6)
+						daNote.kill();
+						notes.remove(daNote, true);
+						daNote.destroy();
 				}
 
 				if (!daNote.mustPress && daNote.wasGoodHit)
@@ -1656,7 +1658,7 @@ class PlayState extends MusicBeatState
 					if (SONG.needsVoices)
 						vocals.volume = 1;
 
-					//if(!daNote.isSustainNote)
+					if(!daNote.isSustainNote)
 						daNote.kill();
 						notes.remove(daNote, true);
 						daNote.destroy();

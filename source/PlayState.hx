@@ -1639,7 +1639,6 @@ class PlayState extends MusicBeatState
 
 				if ((!daNote.mustPress || FlxG.save.data.bot == true) && daNote.wasGoodHit)
 				{
-					dadHitNote = true;
 					if(daNote.mustPress == true) {
 						bfNoteShit(daNote);
 						botHit(daNote);

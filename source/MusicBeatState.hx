@@ -74,6 +74,11 @@ class MusicBeatState extends FlxUIState
 
 	public function beatHit():Void
 	{
+		if (curBeat % 4 == 0)
+			newMeasure();
+	}
+	public function newMeasure():Void
+	{
 		//do literally nothing dumbass
 	}
 }

@@ -118,6 +118,8 @@ class MainMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		if (FlxG.sound.music != null)
+			Conductor.songPosition = FlxG.sound.music.time;
 		FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
 		if (FlxG.keys.justPressed.F){FlxG.fullscreen = !FlxG.fullscreen;}
 		super.update(elapsed);
@@ -239,6 +241,7 @@ class MainMenuState extends MusicBeatState
 	}
 	override function beatHit()
 	{
+		super.beatHit();
 		FlxG.camera.zoom += 0.015;
 	}
 }

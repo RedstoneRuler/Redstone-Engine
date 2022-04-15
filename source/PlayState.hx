@@ -1641,6 +1641,7 @@ class PlayState extends MusicBeatState
 				{
 					if(daNote.mustPress == true) {
 						bfNoteShit(daNote);
+						botHit(daNote);
 					}
 					else {
 						dadNoteShit(daNote);
@@ -1657,28 +1658,19 @@ class PlayState extends MusicBeatState
 						}
 					}
 
-					switch (Math.abs(daNote.noteData))
+					if(!daNote.mustPress) // Preventing dad from singing bf's notes with autoplay on
 					{
-						case 0:
-							if(daNote.mustPress)
-								boyfriend.playAnim('singLEFT', true);
-							else
+						switch (Math.abs(daNote.noteData))
+						{
+							case 0:
 								dad.playAnim('singLEFT' + altAnim, true);
-						case 1:
-							if(daNote.mustPress)
-								boyfriend.playAnim('singDOWN', true);
-							else
+							case 1:
 								dad.playAnim('singDOWN' + altAnim, true);
-						case 2:
-							if(daNote.mustPress)
-								boyfriend.playAnim('singUP', true);
-							else
+							case 2:
 								dad.playAnim('singUP' + altAnim, true);
-						case 3:
-							if(daNote.mustPress)
-								boyfriend.playAnim('singRIGHT', true);
-							else
+							case 3:
 								dad.playAnim('singRIGHT' + altAnim, true);
+						}
 					}
 					dad.holdTimer = 0;
 
@@ -1736,7 +1728,24 @@ class PlayState extends MusicBeatState
 		}
 
 		if (!inCutscene) {
-			keyShit();
+			if (FlxG.save.data.bot != true) //Allow key inputs if autoplay is off
+				keyShit();
+			else {
+				//Otherwise, forbid key inputs but continue to perform basic animation stuff
+				if(boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001){
+					if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss') && boyfriend.animation.curAnim.finished)
+					{
+						boyfriend.playAnim('idle');
+					}
+				}
+				playerStrums.forEach(function(spr:FlxSprite)
+					{
+						if(spr.animation.curAnim.finished) {
+							spr.animation.play('static');
+							spr.centerOffsets();
+						}
+					});	
+			}
 			opponentStrums.forEach(function(spr:FlxSprite)
 			{
 				if(spr.animation.curAnim.finished) {
@@ -1901,25 +1910,27 @@ class PlayState extends MusicBeatState
 		//
 		var rating:FlxSprite = new FlxSprite();
 		var score:Int = 350;
-		if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.9)
-		{
-			daRating = 'shit';
-			score = 50;
-			hitRate -= 1;
-		}
-		else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.75)
-		{
-			daRating = 'bad';
-			score = 100;
-			hitRate -= 0.50;
-		}
-		else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.2)
-		{
-			daRating = 'good';
-			score = 200;
-			hitRate += 0.50;
-		}
-		songScore += score;
+		if(FlxG.save.data.bot != true) {
+			if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.9)
+				{
+					daRating = 'shit';
+					score = 50;
+					hitRate -= 1;
+				}
+				else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.75)
+				{
+					daRating = 'bad';
+					score = 100;
+					hitRate -= 0.50;
+				}
+				else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.2)
+				{
+					daRating = 'good';
+					score = 200;
+					hitRate += 0.50;
+				}
+			songScore += score;
+		}		
 		updateAccuracy(strumtime, daRating, noteDiff);
 		/* if (combo > 60)
 				daRating = 'sick';
@@ -2151,7 +2162,7 @@ class PlayState extends MusicBeatState
 			"Awful",
 			"Open your eyes, man!",
 		];
-		// Why can't you use '..' for switch statements
+		// Why can't you use '...' for switch statements
 		// I'm trying to make this look nicer and instead I gotta do this
 			if(accuracy == 100)
 				accuracyRating = ratingList[0];
@@ -2526,7 +2537,35 @@ class PlayState extends MusicBeatState
 			}
 		}
 	}
-
+	function botHit(note:Note):Void
+	{
+		if (!note.isSustainNote)
+		{
+			popUpScore(note.strumTime, note);
+			combo += 1;
+		}
+		if(boyfriend.animation.curAnim.name != 'hey') {
+			switch (note.noteData)
+			{
+				case 0:
+					boyfriend.playAnim('singLEFT', true);
+				case 1:
+					boyfriend.playAnim('singDOWN', true);
+				case 2:
+					boyfriend.playAnim('singUP', true);
+				case 3:
+					boyfriend.playAnim('singRIGHT', true);
+			}
+		}
+		if (note.noteData >= 0) 
+		{
+			health += 0.023;
+		}
+		else {
+			health += 0.004;
+		}
+		vocals.volume = 1;
+	}
 	var fastCarCanDrive:Bool = true;
 
 	function resetFastCar():Void

@@ -15,6 +15,7 @@ using StringTools;
 class FreeplayState extends MusicBeatState
 {
 	var songs:Array<String> = [];
+	var bpmList:Array<Float> = [];
 
 	var selector:FlxText;
 	var curSelected:Int = 0;
@@ -27,11 +28,9 @@ class FreeplayState extends MusicBeatState
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
-
+	var defaultCamZoom:Float = 1;
 	override function create()
 	{
-		songs = CoolUtil.coolTextFile('assets/data/freeplaySonglist.txt');
-
 		/* 
 			if (FlxG.sound.music != null)
 			{
@@ -45,41 +44,68 @@ class FreeplayState extends MusicBeatState
 		#if debug
 		isDebug = true;
 		#end
-
+		if (StoryMenuState.weekUnlocked[0] || isDebug)
+		{
+			songs.push('Tutorial');
+			bpmList.push(100);
+		}
+		if (StoryMenuState.weekUnlocked[1] || isDebug)
+		{
+			songs.push('Bopeebo');
+			bpmList.push(100);
+			songs.push('Fresh');
+			bpmList.push(120);
+			songs.push('Dadbattle');
+			bpmList.push(180);
+		}
 		if (StoryMenuState.weekUnlocked[2] || isDebug)
 		{
 			songs.push('Spookeez');
+			bpmList.push(150);
 			songs.push('South');
+			bpmList.push(165);
 			songs.push('Monster');
+			bpmList.push(0);
 		}
 
 		if (StoryMenuState.weekUnlocked[3] || isDebug)
 		{
 			songs.push('Pico');
+			bpmList.push(150);
 			songs.push('Philly');
+			bpmList.push(175);
 			songs.push('Blammed');
+			bpmList.push(165);
 		}
 
 		if (StoryMenuState.weekUnlocked[4] || isDebug)
 		{
 			songs.push('Satin-Panties');
+			bpmList.push(110);
 			songs.push('High');
+			bpmList.push(125);
 			songs.push('Milf');
+			bpmList.push(180);
 		}
 
 		if (StoryMenuState.weekUnlocked[5] || isDebug)
 		{
 			songs.push('Cocoa');
+			bpmList.push(100);
 			songs.push('Eggnog');
+			bpmList.push(150);
 			songs.push('Winter-Horrorland');
+			bpmList.push(159); //weird ass bpm lmao
 		}
 
 		if (StoryMenuState.weekUnlocked[6] || isDebug)
 		{
 			songs.push('Senpai');
+			bpmList.push(144);
 			songs.push('Roses');
+			bpmList.push(120);
 			songs.push('Thorns');
-			// songs.push('Winter-Horrorland');
+			bpmList.push(190);
 		}
 
 		// LOAD MUSIC
@@ -150,11 +176,22 @@ class FreeplayState extends MusicBeatState
 
 		super.create();
 	}
-
+	override function beatHit()
+	{
+		super.beatHit();
+		FlxG.camera.zoom += 0.015; // mid fight masses style zooming per song bpm
+	}
+	override function newMeasure()
+	{
+		super.newMeasure();
+		FlxG.camera.zoom += 0.03;
+	}
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
-
+		if (FlxG.sound.music != null)
+			Conductor.songPosition = FlxG.sound.music.time;
+		FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -237,11 +274,6 @@ class FreeplayState extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
-		#if !switch
-		NGio.logEvent('Fresh');
-		#end
-
-		// NGio.logEvent('Fresh');
 		FlxG.sound.play('assets/sounds/scrollMenu' + TitleState.soundExt, 0.4);
 
 		curSelected += change;
@@ -260,6 +292,7 @@ class FreeplayState extends MusicBeatState
 
 		FlxG.sound.playMusic('assets/music/' + songs[curSelected] + "_Inst" + TitleState.soundExt, 0);
 
+		Conductor.changeBPM(bpmList[curSelected]);
 		var bullShit:Int = 0;
 
 		for (item in grpSongs.members)

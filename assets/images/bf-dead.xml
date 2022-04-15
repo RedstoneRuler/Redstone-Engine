@@ -57,16 +57,6 @@
 <SubTexture name="BF Dead confirm0021" x="2195" y="1798" width="439" height="433" frameX="0" frameY="-65" frameWidth="439" frameHeight="499" />
 <SubTexture name="BF Dead confirm0022" x="2634" y="0" width="439" height="433" frameX="0" frameY="-65" frameWidth="439" frameHeight="499" />
 <SubTexture name="BF Dead confirm0023" x="2634" y="433" width="439" height="433" frameX="0" frameY="-65" frameWidth="439" frameHeight="499" />
-<SubTexture name="BF Dead confirm0024" x="2634" y="433" width="439" height="433" frameX="0" frameY="-30" frameWidth="439" frameHeight="499" />
-<SubTexture name="BF Dead confirm0025" x="2634" y="433" width="439" height="433" frameX="0" frameY="-30" frameWidth="439" frameHeight="499" />
-<SubTexture name="BF Dead confirm0026" x="2634" y="433" width="439" height="433" frameX="0" frameY="-30" frameWidth="439" frameHeight="499" />
-<SubTexture name="BF Dead confirm0027" x="2634" y="433" width="439" height="433" frameX="0" frameY="-30" frameWidth="439" frameHeight="499" />
-<SubTexture name="BF Dead confirm0028" x="2634" y="433" width="439" height="433" frameX="0" frameY="-30" frameWidth="439" frameHeight="499" />
-<SubTexture name="BF Dead confirm0029" x="2634" y="433" width="439" height="433" frameX="0" frameY="-30" frameWidth="439" frameHeight="499" />
-<SubTexture name="BF Dead confirm0030" x="2634" y="433" width="439" height="433" frameX="0" frameY="-30" frameWidth="439" frameHeight="499" />
-<SubTexture name="BF Dead confirm0031" x="2634" y="433" width="439" height="433" frameX="0" frameY="-30" frameWidth="439" frameHeight="499" />
-<SubTexture name="BF Dead confirm0032" x="2634" y="433" width="439" height="433" frameX="0" frameY="-30" frameWidth="439" frameHeight="499" />
-<SubTexture name="BF Dead confirm0033" x="2634" y="433" width="439" height="433" frameX="0" frameY="-30" frameWidth="439" frameHeight="499" />
 <SubTexture name="BF dies0000" x="878" y="2664" width="433" height="415" frameX="-1" frameY="0" frameWidth="439" frameHeight="445" />
 <SubTexture name="BF dies0001" x="1311" y="2664" width="433" height="415" frameX="-1" frameY="0" frameWidth="439" frameHeight="445" />
 <SubTexture name="BF dies0002" x="1744" y="2664" width="439" height="411" frameX="0" frameY="-7" frameWidth="439" frameHeight="445" />

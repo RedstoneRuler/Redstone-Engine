@@ -83,12 +83,7 @@ class Note extends FlxSprite
 				updateHitbox();
 
 			default:
-				if(FlxG.save.data.optimize == true) {
-					frames = FlxAtlasFrames.fromSparrow('assets/images/notes-optimized.png', 'assets/images/notes-optimized.xml');
-				}
-				else {
-					frames = FlxAtlasFrames.fromSparrow('assets/images/NOTE_assets.png', 'assets/images/NOTE_assets.xml');
-				}
+				frames = FlxAtlasFrames.fromSparrow('assets/images/NOTE_assets.png', 'assets/images/NOTE_assets.xml');
 
 				animation.addByPrefix('greenScroll', 'green0');
 				animation.addByPrefix('redScroll', 'red0');
@@ -99,16 +94,17 @@ class Note extends FlxSprite
 				animation.addByPrefix('redScrollGlow', 'Red Active');
 				animation.addByPrefix('blueScrollGlow', 'Blue Active');
 				animation.addByPrefix('purpleScrollGlow', 'Purple Active');
+				if (isSustainNote) {
+					animation.addByPrefix('purpleholdend', 'pruple end hold');
+					animation.addByPrefix('greenholdend', 'green hold end');
+					animation.addByPrefix('redholdend', 'red hold end');
+					animation.addByPrefix('blueholdend', 'blue hold end');
 
-				animation.addByPrefix('purpleholdend', 'pruple end hold');
-				animation.addByPrefix('greenholdend', 'green hold end');
-				animation.addByPrefix('redholdend', 'red hold end');
-				animation.addByPrefix('blueholdend', 'blue hold end');
-
-				animation.addByPrefix('purplehold', 'purple hold piece');
-				animation.addByPrefix('greenhold', 'green hold piece');
-				animation.addByPrefix('redhold', 'red hold piece');
-				animation.addByPrefix('bluehold', 'blue hold piece');
+					animation.addByPrefix('purplehold', 'purple hold piece');
+					animation.addByPrefix('greenhold', 'green hold piece');
+					animation.addByPrefix('redhold', 'red hold piece');
+					animation.addByPrefix('bluehold', 'blue hold piece');
+				}
 
 				setGraphicSize(Std.int(width * 0.7));
 				updateHitbox();
@@ -155,10 +151,8 @@ class Note extends FlxSprite
 			updateHitbox();
 
 			x -= width / 2;
-
-			if (PlayState.curStage.startsWith('school'))
+			if(PlayState.curStage.startsWith('school'))
 				x += 30;
-
 			if (prevNote.isSustainNote)
 			{
 				switch (prevNote.noteData)

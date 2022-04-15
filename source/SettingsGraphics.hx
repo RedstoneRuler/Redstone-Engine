@@ -45,7 +45,7 @@ class SettingsGraphics extends MusicBeatState
 				splashText = "Note Splashes on";
 		}
 		// this used to be an integer but i couldn't get it to work so... yeah
-		switch(FlxG.save.data.splash) {
+		switch(FlxG.save.data.zoom) {
 			case false:
 				zoomText = "Camera zooms per measure";
 			case true:

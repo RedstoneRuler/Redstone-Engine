@@ -358,7 +358,29 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				flipX = true;
+			case 'tankman':
+				tex = FlxAtlasFrames.fromSparrow('assets/images/tankmanCaptain.png', 'assets/images/tankmanCaptain.xml');
+				frames = tex;
+				animation.addByPrefix('idle', "Tankman Idle Dance instance 1", 24, false);
+				animation.addByPrefix('singUP', 'Tankman UP note instance 1', 24, false);
+				animation.addByPrefix('singDOWN', 'Tankman DOWN note instance 1', 24, false);
+				animation.addByPrefix('singLEFT', 'Tankman Right Note instance 1', 24, false);
+				animation.addByPrefix('singRIGHT', 'Tankman Note Left instance 1', 24, false);
 
+				animation.addByPrefix('singUP-alt', 'TANKMAN UGH instance 1', 24, false);
+				animation.addByPrefix('singDOWN-alt', 'PRETTY GOOD tankman instance 1', 24, false);
+
+				addOffset('idle');
+				addOffset("singUP", 0, 0);
+				addOffset("singRIGHT", 0, 0);
+				addOffset("singLEFT", 0, 0);
+				addOffset("singDOWN", 0, 0);
+				addOffset("singUP-alt", 0, 0);
+				addOffset("singDOWN-alt", 0, 0);
+
+				playAnim('idle');
+	
+				flipX = true;
 			case 'bf-optimized':
 				var tex = FlxAtlasFrames.fromSparrow('assets/images/bf-optimized.png', 'assets/images/bf-optimized.xml');
 				frames = tex;

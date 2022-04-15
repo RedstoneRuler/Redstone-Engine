@@ -1672,7 +1672,8 @@ class PlayState extends MusicBeatState
 								dad.playAnim('singRIGHT' + altAnim, true);
 						}
 					}
-					dad.holdTimer = 0;
+					if(!daNote.mustPress)
+						dad.holdTimer = 0;
 
 					if (SONG.needsVoices)
 						vocals.volume = 1;
@@ -2764,7 +2765,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (curBeat % 8 == 7 && curSong == 'Bopeebo')
+		if (curBeat % 8 == 7)
 		{
 			boyfriend.playAnim('hey', true);
 

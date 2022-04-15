@@ -1734,7 +1734,7 @@ class PlayState extends MusicBeatState
 			else {
 				//Otherwise, forbid key inputs but continue to perform basic animation stuff
 				if(boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001){
-					if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss') && boyfriend.animation.curAnim.finished)
+					if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 					{
 						boyfriend.playAnim('idle');
 					}
@@ -2541,6 +2541,7 @@ class PlayState extends MusicBeatState
 	}
 	function botHit(note:Note):Void
 	{
+		boyfriend.holdTimer = 0;
 		if (!note.isSustainNote)
 		{
 			popUpScore(note.strumTime, note);

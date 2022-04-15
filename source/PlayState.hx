@@ -1639,6 +1639,7 @@ class PlayState extends MusicBeatState
 
 				if ((!daNote.mustPress || FlxG.save.data.bot == true) && daNote.wasGoodHit)
 				{
+					dadHitNote = true;
 					if(daNote.mustPress == true) {
 						bfNoteShit(daNote);
 						botHit(daNote);
@@ -2767,10 +2768,12 @@ class PlayState extends MusicBeatState
 
 		if (curBeat % 8 == 7)
 		{
-			boyfriend.playAnim('hey', true);
+			if(SONG.song == 'Bopeebo')
+				boyfriend.playAnim('hey', true);
 
 			if (SONG.song == 'Tutorial' && dad.curCharacter == 'gf')
 			{
+				boyfriend.playAnim('hey', true);
 				dad.playAnim('cheer', true);
 			}
 		}

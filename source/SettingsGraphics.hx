@@ -53,7 +53,7 @@ class SettingsGraphics extends MusicBeatState
 		}
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
 		controlsStrings = CoolUtil.coolStringFile((FlxG.save.data.glow ? "Note Glow On" : "Note Glow Off") + "\n" + (zoomText) + "\n" + (splashText));
-		
+		versionShit.text = "Framerate: " + FlxG.save.data.fps + " (Left, Right, Shift)";
 		trace(controlsStrings);
 		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));

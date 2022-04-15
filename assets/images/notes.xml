@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="notes.png"><SubTexture name="Blue Active0000" x="154" y="157" width="157" height="154" frameX="0" frameY="0" frameWidth="157" frameHeight="154" />
+<SubTexture name="Green Active0000" x="462" y="0" width="157" height="154" frameX="0" frameY="0" frameWidth="157" frameHeight="154" />
+<SubTexture name="Purple Active0000" x="0" y="0" width="154" height="157" frameX="0" frameY="0" frameWidth="154" frameHeight="157" />
+<SubTexture name="Red Active0000" x="154" y="0" width="154" height="157" frameX="0" frameY="0" frameWidth="154" frameHeight="157" />
+<SubTexture name="blue0000" x="462" y="154" width="157" height="154" frameX="0" frameY="0" frameWidth="157" frameHeight="154" />
+<SubTexture name="green0000" x="0" y="314" width="157" height="154" frameX="0" frameY="0" frameWidth="157" frameHeight="154" />
+<SubTexture name="purple0000" x="308" y="0" width="154" height="157" frameX="0" frameY="0" frameWidth="154" frameHeight="157" />
+<SubTexture name="red0000" x="0" y="157" width="154" height="157" frameX="0" frameY="0" frameWidth="154" frameHeight="157" />
+</TextureAtlas>

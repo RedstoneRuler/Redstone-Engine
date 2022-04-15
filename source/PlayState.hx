@@ -1092,7 +1092,6 @@ class PlayState extends MusicBeatState
 				var daNoteData:Int = Std.int(songNotes[1] % 4);
 
 				var gottaHitNote:Bool = section.mustHitSection;
-
 				if (songNotes[1] > 3)
 				{
 					gottaHitNote = !section.mustHitSection;
@@ -1326,6 +1325,21 @@ class PlayState extends MusicBeatState
 			}
 			});
 	}
+	function bfNoteShit(daNote:Note):Void
+		{
+			playerStrums.forEach(function(spr:FlxSprite)
+			{
+				if (Math.abs(daNote.noteData) == spr.ID)
+				{
+					spr.animation.play('confirm', true);
+					if(!curStage.startsWith('school')) {
+						spr.centerOffsets();
+						spr.offset.x -= 13;
+						spr.offset.y -= 13;
+					}
+				}
+				});
+		}
 	override public function update(elapsed:Float)
 	{
 		#if !debug
@@ -1623,9 +1637,14 @@ class PlayState extends MusicBeatState
 					}*/
 				}
 
-				if (!daNote.mustPress && daNote.wasGoodHit)
+				if ((!daNote.mustPress || FlxG.save.data.bot == true) && daNote.wasGoodHit)
 				{
-					dadNoteShit(daNote);
+					if(daNote.mustPress == true) {
+						bfNoteShit(daNote);
+					}
+					else {
+						dadNoteShit(daNote);
+					}
 					if (SONG.song != 'Tutorial')
 						camZooming = true;
 
@@ -1641,13 +1660,25 @@ class PlayState extends MusicBeatState
 					switch (Math.abs(daNote.noteData))
 					{
 						case 0:
-							dad.playAnim('singLEFT' + altAnim, true);
+							if(daNote.mustPress)
+								boyfriend.playAnim('singLEFT', true);
+							else
+								dad.playAnim('singLEFT' + altAnim, true);
 						case 1:
-							dad.playAnim('singDOWN' + altAnim, true);
+							if(daNote.mustPress)
+								boyfriend.playAnim('singDOWN', true);
+							else
+								dad.playAnim('singDOWN' + altAnim, true);
 						case 2:
-							dad.playAnim('singUP' + altAnim, true);
+							if(daNote.mustPress)
+								boyfriend.playAnim('singUP', true);
+							else
+								dad.playAnim('singUP' + altAnim, true);
 						case 3:
-							dad.playAnim('singRIGHT' + altAnim, true);
+							if(daNote.mustPress)
+								boyfriend.playAnim('singRIGHT', true);
+							else
+								dad.playAnim('singRIGHT' + altAnim, true);
 					}
 					dad.holdTimer = 0;
 
@@ -2191,7 +2222,7 @@ class PlayState extends MusicBeatState
 			{
 				var daNote = possibleNotes[0];
 
-				if (perfectMode)
+				if (FlxG.save.data.bot == true)
 					noteCheck(true, daNote);
 
 				
@@ -2272,7 +2303,7 @@ class PlayState extends MusicBeatState
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{
-				if (daNote.canBeHit && daNote.mustPress && daNote.isSustainNote)
+				if (daNote.canBeHit && daNote.mustPress && daNote.isSustainNote && FlxG.save.data.bot == false)
 				{
 					switch (daNote.noteData)
 					{

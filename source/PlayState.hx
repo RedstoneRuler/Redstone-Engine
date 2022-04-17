@@ -147,6 +147,10 @@ class PlayState extends MusicBeatState
 	var wasPractice:Bool = false;
 	override public function create()
 	{
+		#if html5
+		FlxG.drawFramerate = 30;
+		FlxG.updateFramerate = 30;
+		#end
 		// Formatting save data for important values
 		if (FlxG.save.data.noteframe == null) {
 			FlxG.save.data.noteframe = 10;
@@ -759,7 +763,13 @@ class PlayState extends MusicBeatState
 
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
-
+		#if html5
+		if(FlxG.save.data.fps != null)
+			FlxG.drawFramerate = FlxG.save.data.fps;
+		else
+			FlxG.drawFramerate = 60;
+		FlxG.updateFramerate = FlxG.drawFramerate;
+		#end
 		if (isStoryMode)
 		{
 			switch (curSong.toLowerCase())

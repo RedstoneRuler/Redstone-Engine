@@ -1898,6 +1898,7 @@ class PlayState extends MusicBeatState
 	}
 	private function popUpScore(strumtime:Float, daNote:Note):Void
 	{
+		FlxG.sound.play("assets/sounds/hitSound.wav", 4);
 		var daRating:String = "sick";
 		var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
 		// boyfriend.playAnim('hey');

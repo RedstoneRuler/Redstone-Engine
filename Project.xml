@@ -46,10 +46,13 @@
 	
 	<!-- <library name="noPreload" preload='false'/> -->
 	<!-- <library name="noPreload"/> -->
-	<assets path="assets/music" include="*.mp3" if="web"/>
-	<assets path="assets/music" include="*.ogg" unless="web"/>
-	<assets path="assets/sounds" include="*.mp3" if="web" />
-	<assets path="assets/sounds" include="*.ogg" unless="web" />
+	<!--I don't get why these were restricted in the first place-->
+	<assets path="assets/music" include="*.mp3"/>
+	<assets path="assets/music" include="*.ogg" />
+	<assets path="assets/music" include="*.wav" />
+	<assets path="assets/sounds" include="*.mp3" />
+	<assets path="assets/sounds" include="*.ogg"  />
+	<assets path="assets/sounds" include="*.wav" />
 
 	<!-- NOTE FOR FUTURE SELF SINCE FONTS ARE ALWAYS FUCKY 
 		TO FIX ONE OF THEM, I CONVERTED IT TO OTF. DUNNO IF YOU NEED TO

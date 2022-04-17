@@ -18,6 +18,5 @@ gf-pixel
 senpai
 senpai-angry
 spirit
-tankman
 tylo
 kdog

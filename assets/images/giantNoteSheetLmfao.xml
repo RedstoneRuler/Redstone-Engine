@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="giantNoteSheetLmfao.png"><SubTexture name="Blue Active0000" x="0" y="2171" width="157" height="154" frameX="0" frameY="0" frameWidth="157" frameHeight="154" />
+<SubTexture name="Green Active0000" x="157" y="2171" width="157" height="154" frameX="0" frameY="0" frameWidth="157" frameHeight="154" />
+<SubTexture name="Purple Active0000" x="1918" y="1504" width="154" height="157" frameX="0" frameY="0" frameWidth="154" frameHeight="157" />
+<SubTexture name="Red Active0000" x="1292" y="1011" width="154" height="157" frameX="0" frameY="0" frameWidth="154" frameHeight="157" />
+<SubTexture name="arrowDOWN0000" x="314" y="2171" width="157" height="154" frameX="0" frameY="0" frameWidth="157" frameHeight="154" />
+<SubTexture name="arrowLEFT0000" x="2183" y="157" width="154" height="156" frameX="0" frameY="0" frameWidth="155" frameHeight="156" />
+<SubTexture name="arrowRIGHT0000" x="2183" y="313" width="154" height="156" frameX="0" frameY="0" frameWidth="154" frameHeight="157" />
+<SubTexture name="arrowUP0000" x="471" y="2171" width="157" height="154" frameX="0" frameY="0" frameWidth="157" frameHeight="154" />
+<SubTexture name="blue0000" x="628" y="2171" width="157" height="154" frameX="0" frameY="0" frameWidth="157" frameHeight="154" />
+<SubTexture name="blue hold end0000" x="2183" y="1628" width="50" height="64" frameX="0" frameY="0" frameWidth="50" frameHeight="64" />
+<SubTexture name="blue hold piece0000" x="2233" y="1692" width="50" height="44" frameX="0" frameY="0" frameWidth="50" frameHeight="44" />
+<SubTexture name="down confirm0000" x="1350" y="1701" width="235" height="235" frameX="-2" frameY="0" frameWidth="244" frameHeight="240" />
+<SubTexture name="down confirm0001" x="1585" y="1701" width="235" height="235" frameX="-2" frameY="0" frameWidth="244" frameHeight="240" />
+<SubTexture name="down confirm0002" x="1481" y="735" width="204" height="204" frameX="-17" frameY="-16" frameWidth="244" frameHeight="240" />
+<SubTexture name="down press0000" x="2183" y="1489" width="142" height="139" frameX="-4" frameY="-3" frameWidth="149" frameHeight="146" />
+<SubTexture name="down press0001" x="2183" y="1489" width="142" height="139" frameX="-4" frameY="-2" frameWidth="149" frameHeight="146" />
+<SubTexture name="down press0002" x="2183" y="919" width="149" height="146" frameX="0" frameY="0" frameWidth="149" frameHeight="146" />
+<SubTexture name="green0000" x="785" y="2171" width="157" height="154" frameX="0" frameY="0" frameWidth="157" frameHeight="154" />
+<SubTexture name="green hold end0000" x="2233" y="1628" width="50" height="64" frameX="0" frameY="0" frameWidth="50" frameHeight="64" />
+<SubTexture name="green hold piece0000" x="2283" y="1692" width="50" height="44" frameX="0" frameY="0" frameWidth="50" frameHeight="44" />
+<SubTexture name="left confirm0000" x="691" y="1939" width="225" height="226" frameX="-1" frameY="-2" frameWidth="231" frameHeight="235" />
+<SubTexture name="left confirm0001" x="916" y="1939" width="225" height="226" frameX="-1" frameY="-2" frameWidth="231" frameHeight="235" />
+<SubTexture name="left confirm0002" x="1481" y="530" width="204" height="205" frameX="-12" frameY="-14" frameWidth="231" frameHeight="235" />
+<SubTexture name="left press0000" x="2183" y="1065" width="139" height="142" frameX="-4" frameY="-3" frameWidth="146" frameHeight="149" />
+<SubTexture name="left press0001" x="2183" y="1065" width="139" height="142" frameX="-3" frameY="-3" frameWidth="146" frameHeight="149" />
+<SubTexture name="left press0002" x="2183" y="770" width="146" height="149" frameX="0" frameY="0" frameWidth="146" frameHeight="149" />
+<SubTexture name="pruple end hold0000" x="2283" y="1628" width="50" height="64" frameX="0" frameY="0" frameWidth="50" frameHeight="64" />
+<SubTexture name="purple0000" x="1986" y="1939" width="154" height="157" frameX="0" frameY="0" frameWidth="154" frameHeight="157" />
+<SubTexture name="purple hold piece0000" x="2183" y="1756" width="50" height="44" frameX="0" frameY="0" frameWidth="50" frameHeight="44" />
+<SubTexture name="red0000" x="2183" y="0" width="154" height="157" frameX="0" frameY="0" frameWidth="154" frameHeight="157" />
+<SubTexture name="red hold end0000" x="2183" y="1692" width="50" height="64" frameX="0" frameY="0" frameWidth="50" frameHeight="64" />
+<SubTexture name="red hold piece0000" x="2233" y="1756" width="50" height="44" frameX="0" frameY="0" frameWidth="50" frameHeight="44" />
+<SubTexture name="right confirm0000" x="1820" y="1701" width="231" height="232" frameX="0" frameY="-3" frameWidth="237" frameHeight="241" />
+<SubTexture name="right confirm0001" x="0" y="1939" width="231" height="232" frameX="0" frameY="-3" frameWidth="237" frameHeight="241" />
+<SubTexture name="right confirm0002" x="1481" y="939" width="204" height="204" frameX="-14" frameY="-17" frameWidth="237" frameHeight="241" />
+<SubTexture name="right press0000" x="2183" y="1207" width="138" height="141" frameX="-3" frameY="-7" frameWidth="148" frameHeight="151" />
+<SubTexture name="right press0001" x="2183" y="1207" width="138" height="141" frameX="-3" frameY="-7" frameWidth="148" frameHeight="151" />
+<SubTexture name="right press0002" x="2183" y="469" width="148" height="151" frameX="0" frameY="0" frameWidth="148" frameHeight="151" />
+<SubTexture name="up confirm0000" x="231" y="1939" width="230" height="229" frameX="-2" frameY="-1" frameWidth="238" frameHeight="234" />
+<SubTexture name="up confirm0001" x="461" y="1939" width="230" height="229" frameX="-2" frameY="-1" frameWidth="238" frameHeight="234" />
+<SubTexture name="up confirm0002" x="1481" y="1143" width="202" height="202" frameX="-16" frameY="-14" frameWidth="238" frameHeight="234" />
+<SubTexture name="up press0000" x="2183" y="1348" width="144" height="141" frameX="-5" frameY="-4" frameWidth="153" frameHeight="150" />
+<SubTexture name="up press0001" x="2183" y="1348" width="144" height="141" frameX="-5" frameY="-4" frameWidth="153" frameHeight="150" />
+<SubTexture name="up press0002" x="2183" y="620" width="153" height="150" frameX="0" frameY="0" frameWidth="153" frameHeight="150" />
+<SubTexture name="note impact 1  blue pixel0000" x="252" y="887" width="189" height="270" frameX="-32" frameY="-12" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1  blue pixel0001" x="0" y="1178" width="213" height="265" frameX="-27" frameY="-22" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1  blue pixel0002" x="0" y="596" width="252" height="291" frameX="-4" frameY="-6" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1  blue pixel0003" x="0" y="0" width="260" height="298" frameX="0" frameY="0" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 green pixel0000" x="441" y="887" width="189" height="270" frameX="-32" frameY="-12" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 green pixel0001" x="213" y="1178" width="213" height="265" frameX="-27" frameY="-22" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 green pixel0002" x="252" y="596" width="252" height="291" frameX="-4" frameY="-6" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 green pixel0003" x="260" y="0" width="260" height="298" frameX="0" frameY="0" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 purple pixel0000" x="630" y="887" width="189" height="270" frameX="-32" frameY="-12" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 purple pixel0001" x="426" y="1178" width="213" height="265" frameX="-27" frameY="-22" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 purple pixel0002" x="504" y="596" width="252" height="291" frameX="-4" frameY="-6" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 purple pixel0003" x="520" y="0" width="260" height="298" frameX="0" frameY="0" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 red pixel0000" x="819" y="887" width="189" height="270" frameX="-32" frameY="-12" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 red pixel0001" x="639" y="1178" width="213" height="265" frameX="-27" frameY="-22" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 red pixel0002" x="756" y="596" width="252" height="291" frameX="-4" frameY="-6" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 red pixel0003" x="0" y="298" width="260" height="298" frameX="0" frameY="0" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 2 blue pixel0000" x="1292" y="810" width="169" height="201" frameX="-45" frameY="-41" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 blue pixel0001" x="1918" y="1028" width="225" height="238" frameX="-20" frameY="-19" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 blue pixel0002" x="672" y="1443" width="265" height="257" frameX="0" frameY="-10" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 blue pixel0003" x="1694" y="0" width="224" height="258" frameX="-50" frameY="0" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 green pixel0000" x="1278" y="1178" width="169" height="201" frameX="-45" frameY="-41" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 green pixel0001" x="1918" y="1266" width="225" height="238" frameX="-20" frameY="-19" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 green pixel0002" x="937" y="1443" width="265" height="257" frameX="0" frameY="-10" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 green pixel0003" x="1694" y="258" width="224" height="258" frameX="-50" frameY="0" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 purple pixel0000" x="1732" y="1443" width="169" height="201" frameX="-45" frameY="-41" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 purple pixel0001" x="0" y="1701" width="225" height="238" frameX="-20" frameY="-19" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 purple pixel0002" x="1202" y="1443" width="265" height="257" frameX="0" frameY="-10" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 purple pixel0003" x="1694" y="516" width="224" height="258" frameX="-50" frameY="0" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 red pixel0000" x="1141" y="1939" width="169" height="201" frameX="-45" frameY="-41" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 red pixel0001" x="225" y="1701" width="225" height="238" frameX="-20" frameY="-19" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 red pixel0002" x="1467" y="1443" width="265" height="257" frameX="0" frameY="-10" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 red pixel0003" x="1694" y="774" width="224" height="258" frameX="-50" frameY="0" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 1  blue0000" x="1008" y="887" width="189" height="270" frameX="-32" frameY="-12" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1  blue0001" x="852" y="1178" width="213" height="265" frameX="-27" frameY="-22" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1  blue0002" x="1040" y="0" width="252" height="291" frameX="-4" frameY="-6" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1  blue0003" x="260" y="298" width="260" height="298" frameX="0" frameY="0" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 green0000" x="1292" y="0" width="189" height="270" frameX="-32" frameY="-12" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 green0001" x="1065" y="1178" width="213" height="265" frameX="-27" frameY="-22" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 green0002" x="1040" y="291" width="252" height="291" frameX="-4" frameY="-6" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 green0003" x="520" y="298" width="260" height="298" frameX="0" frameY="0" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 purple0000" x="1292" y="270" width="189" height="270" frameX="-32" frameY="-12" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 purple0001" x="1481" y="0" width="213" height="265" frameX="-27" frameY="-22" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 purple0002" x="1040" y="582" width="252" height="291" frameX="-4" frameY="-6" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 purple0003" x="780" y="0" width="260" height="298" frameX="0" frameY="0" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 red0000" x="1292" y="540" width="189" height="270" frameX="-32" frameY="-12" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 red0001" x="1481" y="265" width="213" height="265" frameX="-27" frameY="-22" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 red0002" x="0" y="887" width="252" height="291" frameX="-4" frameY="-6" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 1 red0003" x="780" y="298" width="260" height="298" frameX="0" frameY="0" frameWidth="260" frameHeight="298" />
+<SubTexture name="note impact 2 blue0000" x="1310" y="1939" width="169" height="201" frameX="-45" frameY="-41" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 blue0001" x="450" y="1701" width="225" height="238" frameX="-20" frameY="-19" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 blue0002" x="1918" y="0" width="265" height="257" frameX="0" frameY="-10" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 blue0003" x="1694" y="1032" width="224" height="258" frameX="-50" frameY="0" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 green0000" x="1479" y="1939" width="169" height="201" frameX="-45" frameY="-41" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 green0001" x="675" y="1701" width="225" height="238" frameX="-20" frameY="-19" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 green0002" x="1918" y="257" width="265" height="257" frameX="0" frameY="-10" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 green0003" x="0" y="1443" width="224" height="258" frameX="-50" frameY="0" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 purple0000" x="1648" y="1939" width="169" height="201" frameX="-45" frameY="-41" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 purple0001" x="900" y="1701" width="225" height="238" frameX="-20" frameY="-19" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 purple0002" x="1918" y="514" width="265" height="257" frameX="0" frameY="-10" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 purple0003" x="224" y="1443" width="224" height="258" frameX="-50" frameY="0" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 red0000" x="1817" y="1939" width="169" height="201" frameX="-45" frameY="-41" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 red0001" x="1125" y="1701" width="225" height="238" frameX="-20" frameY="-19" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 red0002" x="1918" y="771" width="265" height="257" frameX="0" frameY="-10" frameWidth="274" frameHeight="267" />
+<SubTexture name="note impact 2 red0003" x="448" y="1443" width="224" height="258" frameX="-50" frameY="0" frameWidth="274" frameHeight="267" />
+</TextureAtlas>

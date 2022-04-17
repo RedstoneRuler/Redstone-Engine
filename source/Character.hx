@@ -276,7 +276,7 @@ class Character extends FlxSprite
 				// ANIMATION IS CALLED MOM POSE LEFT BUT IT'S FOR THE RIGHT
 				// CUZ DAVE IS DUMB!
 				animation.addByPrefix('singRIGHT', 'Mom Pose Left', 24, false);
-				animation.addByIndices('singRIGHT-loop', "Mom Pose Left", [7, 8, 9], "", 24, true);
+				animation.addByIndices('singRIGHT-loop', "Mom Pose Left", [6, 7, 8, 9], "", 24, true);
 
 				addOffset('idle');
 				addOffset('idle-loop');

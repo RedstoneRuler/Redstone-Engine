@@ -1094,6 +1094,7 @@ class PlayState extends MusicBeatState
 		var daBeats:Int = 0; // Not exactly representative of 'daBeats' lol, just how much it has looped
 		for (section in noteData)
 		{
+			var dontExtend:Bool = false;
 			var coolSection:Int = Std.int(section.lengthInSteps / 4);
 
 			for (songNotes in section.sectionNotes)
@@ -1118,10 +1119,12 @@ class PlayState extends MusicBeatState
 				swagNote.scrollFactor.set(0, 0);
 
 				var susLength:Float = swagNote.sustainLength;
-
+				if(susLength >= 771) {
+					dontExtend = true;
+				}
 				susLength = (susLength / Conductor.stepCrochet);
-				if(SONG.song.toLowerCase() != 'bopeebo') // for bf's v sign
-					susLength = susLength + susLength / (5 * (2 / SONG.speed)); // fixing the issue where held notes are shorter than intended
+				if(dontExtend == false)
+					susLength = susLength + susLength / (4 * (2 / SONG.speed)); // fixing the issue where held notes are shorter than intended
 				unspawnNotes.push(swagNote);
 
 				for (susNote in 0...Math.floor(susLength))

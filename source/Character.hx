@@ -432,7 +432,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('scared', 'BF idle shaking', 24);
 
 				addOffset('idle', -5);
-				addOffset("singUP", -29, 27);
+				addOffset("singUP", -39, 27);
 				addOffset("singRIGHT", -38, -7);
 				addOffset("singLEFT", 12, -6);
 				addOffset("singDOWN", -10, -50);
@@ -440,7 +440,7 @@ class Character extends FlxSprite
 				addOffset("singRIGHTmiss", -30, 21);
 				addOffset("singLEFTmiss", 12, 24);
 				addOffset("singDOWNmiss", -11, -19);
-				addOffset("hey", 7, 4);
+				addOffset("hey", -3, 6);
 				addOffset('firstDeath', 37, 11);
 				addOffset('deathLoop', 37, 5);
 				addOffset('deathConfirm', 37, 69);
@@ -716,7 +716,6 @@ class Character extends FlxSprite
 		}
 		FlxG.log.add(curCharacter);
 	}
-
 	override function update(elapsed:Float)
 	{
 		if (!isPlayer)

@@ -132,6 +132,7 @@ class SettingsGameplay extends MusicBeatState
 						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.accuracy ? 'modern accuracy system' : 'legacy accuracy system'), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 1;
+						grpControls.add(ctrl);
 					case 2:
 						FlxG.save.data.bot = !FlxG.save.data.bot;
 						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.bot ? 'autoplay on' : 'autoplay off'), true, false);

@@ -1708,23 +1708,7 @@ class PlayState extends MusicBeatState
 					{
 						if (daNote.tooLate || !daNote.wasGoodHit)
 						{
-							if(FlxG.save.data.ghost){noteMiss(1, true);}else{
-							firstHit = false;
-							if(FlxG.save.data.accuracy == false)
-								accuracy -= 5;
-							else
-								hitRate -= 2;
-								updateAccuracy();
-							accuracyLogic();
-							missCount += 1;
-							health -= 0.0475;
-							vocals.volume = 0;
-							if (combo > 5)
-								{
-									gf.playAnim('sad');
-								}
-								combo = 0;
-							}
+							noteMiss(daNote.noteData, true);
 						}
 
 						daNote.active = false;

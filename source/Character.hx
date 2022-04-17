@@ -767,16 +767,16 @@ class Character extends FlxSprite
 				{
 					danced = !danced;
 					if (danced) {
-						playAnim('danceRight');
+						playAnim('danceRight', true);
 					}
 					else {
-						playAnim('danceLeft');
+						playAnim('danceLeft',true);
 					}
 				}
 			}
 			else {
 				if(Conductor.bpm > 150) {
-					playAnim('idle');
+					playAnim('idle',true);
 				}
 				else {
 					playAnim('idle', true);

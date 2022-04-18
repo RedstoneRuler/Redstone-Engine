@@ -142,7 +142,7 @@ class PlayState extends MusicBeatState
 
 	var inCutscene:Bool = false;
 
-	var altbeat:Bool = true;
+	var altbeat:Bool = false;
 
 	var wasPractice:Bool = false;
 	override public function create()
@@ -2758,6 +2758,9 @@ class PlayState extends MusicBeatState
 			if(dad.animation.curAnim.name.contains("idle") || dad.animation.curAnim.name.contains("dance") || dad.animation.curAnim.name.contains('-loop')) {
 				dad.dance();
 			}
+			else if(!dad.animation.curAnim.name.startsWith("sing")) {
+				dad.dance();
+			}
 			if (!boyfriend.animation.curAnim.name.startsWith("sing"))
 			{
 				boyfriend.playAnim('idle', true);
@@ -2769,7 +2772,7 @@ class PlayState extends MusicBeatState
 			if(SONG.song == 'Bopeebo')
 				boyfriend.playAnim('hey', true);
 
-			if (SONG.song == 'Tutorial' && dad.curCharacter == 'gf')
+			if (SONG.song == 'Tutorial' && dad.curCharacter == 'gf' && curBeat > 16 && curBeat < 48)
 			{
 				boyfriend.playAnim('hey', true);
 				dad.playAnim('cheer', true);

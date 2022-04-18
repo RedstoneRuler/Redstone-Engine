@@ -45,6 +45,13 @@ class PauseSubState extends MusicBeatSubstate
 		bg.scrollFactor.set();
 		add(bg);
 
+		var pause:FlxSprite = new FlxSprite();
+		pause.loadGraphic("assets/images/pause.png");
+		pause.alpha = 1;
+		pause.setGraphicSize(Std.int(pause.width / 1.5));
+		pause.scrollFactor.set();
+		//add(pause);
+
 		var levelInfo:FlxText = new FlxText(20, 15, 0, "", 32);
 		levelInfo.text += PlayState.SONG.song;
 		levelInfo.scrollFactor.set();

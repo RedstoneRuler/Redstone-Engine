@@ -519,7 +519,7 @@ class PlayState extends MusicBeatState
 			waveSprite.scale.set(6, 6);
 			waveSpriteFG.scale.set(6, 6);
 			waveSprite.setPosition(posX + 80, posY + 165);
-			waveSpriteFG.setPosition(posX + 90, posY + 165);
+			waveSpriteFG.setPosition(posX + 80, posY + 165);
 
 			waveSprite.scrollFactor.set(0.7, 0.8);
 			waveSpriteFG.scrollFactor.set(0.9, 0.8);

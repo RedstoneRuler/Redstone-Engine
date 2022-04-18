@@ -16,6 +16,7 @@ class FreeplayState extends MusicBeatState
 {
 	var songs:Array<String> = [];
 	var bpmList:Array<Float> = [];
+	var bpmStrings:Array<String> = [];
 
 	var selector:FlxText;
 	var curSelected:Int = 0;
@@ -44,6 +45,17 @@ class FreeplayState extends MusicBeatState
 		#if debug
 		isDebug = true;
 		#end
+		//append the text files as long as they exist
+		if (CoolUtil.coolTextFile('assets/data/freeplaySonglist.txt') != null)
+			songs = CoolUtil.coolTextFile('assets/data/freeplaySonglist.txt');
+		if (CoolUtil.coolTextFile('assets/data/freeplayBPMList.txt') != null) {
+			bpmStrings = CoolUtil.coolTextFile('assets/data/freeplayBPMList.txt');
+			bpmStrings.remove('');
+			for(item in bpmStrings)
+			{
+				bpmList.push(Std.parseFloat(item));
+			}
+		}
 		if (StoryMenuState.weekUnlocked[0] || isDebug)
 		{
 			songs.push('Tutorial');
@@ -107,7 +119,9 @@ class FreeplayState extends MusicBeatState
 			songs.push('Thorns');
 			bpmList.push(190);
 		}
-
+		trace(songs);
+		trace(bpmList);
+		songs.remove('');
 		// LOAD MUSIC
 
 		// LOAD CHARACTERS

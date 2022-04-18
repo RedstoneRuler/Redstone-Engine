@@ -142,11 +142,13 @@ class PlayState extends MusicBeatState
 
 	var inCutscene:Bool = false;
 
-	var altbeat:Bool;
+	var altbeat:Bool = true;
 
 	var wasPractice:Bool = false;
 	override public function create()
 	{
+		practiceMode = false;
+		wasPractice = false;
 		// Doing this fixes latency on HTML builds for some reason
 		// This sets back to 60 after it loads everything
 		#if html5
@@ -479,6 +481,7 @@ class PlayState extends MusicBeatState
 			var posX = 400;
 			var posY = 200;
 
+			/*
 			var bg:FlxSprite = new FlxSprite(posX, posY);
 			bg.frames = FlxAtlasFrames.fromSparrow('assets/images/weeb/animatedEvilSchool.png', 'assets/images/weeb/animatedEvilSchool.xml');
 			bg.animation.addByPrefix('idle', 'background 2', 24);
@@ -486,50 +489,48 @@ class PlayState extends MusicBeatState
 			bg.scrollFactor.set(0.8, 0.9);
 			bg.scale.set(6, 6);
 			add(bg);
+			*/
 
-			/* 
-				var bg:FlxSprite = new FlxSprite(posX, posY).loadGraphic('assets/images/weeb/evilSchoolBG.png');
-				bg.scale.set(6, 6);
-				// bg.setGraphicSize(Std.int(bg.width * 6));
-				// bg.updateHitbox();
-				add(bg);
+			 
+			var bg:FlxSprite = new FlxSprite(posX, posY).loadGraphic('assets/images/weeb/evilSchoolBG.png');
+			bg.scale.set(6, 6);
+			// bg.setGraphicSize(Std.int(bg.width * 6));
+			// bg.updateHitbox();
+			add(bg);
 
-				var fg:FlxSprite = new FlxSprite(posX, posY).loadGraphic('assets/images/weeb/evilSchoolFG.png');
-				fg.scale.set(6, 6);
-				// fg.setGraphicSize(Std.int(fg.width * 6));
-				// fg.updateHitbox();
-				add(fg);
+			var fg:FlxSprite = new FlxSprite(posX, posY).loadGraphic('assets/images/weeb/evilSchoolFG.png');
+			fg.scale.set(6, 6);
+			// fg.setGraphicSize(Std.int(fg.width * 6));
+			// fg.updateHitbox();
+			add(fg);
 
-				wiggleShit.effectType = WiggleEffectType.DREAMY;
-				wiggleShit.waveAmplitude = 0.01;
-				wiggleShit.waveFrequency = 60;
-				wiggleShit.waveSpeed = 0.8;
-			 */
+			wiggleShit.effectType = WiggleEffectType.DREAMY;
+			wiggleShit.waveAmplitude = 0.01;
+			wiggleShit.waveFrequency = 60;
+			wiggleShit.waveSpeed = 0.8;
 
-			// bg.shader = wiggleShit.shader;
-			// fg.shader = wiggleShit.shader;
+			bg.shader = wiggleShit.shader;
+			fg.shader = wiggleShit.shader;
 
-			/* 
-				var waveSprite = new FlxEffectSprite(bg, [waveEffectBG]);
-				var waveSpriteFG = new FlxEffectSprite(fg, [waveEffectFG]);
+			var waveSprite = new FlxEffectSprite(bg, [waveEffectBG]);
+			var waveSpriteFG = new FlxEffectSprite(fg, [waveEffectFG]);
 
-				// Using scale since setGraphicSize() doesnt work???
-				waveSprite.scale.set(6, 6);
-				waveSpriteFG.scale.set(6, 6);
-				waveSprite.setPosition(posX, posY);
-				waveSpriteFG.setPosition(posX, posY);
+			// Using scale since setGraphicSize() doesnt work???
+			waveSprite.scale.set(6, 6);
+			waveSpriteFG.scale.set(6, 6);
+			waveSprite.setPosition(posX + 50, posY + 160);
+			waveSpriteFG.setPosition(posX+ 50, posY + 160);
 
-				waveSprite.scrollFactor.set(0.7, 0.8);
-				waveSpriteFG.scrollFactor.set(0.9, 0.8);
+			waveSprite.scrollFactor.set(0.7, 0.8);
+			waveSpriteFG.scrollFactor.set(0.9, 0.8);
 
-				// waveSprite.setGraphicSize(Std.int(waveSprite.width * 6));
-				// waveSprite.updateHitbox();
-				// waveSpriteFG.setGraphicSize(Std.int(fg.width * 6));
-				// waveSpriteFG.updateHitbox();
+			// waveSprite.setGraphicSize(Std.int(waveSprite.width * 6));
+			// waveSprite.updateHitbox();
+			// waveSpriteFG.setGraphicSize(Std.int(fg.width * 6));
+			// waveSpriteFG.updateHitbox();
 
-				add(waveSprite);
-				add(waveSpriteFG);
-			 */
+			add(waveSprite);
+			add(waveSpriteFG);
 		}
 		else
 		{
@@ -1760,11 +1761,7 @@ class PlayState extends MusicBeatState
 
 		#if debug
 		if (FlxG.keys.justPressed.ONE)
-			if(wasPractice) {
-				gameOver(false);
-			} else {
-				endSong;
-			}
+			endSong;
 		#end
 	}
 	function gameOver(gitaroo:Bool = false):Void
@@ -2395,16 +2392,16 @@ class PlayState extends MusicBeatState
 			if(wasPassedNote) {
 				health -= 0.0475;
 				if(FlxG.save.data.accuracy == false)
-					accuracy -= 5; //missing a note is a blow to your accuracy
+					accuracy -= 3; //missing a note is a blow to your accuracy
 				else
-					hitRate -= 2;
+					hitRate -= 1;
 					updateAccuracy();
 			} else {
 				health -= 0.04;
 				if(FlxG.save.data.accuracy == false)
 					accuracy -= 0.5; //missing a note is a blow to your accuracy
 				else
-					hitRate -= 1;
+					hitRate -= 0.5;
 					updateAccuracy();
 			}
 			firstHit = false;
@@ -2429,8 +2426,6 @@ class PlayState extends MusicBeatState
 			{
 				boyfriend.stunned = false;
 			});
-			if(!FlxG.save.data.ghost)
-			{
 				switch (direction)
 				{
 					case 0:
@@ -2442,7 +2437,6 @@ class PlayState extends MusicBeatState
 					case 3:
 						boyfriend.playAnim('singRIGHTmiss', true);
 				}
-			}
 		}
 	}
 

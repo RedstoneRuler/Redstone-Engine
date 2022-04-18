@@ -70,6 +70,7 @@ class StoryMenuState extends MusicBeatState
 
 	override function create()
 	{
+		Conductor.changeBPM(102);
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
@@ -146,7 +147,6 @@ class StoryMenuState extends MusicBeatState
 				case 'dad':
 					weekCharacterThing.setGraphicSize(Std.int(weekCharacterThing.width * 0.5));
 					weekCharacterThing.updateHitbox();
-
 				case 'bf':
 					weekCharacterThing.setGraphicSize(Std.int(weekCharacterThing.width * 0.9));
 					weekCharacterThing.updateHitbox();

@@ -16,7 +16,7 @@ class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Framerate: " + FlxG.save.data.fps + " (Left, Right, Shift)", 12);
-	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Exit to menu'];
+	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Toggle Hit Sounds', 'Exit to menu'];
 	var curSelected:Int = 0;
 
 	var minFPS:Int = 10;
@@ -25,7 +25,9 @@ class PauseSubState extends MusicBeatSubstate
 	var pauseMusic:FlxSound;
 	var menuItemsOG:Array<String>;
 	var updatedPractice:Bool = true;
-	var practice:FlxText = new FlxText(20, 15 + 96, 0, "", 32);
+	var updatedhitSounds:Bool = true;
+	var practice:FlxText = new FlxText(20, 15 + 128, 0, "", 32);
+	var hitSounds:FlxText = new FlxText(20, 15 + 96, 0, "", 32);
 	var difficultyChoices = [
 		"Easy", "Normal", "Hard"
 	];
@@ -70,20 +72,31 @@ class PauseSubState extends MusicBeatSubstate
 		practice.updateHitbox();
 		add(practice);
 
+		hitSounds.text = "Hit Sounds On";
+		hitSounds.scrollFactor.set();
+		hitSounds.setFormat('assets/fonts/vcr.ttf', 32);
+		hitSounds.updateHitbox();
+		add(hitSounds);
+
 		levelDifficulty.alpha = 0;
 		levelInfo.alpha = 0;
 		deathCount.alpha = 0;
 		practice.alpha = 0;
+		hitSounds.alpha = 0;
 
 		levelInfo.x = FlxG.width - (levelInfo.width + 20);
 		levelDifficulty.x = FlxG.width - (levelDifficulty.width + 20);
 		deathCount.x = FlxG.width - (deathCount.width + 20);
 		practice.x = FlxG.width - (practice.width + 20);
+		hitSounds.x = FlxG.width - (hitSounds.width + 20);
 
 		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
 		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
 		FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
 		FlxTween.tween(deathCount, {alpha: 1, y: deathCount.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.7});
+		if(FlxG.save.data.hitSounds == true) {
+			FlxTween.tween(hitSounds, {alpha: 1, y: hitSounds.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.9});
+		}
 		if(PlayState.practiceMode == true) {
 			FlxTween.tween(practice, {alpha: 1, y: practice.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.9});
 		}
@@ -112,6 +125,15 @@ class PauseSubState extends MusicBeatSubstate
 			pauseMusic.volume += 0.01 * elapsed;
 
 		super.update(elapsed);
+		if(!updatedhitSounds) {
+			if(FlxG.save.data.hitSounds == true) {
+				FlxTween.tween(hitSounds, {alpha: 1, y: hitSounds.y + 5}, 0.4, {ease: FlxEase.quartInOut});
+			}
+			else {
+				FlxTween.tween(hitSounds, {alpha: 0, y: hitSounds.y - 5}, 0.4, {ease: FlxEase.quartInOut});
+			}
+			updatedhitSounds = true;
+		}
 		if(!updatedPractice) {
 			if(PlayState.practiceMode == true) {
 				FlxTween.tween(practice, {alpha: 1, y: practice.y + 5}, 0.4, {ease: FlxEase.quartInOut});
@@ -213,6 +235,9 @@ class PauseSubState extends MusicBeatSubstate
 				case "Toggle Practice Mode":
 					PlayState.practiceMode = !PlayState.practiceMode;
 					updatedPractice = false;
+				case "Toggle Hit Sounds":
+					FlxG.save.data.hitSounds = !FlxG.save.data.hitSounds;
+					updatedhitSounds = false;
 				case "Exit to menu":
 					FlxG.switchState(new MainMenuState());
 			}

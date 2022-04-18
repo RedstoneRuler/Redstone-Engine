@@ -81,7 +81,6 @@ class ChartingState extends MusicBeatState
 
 	var leftIcon:HealthIcon;
 	var rightIcon:HealthIcon;
-
 	override function create()
 	{
 		curSection = lastSection;
@@ -89,8 +88,9 @@ class ChartingState extends MusicBeatState
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 16);
 		add(gridBG);
 
-		leftIcon = new HealthIcon('bf');
-		rightIcon = new HealthIcon('dad');
+
+		leftIcon = new HealthIcon();
+		rightIcon = new HealthIcon();
 		leftIcon.scrollFactor.set(1, 1);
 		rightIcon.scrollFactor.set(1, 1);
 
@@ -169,6 +169,7 @@ class ChartingState extends MusicBeatState
 
 		add(curRenderedNotes);
 		add(curRenderedSustains);
+		updateHeads();
 
 		super.create();
 	}
@@ -469,14 +470,22 @@ class ChartingState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		var playedSound:Bool = false;
+		curRenderedNotes.forEachAlive(function(note:Note)
+		{
+			if(note.strumTime <= Conductor.songPosition) {
+				if(FlxG.sound.music.playing && note.noteData > -1 && note.alpha == 1) {
+					FlxG.sound.play('assets/sounds/hitSound.wav');
+				}
+				note.alpha = 0.4;
+			}
+			else {
+				note.alpha = 1;
+			}
+		});
 		curStep = recalculateSteps();
 
 		Conductor.songPosition = FlxG.sound.music.time;
 		_song.song = typingShit.text;
-		if(FlxG.sound != null) {
-			playedSound = false;
-		}
 		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
 		if (curBeat % 4 == 0 && curStep >= 16 * (curSection + 1))
 		{
@@ -797,13 +806,13 @@ class ChartingState extends MusicBeatState
 	{
 		if (check_mustHitSection.checked)
 		{
-			leftIcon.animation.play('bf');
-			rightIcon.animation.play('dad');
+			leftIcon.animation.play(_song.player1);
+			rightIcon.animation.play(_song.player2);
 		}
 		else
 		{
-			leftIcon.animation.play('dad');
-			rightIcon.animation.play('bf');
+			leftIcon.animation.play(_song.player2);
+			rightIcon.animation.play(_song.player1);
 		}
 	}
 

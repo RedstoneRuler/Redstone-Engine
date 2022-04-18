@@ -147,6 +147,8 @@ class PlayState extends MusicBeatState
 	var wasPractice:Bool = false;
 	override public function create()
 	{
+		// Doing this fixes latency on HTML builds for some reason
+		// This sets back to 60 after it loads everything
 		#if html5
 		FlxG.drawFramerate = 30;
 		FlxG.updateFramerate = 30;
@@ -163,6 +165,9 @@ class PlayState extends MusicBeatState
 		}
 		if (FlxG.save.data.splash == null) {
 			FlxG.save.data.splash = true;
+		}
+		if(FlxG.save.data.hitSounds = null) {
+			FlxG.save.data.hitSounds = false;
 		}
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
@@ -1895,7 +1900,8 @@ class PlayState extends MusicBeatState
 	}
 	private function popUpScore(strumtime:Float, daNote:Note):Void
 	{
-		FlxG.sound.play("assets/sounds/hitSound.wav", 4);
+		if(FlxG.save.data.hitSounds = true)
+			FlxG.sound.play("assets/sounds/hitSound.wav", 4);
 		var daRating:String = "sick";
 		var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
 		// boyfriend.playAnim('hey');

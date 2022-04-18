@@ -52,7 +52,6 @@ class PlayState extends MusicBeatState
 	public static var curSong:String = "";
 	public static var deathCount:Int = 0;
 	public static var practiceMode:Bool = false;
-	public static var hitSounds:Bool = false;
 
 	var halloweenLevel:Bool = false;
 
@@ -166,6 +165,9 @@ class PlayState extends MusicBeatState
 		}
 		if (FlxG.save.data.splash == null) {
 			FlxG.save.data.splash = true;
+		}
+		if(FlxG.save.data.hitSounds == null) {
+			FlxG.save.data.hitSounds = false;
 		}
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
@@ -1898,9 +1900,8 @@ class PlayState extends MusicBeatState
 	}
 	private function popUpScore(strumtime:Float, daNote:Note):Void
 	{
-		if(hitSounds = true) {
+		if(FlxG.save.data.hitSounds == true)
 			FlxG.sound.play("assets/sounds/hitSound.wav", 4);
-		}
 		var daRating:String = "sick";
 		var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
 		// boyfriend.playAnim('hey');

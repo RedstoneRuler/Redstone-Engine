@@ -94,7 +94,7 @@ class PauseSubState extends MusicBeatSubstate
 		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
 		FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
 		FlxTween.tween(deathCount, {alpha: 1, y: deathCount.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.7});
-		if(FlxG.save.data.hitSounds == true) {
+		if(PlayState.hitSounds == true) {
 			FlxTween.tween(hitSounds, {alpha: 1, y: hitSounds.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.9});
 		}
 		if(PlayState.practiceMode == true) {
@@ -126,7 +126,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		super.update(elapsed);
 		if(!updatedhitSounds) {
-			if(FlxG.save.data.hitSounds == true) {
+			if(PlayState.hitSounds == true) {
 				FlxTween.tween(hitSounds, {alpha: 1, y: hitSounds.y + 5}, 0.4, {ease: FlxEase.quartInOut});
 			}
 			else {
@@ -236,7 +236,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.practiceMode = !PlayState.practiceMode;
 					updatedPractice = false;
 				case "Toggle Hit Sounds":
-					FlxG.save.data.hitSounds = !FlxG.save.data.hitSounds;
+					PlayState.hitSounds = !PlayState.hitSounds;
 					updatedhitSounds = false;
 				case "Exit to menu":
 					FlxG.switchState(new MainMenuState());

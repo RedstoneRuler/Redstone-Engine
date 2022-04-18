@@ -119,6 +119,14 @@ class FreeplayState extends MusicBeatState
 			songs.push('Thorns');
 			bpmList.push(190);
 		}
+		#if debug
+		songs.push('Ugh');
+		bpmList.push(160);
+		songs.push('Guns');
+		bpmList.push(185);
+		songs.push('Stress');
+		bpmList.push(178);
+		#end
 		trace(songs);
 		trace(bpmList);
 		songs.remove('');

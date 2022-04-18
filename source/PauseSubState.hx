@@ -236,7 +236,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.practiceMode = !PlayState.practiceMode;
 					updatedPractice = false;
 				case "Toggle Hit Sounds":
-					PlayState.hitSounds = !FlxG.save.data.hitSounds;
+					FlxG.save.data.hitSounds = !FlxG.save.data.hitSounds;
 					updatedhitSounds = false;
 				case "Exit to menu":
 					FlxG.switchState(new MainMenuState());

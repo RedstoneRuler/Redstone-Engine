@@ -68,6 +68,41 @@ class Character extends FlxSprite
 				addOffset('scared', -2, -17);
 
 				playAnim('danceRight');
+			case 'gf-tankmen':
+				// GIRLFRIEND CODE
+				tex = FlxAtlasFrames.fromSparrow('assets/images/gfTankmen.png', 'assets/images/gfTankmen.xml');
+				frames = tex;
+				animation.addByIndices('sad', 'GF Crying at Gunpoint', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
+				animation.addByIndices('danceLeft', 'GF Dancing at Gunpoint', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+				animation.addByIndices('danceRight', 'GF Dancing at Gunpoint', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+
+				addOffset('sad', -2, -2);
+				addOffset('danceLeft', 0, -9);
+				addOffset('danceRight', 0, -9);
+
+				playAnim('danceRight');
+			case "pico-speaker":
+				tex = FlxAtlasFrames.fromSparrow("assets/images/picoSpeaker.png", "assets/images/picoSpeaker.xml");
+				frames = tex;
+				animation.addByPrefix("shoot1", "Pico shoot 1", 24, false);
+				animation.addByIndices('shoot1-loop', 'Pico shoot 1', [4,5,6], "", 24, true);
+				animation.addByPrefix("shoot2", "Pico shoot 2", 24, true);
+				animation.addByIndices('shoot2-loop', 'Pico shoot 2', [4,5,6], "", 24, true);
+				animation.addByPrefix("shoot3", "Pico shoot 3", 24, true);
+				animation.addByIndices('shoot3-loop', 'Pico shoot 3', [4,5,6], "", 24, true);
+				animation.addByPrefix("shoot4", "Pico shoot 4", 24, true);
+				animation.addByIndices('shoot4-loop', 'Pico shoot 4', [4,5,6], "", 24, true);
+				
+				addOffset('shoot1', 0, 0);
+				addOffset('shoot1-loop', 0, 0);
+				addOffset('shoot2', -1, -128);
+				addOffset('shoot2-loop', -1, -128);
+				addOffset('shoot3', 412, -64);
+				addOffset('shoot3-loop', 412, -64);
+				addOffset('shoot4', 439, -19);
+				addOffset('shoot4-loop', 439, -19);
+
+				playAnim("shoot1");
 			case 'gf-optimized':
 				// GIRLFRIEND CODE					
 				tex = FlxAtlasFrames.fromSparrow('assets/images/gf_optimized.png', 'assets/images/gf_optimized.xml');
@@ -124,8 +159,7 @@ class Character extends FlxSprite
 				frames = tex;
 				animation.addByIndices('singUP', 'GF Dancing Beat Hair blowing CAR', [0], "", 24, false);
 				animation.addByIndices('danceLeft', 'GF Dancing Beat Hair blowing CAR', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat Hair blowing CAR', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24,
-					false);
+				animation.addByIndices('danceRight', 'GF Dancing Beat Hair blowing CAR', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 
 				addOffset('danceLeft', 0);
 				addOffset('danceRight', 0);
@@ -371,12 +405,12 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN-alt', 'PRETTY GOOD tankman instance 1', 24, false);
 
 				addOffset('idle');
-				addOffset("singUP", 0, 0);
-				addOffset("singRIGHT", 0, 0);
-				addOffset("singLEFT", 0, 0);
-				addOffset("singDOWN", 0, 0);
-				addOffset("singUP-alt", 0, 0);
-				addOffset("singDOWN-alt", 0, 0);
+				addOffset("singUP", 48, 60);
+				addOffset("singRIGHT", -1, -7);
+				addOffset("singLEFT", 109, -4);
+				addOffset("singDOWN", 98, -90);
+				addOffset("singUP-alt", -19, -9);
+				addOffset("singDOWN-alt", 101, 16);
 
 				playAnim('idle');
 	
@@ -463,15 +497,15 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
 				animation.addByPrefix('catch', 'BF catches GF', 24, false);
 
-				addOffset('idle', -5);
-				addOffset("singUP", -29, 27);
-				addOffset("singRIGHT", -38, -7);
-				addOffset("singLEFT", 12, -6);
-				addOffset("singDOWN", -10, -50);
-				addOffset("singUPmiss", -29, 27);
-				addOffset("singRIGHTmiss", -30, 21);
-				addOffset("singLEFTmiss", 12, 24);
-				addOffset("singDOWNmiss", -11, -19);
+				addOffset('idle');
+				addOffset("singUP", -29, 10);
+				addOffset("singRIGHT", -41, 23);
+				addOffset("singLEFT", 12, 7);
+				addOffset("singDOWN", -10, -10);
+				addOffset("singUPmiss", -29, 10);
+				addOffset("singRIGHTmiss", -41, 23);
+				addOffset("singLEFTmiss", 12, 7);
+				addOffset("singDOWNmiss", -10, -10);
 				addOffset("catch", 0, 0);
 
 				playAnim('idle');
@@ -636,6 +670,7 @@ class Character extends FlxSprite
 				addOffset("singRIGHT");
 				addOffset("singLEFT", 40);
 				addOffset("singDOWN", 14);
+
 				playAnim('idle');
 
 				setGraphicSize(Std.int(width * 6));
@@ -722,7 +757,10 @@ class Character extends FlxSprite
 		{
 			if (animation.curAnim.name.startsWith('sing'))
 			{
-				holdTimer += elapsed;
+				if(animation.curAnim.name.contains("singDOWN-alt") && curCharacter == 'tankman' && !animation.curAnim.finished)
+				{} else {
+					holdTimer += elapsed;
+				}
 			}
 
 			var dadVar:Float = 4;
@@ -775,7 +813,7 @@ class Character extends FlxSprite
 			}
 			else {
 				if(Conductor.bpm > 150) {
-					playAnim('idle',true);
+					playAnim('idle', true);
 				}
 				else {
 					playAnim('idle', true);

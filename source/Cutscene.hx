@@ -17,7 +17,7 @@ import haxe.io.Path;
 
 class Cutscene extends MusicBeatState
 {
-	//loosley based on loading state
+	//loosely based on loading state
 	var SONG:SwagSong;
 	inline static var MIN_TIME = 1.0;
 	

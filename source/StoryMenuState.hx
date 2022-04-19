@@ -330,7 +330,7 @@ class StoryMenuState extends MusicBeatState
 			{
 				if (FlxG.sound.music != null)
 					FlxG.sound.music.stop();
-				FlxG.switchState(new PlayState());
+				Cutscene.switchState(new PlayState(), true, PlayState.storyPlaylist[0].toLowerCase());
 			});
 		}
 		//}

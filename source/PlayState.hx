@@ -1955,6 +1955,20 @@ class PlayState extends MusicBeatState
 	
 			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 	}
+	function finishWeek():Void
+	{
+		switch(SONG.song.toLowerCase())
+		{
+		// I was gonna do this but then I remembered the kickstarter is over lmfao
+		/*
+		case 'stress':
+			FlxG.switchState(new VideoState('assets/videos/kickstarterTrailer.webm', new PlayState(), 0));
+		*/
+		default:
+			FlxG.switchState(new StoryMenuState());
+		}
+		
+	}
 	function endSong():Void
 	{
 		canPause = false;
@@ -1979,10 +1993,9 @@ class PlayState extends MusicBeatState
 
 				transIn = FlxTransitionableState.defaultTransIn;
 				transOut = FlxTransitionableState.defaultTransOut;
+				
+				finishWeek();
 
-				FlxG.switchState(new StoryMenuState());
-
-				// if ()
 				StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
 
 				if (SONG.validScore)
@@ -2025,7 +2038,7 @@ class PlayState extends MusicBeatState
 				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0]);
 				FlxG.sound.music.stop();
 
-				FlxG.switchState(new PlayState());
+				Cutscene.switchState(new PlayState(), true, PlayState.storyPlaylist[0].toLowerCase());
 			}
 		}
 		else
@@ -3019,6 +3032,5 @@ class PlayState extends MusicBeatState
 				shootConditions = false;
 			}
 	}
-
 	var curLight:Int = 0;
 }

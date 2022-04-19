@@ -19,8 +19,12 @@ A modification of Friday Night Funkin's engine, designed to tweak little details
 - [PhantomArcade3K](https://twitter.com/phantomarcade3k) and [Evilsk8r](https://twitter.com/evilsk8r) - Art/Animation
 - [Kawai Sprite](https://twitter.com/kawaisprite) - Music
 ## Build instructions
-The compilation process for this engine is the same as compiling the base game. Just follow those ones!
-https://github.com/ninjamuffin99/Funkin#build-instructions
+The compilation process for this engine is mostly the same as compiling the base game, but there are a few more steps.
+After setting up Haxe, do the following:
+- Install actuate by running `haxelib install actuate`
+- Install the extension-webm fork by running `haxelib git extension-webm https://github.com/GrowtopiaFli/extension-webm`
+- Finally, run `lime rebuild extension-webm [windows/mac/linux/android]`, depending on device.
+The rest of the process can be found here: https://github.com/ninjamuffin99/Funkin#build-instructions
 ## HTML5
 Don't feel like downloading the engine? Play a browser build here!
 This version is updated more frequently than the downloadable counterparts.

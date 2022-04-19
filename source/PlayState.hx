@@ -1919,16 +1919,6 @@ class PlayState extends MusicBeatState
 		if (FlxG.keys.justPressed.ONE)
 			endSong;
 		#end
-		if (gf.curCharacter == 'pico-speaker')
-		{
-			var shootConditions = false;
-			if(curBeat >= 32 && curBeat <= 62 || curBeat >= 360)
-				shootConditions = false;
-			else if(curStep % 4 == 0)
-					shootConditions = true;
-			if(shootConditions == true)
-				gf.playAnim('shoot' + FlxG.random.int(1,4), true);
-		}
 	}
 	function gameOver(gitaroo:Bool = false):Void
 	{
@@ -3015,6 +3005,19 @@ class PlayState extends MusicBeatState
 		{
 			lightningStrikeShit();
 		}
+		if (gf.curCharacter == 'pico-speaker')
+			{
+				var shootConditions = false;
+				if(curBeat >= 32 && curBeat <= 62 || curBeat >= 360) {
+					shootConditions = false;
+				} else if(curStep % 4 == 0) {
+					shootConditions = true;
+				}
+				if(shootConditions == true) {
+					gf.playAnim('shoot' + FlxG.random.int(1,4), true);
+				}
+				shootConditions = false;
+			}
 	}
 
 	var curLight:Int = 0;

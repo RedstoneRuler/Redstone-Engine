@@ -99,9 +99,9 @@ class VideoState extends MusicBeatState
 		
 			/*new FlxTimer().start(0.1, function(tmr:FlxTimer)
 			{*/
-				//#if !html5
-				//vidSound.time = vidSound.length * soundMultiplier;
-				//#end
+				#if !html5
+				vidSound.time = vidSound.length * soundMultiplier;
+				#end
 				/*new FlxTimer().start(1.2, function(tmr:FlxTimer)
 				{
 					if (useSound)
@@ -140,8 +140,8 @@ class VideoState extends MusicBeatState
 			if (doShit)
 			{
 				var compareShit:Float = 50;
-				//if (vidSound.time >= (vidSound.length * soundMultiplier) + compareShit || vidSound.time <= (vidSound.length * soundMultiplier) - compareShit)
-				//	vidSound.time = vidSound.length * soundMultiplier;
+				if (vidSound.time >= (vidSound.length * soundMultiplier) + compareShit || vidSound.time <= (vidSound.length * soundMultiplier) - compareShit)
+					vidSound.time = vidSound.length * soundMultiplier;
 			}
 			if (wasFuckingHit)
 			{
@@ -150,13 +150,13 @@ class VideoState extends MusicBeatState
 				if (prevSoundMultiplier != 0)
 				{
 					vidSound.pause();
-					//vidSound.time = 0;
+					vidSound.time = 0;
 				}
 			} else {
 				if (prevSoundMultiplier == 0)
 				{
 					vidSound.resume();
-					//vidSound.time = vidSound.length * soundMultiplier;
+					vidSound.time = vidSound.length * soundMultiplier;
 				}
 			}
 			prevSoundMultiplier = soundMultiplier;

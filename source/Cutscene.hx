@@ -41,11 +41,11 @@ class Cutscene extends MusicBeatState
 		switch(song.toLowerCase())
 		{
 			case 'ugh':
-				FlxG.switchState(new VideoState('assets/videos/ughCutscene.webm', new PlayState(), 0));
+				FlxG.switchState(new VideoState('assets/videos/ughCutscene.webm', new PlayState(), -1));
 			case 'guns':
-				FlxG.switchState(new VideoState('assets/videos/gunsCutscene.webm', new PlayState(), 0));
+				FlxG.switchState(new VideoState('assets/videos/gunsCutscene.webm', new PlayState(), -1));
 			case 'stress':
-				FlxG.switchState(new VideoState('assets/videos/stressCutscene.webm', new PlayState(), 0));
+				FlxG.switchState(new VideoState('assets/videos/stressCutscene.webm', new PlayState(), -1));
 			default:
 				FlxG.switchState(getNextState(target, stopMusic));
 		}

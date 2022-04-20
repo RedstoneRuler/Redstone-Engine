@@ -50,7 +50,6 @@ class AnimationDebug extends FlxState
 			add(dad);
 
 			char = dad;
-			dad.flipX = false;
 		}
 		else
 		{
@@ -60,7 +59,6 @@ class AnimationDebug extends FlxState
 			add(bf);
 
 			char = bf;
-			bf.flipX = false;
 		}
 
 		dumbTexts = new FlxTypedGroup<FlxText>();

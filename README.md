@@ -24,6 +24,7 @@ After setting up Haxe, do the following:
 - Install actuate by running `haxelib install actuate`
 - Install the extension-webm fork by running `haxelib git extension-webm https://github.com/GrowtopiaFli/extension-webm`
 - Finally, run `lime rebuild extension-webm [windows/mac/linux/android]`, depending on device.
+
 The rest of the process can be found here: https://github.com/ninjamuffin99/Funkin#build-instructions
 ## HTML5
 Don't feel like downloading the engine? Play a browser build here!

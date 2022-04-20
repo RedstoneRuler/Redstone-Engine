@@ -86,11 +86,11 @@ class Character extends FlxSprite
 				frames = tex;
 				animation.addByPrefix("shoot1", "Pico shoot 1", 24, false);
 				animation.addByIndices('shoot1-loop', 'Pico shoot 1', [4,5,6], "", 24, true);
-				animation.addByPrefix("shoot2", "Pico shoot 2", 24, true);
+				animation.addByPrefix("shoot2", "Pico shoot 2", 24, false);
 				animation.addByIndices('shoot2-loop', 'Pico shoot 2', [4,5,6], "", 24, true);
-				animation.addByPrefix("shoot3", "Pico shoot 3", 24, true);
+				animation.addByPrefix("shoot3", "Pico shoot 3", 24, false);
 				animation.addByIndices('shoot3-loop', 'Pico shoot 3', [4,5,6], "", 24, true);
-				animation.addByPrefix("shoot4", "Pico shoot 4", 24, true);
+				animation.addByPrefix("shoot4", "Pico shoot 4", 24, false);
 				animation.addByIndices('shoot4-loop', 'Pico shoot 4', [4,5,6], "", 24, true);
 				
 				addOffset('shoot1', 0, 0);
@@ -409,8 +409,8 @@ class Character extends FlxSprite
 				addOffset("singRIGHT", -1, -7);
 				addOffset("singLEFT", 109, -4);
 				addOffset("singDOWN", 98, -90);
-				addOffset("singUP-alt", -19, -9);
-				addOffset("singDOWN-alt", 101, 16);
+				addOffset("singUP-alt", -9, -9);
+				addOffset("singDOWN-alt", -100, 16);
 
 				playAnim('idle');
 	

@@ -551,48 +551,6 @@ class PlayState extends MusicBeatState
 		{
 			defaultCamZoom = 0.9;
 			curStage = "tank";
-			tank0 = new FlxSprite(-500, 650);
-			tank0.frames = Paths.getSparrowAtlas('tank0');
-			tank0.animation.addByPrefix('idle', 'fg tankhead far right', 24, false);
-			tank0.scrollFactor.set(1.7, 1.5);
-			tank0.antialiasing = true;
-
-			tank1 = new FlxSprite(-300, 750);
-			tank1.frames = Paths.getSparrowAtlas('tank1');
-			tank1.animation.addByPrefix('idle', 'fg', 24, false);
-			tank1.scrollFactor.set(2, 0.2);
-			tank1.antialiasing = true;
-
-			tank2 = new FlxSprite(450, 940);
-			tank2.frames = Paths.getSparrowAtlas('tank2');
-			tank2.animation.addByPrefix('idle', 'foreground', 24, false);
-			tank2.scrollFactor.set(1.5, 1.5);
-			tank2.antialiasing = true;
-
-			tank4 = new FlxSprite(1300, 900);
-			tank4.frames = Paths.getSparrowAtlas('tank4');
-			tank4.animation.addByPrefix('idle', 'fg', 24, false);
-			tank4.scrollFactor.set(1.5, 1.5);
-			tank4.antialiasing = true;
-
-			tank5 = new FlxSprite(1620, 700);
-			tank5.frames = Paths.getSparrowAtlas('tank5');
-			tank5.animation.addByPrefix('idle', 'fg', 24, false);
-			tank5.scrollFactor.set(1.5, 1.5);
-			tank5.antialiasing = true;
-
-			tank3 = new FlxSprite(1300, 1200);
-			tank3.frames = Paths.getSparrowAtlas('tank3');
-			tank3.animation.addByPrefix('idle', 'fg', 24, false);
-			tank3.scrollFactor.set(1.5, 1.5);
-			tank3.antialiasing = true;
-			add(tank0);
-			add(tank1);
-			add(tank2);
-			add(tank4);
-			add(tank5);
-			add(tank3);
-
 			var tankSky:FlxSprite = new FlxSprite(-400, -400).loadGraphic(Paths.image('tankSky'));
 			tankSky.antialiasing = true;
 			tankSky.scrollFactor.set(0, 0);
@@ -663,6 +621,48 @@ class PlayState extends MusicBeatState
 			tankGround.updateHitbox();
 			tankGround.antialiasing = true;
 			add(tankGround);
+			tank0 = new FlxSprite(-500, 650);
+			tank0.frames = Paths.getSparrowAtlas('tank0');
+			tank0.animation.addByPrefix('idle', 'fg tankhead far right', 24, false);
+			tank0.scrollFactor.set(1.7, 1.5);
+			tank0.antialiasing = true;
+
+			tank1 = new FlxSprite(-300, 750);
+			tank1.frames = Paths.getSparrowAtlas('tank1');
+			tank1.animation.addByPrefix('idle', 'fg', 24, false);
+			tank1.scrollFactor.set(2, 0.2);
+			tank1.antialiasing = true;
+
+			tank2 = new FlxSprite(450, 940);
+			tank2.frames = Paths.getSparrowAtlas('tank2');
+			tank2.animation.addByPrefix('idle', 'foreground', 24, false);
+			tank2.scrollFactor.set(1.5, 1.5);
+			tank2.antialiasing = true;
+
+			tank4 = new FlxSprite(1300, 900);
+			tank4.frames = Paths.getSparrowAtlas('tank4');
+			tank4.animation.addByPrefix('idle', 'fg', 24, false);
+			tank4.scrollFactor.set(1.5, 1.5);
+			tank4.antialiasing = true;
+
+			tank5 = new FlxSprite(1620, 700);
+			tank5.frames = Paths.getSparrowAtlas('tank5');
+			tank5.animation.addByPrefix('idle', 'fg', 24, false);
+			tank5.scrollFactor.set(1.5, 1.5);
+			tank5.antialiasing = true;
+
+			tank3 = new FlxSprite(1300, 1200);
+			tank3.frames = Paths.getSparrowAtlas('tank3');
+			tank3.animation.addByPrefix('idle', 'fg', 24, false);
+			tank3.scrollFactor.set(1.5, 1.5);
+			tank3.antialiasing = true;
+			add(tank0);
+			add(tank1);
+			add(tank2);
+			add(tank4);
+			add(tank5);
+			add(tank3);
+
 			picoStep = Json.parse(openfl.utils.Assets.getText(Paths.json('stress/picospeaker')));
 			tankStep = Json.parse(openfl.utils.Assets.getText(Paths.json('stress/tankSpawn')));
 		}
@@ -772,7 +772,7 @@ class PlayState extends MusicBeatState
 		}
 		else if(gfVersion == 'pico-speaker')
 		{
-			gf.x -= 200;
+			gf.x -= 140;
 			gf.y -= 100;
 		}
 

@@ -2562,56 +2562,53 @@ class PlayState extends MusicBeatState
 	{
 		vocals.volume = 0;
 		missCount += 1;
-		if (!boyfriend.stunned)
+		if(wasPassedNote) {
+			health -= 0.0475;
+			if(FlxG.save.data.accuracy == false)
+				accuracy -= 3; //missing a note is a blow to your accuracy
+			else
+				hitRate -= 1;
+				updateAccuracy();
+		} else {
+			health -= 0.04;
+			if(FlxG.save.data.accuracy == false)
+				accuracy -= 0.5; //missing a note is a blow to your accuracy
+			else
+				hitRate -= 0.5;
+				updateAccuracy();
+		}
+		firstHit = false;
+		accuracyLogic();
+		
+		if (combo > 5)
 		{
-			if(wasPassedNote) {
-				health -= 0.0475;
-				if(FlxG.save.data.accuracy == false)
-					accuracy -= 3; //missing a note is a blow to your accuracy
-				else
-					hitRate -= 1;
-					updateAccuracy();
-			} else {
-				health -= 0.04;
-				if(FlxG.save.data.accuracy == false)
-					accuracy -= 0.5; //missing a note is a blow to your accuracy
-				else
-					hitRate -= 0.5;
-					updateAccuracy();
-			}
-			firstHit = false;
-			accuracyLogic();
-			
-			if (combo > 5)
-			{
-					gf.playAnim('sad');
-			}
-			combo = 0;
+				gf.playAnim('sad');
+		}
+		combo = 0;
 
-			songScore -= 10;
+		songScore -= 10;
 
-			FlxG.sound.play('assets/sounds/missnote' + FlxG.random.int(1, 3) + TitleState.soundExt, FlxG.random.float(0.1, 0.2));
-			// FlxG.sound.play('assets/sounds/missnote1' + TitleState.soundExt, 1, false);
-			// FlxG.log.add('played imss note');
+		FlxG.sound.play('assets/sounds/missnote' + FlxG.random.int(1, 3) + TitleState.soundExt, FlxG.random.float(0.1, 0.2));
+		// FlxG.sound.play('assets/sounds/missnote1' + TitleState.soundExt, 1, false);
+		// FlxG.log.add('played imss note');
 
-			boyfriend.stunned = true;
+		boyfriend.stunned = true;
 
-			// get stunned for 5 seconds
-			new FlxTimer().start(5 / 60, function(tmr:FlxTimer)
-			{
-				boyfriend.stunned = false;
-			});
-				switch (direction)
-				{
-					case 0:
-						boyfriend.playAnim('singLEFTmiss', true);
-					case 1:
-						boyfriend.playAnim('singDOWNmiss', true);
-					case 2:
-						boyfriend.playAnim('singUPmiss', true);
-					case 3:
-						boyfriend.playAnim('singRIGHTmiss', true);
-				}
+		// get stunned for 5 seconds
+		new FlxTimer().start(5 / 60, function(tmr:FlxTimer)
+		{
+			boyfriend.stunned = false;
+		});
+		switch (direction)
+		{
+			case 0:
+				boyfriend.playAnim('singLEFTmiss', true);
+			case 1:
+				boyfriend.playAnim('singDOWNmiss', true);
+			case 2:
+				boyfriend.playAnim('singUPmiss', true);
+			case 3:
+				boyfriend.playAnim('singRIGHTmiss', true);
 		}
 	}
 

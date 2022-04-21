@@ -1552,7 +1552,7 @@ class PlayState extends MusicBeatState
 		if(practiceMode == true) {
 			wasPractice = true;
 		}
-		if(FlxG.save.data.bot == false) {
+		if(FlxG.save.data.bot != true) {
 			scoreTxt.text = "Score: " + songScore;
 			missTxt.text = "Misses: " + missCount;
 			if(displayAccuracy == '?')

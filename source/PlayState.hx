@@ -1552,12 +1552,18 @@ class PlayState extends MusicBeatState
 		if(practiceMode == true) {
 			wasPractice = true;
 		}
-		scoreTxt.text = "Score: " + songScore;
-		missTxt.text = "Misses: " + missCount;
-		if(displayAccuracy == '?')
-			accuracyTxt.text = "Accuracy: " + displayAccuracy;
-		else
-			accuracyTxt.text = "Accuracy: " + displayAccuracy + "% - " + accuracyRating;
+		if(FlxG.save.data.bot == false) {
+			scoreTxt.text = "Score: " + songScore;
+			missTxt.text = "Misses: " + missCount;
+			if(displayAccuracy == '?')
+				accuracyTxt.text = "Accuracy: " + displayAccuracy;
+			else
+				accuracyTxt.text = "Accuracy: " + displayAccuracy + "% - " + accuracyRating;
+		} else{
+			scoreTxt.text = "";
+			missTxt.text = "AUTOPLAY ON";
+			accuracyTxt.text = "";
+		}
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
 			persistentUpdate = false;

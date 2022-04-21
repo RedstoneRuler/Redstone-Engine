@@ -17,6 +17,7 @@ class FreeplayState extends MusicBeatState
 	var songs:Array<String> = [];
 	var bpmList:Array<Float> = [];
 	var bpmStrings:Array<String> = [];
+	var iconList:Array<String> = [];
 
 	var selector:FlxText;
 	var curSelected:Int = 0;
@@ -29,7 +30,9 @@ class FreeplayState extends MusicBeatState
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
+
 	var defaultCamZoom:Float = 1;
+	private var iconArray:Array<HealthIcon> = [];
 	override function create()
 	{
 		/* 
@@ -59,80 +62,116 @@ class FreeplayState extends MusicBeatState
 		if (StoryMenuState.weekUnlocked[0] || isDebug)
 		{
 			songs.push('Tutorial');
+			iconList.push('gf');
 			bpmList.push(100);
 		}
 		if (StoryMenuState.weekUnlocked[1] || isDebug)
 		{
 			songs.push('Bopeebo');
+			iconList.push('dad');
 			bpmList.push(100);
+			
 			songs.push('Fresh');
+			iconList.push('dad');
 			bpmList.push(120);
+
 			songs.push('Dadbattle');
+			iconList.push('dad');
 			bpmList.push(180);
 		}
 		if (StoryMenuState.weekUnlocked[2] || isDebug)
 		{
 			songs.push('Spookeez');
+			iconList.push('spooky');
 			bpmList.push(150);
+
 			songs.push('South');
+			iconList.push('spooky');
 			bpmList.push(165);
+
 			songs.push('Monster');
+			iconList.push('monster');
 			bpmList.push(0);
 		}
 
 		if (StoryMenuState.weekUnlocked[3] || isDebug)
 		{
 			songs.push('Pico');
+			iconList.push('pico');
 			bpmList.push(150);
+
 			songs.push('Philly');
+			iconList.push('pico');
 			bpmList.push(175);
+
 			songs.push('Blammed');
+			iconList.push('pico');
 			bpmList.push(165);
 		}
 
 		if (StoryMenuState.weekUnlocked[4] || isDebug)
 		{
 			songs.push('Satin-Panties');
+			iconList.push('mom');
 			bpmList.push(110);
+
 			songs.push('High');
+			iconList.push('mom');
 			bpmList.push(125);
+
 			songs.push('Milf');
+			iconList.push('mom');
 			bpmList.push(180);
 		}
 
 		if (StoryMenuState.weekUnlocked[5] || isDebug)
 		{
 			songs.push('Cocoa');
+			iconList.push('parents-christmas');
 			bpmList.push(100);
+
 			songs.push('Eggnog');
+			iconList.push('parents-christmas');
 			bpmList.push(150);
+
 			songs.push('Winter-Horrorland');
-			bpmList.push(159); //weird ass bpm lmao
+			iconList.push('monster');
+			bpmList.push(159);
 		}
 
 		if (StoryMenuState.weekUnlocked[6] || isDebug)
 		{
 			songs.push('Senpai');
+			iconList.push('senpai');
 			bpmList.push(144);
+
 			songs.push('Roses');
+			iconList.push('senpai');
 			bpmList.push(120);
+
 			songs.push('Thorns');
+			iconList.push('spirit');
 			bpmList.push(190);
 		}
 	
 		if (StoryMenuState.weekUnlocked[7] || isDebug)
 		{
 			songs.push('Ugh');
+			iconList.push('tankman');
 			bpmList.push(160);
+
 			songs.push('Guns');
+			iconList.push('tankman');
 			bpmList.push(185);
+
 			songs.push('Stress');
+			iconList.push('tankman');
 			bpmList.push(178);
 		}
-		#if debug
-		#end
 		trace(songs);
 		trace(bpmList);
+		trace(iconList);
+
 		songs.remove('');
 		// LOAD MUSIC
 
@@ -150,6 +189,14 @@ class FreeplayState extends MusicBeatState
 			songText.isMenuItem = true;
 			songText.targetY = i;
 			grpSongs.add(songText);
+
+			var icon:HealthIcon = new HealthIcon(iconList[i]);
+			icon.sprTracker = songText;
+
+			// using a FlxGroup is too much fuss!
+			iconArray.push(icon);
+			add(icon);
+
 			// songText.x += 40;
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 			// songText.screenCenter(X);
@@ -319,7 +366,13 @@ class FreeplayState extends MusicBeatState
 
 		Conductor.changeBPM(bpmList[curSelected]);
 		var bullShit:Int = 0;
+		
+		for (i in 0...iconArray.length)
+		{
+			iconArray[i].alpha = 0.6;
+		}
 
+		iconArray[curSelected].alpha = 1;
 		for (item in grpSongs.members)
 		{
 			item.targetY = bullShit - curSelected;

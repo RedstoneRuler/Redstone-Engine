@@ -522,7 +522,19 @@ class Character extends FlxSprite
 				addOffset('deathConfirm', 37, 69);
 				playAnim('firstDeath');
 				flipX = true;
-	
+
+			case 'bf-holding-gf-dead':
+				var tex = FlxAtlasFrames.fromSparrow('assets/images/bfHoldingGF-DEAD.png', 'assets/images/bfHoldingGF-DEAD.xml');
+				frames = tex;
+				animation.addByPrefix('firstDeath', "BF Dies with GF", 24, false);
+				animation.addByPrefix('deathLoop', "BF Dead with GF Loop", 24, false);
+				animation.addByPrefix('deathConfirm', "RETRY confirm holding gf", 24, false);
+
+				addOffset('firstDeath', 37, 14);
+				addOffset('deathLoop', 37, -3);
+				addOffset('deathConfirm', 37, 28);
+				playAnim('firstDeath');
+				flipX = true;
 			case 'bf-christmas':
 				var tex = FlxAtlasFrames.fromSparrow('assets/images/christmas/bfChristmas.png', 'assets/images/christmas/bfChristmas.xml');
 				frames = tex;

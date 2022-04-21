@@ -34,7 +34,10 @@ class GameOverSubstate extends MusicBeatSubstate
 					stageSuffix = '-pixel';
 					daBf = 'bf-pixel-dead';
 				default:
-					daBf = 'bf';
+					if(PlayState.curSong.toLowerCase() == 'stress')
+						daBf = 'bf-holding-gf-dead';
+					else
+						daBf = 'bf';
 			}
 		}
 		super();
@@ -85,7 +88,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished)
 		{
 			if(tank == true)
-				FlxG.sound.play('assets/sounds/jeffGameover/jeffGameover-' + FlxG.random.int(1, 25) + '.mp3', 1);
+				FlxG.sound.play('assets/sounds/jeffGameover/jeffGameover-' + FlxG.random.int(1, 25) + '.ogg', 1);
 			FlxG.sound.playMusic('assets/music/gameOver' + stageSuffix + TitleState.soundExt);
 		}
 

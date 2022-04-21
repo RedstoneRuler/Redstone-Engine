@@ -3005,7 +3005,7 @@ class PlayState extends MusicBeatState
 			if(SONG.song == 'Bopeebo')
 				boyfriend.playAnim('hey', true);
 
-			if (SONG.song == 'Tutorial' && dad.curCharacter == 'gf' && curBeat > 16 && curBeat < 48 && PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection
+			if (SONG.song == 'Tutorial' && dad.curCharacter == 'gf' && curBeat > 16 && curBeat < 48 && PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection)
 			{
 				boyfriend.playAnim('hey', true);
 				dad.playAnim('cheer', true);

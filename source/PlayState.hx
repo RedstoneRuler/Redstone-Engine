@@ -2561,9 +2561,9 @@ class PlayState extends MusicBeatState
 	function noteMiss(direction:Int = 1, wasPassedNote:Bool = false):Void
 	{
 		vocals.volume = 0;
+		missCount += 1;
 		if (!boyfriend.stunned)
 		{
-			missCount += 1;
 			if(wasPassedNote) {
 				health -= 0.0475;
 				if(FlxG.save.data.accuracy == false)

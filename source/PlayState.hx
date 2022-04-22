@@ -971,9 +971,8 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'thorns':
 					schoolIntro(doof);
-				case 'stress'
-					var preloadTankman:FlxSprite = new FlxSprite().loadGraphic('assets/images/tankmanKilled1.png'); //preloading to prevent lag
-					preloadTankman.alpha = 0;
+				case 'stress':
+					var tankLoad:FlxSprite = new FlxSprite().loadGraphic('assets/images/tankmanKilled1.png'); //preloading to prevent lag
 				default:
 					startCountdown();
 			}

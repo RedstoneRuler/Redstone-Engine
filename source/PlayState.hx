@@ -1083,6 +1083,8 @@ class PlayState extends MusicBeatState
 
 	function startCountdown():Void
 	{
+		if(SONG.song.toLowerCase() == 'stress')
+			var tankLoad:FlxSprite = new FlxSprite().loadGraphic(Paths.image('tankmanKilled1')); //preload to prevent lag
 		inCutscene = false;
 
 		generateStaticArrows(0);

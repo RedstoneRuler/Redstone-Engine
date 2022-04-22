@@ -972,7 +972,7 @@ class PlayState extends MusicBeatState
 				case 'thorns':
 					schoolIntro(doof);
 				case 'stress'
-					loadGraphic('assets/images/tankmanKilled1.png'); //preloading to prevent lag
+					var preloadTankman:FlxSprite = new FlxSprite().loadGraphic('assets/images/tankmanKilled1.png'); //preloading to prevent lag
 				default:
 					startCountdown();
 			}

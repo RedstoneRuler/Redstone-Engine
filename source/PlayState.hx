@@ -973,6 +973,7 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'stress'
 					var preloadTankman:FlxSprite = new FlxSprite().loadGraphic('assets/images/tankmanKilled1.png'); //preloading to prevent lag
+					preloadTankman.alpha = 0;
 				default:
 					startCountdown();
 			}

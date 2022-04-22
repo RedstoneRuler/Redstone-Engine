@@ -95,8 +95,6 @@ class TankmenBG extends FlxSprite
                 velocity.x = 0;
             }
         }
-        
-        
     }
     override public function update(elapsed:Float)
     {
@@ -120,29 +118,16 @@ class TankmenBG extends FlxSprite
         }
         super.update(elapsed);
         
-
         if(animation.curAnim.name == "run" && animation.curAnim.finished == true && runAnimPlayedTimes < runAnimPlayedTimesMax)
         {
-            
-            
             animation.play("run", true);
-
             runAnimPlayedTimes++;
-
-            
-            
         }
 
         if(animation.curAnim.name == "run" && animation.curAnim.finished == true && runAnimPlayedTimes >= runAnimPlayedTimesMax)
         {
-            
-            
             animation.play("shot", true);
-
-
             runAnimPlayedTimes = 0;
-            
-            
         }
         if(animation.curAnim.name == "shot" && animation.curAnim.curFrame >= animation.curAnim.frames.length - 1)
         {

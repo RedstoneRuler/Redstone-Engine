@@ -971,6 +971,8 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'thorns':
 					schoolIntro(doof);
+				case 'stress':
+					var tankLoad:FlxSprite = new FlxSprite().loadGraphic('assets/images/tankmanKilled1.png'); //preloading to prevent lag
 				default:
 					startCountdown();
 			}
@@ -1098,8 +1100,6 @@ class PlayState extends MusicBeatState
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 		{
 			altbeat = !altbeat;
-			if(SONG.song.toLowerCase() == 'stress')
-				var tankLoad:FlxSprite = new FlxSprite().loadGraphic('assets/images/tankmanKilled1.png'); //preloading to prevent lag
 			if(Conductor.bpm > 150) {
 				if(altbeat == true && dad.animation.getByName('danceLeft') == null) {
 					dad.dance();

@@ -15,7 +15,7 @@ import flixel.tweens.FlxEase;
 class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
-	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Framerate: " + FlxG.save.data.fps + fpsDisplayAddition + " (Left, Right, Shift)", 12);
+	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "", 12);
 	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Toggle Hit Sounds', 'Exit to menu'];
 	var curSelected:Int = 0;
 
@@ -37,6 +37,7 @@ class PauseSubState extends MusicBeatSubstate
 	];
 	public function new(x:Float, y:Float)
 	{
+		versionShit.text = "Framerate: " + FlxG.save.data.fps + fpsDisplayAddition + " (Left, Right, Shift)";
 		super();
 		pauseMusic = new FlxSound().loadEmbedded('assets/music/breakfast' + TitleState.soundExt, true, true);
 		pauseMusic.volume = 0;

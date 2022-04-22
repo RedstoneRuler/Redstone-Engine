@@ -15,13 +15,17 @@ import flixel.tweens.FlxEase;
 class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
-	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Framerate: " + FlxG.save.data.fps + " (Left, Right, Shift)", 12);
+	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "Framerate: " + FlxG.save.data.fps + fpsDisplayAddition + " (Left, Right, Shift)", 12);
 	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Toggle Hit Sounds', 'Exit to menu'];
 	var curSelected:Int = 0;
 
 	var minFPS:Int = 10;
 	var maxFPS:Int;
-
+	#if html5
+	var fpsDisplayAddition:Int = 1;
+	#else
+	var fpsDisplayAddition:Int = 0;
+	#end
 	var pauseMusic:FlxSound;
 	var menuItemsOG:Array<String>;
 	var updatedPractice:Bool = true;
@@ -163,7 +167,7 @@ class PauseSubState extends MusicBeatSubstate
 			changeSelection(1);
 		}
 		#if html5
-		maxFPS = 60;
+		maxFPS = 59;
 		#else
 		maxFPS = 360;
 		#end
@@ -177,7 +181,7 @@ class PauseSubState extends MusicBeatSubstate
 					if (FlxG.updateFramerate >= maxFPS) { FlxG.updateFramerate = maxFPS; }
 					FlxG.drawFramerate = (FlxG.updateFramerate);
 					FlxG.save.data.fps = FlxG.drawFramerate;
-					versionShit.text = "Framerate: " + FlxG.save.data.fps;
+					versionShit.text = "Framerate: " + FlxG.save.data.fps + fpsDisplayAddition;
 				}
 			
 				if(FlxG.keys.pressed.LEFT)
@@ -186,7 +190,7 @@ class PauseSubState extends MusicBeatSubstate
 					if (FlxG.updateFramerate <= minFPS) { FlxG.updateFramerate = minFPS; }
 					FlxG.drawFramerate = (FlxG.updateFramerate);
 					FlxG.save.data.fps = FlxG.drawFramerate;
-					versionShit.text = "Framerate: " + FlxG.save.data.fps;
+					versionShit.text = "Framerate: " + FlxG.save.data.fps + fpsDisplayAddition;
 				}
 		}
 		else {
@@ -196,7 +200,7 @@ class PauseSubState extends MusicBeatSubstate
 				if (FlxG.updateFramerate >= maxFPS) { FlxG.updateFramerate = maxFPS; }
 				FlxG.drawFramerate = (FlxG.updateFramerate);
 				FlxG.save.data.fps = FlxG.drawFramerate;
-				versionShit.text = "Framerate: " + FlxG.save.data.fps;
+				versionShit.text = "Framerate: " + FlxG.save.data.fps + fpsDisplayAddition;
 			}
 
 			if(FlxG.keys.justPressed.LEFT)
@@ -205,7 +209,7 @@ class PauseSubState extends MusicBeatSubstate
 				if (FlxG.updateFramerate <= minFPS) { FlxG.updateFramerate = minFPS; }
 				FlxG.drawFramerate = (FlxG.updateFramerate);
 				FlxG.save.data.fps = FlxG.drawFramerate;
-				versionShit.text = "Framerate: " + FlxG.save.data.fps;
+				versionShit.text = "Framerate: " + FlxG.save.data.fps + fpsDisplayAddition;
 			}
 		}
 		if (accepted)

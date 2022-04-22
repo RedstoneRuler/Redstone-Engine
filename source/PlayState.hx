@@ -164,12 +164,6 @@ class PlayState extends MusicBeatState
 	{
 		practiceMode = false;
 		wasPractice = false;
-		// Doing this fixes latency on HTML builds for some reason
-		// This sets back to 60 after it loads everything
-		#if html5
-		FlxG.drawFramerate = 30;
-		FlxG.updateFramerate = 30;
-		#end
 		// Formatting save data for important values
 		if (FlxG.save.data.noteframe == null) {
 			FlxG.save.data.noteframe = 10;
@@ -928,9 +922,14 @@ class PlayState extends MusicBeatState
 		startingSong = true;
 		#if html5
 		if(FlxG.save.data.fps != null)
-			FlxG.drawFramerate = FlxG.save.data.fps;
+			if(FlxG.save.data.fps == 60) {
+				FlxG.save.data.fps = 59;
+				FlxG.drawFramerate = 59;
+			} else {
+				FlxG.drawFramerate = FlxG.save.data.fps;
+			}
 		else
-			FlxG.drawFramerate = 60;
+			FlxG.drawFramerate = 59;
 		FlxG.updateFramerate = FlxG.drawFramerate;
 		#end
 		if (isStoryMode)

@@ -61,9 +61,7 @@ class FreeplayState extends MusicBeatState
 		}
 		if (StoryMenuState.weekUnlocked[0] || isDebug)
 		{
-			songs.push('Tutorial');
-			iconList.push('gf');
-			bpmList.push(100);
+			addSong('Tutorial', 'gf', 100);
 		}
 		if (StoryMenuState.weekUnlocked[1] || isDebug)
 		{
@@ -119,7 +117,7 @@ class FreeplayState extends MusicBeatState
 			iconList.push('mom');
 			bpmList.push(125);
 
-			songs.push('Milf');
+			songs.push('MILF');
 			iconList.push('mom');
 			bpmList.push(180);
 		}
@@ -259,6 +257,12 @@ class FreeplayState extends MusicBeatState
 		super.newMeasure();
 		FlxG.camera.zoom += 0.03;
 	}
+	function addSong(song:String, icon:String = 'face', bpm:Float = 0)
+	{
+		songs.push(song);
+		iconList.push(icon);
+		bpmList.push(bpm);
+	}
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -306,17 +310,13 @@ class FreeplayState extends MusicBeatState
 			var poop:String = Highscore.formatSong(songs[curSelected].toLowerCase(), curDifficulty);
 
 			trace(poop);
-				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].toLowerCase());
-				PlayState.isStoryMode = false;
-				PlayState.storyDifficulty = curDifficulty;
-				#if debug
-				Cutscene.switchState(new PlayState(), true, songs[curSelected].toLowerCase());
-				#else
-				FlxG.switchState(new PlayState());
-				#end
-				if (FlxG.sound.music != null) {
-					FlxG.sound.music.stop();
-				}
+			PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].toLowerCase());
+			PlayState.isStoryMode = false;
+			PlayState.storyDifficulty = curDifficulty;
+			FlxG.switchState(new PlayState());
+			if (FlxG.sound.music != null) {
+				FlxG.sound.music.stop();
+			}
 		}
 	}
 

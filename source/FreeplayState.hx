@@ -117,7 +117,7 @@ class FreeplayState extends MusicBeatState
 			iconList.push('mom');
 			bpmList.push(125);
 
-			songs.push('MILF');
+			songs.push('Milf');
 			iconList.push('mom');
 			bpmList.push(180);
 		}

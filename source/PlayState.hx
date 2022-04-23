@@ -124,6 +124,9 @@ class PlayState extends MusicBeatState
 	var tank4:FlxSprite;
 	var tank5:FlxSprite;
 	var tankWatchtower:FlxSprite;
+	var picoStep:Ps;
+	var tankStep:Ts;
+	var tankmanRun:FlxTypedGroup<TankmenBG>;
 	
 	var talking:Bool = true;
 
@@ -157,9 +160,9 @@ class PlayState extends MusicBeatState
 	var altbeat:Bool = false;
 
 	var wasPractice:Bool = false;
-	var picoStep:Ps;
-	var tankStep:Ts;
-	var tankmanRun:FlxTypedGroup<TankmenBG>;
+
+	static public var canHitOtherNote:Bool = false;
+
 	override public function create()
 	{
 		practiceMode = false;
@@ -1821,6 +1824,12 @@ class PlayState extends MusicBeatState
 						notes.remove(daNote, true);
 						daNote.destroy();
 					}*/
+					if(canHitOtherNote)
+					{
+						daNote.kill();
+						notes.remove(daNote, true);
+						daNote.destroy();
+					}
 				}
 
 				if ((!daNote.mustPress || FlxG.save.data.bot == true) && daNote.wasGoodHit)

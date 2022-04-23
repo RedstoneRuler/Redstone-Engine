@@ -223,13 +223,15 @@ class Note extends FlxSprite
 			else {
 				hitBox = FlxG.save.data.noteframe + 5;
 			}
-			
-				if (strumTime > Conductor.songPosition - (hitBox / 60) * 1000 && strumTime < Conductor.songPosition + ((hitBox / 60) * 1000 * 0.5))
-				{
-					canBeHit = true;
-				}
+
+			if (strumTime > Conductor.songPosition - (hitBox / 60) * 1000 && strumTime < Conductor.songPosition + ((hitBox / 60) * 1000 * 0.5))
+			{
+				PlayState.canHitOtherNote = true;
+				canBeHit = true;
+			}
 			else
 			{
+				PlayState.canHitOtherNote = false;
 				canBeHit = false;
 			}
 			if (strumTime < Conductor.songPosition - (hitBox / 60) * 1000)

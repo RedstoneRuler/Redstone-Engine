@@ -218,7 +218,7 @@ class Note extends FlxSprite
 			}
 			// The * 0.5 us so that its easier to hit them too late, instead of too early
 			if(isSustainNote) {
-				hitBox = 15; // Held notes end earlier than the visual, to fix input dropping caused by 'em
+				hitBox = 1;
 			}
 			else {
 				hitBox = FlxG.save.data.noteframe + 5;

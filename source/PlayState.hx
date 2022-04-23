@@ -1819,12 +1819,7 @@ class PlayState extends MusicBeatState
 					swagRect.height -= swagRect.y;
 
 					daNote.clipRect = swagRect;
-					/*if(daNote.mustPress) {
-						daNote.kill();
-						notes.remove(daNote, true);
-						daNote.destroy();
-					}*/
-					if(canHitOtherNote)
+					if(canHitOtherNote && daNote.mustPress)
 					{
 						daNote.kill();
 						notes.remove(daNote, true);

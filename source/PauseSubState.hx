@@ -37,7 +37,7 @@ class PauseSubState extends MusicBeatSubstate
 	];
 	public function new(x:Float, y:Float)
 	{
-		versionShit.text = "Framerate: " + FlxG.save.data.fps + fpsDisplayAddition + " (Left, Right, Shift)";
+		versionShit.text = "Framerate: " + FlxG.save.data.fps + " (Left, Right, Shift)";
 		super();
 		pauseMusic = new FlxSound().loadEmbedded('assets/music/breakfast' + TitleState.soundExt, true, true);
 		pauseMusic.volume = 0;

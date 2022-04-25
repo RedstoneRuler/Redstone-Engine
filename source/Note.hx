@@ -217,7 +217,7 @@ class Note extends FlxSprite
 				}
 			}
 			if(isSustainNote) {
-				hitBox = 1;
+				hitBox = 10;
 			}
 			else {
 				hitBox = FlxG.save.data.noteframe;

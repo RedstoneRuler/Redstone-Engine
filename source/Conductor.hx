@@ -7,7 +7,7 @@ import flixel.FlxG;
  * ...
  * @author
  */
-
+ 
 typedef BPMChangeEvent =
 {
 	var stepTime:Int;

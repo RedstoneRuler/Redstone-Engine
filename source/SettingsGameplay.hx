@@ -41,8 +41,15 @@ class SettingsGameplay extends MusicBeatState
 		if (FlxG.save.data.splash == null) {
 			FlxG.save.data.splash = true;
 		}
+		if (FlxG.save.data.random == null) {
+			FlxG.save.data.random = false;
+		}
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
-		controlsStrings = CoolUtil.coolStringFile((FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off") + "\n" + (FlxG.save.data.accuracy ? "Modern Accuracy System" : "Legacy Accuracy System") + "\n" + (FlxG.save.data.bot ? "autoplay on" : "autoplay off") + "\n" + "Configure Note Offset");
+		controlsStrings = CoolUtil.coolStringFile((FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off")
+		+ "\n" + (FlxG.save.data.accuracy ? "Modern Accuracy System" : "Legacy Accuracy System")
+		+ "\n" + (FlxG.save.data.bot ? "autoplay on" : "autoplay off")
+		+ "\n" + (FlxG.save.data.random ? "randomization on" : "randomization off")
+		+ "\n" + "Configure Note Offset");
 		
 		trace(controlsStrings);
 		versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe + " (Left, Right, Shift, Higher value = Bigger hitbox)";
@@ -58,10 +65,10 @@ class SettingsGameplay extends MusicBeatState
 
 		for (i in 0...controlsStrings.length)
 		{
-				var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i], true, false);
-				controlLabel.isMenuItem = true;
-				controlLabel.targetY = i;
-				grpControls.add(controlLabel);
+			var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i], true, false);
+			controlLabel.isMenuItem = true;
+			controlLabel.targetY = i;
+			grpControls.add(controlLabel);
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 		}
 
@@ -116,7 +123,7 @@ class SettingsGameplay extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if(curSelected != 3) {
+				if(curSelected != 4) {
 					grpControls.remove(grpControls.members[curSelected]);
 				}
 				switch(curSelected)
@@ -140,6 +147,12 @@ class SettingsGameplay extends MusicBeatState
 						ctrl.targetY = curSelected - 2;
 						grpControls.add(ctrl);
 					case 3:
+						FlxG.save.data.random = !FlxG.save.data.random;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.random ? 'randomization on' : 'randomization off'), true, false);
+						ctrl.isMenuItem = true;
+						ctrl.targetY = curSelected - 3;
+						grpControls.add(ctrl);
+					case 4:
 						FlxG.switchState(new LatencyState());
 				}
 			}

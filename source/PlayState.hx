@@ -183,6 +183,9 @@ class PlayState extends MusicBeatState
 		if(FlxG.save.data.hitSounds == null) {
 			FlxG.save.data.hitSounds = false;
 		}
+		if (FlxG.save.data.random == null) {
+			FlxG.save.data.random = false;
+		}
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -1270,6 +1273,9 @@ class PlayState extends MusicBeatState
 				var altNote:Bool = songNotes[3];
 				var daNoteData:Int = Std.int(songNotes[1] % 4);
 
+				if (FlxG.save.data.random == true) {
+					daNoteData = FlxG.random.int(0,3);
+				}
 				var gottaHitNote:Bool = section.mustHitSection;
 				if (songNotes[1] > 3)
 				{

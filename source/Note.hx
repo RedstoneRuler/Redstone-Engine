@@ -217,10 +217,10 @@ class Note extends FlxSprite
 				}
 			}
 			if(isSustainNote) {
-				hitBox = 5;
+				hitBox = 1;
 			}
 			else {
-				hitBox = FlxG.save.data.noteframe + 5;
+				hitBox = FlxG.save.data.noteframe;
 			}
 			// The * 0.5 is so that its easier to hit them too late, instead of too early
 			if (strumTime > Conductor.songPosition - (hitBox / 60) * 1000 && strumTime < Conductor.songPosition + ((hitBox / 60) * 1000 * 0.5))

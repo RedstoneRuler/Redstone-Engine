@@ -25,7 +25,7 @@ class Conductor
 
 	public static var bpmChangeMap:Array<BPMChangeEvent> = [];
 
-	public static var holdCrochet:Float = ((60 / (bpm + 1)) * 1000); // why does this fix it? i have no idea
+	public static var holdCrochet:Float = ((60 / (bpm + 0.01)) * 1000); // why does this fix it? i have no idea
 	public static var holdStepCrochet:Float = holdCrochet / 4;
 
 	public function new()
@@ -64,7 +64,7 @@ class Conductor
 		bpm = newBpm;
 		crochet = ((60 / bpm) * 1000);
 		stepCrochet = crochet / 4;
-		holdCrochet = ((60 / (bpm + 1)) * 1000);
+		holdCrochet = ((60 / (bpm + 0.01)) * 1000);
 		holdStepCrochet = holdCrochet / 4;	
 	}
 }

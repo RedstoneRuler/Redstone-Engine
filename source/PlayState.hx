@@ -2982,6 +2982,7 @@ class PlayState extends MusicBeatState
 			dad.holdTimer = 0;
 		}
 		else {
+			/*
 			if(Conductor.bpm > 150)
 			{
 				if(altbeat == true && dad.animation.getByName('danceLeft') == null) {
@@ -3002,6 +3003,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 			else {
+			*/
 				if(dad.animation.curAnim.name.contains("idle") || dad.animation.curAnim.name.contains("dance") || dad.animation.curAnim.name.contains('-loop')) {
 					dad.dance();
 				}
@@ -3012,7 +3014,7 @@ class PlayState extends MusicBeatState
 				{
 					boyfriend.playAnim('idle', true);
 				}
-			}	
+			//}	
 		}
 
 		if (curBeat % 8 == 7)

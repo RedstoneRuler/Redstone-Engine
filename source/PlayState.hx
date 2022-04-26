@@ -1106,6 +1106,7 @@ class PlayState extends MusicBeatState
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 		{
 			altbeat = !altbeat;
+			/*
 			if(Conductor.bpm > 150) {
 				if(altbeat == true && dad.animation.getByName('danceLeft') == null) {
 					dad.dance();
@@ -1118,9 +1119,10 @@ class PlayState extends MusicBeatState
 				}
 			}
 			else {
+			*/
 				dad.dance();
 				boyfriend.playAnim('idle', true);
-			}
+			//}
 			gf.dance();
 
 			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
@@ -1816,12 +1818,14 @@ class PlayState extends MusicBeatState
 				// i am so fucking sorry for this if condition
 				if (daNote.isSustainNote && daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2 && (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 				{
-					var swagRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
-					swagRect.y /= daNote.scale.y;
-					swagRect.height -= swagRect.y;
+					if(daNote.isSustainNote) {
+						var swagRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
+						swagRect.y /= daNote.scale.y;
+						swagRect.height -= swagRect.y;
 
-					daNote.clipRect = swagRect;
-					if(!daNote.isSustainNote)
+						daNote.clipRect = swagRect;
+					}
+					else
 					{
 						daNote.kill();
 						notes.remove(daNote, true);
@@ -1880,7 +1884,7 @@ class PlayState extends MusicBeatState
 					if (SONG.needsVoices)
 						vocals.volume = 1;
 
-					if(!daNote.isSustainNote)
+					//if(!daNote.isSustainNote)
 						daNote.kill();
 						notes.remove(daNote, true);
 						daNote.destroy();

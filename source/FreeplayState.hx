@@ -166,6 +166,7 @@ class FreeplayState extends MusicBeatState
 			iconList.push('tankman');
 			bpmList.push(178);
 		}
+		addSong('Test', 'bf-pixel', 150);
 		trace(songs);
 		trace(bpmList);
 		trace(iconList);
@@ -307,6 +308,8 @@ class FreeplayState extends MusicBeatState
 
 		if (accepted)
 		{
+			if(songs[curSelected].toLowerCase() == 'test')
+				curDifficulty = 1;
 			var poop:String = Highscore.formatSong(songs[curSelected].toLowerCase(), curDifficulty);
 
 			trace(poop);

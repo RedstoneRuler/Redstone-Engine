@@ -224,12 +224,16 @@ class Note extends FlxSprite
 			// The * 0.5 is so that its easier to hit them too late, instead of too early
 			if (strumTime > Conductor.songPosition - (hitBox / 60) * 1000 && strumTime < Conductor.songPosition + ((hitBox / 60) * 1000 * 0.5))
 			{
-				PlayState.canHitOtherNote = true;
+				if(!isSustainNote) {
+					PlayState.canHitOtherNote = true;
+				}
 				canBeHit = true;
 			}
 			else
 			{
-				PlayState.canHitOtherNote = false;
+				if(!isSustainNote) {
+					PlayState.canHitOtherNote = false;
+				}
 				canBeHit = false;
 			}
 			if (strumTime < Conductor.songPosition - (hitBox / 60) * 1000)

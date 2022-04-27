@@ -51,6 +51,7 @@ class ChartingState extends MusicBeatState
 
 	var bpmTxt:FlxText;
 
+	var hitSounds:Bool = false;
 	var strumLine:FlxSprite;
 	var curSong:String = 'Dadbattle';
 	var amountSteps:Int = 0;
@@ -188,6 +189,14 @@ class ChartingState extends MusicBeatState
 			trace('CHECKED!');
 		};
 
+		var hitsounds_Check = new FlxUICheckBox(10, 100, null, null, "Play Hit Sounds", 100);
+		hitsounds_Check.checked = hitSounds;
+		hitsounds_Check.callback = function()
+		{
+			hitSounds = hitsounds_Check.checked;
+			trace('CHECKED!');
+		};
+
 		var check_mute_inst = new FlxUICheckBox(10, 200, null, null, "Mute Instrumental (in editor)", 100);
 		check_mute_inst.checked = false;
 		check_mute_inst.callback = function()
@@ -254,6 +263,7 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(stepperSpeed);
 		tab_group_song.add(player1DropDown);
 		tab_group_song.add(player2DropDown);
+		tab_group_song.add(hitsounds_Check);
 
 		UI_box.addGroup(tab_group_song);
 		UI_box.scrollFactor.set();
@@ -475,7 +485,7 @@ class ChartingState extends MusicBeatState
 		curRenderedNotes.forEachAlive(function(note:Note)
 		{
 			if(note.strumTime <= Conductor.songPosition) {
-				if(FlxG.sound.music.playing && note.noteData > -1 && note.alpha == 1) {
+				if(FlxG.sound.music.playing && note.noteData > -1 && note.alpha == 1 && hitSounds == true) {
 					FlxG.sound.play('assets/sounds/hitSound.wav');
 				}
 				note.alpha = 0.4;

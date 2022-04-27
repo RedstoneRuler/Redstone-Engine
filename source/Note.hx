@@ -248,6 +248,8 @@ class Note extends FlxSprite
 				wasGoodHit = true;
 			}
 		}
+		if(FlxG.save.data.bot == true)
+			PlayState.canHitOtherNote = false;
 
 		if (tooLate)
 		{

@@ -1842,12 +1842,6 @@ class PlayState extends MusicBeatState
 						daNote.destroy();
 					}
 				}
-				if(!daNote.isSustainNote && daNote.wasGoodHit)
-				{
-					daNote.kill();
-					notes.remove(daNote, true);
-					daNote.destroy();
-				}
 				if ((!daNote.mustPress || FlxG.save.data.bot == true) && daNote.wasGoodHit)
 				{
 					if(daNote.mustPress == true) {

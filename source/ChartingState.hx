@@ -189,7 +189,7 @@ class ChartingState extends MusicBeatState
 			trace('CHECKED!');
 		};
 
-		var hitsounds_Check = new FlxUICheckBox(10, 100, null, null, "Play Hit Sounds", 100);
+		var hitsounds_Check = new FlxUICheckBox(10, 150, null, null, "Play Hit Sounds", 100);
 		hitsounds_Check.checked = hitSounds;
 		hitsounds_Check.callback = function()
 		{
@@ -412,7 +412,6 @@ class ChartingState extends MusicBeatState
 				case 'Must hit section':
 					_song.notes[curSection].mustHitSection = check.checked;
 					updateHeads();
-
 				case 'Change BPM':
 					_song.notes[curSection].changeBPM = check.checked;
 					FlxG.log.add('changed bpm shit');

@@ -231,9 +231,7 @@ class Note extends FlxSprite
 			}
 			else
 			{
-				if(!isSustainNote) {
-					PlayState.canHitOtherNote = false;
-				}
+				PlayState.canHitOtherNote = false;
 				canBeHit = false;
 			}
 			if (strumTime < Conductor.songPosition - (hitBox / 60) * 1000)

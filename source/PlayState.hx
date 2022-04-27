@@ -1814,7 +1814,12 @@ class PlayState extends MusicBeatState
 				}
 
 				daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
-
+				if(!daNote.isSustainNote && daNote.wasGoodHit && daNote.canBeHit)
+				{
+					daNote.kill();
+					notes.remove(daNote, true);
+					daNote.destroy();
+				}
 				// i am so fucking sorry for this if condition
 				if (daNote.isSustainNote && daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2 && (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 				{
@@ -1825,20 +1830,18 @@ class PlayState extends MusicBeatState
 
 						daNote.clipRect = swagRect;
 					}
-					else
+					if(!daNote.isSustainNote)
 					{
 						daNote.kill();
 						notes.remove(daNote, true);
 						daNote.destroy();
 					}
-					/*
 					if(canHitOtherNote && daNote.mustPress)
 					{
 						daNote.kill();
 						notes.remove(daNote, true);
 						daNote.destroy();
 					}
-					*/
 				}
 
 				if ((!daNote.mustPress || FlxG.save.data.bot == true) && daNote.wasGoodHit)

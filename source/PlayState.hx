@@ -886,7 +886,7 @@ class PlayState extends MusicBeatState
 		// healthBar
 		add(healthBar);
 
-		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 525, healthBarBG.y + 40, 0, "", 20);
+		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 535, healthBarBG.y + 40, 0, "", 20);
 		scoreTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		add(scoreTxt);
@@ -1830,13 +1830,13 @@ class PlayState extends MusicBeatState
 
 						daNote.clipRect = swagRect;
 					}
-					if(!daNote.isSustainNote)
+					if(!daNote.isSustainNote) // For false positives, to prevent input dropping
 					{
 						daNote.kill();
 						notes.remove(daNote, true);
 						daNote.destroy();
 					}
-					if(canHitOtherNote && daNote.mustPress)
+					if(canHitOtherNote && daNote.mustPress) // Same here
 					{
 						daNote.kill();
 						notes.remove(daNote, true);

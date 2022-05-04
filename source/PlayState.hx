@@ -161,6 +161,7 @@ class PlayState extends MusicBeatState
 	var altbeat:Bool = false;
 
 	var wasPractice:Bool = false;
+	var wasBotplay:Bool = false;
 
 	static public var canHitOtherNote:Bool = false;
 
@@ -1106,7 +1107,6 @@ class PlayState extends MusicBeatState
 
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 		{
-			altbeat = !altbeat;
 			/*
 			if(Conductor.bpm > 150) {
 				if(altbeat == true && dad.animation.getByName('danceLeft') == null) {
@@ -1561,6 +1561,9 @@ class PlayState extends MusicBeatState
 		if(practiceMode == true) {
 			wasPractice = true;
 		}
+		if(FlxG.save.data.bot == true) {
+			wasBotplay = true;
+		}
 		if(FlxG.save.data.bot != true) {
 			scoreTxt.text = "Score: " + songScore;
 			missTxt.text = "Misses: " + missCount;
@@ -2007,7 +2010,7 @@ class PlayState extends MusicBeatState
 		canPause = false;
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;
-		if (SONG.validScore)
+		if (SONG.validScore && !wasBotplay)
 		{
 			#if !switch
 			Highscore.saveScore(SONG.song, songScore, storyDifficulty);
@@ -2031,7 +2034,7 @@ class PlayState extends MusicBeatState
 
 				StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
 
-				if (SONG.validScore)
+				if (SONG.validScore && !wasBotplay)
 				{
 					NGio.unlockMedal(60961);
 					Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
@@ -2866,6 +2869,12 @@ class PlayState extends MusicBeatState
 	}
 	override function stepHit()
 	{
+		//Putting this here so it doesn't count the opening theme for week 6
+		if(wasPractice) {
+			FlxG.sound.music.onComplete = gameOverPractice;
+		} else {
+			FlxG.sound.music.onComplete = endSong;
+		}
 		if(SONG.song.toLowerCase() == 'stress')
 			{
 				//RIGHT
@@ -2926,13 +2935,10 @@ class PlayState extends MusicBeatState
 
 	override function beatHit()
 	{
-		//Putting this here so it doesn't count the opening theme for week 6
-		if(wasPractice) {
-			FlxG.sound.music.onComplete = gameOverPractice;
-		} else {
-			FlxG.sound.music.onComplete = endSong;
-		}
-		altbeat = !altbeat;
+		if(Conductor.bpm > 160) //There's nothing stopping us from not doing this, but it just looks weird at higher BPMs
+			altbeat = !altbeat;
+		else
+			altbeat = true;
 		super.beatHit();
 
 		if(camZooming && FlxG.save.data.zoom == true) {
@@ -3010,6 +3016,7 @@ class PlayState extends MusicBeatState
 			}
 			else {
 			*/
+			if(altbeat == true) {
 				if(dad.animation.curAnim.name.contains("idle") || dad.animation.curAnim.name.contains("dance") || dad.animation.curAnim.name.contains('-loop')) {
 					dad.dance();
 				}
@@ -3020,6 +3027,7 @@ class PlayState extends MusicBeatState
 				{
 					boyfriend.playAnim('idle', true);
 				}
+			}
 			//}	
 		}
 

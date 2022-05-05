@@ -1530,7 +1530,7 @@ class PlayState extends MusicBeatState
 	{
 		if (FlxG.keys.pressed.SPACE) //mouse wheel health easter egg
 		{
-			health += FlxG.mouse.wheel / 3.5;
+			health += FlxG.mouse.wheel / 5;
 		}
 		#if !debug
 		perfectMode = false;

@@ -1528,10 +1528,12 @@ class PlayState extends MusicBeatState
 		}
 	override public function update(elapsed:Float)
 	{
+		#if debug
 		if (FlxG.keys.pressed.SPACE) //mouse wheel health easter egg
 		{
 			health += FlxG.mouse.wheel / 5;
 		}
+		#end
 		#if !debug
 		perfectMode = false;
 		#end

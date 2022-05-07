@@ -158,7 +158,7 @@ class PlayState extends MusicBeatState
 
 	var inCutscene:Bool = false;
 
-	var altbeat:Bool = false;
+	var altbeat:Bool = true;
 
 	var wasPractice:Bool = false;
 	var wasBotplay:Bool = false;
@@ -2910,7 +2910,6 @@ class PlayState extends MusicBeatState
 						tankmanRun.add(tankmanRunner);
 					}
 				}
-	
 				//Right spawn
 				for(i in 0...tankStep.right.length)
 				{
@@ -3022,7 +3021,7 @@ class PlayState extends MusicBeatState
 			}
 			else {
 			*/
-			if(altbeat == true) {
+			if(altbeat == true || boyfriend.animation.getByName('danceLeft') != null || dad.animation.getByName('danceLeft') != null) {
 				if(dad.animation.curAnim.name.contains("idle") || dad.animation.curAnim.name.contains("dance") || dad.animation.curAnim.name.contains('-loop')) {
 					dad.dance();
 				}

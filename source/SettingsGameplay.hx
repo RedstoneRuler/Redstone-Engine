@@ -44,12 +44,16 @@ class SettingsGameplay extends MusicBeatState
 		if (FlxG.save.data.random == null) {
 			FlxG.save.data.random = false;
 		}
+		if (FlxG.save.data.downscroll == null) {
+			FlxG.save.data.downscroll = false;
+		}
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
-		controlsStrings = CoolUtil.coolStringFile((FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off")
-		+ "\n" + (FlxG.save.data.accuracy ? "Modern Accuracy System" : "Legacy Accuracy System")
-		+ "\n" + (FlxG.save.data.bot ? "autoplay on" : "autoplay off")
-		+ "\n" + (FlxG.save.data.random ? "randomization on" : "randomization off")
-		+ "\n" + "Configure Note Offset");
+		controlsStrings = CoolUtil.coolStringFile((
+		FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off")
+			+ "\n" + (FlxG.save.data.downscroll ? "Downscroll" : "Upscroll")
+			+ "\n" + (FlxG.save.data.bot ? "autoplay on" : "autoplay off")
+			+ "\n" + (FlxG.save.data.random ? "randomization on" : "randomization off")
+			+ "\n" + "Configure Note Offset");
 		
 		trace(controlsStrings);
 		versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe + " (Left, Right, Shift, Higher value = Bigger hitbox)";
@@ -135,8 +139,8 @@ class SettingsGameplay extends MusicBeatState
 						ctrl.targetY = curSelected;
 						grpControls.add(ctrl);
 					case 1:
-						FlxG.save.data.accuracy = !FlxG.save.data.accuracy;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.accuracy ? 'modern accuracy system' : 'legacy accuracy system'), true, false);
+						FlxG.save.data.downscroll = !FlxG.save.data.downscroll;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.downscroll ? 'downscroll' : 'upscroll'), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 1;
 						grpControls.add(ctrl);

@@ -188,6 +188,9 @@ class PlayState extends MusicBeatState
 		if (FlxG.save.data.random == null) {
 			FlxG.save.data.random = false;
 		}
+		if (FlxG.save.data.downscroll == null) {
+			FlxG.save.data.downscroll = false;
+		}
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -779,7 +782,7 @@ class PlayState extends MusicBeatState
 		}
 
 		boyfriend = new Boyfriend(770, 450, SONG.player1);
-
+		var daScroll:Bool = FlxG.save.data.downscroll;
 		// REPOSITIONING PER STAGE
 		switch (curStage)
 		{
@@ -838,7 +841,10 @@ class PlayState extends MusicBeatState
 
 		Conductor.songPosition = -5000;
 
-		strumLine = new FlxSprite(0, 50).makeGraphic(FlxG.width, 10);
+		if(daScroll) //offset the strumline if downscroll is on
+			strumLine = new FlxSprite(0, 550).makeGraphic(FlxG.width, 10);
+		else
+			strumLine = new FlxSprite(0, 50).makeGraphic(FlxG.width, 10);
 		strumLine.scrollFactor.set();
 
 		strumLineNotes = new FlxTypedGroup<FlxSprite>();
@@ -874,6 +880,11 @@ class PlayState extends MusicBeatState
 		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
 
 		FlxG.fixedTimestep = false;
+
+		if(daScroll)
+			healthBarBG = new FlxSprite(0, (FlxG.height * 0.9) += 500).loadGraphic('assets/images/healthBar.png');
+		else 
+			healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic('assets/images/healthBar.png');
 
 		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic('assets/images/healthBar.png');
 		healthBarBG.screenCenter(X);
@@ -1810,6 +1821,7 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic)
 		{
+			var daScroll:Bool = FlxG.save.data.downscroll;
 			notes.forEachAlive(function(daNote:Note)
 			{
 				if (daNote.y > FlxG.height)
@@ -1822,24 +1834,33 @@ class PlayState extends MusicBeatState
 					daNote.visible = true;
 					daNote.active = true;
 				}
-				if(!daNote.isSustainNote && daNote.wasGoodHit)
+				if((!daNote.isSustainNote) && daNote.wasGoodHit)
 				{
 					daNote.kill();
 					notes.remove(daNote, true);
 					daNote.destroy();
 				}
-				daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
+				if (daScroll)
+					daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (-0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
+				else
+					daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
+
+				// WIP interpolation shit? Need to fix the pause issue
+				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
+
 				// i am so fucking sorry for this if condition
-				if (daNote.isSustainNote && daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2 && (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
+				if (daNote.isSustainNote && (daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2 && !daScroll
+					|| daNote.y + daNote.offset.y >= strumLine.y + Note.swagWidth / 2 && daScroll) && (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 				{
 					if(daNote.isSustainNote) {
-						var swagRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
+						var swagRect:FlxRect;
+						swagRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
 						swagRect.y /= daNote.scale.y;
 						swagRect.height -= swagRect.y;
 
 						daNote.clipRect = swagRect;
 					}
-					if(!daNote.isSustainNote) // For false positives, to prevent input dropping
+					if(!daNote.isSustainNote || daScroll) // For false positives, to prevent input dropping
 					{
 						daNote.kill();
 						notes.remove(daNote, true);
@@ -1903,7 +1924,7 @@ class PlayState extends MusicBeatState
 				// WIP interpolation shit? Need to fix the pause issue
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
 
-				if (daNote.y < -daNote.height)
+				if (daNote.y < -daNote.height && !FlxG.save.data.downscroll || daNote.y >= strumLine.y + 106 && FlxG.save.data.downscroll)
 				{
 					if (daNote.isSustainNote && daNote.wasGoodHit)
 					{

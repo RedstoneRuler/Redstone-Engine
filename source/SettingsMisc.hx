@@ -29,7 +29,8 @@ class SettingsMisc extends MusicBeatState
 			FlxG.save.data.optimize = false;
 		}
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
-		controlsStrings = CoolUtil.coolStringFile(FlxG.save.data.optimize ?  "Optimization On" : "Optimization Off");
+		controlsStrings = CoolUtil.coolStringFile(
+			FlxG.save.data.optimize ? "Optimization On" : "Optimization Off");
 		
 		trace(controlsStrings);
 		menuBG.color = 0xFFea71fd;

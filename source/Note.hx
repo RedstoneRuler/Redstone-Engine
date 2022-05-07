@@ -128,7 +128,7 @@ class Note extends FlxSprite
 		}
 
 		// trace(prevNote);
-
+		var daScroll:Bool = FlxG.save.data.downscroll;
 		if (isSustainNote && prevNote != null)
 		{
 			noteScore * 0.2;
@@ -146,6 +146,9 @@ class Note extends FlxSprite
 					animation.play('blueholdend');
 				case 0:
 					animation.play('purpleholdend');
+			}
+			if(daScroll) {
+				flipY = true;
 			}
 
 			updateHitbox();

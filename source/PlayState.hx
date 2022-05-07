@@ -1915,7 +1915,16 @@ class PlayState extends MusicBeatState
 					{
 						if (daNote.tooLate || !daNote.wasGoodHit)
 						{
-							noteMiss(daNote.noteData, true);
+							if(FlxG.save.data.bot == true) {
+								daNote.active = false;
+								daNote.visible = false;
+								daNote.kill();
+								notes.remove(daNote, true);
+								daNote.destroy();
+							}
+							else {
+								noteMiss(daNote.noteData, true);
+							}
 						}
 
 						daNote.active = false;

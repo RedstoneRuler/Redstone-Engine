@@ -407,10 +407,10 @@ class Character extends FlxSprite
 				addOffset('idle');
 				addOffset("singUP", 53, 53);
 				addOffset("singRIGHT", -21, -27);
-				addOffset("singLEFT", 91, -12);
+				addOffset("singLEFT", 101, -12);
 				addOffset("singDOWN", 68, -90);
-				addOffset("singUP-alt", -9, -9);
-				addOffset("singDOWN-alt", 1, 18);
+				addOffset("singUP-alt", -15, -9);
+				addOffset("singDOWN-alt", 1, 16);
 
 				playAnim('idle');
 	
@@ -826,12 +826,7 @@ class Character extends FlxSprite
 				}
 			}
 			else {
-				if(Conductor.bpm > 150) {
-					playAnim('idle', true);
-				}
-				else {
-					playAnim('idle', true);
-				}
+				playAnim('idle', true);
 			}
 		}
 	}

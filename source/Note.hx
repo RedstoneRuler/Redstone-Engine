@@ -147,6 +147,7 @@ class Note extends FlxSprite
 				case 0:
 					animation.play('purpleholdend');
 			}
+
 			if(daScroll) {
 				flipY = true;
 			}
@@ -225,7 +226,7 @@ class Note extends FlxSprite
 				hitBox = FlxG.save.data.noteframe;
 			}
 			// The * 0.5 is so that its easier to hit them too late, instead of too early
-			if (strumTime > Conductor.songPosition - (hitBox / 60) * 1000 && strumTime < Conductor.songPosition + ((hitBox / 60) * 1000 * 0.5))
+			if (strumTime > Conductor.songPosition - (hitBox / 60) * 1000 && strumTime < Conductor.songPosition + ((hitBox / 60) * 1000))
 			{
 				if(!isSustainNote) {
 					PlayState.canHitOtherNote = true;

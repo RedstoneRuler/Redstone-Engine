@@ -1850,7 +1850,7 @@ class PlayState extends MusicBeatState
 
 				// i am so fucking sorry for this if condition
 				if (daNote.isSustainNote && (daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2 && !daScroll
-					|| daNote.y + daNote.offset.y >= strumLine.y + Note.swagWidth / 2 && daScroll) && (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
+					|| daNote.y + daNote.offset.y >= strumLine.y && daScroll) && (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 				{
 					if(daNote.isSustainNote) {
 						var swagRect:FlxRect;

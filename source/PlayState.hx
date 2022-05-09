@@ -1866,11 +1866,11 @@ class PlayState extends MusicBeatState
 						notes.remove(daNote, true);
 						daNote.destroy();
 					}
-					if(canHitOtherNote && daNote.mustPress) // Same here
+					if(daNote.prevNote.isSustainNote && daNote.mustPress && !daNote.isSustainNote) //Same here
 					{
-						daNote.kill();
-						notes.remove(daNote, true);
-						daNote.destroy();
+						daNote.prevNote.kill();
+						notes.remove(daNote.prevNote, true);
+						daNote.prevNote.destroy();
 					}
 				}
 				if ((!daNote.mustPress || FlxG.save.data.bot == true) && daNote.wasGoodHit)

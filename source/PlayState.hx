@@ -1857,8 +1857,13 @@ class PlayState extends MusicBeatState
 						swagRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
 						swagRect.y /= daNote.scale.y;
 						swagRect.height -= swagRect.y;
-
 						daNote.clipRect = swagRect;
+					}
+					if(canHitOtherNote && daNote.mustPress) //Same here
+					{
+						daNote.kill();
+						notes.remove(daNote, true);
+						daNote.destroy();
 					}
 					if(!daNote.isSustainNote || daScroll) // For false positives, to prevent input dropping
 					{

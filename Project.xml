@@ -70,8 +70,14 @@
 	<haxelib name="newgrounds"/>
 	<haxelib name="faxe" if='switch'/>
 	<haxelib name="polymod"/>
-	<haxelib name="extension-webm"/>
-	<haxelib name="actuate"/>
+	<haxelib name="hxcodec" />
+	<!--
+	<haxelib name="extension-webm" if="mac"/>
+	<haxelib name="actuate" if="mac"/>
+	-->
+	<!-- Show debug traces for hxCodec -->
+	<haxedef name="HXC_DEBUG_TRACE" if="debug"/>
+
 	<!-- <haxelib name="markdown" /> -->
 	<!-- <haxelib name="HtmlParser" /> -->
 

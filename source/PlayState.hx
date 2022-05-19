@@ -1,5 +1,6 @@
 package;
 
+import lime.app.Application;
 import Section.SwagSection;
 import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
@@ -39,6 +40,7 @@ import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
 import openfl.Lib;
+import vlc.VideoHandler;
 
 using StringTools;
 
@@ -872,7 +874,7 @@ class PlayState extends MusicBeatState
 
 		add(camFollow);
 
-		FlxG.camera.follow(camFollow, LOCKON, 0.04 * (60 / openfl.Lib.current.stage.frameRate));
+		FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / Application.current.window.frameRate));
 		// FlxG.camera.setScrollBounds(0, FlxG.width, 0, FlxG.height);
 		FlxG.camera.zoom = defaultCamZoom;
 		FlxG.camera.focusOn(camFollow.getPosition());
@@ -990,6 +992,12 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'thorns':
 					schoolIntro(doof);
+				case 'ugh':
+					playCutscene('ughCutscene.mp4');
+				case 'guns':
+					playCutscene('gunsCutscene.mp4');
+				case 'stress':
+					playCutscene('stressCutscene.mp4');
 				default:
 					startCountdown();
 			}
@@ -1011,6 +1019,29 @@ class PlayState extends MusicBeatState
 		num = Math.round( num ) / Math.pow(10, precision);
 		return num;
 	}
+	function playCutscene(name:String, ?atend:Bool)
+		{
+			inCutscene = true;
+		
+			var video:VideoHandler = new VideoHandler();
+			FlxG.sound.music.stop();
+			video.finishCallback = function()
+			{
+				if (atend == true)
+				{
+					if (storyPlaylist.length <= 0)
+						FlxG.switchState(new StoryMenuState());
+					else
+					{
+						SONG = Song.loadFromJson(storyPlaylist[0].toLowerCase());
+						FlxG.switchState(new PlayState());
+					}
+				}
+				else
+					startCountdown();
+			}
+			video.playVideo('assets/videos/' + name);
+		}
 	function schoolIntro(?dialogueBox:DialogueBox):Void
 	{
 		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
@@ -1610,8 +1641,8 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
-		iconP1.setGraphicSize(Std.int(FlxMath.lerp(iconP1.width, 150, 0.09 / (openfl.Lib.current.stage.frameRate / 144))));
-		iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP2.width, 150, 0.09 / (openfl.Lib.current.stage.frameRate / 144))));
+		iconP1.setGraphicSize(Std.int(FlxMath.lerp(iconP1.width, 150, 0.09 / (Application.current.window.frameRate / 144))));
+		iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP2.width, 150, 0.09 / (Application.current.window.frameRate / 144))));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
@@ -1686,7 +1717,7 @@ class PlayState extends MusicBeatState
 
 			if (camFollow.x != dad.getMidpoint().x + 150 && !PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection)
 			{
-				FlxG.camera.follow(camFollow, LOCKON, 0.04 * (60 / openfl.Lib.current.stage.frameRate));
+				FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / Application.current.window.frameRate));
 				camFollow.setPosition(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
 				// camFollow.setPosition(lucky.getMidpoint().x - 120, lucky.getMidpoint().y + 210);
 
@@ -1716,7 +1747,7 @@ class PlayState extends MusicBeatState
 
 			if (PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection && camFollow.x != boyfriend.getMidpoint().x - 100)
 			{
-				FlxG.camera.follow(camFollow, LOCKON, 0.04 * (60 / openfl.Lib.current.stage.frameRate));
+				FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / Application.current.window.frameRate));
 				camFollow.setPosition(boyfriend.getMidpoint().x - 100, boyfriend.getMidpoint().y - 100);
 
 				switch (curStage)
@@ -2115,7 +2146,8 @@ class PlayState extends MusicBeatState
 				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0]);
 				FlxG.sound.music.stop();
 
-				Cutscene.switchState(new PlayState(), true, PlayState.storyPlaylist[0].toLowerCase());
+				FlxG.switchState(new PlayState());
+				//Cutscene.switchState(new PlayState(), true, PlayState.storyPlaylist[0].toLowerCase());
 			}
 		}
 		else

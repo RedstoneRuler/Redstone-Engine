@@ -1,6 +1,7 @@
 package;
 
 import lime.app.Application;
+import lime.graphics.RenderContextAttributes;
 import Section.SwagSection;
 import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
@@ -883,7 +884,7 @@ class PlayState extends MusicBeatState
 
 		FlxG.fixedTimestep = false;
 
-		if(daScroll)
+		if(FlxG.save.data.downscroll)
 			healthBarBG = new FlxSprite(0, (FlxG.height * 0.9) += 500).loadGraphic('assets/images/healthBar.png');
 		else 
 			healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic('assets/images/healthBar.png');
@@ -1570,6 +1571,13 @@ class PlayState extends MusicBeatState
 		}
 	override public function update(elapsed:Float)
 	{
+		var refreshRate:Int = Application.current.window.displayMode.refreshRate;
+		if(FlxG.save.data.fps == refreshRate)
+		{
+		}
+		else
+		{
+		}
 		#if debug
 		if (FlxG.keys.pressed.SPACE) //mouse wheel health easter egg
 		{
@@ -3007,7 +3015,7 @@ class PlayState extends MusicBeatState
 
 	override function beatHit()
 	{
-		if(Conductor.bpm > 160) //There's nothing stopping us from not doing this, but it just looks weird at higher BPMs
+		if(Conductor.bpm > 140) //There's nothing stopping us from not doing this, but it just looks weird at higher BPMs
 			altbeat = !altbeat;
 		else
 			altbeat = true;

@@ -1886,7 +1886,12 @@ class PlayState extends MusicBeatState
 
 				// WIP interpolation shit? Need to fix the pause issue
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
-
+				if(daNote.isSustainNote && daNote.wasGoodHit && daScroll)
+				{
+					daNote.kill();
+					notes.remove(daNote, true);
+					daNote.destroy();
+				}
 				// i am so fucking sorry for this if condition
 				if (daNote.isSustainNote && (daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2 && !daScroll
 					|| daNote.y + daNote.offset.y >= strumLine.y && daScroll) && (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
@@ -1904,7 +1909,7 @@ class PlayState extends MusicBeatState
 						notes.remove(daNote, true);
 						daNote.destroy();
 					}
-					if(!daNote.isSustainNote || daScroll) // For false positives, to prevent input dropping
+					if(!daNote.isSustainNote) // For false positives, to prevent input dropping
 					{
 						daNote.kill();
 						notes.remove(daNote, true);

@@ -19,7 +19,7 @@ A modification of Friday Night Funkin's engine, designed to tweak little details
 - [PhantomArcade3K](https://twitter.com/phantomarcade3k) and [Evilsk8r](https://twitter.com/evilsk8r) - Art/Animation
 - [Kawai Sprite](https://twitter.com/kawaisprite) - Music
 ## Build instructions
-The compilation process for this engine is mostly the same as compiling the base game, but there are a few more steps if you're planning on building an older version. (Anything before "Using a better video playing codec now")
+The compilation process for this engine is mostly the same as compiling the base game, but there are a few more steps if you're planning on building a version with the old video codec.
 After setting up Haxe, do the following:
 - Install actuate by running `haxelib install actuate`
 - Install the extension-webm fork by running `haxelib git extension-webm https://github.com/GrowtopiaFli/extension-webm`

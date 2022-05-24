@@ -2251,6 +2251,7 @@ class PlayState extends MusicBeatState
 		comboSpr.x = coolText.x;
 		comboSpr.acceleration.y = 600;
 		comboSpr.velocity.y -= 150;
+		add(comboSpr); //ninjamuffin forgor :skull:
 
 		comboSpr.velocity.x += FlxG.random.int(1, 10);
 		add(rating);

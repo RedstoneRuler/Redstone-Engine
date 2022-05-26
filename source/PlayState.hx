@@ -1887,27 +1887,38 @@ class PlayState extends MusicBeatState
 				// WIP interpolation shit? Need to fix the pause issue
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
 				// i am so fucking sorry for this if condition
-				if (daNote.isSustainNote && (daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2 && !daScroll
-					|| daNote.y + daNote.offset.y >= strumLine.y && daScroll) && (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
+				if(daScroll)
 				{
-					if(daNote.isSustainNote) {
-						var swagRect:FlxRect;
-						swagRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
-						swagRect.y /= daNote.scale.y;
-						swagRect.height -= swagRect.y;
-						daNote.clipRect = swagRect;
-					}
-					if(!daNote.isSustainNote || canHitOtherNote && daNote.mustPress || daScroll && daNote.wasGoodHit) // For false positives, to prevent input dropping
+					if(daNote.isSustainNote && daNote.wasGoodHit)
 					{
 						daNote.kill();
 						notes.remove(daNote, true);
 						daNote.destroy();
 					}
-					if(daNote.prevNote.isSustainNote && daNote.mustPress && !daNote.isSustainNote) //Same here
+				}
+				else
+				{
+					if (daNote.isSustainNote && (daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2) && (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 					{
-						daNote.prevNote.kill();
-						notes.remove(daNote.prevNote, true);
-						daNote.prevNote.destroy();
+						if(daNote.isSustainNote) {
+							var swagRect:FlxRect;
+							swagRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
+							swagRect.y /= daNote.scale.y;
+							swagRect.height -= swagRect.y;
+							daNote.clipRect = swagRect;
+						}
+						if(!daNote.isSustainNote || canHitOtherNote && daNote.mustPress) // For false positives, to prevent input dropping
+						{
+							daNote.kill();
+							notes.remove(daNote, true);
+							daNote.destroy();
+						}
+						if(daNote.prevNote.isSustainNote && daNote.mustPress && !daNote.isSustainNote) //Same here
+						{
+							daNote.prevNote.kill();
+							notes.remove(daNote.prevNote, true);
+							daNote.prevNote.destroy();
+						}
 					}
 				}
 				if ((!daNote.mustPress || FlxG.save.data.bot == true) && daNote.wasGoodHit)

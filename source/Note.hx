@@ -185,6 +185,7 @@ class Note extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
+		var daScroll:Bool = FlxG.save.data.downscroll;
 		var hitBox:Float;
 		super.update(elapsed);
 		if (mustPress && FlxG.save.data.bot != true)
@@ -219,7 +220,7 @@ class Note extends FlxSprite
 					}
 				}
 			}
-			if(isSustainNote) {
+			if(isSustainNote && !daScroll) {
 				hitBox = 5;
 			}
 			else {

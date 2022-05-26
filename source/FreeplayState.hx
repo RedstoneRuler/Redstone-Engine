@@ -49,47 +49,41 @@ class FreeplayState extends MusicBeatState
 		isDebug = true;
 		#end
 		//append the text files as long as they exist
-		if (CoolUtil.coolTextFile('assets/data/freeplaySonglist.txt') != null)
+		#if desktop
+		if (sys.FileSystem.exists('assets/data/freeplaySonglist.txt'))
+		#end
 			songs = CoolUtil.coolTextFile('assets/data/freeplaySonglist.txt');
-		if (CoolUtil.coolTextFile('assets/data/freeplayBPMList.txt') != null) {
+		#if desktop
+		if (sys.FileSystem.exists('assets/data/freeplayBPMList.txt')) {
+		#end
 			bpmStrings = CoolUtil.coolTextFile('assets/data/freeplayBPMList.txt');
 			bpmStrings.remove('');
 			for(item in bpmStrings)
 			{
 				bpmList.push(Std.parseFloat(item));
 			}
+		#if desktop
 		}
+		#end
 		if (StoryMenuState.weekUnlocked[0] || isDebug)
 		{
 			addSong('Tutorial', 'gf', 100);
 		}
 		if (StoryMenuState.weekUnlocked[1] || isDebug)
 		{
-			songs.push('Bopeebo');
-			iconList.push('dad');
-			bpmList.push(100);
+			addSong('Bopeebo', 'dad', 100);
 			
-			songs.push('Fresh');
-			iconList.push('dad');
-			bpmList.push(120);
+			addSong('Fresh', 'dad', 120);
 
-			songs.push('Dadbattle');
-			iconList.push('dad');
-			bpmList.push(180);
+			addSong('Dadbattle', 'dad', 180);
 		}
 		if (StoryMenuState.weekUnlocked[2] || isDebug)
 		{
-			songs.push('Spookeez');
-			iconList.push('spooky');
-			bpmList.push(150);
+			addSong('Spookeez', 'spooky', 150);
 
-			songs.push('South');
-			iconList.push('spooky');
-			bpmList.push(165);
+			addSong('South', 'spooky', 165);
 
-			songs.push('Monster');
-			iconList.push('monster');
-			bpmList.push(0);
+			addSong('Monster', 'monster', 0);
 		}
 
 		if (StoryMenuState.weekUnlocked[3] || isDebug)
@@ -154,17 +148,11 @@ class FreeplayState extends MusicBeatState
 	
 		if (StoryMenuState.weekUnlocked[7] || isDebug)
 		{
-			songs.push('Ugh');
-			iconList.push('tankman');
-			bpmList.push(160);
+			addSong('Ugh', 'tankman', 160);
 
-			songs.push('Guns');
-			iconList.push('tankman');
-			bpmList.push(185);
+			addSong('Guns', 'tankman', 185);
 
-			songs.push('Stress');
-			iconList.push('tankman');
-			bpmList.push(178);
+			addSong('Stress', 'tankman', 178);
 		}
 		addSong('Test', 'bf-pixel', 150);
 		trace(songs);

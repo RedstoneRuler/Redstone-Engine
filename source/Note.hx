@@ -223,8 +223,8 @@ class Note extends FlxSprite
 			if(isSustainNote && !daScroll) {
 				hitBox = 5;
 			}
-			else if (isSustainNote && !daScroll) {
-				hitBox = 6.5;
+			else if (isSustainNote && daScroll) {
+				hitBox = 10;
 			}
 			else {
 				hitBox = FlxG.save.data.noteframe;

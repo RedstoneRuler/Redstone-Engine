@@ -1984,7 +1984,8 @@ class PlayState extends MusicBeatState
 					{
 						if (daNote.tooLate || !daNote.wasGoodHit)
 						{
-							if(FlxG.save.data.bot == true) {
+							// Force a good note hit if it goes offscreen, preventing lag from triggering a miss
+							if(FlxG.save.data.bot == true || !daNote.mustPress) {
 								daNote.active = false;
 								daNote.visible = false;
 								daNote.kill();

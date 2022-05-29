@@ -2223,8 +2223,8 @@ class PlayState extends MusicBeatState
 					hitRate += 0.50;
 				}
 			songScore += score;
+			updateAccuracy(strumtime, daRating, noteDiff);
 		}		
-		updateAccuracy(strumtime, daRating, noteDiff);
 		/* if (combo > 60)
 				daRating = 'sick';
 			else if (combo > 12)

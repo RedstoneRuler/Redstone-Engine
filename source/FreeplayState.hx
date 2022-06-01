@@ -27,6 +27,7 @@ class FreeplayState extends MusicBeatState
 	var diffText:FlxText;
 	var lerpScore:Int = 0;
 	var intendedScore:Int = 0;
+	var isDebug:Bool = false;
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
@@ -42,29 +43,22 @@ class FreeplayState extends MusicBeatState
 					FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt);
 			}
 		 */
-
-		var isDebug:Bool = false;
-
 		#if debug
 		isDebug = true;
 		#end
 		//append the text files as long as they exist
-		#if desktop
-		if (sys.FileSystem.exists('assets/data/freeplaySonglist.txt'))
-		#end
-			songs = CoolUtil.coolTextFile('assets/data/freeplaySonglist.txt');
-		#if desktop
-		if (sys.FileSystem.exists('assets/data/freeplayBPMList.txt')) {
-		#end
-			bpmStrings = CoolUtil.coolTextFile('assets/data/freeplayBPMList.txt');
-			bpmStrings.remove('');
-			for(item in bpmStrings)
-			{
-				bpmList.push(Std.parseFloat(item));
-			}
-		#if desktop
+		var songStrings:Array<String> = CoolUtil.coolTextFile('assets/data/freeplaySonglist.txt');
+		//songStrings.remove('');
+		for (i in 0...songStrings.length)
+		{
+			var songShit = songStrings[i].split(',');
+			songShit.remove(' ');
+			var songName = songShit[0];
+			addSong(songName, songShit[1], Std.parseInt(songShit[2]), Std.parseInt(songShit[3]));
 		}
-		#end
+	
+		//HARDCODED SONG TEMPLATE: addSong('title', 'icon', bpm, week);
+		/*
 		if (StoryMenuState.weekUnlocked[0] || isDebug)
 		{
 			addSong('Tutorial', 'gf', 100);
@@ -155,11 +149,12 @@ class FreeplayState extends MusicBeatState
 			addSong('Stress', 'tankman', 178);
 		}
 		addSong('Test', 'bf-pixel', 150);
+		*/
 		trace(songs);
 		trace(bpmList);
 		trace(iconList);
 
-		songs.remove('');
+		songs.remove(''); //if empty strings got in there, just clear them out, they probably came from the text file
 		// LOAD MUSIC
 
 		// LOAD CHARACTERS
@@ -246,11 +241,13 @@ class FreeplayState extends MusicBeatState
 		super.newMeasure();
 		FlxG.camera.zoom += 0.03;
 	}
-	function addSong(song:String, icon:String = 'face', bpm:Float = 0)
+	function addSong(song:String, icon:String = 'blank', bpm:Float = 0, week:Int = 0)
 	{
-		songs.push(song);
-		iconList.push(icon);
-		bpmList.push(bpm);
+		if (StoryMenuState.weekUnlocked[week] || isDebug) {
+			songs.push(song);
+			iconList.push(icon);
+			bpmList.push(bpm);
+		}
 	}
 	override function update(elapsed:Float)
 	{

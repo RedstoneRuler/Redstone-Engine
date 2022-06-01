@@ -6,7 +6,7 @@ class HealthIcon extends FlxSprite
 {
 	public var sprTracker:FlxSprite;
 	
-	public function new(char:String = 'bf', isPlayer:Bool = false)
+	public function new(char:String = 'face', isPlayer:Bool = false)
 	{
 		super();
 		loadGraphic('assets/images/iconGrid.png', true, 150, 150);
@@ -38,13 +38,19 @@ class HealthIcon extends FlxSprite
 		animation.add('monster-christmas', [19, 20, 19], 0, false, isPlayer);
 		animation.add('tylo', [24, 25, 26], 0, false, isPlayer);
 		// Avoids crashes if health head doesn't exist
-		if(animation.getByName(char) != null) {
-			animation.play(char);
+		if(char != 'blank')
+		{
+			if(animation.getByName(char) != null) {
+				animation.play(char);
+			}
+			else {
+				animation.play("face");
+			}
+			scrollFactor.set();
 		}
 		else {
-			animation.play("face");
+			visible = false;
 		}
-		scrollFactor.set();
 	}
 	override function update(elapsed:Float)
 	{

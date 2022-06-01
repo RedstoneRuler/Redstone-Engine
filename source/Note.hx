@@ -220,7 +220,7 @@ class Note extends FlxSprite
 					}
 				}
 			}
-			if(isSustainNote && !daScroll) {
+			if(isSustainNote && !daScroll && !PlayState.canHitOtherNote) {
 				hitBox = 5;
 			}
 			else if (isSustainNote && daScroll) {

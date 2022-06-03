@@ -55,7 +55,7 @@ class TitleState extends MusicBeatState
 		}
 		#if !html5
 		if (FlxG.save.data.fps == null) {
-			FlxG.save.data.fps = 60;
+			FlxG.save.data.fps = Application.current.window.displayMode.refreshRate;
 		}
 		#end
 		Polymod.init({modRoot: "mods", dirs: ['introMod']});

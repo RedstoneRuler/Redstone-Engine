@@ -44,6 +44,7 @@ class TitleState extends MusicBeatState
 	var speed:Float = 1;
 	var bpmModifier:Float = 0;
 	var curWacky:Array<String> = [];
+	var creditsText:Array<String> = [];
 
 	var wackyImage:FlxSprite;
 	var defaultCamZoom:Float = 1;
@@ -63,7 +64,7 @@ class TitleState extends MusicBeatState
 		PlayerSettings.init();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
-
+		creditsText = Assets.getText('assets/data/introCredits.txt').split('\n');
 		// DEBUG BULLSHIT
 
 		super.create();
@@ -233,7 +234,22 @@ class TitleState extends MusicBeatState
 
 		return swagGoodArray;
 	}
-
+	/*
+	function getCreditTextShit():Array<Array<String>>
+	{
+		var fullText:String = Assets.getText('assets/data/introCredits.txt');
+	
+		var firstArray:Array<String> = fullText.split('\n');
+		var swagGoodArray:Array<Array<String>> = [];
+	
+		for (i in firstArray)
+		{
+			swagGoodArray.push(i.split('--'));
+		}
+	
+		return swagGoodArray;
+	}
+	*/
 	var transitioning:Bool = false;
 
 	override function update(elapsed:Float)
@@ -366,7 +382,7 @@ class TitleState extends MusicBeatState
 		switch (curBeat)
 		{
 			case 1:
-				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er', 'redstoneruler']);
+				createCoolText(creditsText);
 			// credTextShit.visible = true;
 			case 3:
 				addMoreText('present');
@@ -378,10 +394,10 @@ class TitleState extends MusicBeatState
 			// credTextShit.text = 'In association \nwith';
 			// credTextShit.screenCenter();
 			case 5:
-				createCoolText(['In association', 'with']);
+				createCoolText(['Redstone Engine by']);
 			case 7:
-				addMoreText('newgrounds');
-				ngSpr.visible = true;
+				addMoreText('RedstoneRuler');
+				ngSpr.visible = false;
 			// credTextShit.text += '\nNewgrounds';
 			case 8:
 				deleteCoolText();
@@ -408,8 +424,8 @@ class TitleState extends MusicBeatState
 				addMoreText('Night');
 			// credTextShit.text += '\nNight';
 			case 15:
-				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
-
+				addMoreText('Funkin');
+				// credTextShit.text += '\nFunkin';
 			case 16:
 				skipIntro();
 		}

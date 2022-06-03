@@ -153,7 +153,7 @@ class Alphabet extends FlxSpriteGroup
 			var isSymbol:Bool = AlphaCharacter.symbols.indexOf(splitWords[loopNum]) != -1;
 			#end
 
-			if (AlphaCharacter.alphabet.indexOf(splitWords[loopNum].toLowerCase()) != -1 ) //|| isNumber || isSymbol
+			if (AlphaCharacter.alphabet.indexOf(splitWords[loopNum].toLowerCase()) != -1 || isNumber || isSymbol)
 				// if (AlphaCharacter.alphabet.contains(splitWords[loopNum].toLowerCase()) || isNumber || isSymbol)
 
 			{
@@ -181,7 +181,17 @@ class Alphabet extends FlxSpriteGroup
 				letter.row = curRow;
 				if (isBold)
 				{
-					letter.createBold(splitWords[loopNum]);
+					if (isNumber)
+					{
+						letter.createNumber(splitWords[loopNum], true);
+					}
+					else if (isSymbol)
+					{
+						letter.createSymbol(splitWords[loopNum], true);
+					}
+					else {
+						letter.createBold(splitWords[loopNum]);
+					}
 				}
 				else
 				{
@@ -258,49 +268,60 @@ class AlphaCharacter extends FlxSprite
 		updateHitbox();
 	}
 
-	public function createLetter(letter:String):Void
+	public function createLetter(letter:String, bold:Bool = false):Void
 	{
 		var letterCase:String = "lowercase";
 		if (letter.toLowerCase() != letter)
 		{
 			letterCase = 'capital';
 		}
-
-		animation.addByPrefix(letter, letter + " " + letterCase, 24);
+		if(bold) {
+			animation.addByPrefix(letter, letter.toUpperCase() + " bold", 24);
+		} else {
+			animation.addByPrefix(letter, letter + " " + letterCase, 24);
+		}
 		animation.play(letter);
 		updateHitbox();
 
 		FlxG.log.add('the row' + row);
-
-		y = (110 - height);
-		y += row * 60;
+		if(!bold) {
+			y = (110 - height);
+			y += row * 60;
+		}
+		
 	}
 
-	public function createNumber(letter:String):Void
+	public function createNumber(letter:String, bold:Bool = false):Void
 	{
-		animation.addByPrefix(letter, letter, 24);
+		if(bold) {
+			animation.addByPrefix(letter, letter.toUpperCase() + " bold", 24);
+		} else {
+			animation.addByPrefix(letter, letter, 24);
+		}
 		animation.play(letter);
 
 		updateHitbox();
 	}
 
-	public function createSymbol(letter:String)
+	public function createSymbol(letter:String, bold:Bool = false)
 	{
+		var textPrefix = '';
+		if(bold) {textPrefix = ' bold';}
 		switch (letter)
 		{
 			case '.':
-				animation.addByPrefix(letter, 'period', 24);
+				animation.addByPrefix(letter, 'period' + textPrefix, 24);
 				animation.play(letter);
 				y += 50;
 			case "'":
-				animation.addByPrefix(letter, 'apostraphie', 24);
+				animation.addByPrefix(letter, 'apostraphie' + textPrefix, 24);
 				animation.play(letter);
 				y -= 0;
 			case "?":
-				animation.addByPrefix(letter, 'question mark', 24);
+				animation.addByPrefix(letter, 'question mark' + textPrefix, 24);
 				animation.play(letter);
 			case "!":
-				animation.addByPrefix(letter, 'exclamation point', 24);
+				animation.addByPrefix(letter, 'exclamation point' + textPrefix, 24);
 				animation.play(letter);
 		}
 

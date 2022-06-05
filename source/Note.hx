@@ -6,6 +6,7 @@ import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 import polymod.format.ParseRules.TargetSignatureElement;
 import flixel.FlxG;
+import flixel.util.FlxTimer;
 
 using StringTools;
 
@@ -34,6 +35,7 @@ class Note extends FlxSprite
 
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?altNote:Bool = false)
 	{
+		
 		super();
 		if (prevNote == null)
 			prevNote = this;
@@ -232,6 +234,7 @@ class Note extends FlxSprite
 			// The * 0.5 is so that its easier to hit them too late, instead of too early
 			if (strumTime > Conductor.songPosition - ((hitBox / 60) * 1000) && strumTime < Conductor.songPosition + ((hitBox / 60) * 1000) * 0.5)
 			{
+				PlayState.canHitNote = true;
 				if(!isSustainNote) {
 					PlayState.canHitOtherNote = true;
 				}
@@ -239,6 +242,7 @@ class Note extends FlxSprite
 			}
 			else
 			{
+				queueNoteCancel();
 				PlayState.canHitOtherNote = false;
 				canBeHit = false;
 			}
@@ -264,6 +268,15 @@ class Note extends FlxSprite
 			if (alpha > 0.3) {
 				alpha = 0.3;
 			}
+		}
+	}
+	function queueNoteCancel():Void
+	{
+		if(canBeHit == false){
+			new FlxTimer().start(2.6, function(tmr:FlxTimer)
+			{
+				PlayState.canHitNote = false;
+			});
 		}
 	}
 }

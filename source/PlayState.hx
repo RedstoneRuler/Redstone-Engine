@@ -165,8 +165,10 @@ class PlayState extends MusicBeatState
 
 	var wasPractice:Bool = false;
 	var wasBotplay:Bool = false;
+	var mashVar:Float = 0;
 
 	static public var canHitOtherNote:Bool = false;
+	static public var canHitNote:Bool = false;
 
 	override public function create()
 	{
@@ -2040,6 +2042,7 @@ class PlayState extends MusicBeatState
 		if (FlxG.keys.justPressed.ONE)
 			endSong;
 		#end
+		FlxG.watch.addQuick("Can Hit Note",PlayState.canHitNote);
 	}
 	function gameOver(gitaroo:Bool = false):Void
 	{
@@ -2747,6 +2750,36 @@ class PlayState extends MusicBeatState
 			if (rightP)
 				noteMiss(3);
 		}
+		else {
+			if (leftP && canHitNote)
+			{
+				mashVar += 0.5;
+				if(mashVar > 2) {
+					noteMiss(0);
+				}
+			}
+			if (downP && canHitNote)
+			{
+				mashVar += 0.5;
+				if(mashVar > 23) {
+					noteMiss(1);
+				}
+			}
+			if (upP && canHitNote)
+			{
+				mashVar += 0.5;
+				if(mashVar > 2) {
+					noteMiss(2);
+				}
+			}
+			if (rightP && canHitNote)
+			{
+				mashVar += 0.5;
+				if(mashVar > 2) {
+					noteMiss(3);
+				}
+			}
+		}
 	}
 
 	function noteCheck(keyP:Bool, note:Note):Void
@@ -3016,6 +3049,9 @@ class PlayState extends MusicBeatState
 
 	override function beatHit()
 	{
+		mashVar -= 0.8;
+		if(mashVar < 0)
+			mashVar = 0;
 		if(Conductor.bpm > 140) //There's nothing stopping us from not doing this, but it just looks weird at higher BPMs
 			altbeat = !altbeat;
 		else

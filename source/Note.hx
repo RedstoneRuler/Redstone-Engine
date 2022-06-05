@@ -277,7 +277,9 @@ class Note extends FlxSprite
 			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
 				if(canBeHit == false) {
+					*/
 					PlayState.canHitNote = false;
+					/*
 				}
 			});
 		}

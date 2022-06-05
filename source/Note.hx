@@ -272,11 +272,15 @@ class Note extends FlxSprite
 	}
 	function queueNoteCancel():Void
 	{
-		if(canBeHit == false){
-			new FlxTimer().start(3, function(tmr:FlxTimer)
+		/*
+		if(canBeHit == false) {
+			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
-				PlayState.canHitNote = false;
+				if(canBeHit == false) {
+					PlayState.canHitNote = false;
+				}
 			});
 		}
+		*/
 	}
 }

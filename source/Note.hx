@@ -273,7 +273,7 @@ class Note extends FlxSprite
 	function queueNoteCancel():Void
 	{
 		if(canBeHit == false){
-			new FlxTimer().start(2.6, function(tmr:FlxTimer)
+			new FlxTimer().start(3, function(tmr:FlxTimer)
 			{
 				PlayState.canHitNote = false;
 			});

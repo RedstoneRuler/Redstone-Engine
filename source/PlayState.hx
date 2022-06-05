@@ -2753,11 +2753,6 @@ class PlayState extends MusicBeatState
 	{
 		if (keyP)
 			goodNoteHit(note);
-		else
-		{
-			//This. This right here is what causes the input dropping.
-			//badNoteCheck();
-		}
 	}
 	/*
 	function showSplash(dir:Int):Void

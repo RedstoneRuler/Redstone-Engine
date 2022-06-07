@@ -319,7 +319,7 @@ class ChartingState extends MusicBeatState
 		check_altAnim = new FlxUICheckBox(10, 230, null, null, "Alt Animation (Forced)", 100);
 		check_altAnim.name = 'check_altAnim';
 
-		check_altAnim2 = new FlxUICheckBox(10, 250, null, null, "Alt Animation (Automatic)", 100);
+		check_altAnim2 = new FlxUICheckBox(10, 255, null, null, "Alt Animation (Automatic)", 100);
 		check_altAnim2.name = 'check_altAnim2';
 
 		check_changeBPM = new FlxUICheckBox(10, 60, null, null, 'Change BPM', 100);

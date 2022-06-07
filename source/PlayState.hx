@@ -1925,6 +1925,18 @@ class PlayState extends MusicBeatState
 				}
 				if ((!daNote.mustPress || FlxG.save.data.bot == true) && daNote.wasGoodHit)
 				{
+					var anim:String = "";
+					switch (Math.abs(daNote.noteData))
+					{
+						case 0:
+							anim = 'LEFT';
+						case 1:
+							anim = 'DOWN';
+						case 2:
+							anim = 'UP';
+						case 3:
+							anim = 'RIGHT';
+					}
 					if(daNote.mustPress == true) {
 						bfNoteShit(daNote);
 						botHit(daNote);
@@ -1940,6 +1952,8 @@ class PlayState extends MusicBeatState
 					if (SONG.notes[Math.floor(curStep / 16)] != null)
 					{
 						if (SONG.notes[Math.floor(curStep / 16)].altAnim) {
+							altAnim = '-alt';
+						} else if(SONG.notes[Math.floor(curStep / 16)].altAnim2 && dad.animation.getByName('sing' + anim + '-alt') != null) {
 							altAnim = '-alt';
 						}
 					}

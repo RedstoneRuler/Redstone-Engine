@@ -2764,42 +2764,22 @@ class PlayState extends MusicBeatState
 			if (rightP)
 				noteMiss(3);
 		}
-		else {
-			if (leftP && canHitNote)
-			{
-				mashVar += 0.5;
-				if(mashVar > 2) {
-					noteMiss(0);
-				}
-			}
-			if (downP && canHitNote)
-			{
-				mashVar += 0.5;
-				if(mashVar > 23) {
-					noteMiss(1);
-				}
-			}
-			if (upP && canHitNote)
-			{
-				mashVar += 0.5;
-				if(mashVar > 2) {
-					noteMiss(2);
-				}
-			}
-			if (rightP && canHitNote)
-			{
-				mashVar += 0.5;
-				if(mashVar > 2) {
-					noteMiss(3);
-				}
-			}
-		}
 	}
 
 	function noteCheck(keyP:Bool, note:Note):Void
 	{
-		if (keyP)
+		if (keyP) {
 			goodNoteHit(note);
+		}
+		else if(FlxG.save.data.ghost) {
+			//if (keyP)
+				//{
+					mashVar += 0.3;
+					if(mashVar > 1.5) {
+						noteMiss(note.noteData);
+					}
+				//}
+		}
 	}
 	/*
 	function showSplash(dir:Int):Void
@@ -3046,7 +3026,8 @@ class PlayState extends MusicBeatState
 		super.stepHit();
 		if (SONG.needsVoices)
 		{
-			if (vocals.time > Conductor.songPosition + 20 || vocals.time < Conductor.songPosition - 20)
+			if (Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset)) > 20
+				|| (SONG.needsVoices && Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > 20))
 			{
 				resyncVocals();
 			}

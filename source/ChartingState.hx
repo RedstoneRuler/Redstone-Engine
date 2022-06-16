@@ -277,6 +277,7 @@ class ChartingState extends MusicBeatState
 	var stepperSectionBPM:FlxUINumericStepper;
 	var check_altAnim:FlxUICheckBox;
 	var check_altAnim2:FlxUICheckBox;
+	var check_altNote:FlxUICheckBox;
 
 	function addSectionUI():Void
 	{
@@ -350,10 +351,14 @@ class ChartingState extends MusicBeatState
 		stepperSusLength.value = 0;
 		stepperSusLength.name = 'note_susLength';
 
-		var applyLength:FlxButton = new FlxButton(100, 10, 'Apply');
+		check_altNote = new FlxUICheckBox(10, 25, null, null, "Alt Note", 100);
+		check_altNote.name = 'check_altNote';
 
+		//var applyLength:FlxButton = new FlxButton(100, 10, 'Apply');
+
+		tab_group_note.add(check_altNote);
 		tab_group_note.add(stepperSusLength);
-		tab_group_note.add(applyLength);
+		//tab_group_note.add(applyLength);
 
 		UI_box.addGroup(tab_group_note);
 	}
@@ -424,6 +429,10 @@ class ChartingState extends MusicBeatState
 					_song.notes[curSection].altAnim = check.checked;
 				case "Alt Animation (Automatic)":
 					_song.notes[curSection].altAnim2 = check.checked;
+				case "Alt Note":
+					if(curSelectedNote != null) {
+						curSelectedNote[3] = check.checked;
+					}
 			}
 		}
 		else if (id == FlxUINumericStepper.CHANGE_EVENT && (sender is FlxUINumericStepper))
@@ -837,8 +846,13 @@ class ChartingState extends MusicBeatState
 
 	function updateNoteUI():Void
 	{
-		if (curSelectedNote != null)
+		if (curSelectedNote != null) {
 			stepperSusLength.value = curSelectedNote[2];
+			if(curSelectedNote[3] != null) {
+				check_altNote.checked = curSelectedNote[3];
+			}
+		}
+
 	}
 
 	function updateGrid():Void
@@ -940,6 +954,7 @@ class ChartingState extends MusicBeatState
 
 		updateGrid();
 		updateNoteUI();
+		trace('SELECTED NOTE');
 	}
 
 	function deleteNote(note:Note):Void
@@ -994,6 +1009,7 @@ class ChartingState extends MusicBeatState
 		updateGrid();
 		updateNoteUI();
 
+		check_altNote.checked = false;
 		autosaveSong();
 	}
 

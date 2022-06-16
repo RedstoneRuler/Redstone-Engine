@@ -149,6 +149,10 @@ class AnimationDebug extends FlxState
 			curAnim += 1;
 		}
 
+		if (FlxG.keys.justPressed.Z)
+		{
+			char.flipX = !char.flipX;
+		}
 		if (curAnim < 0)
 			curAnim = animList.length - 1;
 

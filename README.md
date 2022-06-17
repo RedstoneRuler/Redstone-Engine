@@ -6,6 +6,7 @@ A modification of Friday Night Funkin's engine, designed to tweak little details
 - Customizable note hitboxes
 - Notes glow when they can be hit
 - Decimal BPM support
+- Randomization
 - Powerful optimization system featuring almost no noticeable visual changes
 - Improved animations
 - And more!
@@ -26,9 +27,5 @@ After setting up Haxe, do the following:
 - Finally, run `lime rebuild extension-webm [windows/mac/linux/android]`, depending on device.
 
 The rest of the process can be found here: https://github.com/ninjamuffin99/Funkin#build-instructions
-## HTML5
-Don't feel like downloading the engine? Play a browser build here!
-This version is updated more frequently than the downloadable counterparts.
-https://redstoneruler.github.io/redstoneengine/
 ## Other notes
 This repository probably looks much smaller than what you're used to. Don't worry, I just gitignored a lot of unnecessary files. This will not affect compilation.

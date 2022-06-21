@@ -2250,18 +2250,21 @@ class PlayState extends MusicBeatState
 		if(FlxG.save.data.bot != true) {
 			if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.9)
 				{
+					shits += 1;
 					daRating = 'shit';
 					score = 50;
 					hitRate -= 1;
 				}
 				else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.75)
 				{
+					bads += 1;
 					daRating = 'bad';
 					score = 100;
 					hitRate -= 0.50;
 				}
 				else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.2)
 				{
+					goods += 1;
 					daRating = 'good';
 					score = 200;
 					hitRate += 0.50;
@@ -2277,6 +2280,7 @@ class PlayState extends MusicBeatState
 				daRating = 'bad';
 		 */
 		if(daRating == 'sick') {
+			sicks += 1;
 			hitRate += 1;
 			if (!daNote.isSustainNote && FlxG.save.data.splash)
 			{
@@ -2530,17 +2534,21 @@ class PlayState extends MusicBeatState
 	}
 	function updateFC():Void
 	{
-		if(missCount == 0)
-			if(sicks >= 1 && goods == 0 && bads == 0 && shits == 0)
-				clearStats == 'MFC';
-			else if(bads == 0 && shits == 0)
+		if(missCount == 0) {
+			clearStats == 'MFC';
+			if(bads == 0 && shits == 0)
 				clearStats = 'GFC';
 			else
 				clearStats = 'FC';
+		}
 		else if(missCount <= 10)
 			clearStats = 'SDCB';
 		else
 			clearStats = 'Clear';
+		FlxG.watch.addQuick('Sicks', sicks);
+		FlxG.watch.addQuick('Goods', goods);
+		FlxG.watch.addQuick('Bads', bads);
+		FlxG.watch.addQuick('Shits', shits);
 	}
 	private function keyShit():Void
 	{

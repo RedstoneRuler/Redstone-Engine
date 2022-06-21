@@ -48,6 +48,7 @@
 	<!-- <library name="noPreload"/> -->
 	<!--I don't get why these were restricted in the first place-->
 	<assets path="assets/music"/>
+	<assets path="assets/songs"/>
 	<assets path="assets/sounds"/>
 	<assets path="assets/videos"/>
 	<!-- NOTE FOR FUTURE SELF SINCE FONTS ARE ALWAYS FUCKY 

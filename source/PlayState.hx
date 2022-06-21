@@ -243,7 +243,7 @@ class PlayState extends MusicBeatState
 		{
 			curStage = "spooky";
 		}
-		if (SONG.song.toLowerCase() == 'pico' || SONG.song.toLowerCase() == 'blammed' || SONG.song.toLowerCase() == 'philly')
+		if (SONG.song.toLowerCase() == 'pico' || SONG.song.toLowerCase() == 'blammed' || SONG.song.toLowerCase() == 'philly-nice')
 		{
 			curStage = 'philly';
 		}
@@ -1287,7 +1287,7 @@ class PlayState extends MusicBeatState
 		lastReportedPlayheadPosition = 0;
 
 		if (!paused)
-			FlxG.sound.playMusic('assets/songs/${SONG.song.toLowerCase()}/Inst' + TitleState.soundExt, 1, false);
+			FlxG.sound.playMusic("assets/songs/" + SONG.song.toLowerCase() + "/Inst" + TitleState.soundExt, 1, false);
 		vocals.play();
 	}
 
@@ -1303,7 +1303,7 @@ class PlayState extends MusicBeatState
 		curSong = songData.song;
 
 		if(SONG.needsVoices) {
-			vocals = new FlxSound().loadEmbedded('assets/songs/${SONG.song.toLowerCase()}/Voices' + TitleState.soundExt);
+			vocals = new FlxSound().loadEmbedded("assets/songs/" + curSong.toLowerCase() + "/Voices" + TitleState.soundExt);
 		}
 		else {
 			vocals = new FlxSound();

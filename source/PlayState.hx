@@ -1569,7 +1569,7 @@ class PlayState extends MusicBeatState
 					spr.offset.y -= 13;
 				}
 			}
-			});
+		});
 	}
 	function bfNoteShit(daNote:Note):Void
 		{

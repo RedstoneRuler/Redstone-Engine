@@ -7,7 +7,7 @@ A modification of Friday Night Funkin's engine, designed to tweak little details
 - Notes glow when they can be hit
 - Decimal BPM support
 - Randomization
-- Powerful optimization system featuring almost no noticeable visual changes
+- Powerful optimization system
 - Improved animations
 - And more!
 ## Feature requests

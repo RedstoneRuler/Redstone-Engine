@@ -350,7 +350,7 @@ class FreeplayState extends MusicBeatState
 		// lerpScore = 0;
 		#end
 
-		FlxG.sound.playMusic('assets/music/' + songs[curSelected] + "_Inst" + TitleState.soundExt, 0);
+		FlxG.sound.playMusic('assets/songs/' + songs[curSelected].toLowerCase() + "/Inst" + TitleState.soundExt, 0);
 
 		Conductor.changeBPM(bpmList[curSelected]);
 		var bullShit:Int = 0;

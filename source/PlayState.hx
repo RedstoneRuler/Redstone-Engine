@@ -186,7 +186,6 @@ class PlayState extends MusicBeatState
 	override public function create()
 	{
 		curStage = 'stage';
-		defaultCamZoom = 0.9;
 		practiceMode = false;
 		wasPractice = false;
 		// var gameCam:FlxCamera = FlxG.camera;
@@ -717,6 +716,8 @@ class PlayState extends MusicBeatState
 
 		switch (curStage)
 		{
+			case 'stage':
+				defaultCamZoom = 0.9;
 			case 'limo':
 				gfVersion = 'gf-car';
 			case 'mall' | 'mallEvil':
@@ -731,10 +732,6 @@ class PlayState extends MusicBeatState
 				} else {
 					gfVersion = 'gf-tankmen';
 				}
-		}
-
-		if (curStage == 'limo') {
-			gfVersion = 'gf-car';
 		}
 
 		gf = new Character(400, 130, gfVersion);

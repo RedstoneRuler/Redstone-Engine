@@ -2544,7 +2544,7 @@ class PlayState extends MusicBeatState
 					clearStats = 'FC';
 			}
 		}
-		else if(missCount <= 10)
+		else if(missCount < 10)
 			clearStats = 'SDCB';
 		else
 			clearStats = 'Clear';

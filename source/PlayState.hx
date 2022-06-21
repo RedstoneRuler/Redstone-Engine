@@ -2535,11 +2535,14 @@ class PlayState extends MusicBeatState
 	function updateFC():Void
 	{
 		if(missCount == 0) {
-			clearStats == 'MFC';
-			if(bads == 0 && shits == 0)
-				clearStats = 'GFC';
-			else
-				clearStats = 'FC';
+			clearStats = 'MFC';
+			if(goods != 0 || bads != 0 || shits != 0)
+			{
+				if(goods != 0)
+					clearStats = 'GFC';
+				if(bads != 0 || shits != 0)
+					clearStats = 'FC';
+			}
 		}
 		else if(missCount <= 10)
 			clearStats = 'SDCB';

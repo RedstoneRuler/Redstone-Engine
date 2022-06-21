@@ -151,6 +151,7 @@ class PlayState extends MusicBeatState
 	var wasSickHit:Bool = false;
 
 	var accuracyRating:String = '?';
+	var clearStats:String = '';
 	var hitRate:Float = 1; //Making sure you start at 100% accuracy if you hit a sick note
 	public static var campaignScore:Int = 0;
 
@@ -1644,7 +1645,7 @@ class PlayState extends MusicBeatState
 			if(displayAccuracy == '?')
 				accuracyTxt.text = "Accuracy: " + displayAccuracy;
 			else
-				accuracyTxt.text = "Accuracy: " + displayAccuracy + "% - " + accuracyRating;
+				accuracyTxt.text = "Accuracy: " + displayAccuracy + "% - " + accuracyRating + ' (${clearStats})';
 		} else{
 			scoreTxt.text = "";
 			missTxt.text = "AUTOPLAY ON";
@@ -2520,8 +2521,17 @@ class PlayState extends MusicBeatState
 				accuracyRating = ratingList[9];
 		// I'm so sorry for this script
 		displayAccuracy = ("" + accuracy); // makin sure the game knows it's converting it into a string
+		updateFC();
 	}
-	function update
+	function updateFC():Void
+	{
+		if(missCount == 0)
+			clearStats = 'FC';
+		else if(missCount <= 10)
+			clearStats = 'SDCB';
+		else
+			clearStats = 'Clear';
+	}
 	private function keyShit():Void
 	{
 		// HOLDING

@@ -125,6 +125,7 @@
 	<icon path="icons/icon32.png" size='32'/>
 	<icon path="icons/icon64.png" size='64'/>
 	<icon path="icons/iconOG.png" size='600' />
+	<icon path="icons/iconOG.png"/>
 
 	<!-- <haxedef name="SKIP_TO_PLAYSTATE" if="debug" /> -->
 	<haxedef name="NG_LOGIN" if="newgrounds"/>

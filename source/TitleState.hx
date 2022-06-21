@@ -50,15 +50,6 @@ class TitleState extends MusicBeatState
 	var defaultCamZoom:Float = 1;
 	override public function create():Void
 	{
-		FlxG.save.data.deathCount = 0;
-		if (FlxG.save.data.noteframe == null) {
-			FlxG.save.data.noteframe = 10;
-		}
-		#if !html5
-		if (FlxG.save.data.fps == null) {
-			FlxG.save.data.fps = Application.current.window.displayMode.refreshRate;
-		}
-		#end
 		Polymod.init({modRoot: "mods", dirs: ['introMod']});
 		
 		PlayerSettings.init();
@@ -113,6 +104,7 @@ class TitleState extends MusicBeatState
 
 	function startIntro()
 	{
+		SaveData.formatSaveFile();
 		if (!initialized)
 		{
 			var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
@@ -312,7 +304,7 @@ class TitleState extends MusicBeatState
 			{
 				// Check if version is outdated	
 				var version:String = "v" + Application.current.meta.get('version');
-
+				/*
 				if (version.trim() != NGio.GAME_VER_NUMS && !OutdatedSubState.leftState)
 				{
 					trace('OLD VERSION!');
@@ -321,8 +313,9 @@ class TitleState extends MusicBeatState
 				}
 				else
 				{
+				*/
 					FlxG.switchState(new MainMenuState());
-				}
+				//}
 			});
 		FlxG.sound.play('assets/music/titleShoot' + TitleState.soundExt, 0.7);
 		}

@@ -26,27 +26,6 @@ class SettingsGameplay extends MusicBeatState
 
 	override function create()
 	{
-		if (FlxG.save.data.bot == null) {
-			FlxG.save.data.bot = false;
-		}
-		if (FlxG.save.data.ghost == null) {
-			FlxG.save.data.ghost = false;
-		}
-		if (FlxG.save.data.accuracy == null) {
-			FlxG.save.data.accuracy = true;
-		}
-		if (FlxG.save.data.noteframe == null) {
-			FlxG.save.data.noteframe = 10;
-		}
-		if (FlxG.save.data.splash == null) {
-			FlxG.save.data.splash = true;
-		}
-		if (FlxG.save.data.random == null) {
-			FlxG.save.data.random = false;
-		}
-		if (FlxG.save.data.downscroll == null) {
-			FlxG.save.data.downscroll = false;
-		}
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
 		controlsStrings = CoolUtil.coolStringFile((
 		FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off")

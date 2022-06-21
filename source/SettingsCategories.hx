@@ -26,7 +26,7 @@ class SettingsCategories extends MusicBeatState
 	override function create()
 	{
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
-		controlsStrings = CoolUtil.coolStringFile("Gameplay\nGraphics\nMiscellaneous");
+		controlsStrings = CoolUtil.coolStringFile("Gameplay\nGraphics\nOptimization");
 		
 		trace(controlsStrings);
 		menuBG.color = 0xFFea71fd;
@@ -71,7 +71,7 @@ class SettingsCategories extends MusicBeatState
 					case 1:
 						FlxG.switchState(new SettingsGraphics());
 					case 2:
-						FlxG.switchState(new SettingsMisc());
+						FlxG.switchState(new SettingsOptimization());
 				}
 			}
 	}

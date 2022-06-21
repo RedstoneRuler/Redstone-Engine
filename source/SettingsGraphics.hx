@@ -26,18 +26,6 @@ class SettingsGraphics extends MusicBeatState
 
 	override function create()
 	{
-		if (FlxG.save.data.zoom == null) {
-			FlxG.save.data.zoom = false;
-		}
-		if (FlxG.save.data.glow == null) {
-			FlxG.save.data.glow = false;
-		}
-		if (FlxG.save.data.fps == null) {
-			FlxG.save.data.fps = 60;
-		}
-		if (FlxG.save.data.splash == true) {
-			FlxG.save.data.splash = true;
-		}
 		switch(FlxG.save.data.splash) {
 			case false:
 				splashText = "Note Splashes off";

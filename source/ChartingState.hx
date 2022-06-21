@@ -52,6 +52,7 @@ class ChartingState extends MusicBeatState
 	var bpmTxt:FlxText;
 
 	var hitSounds:Bool = false;
+	var autoCamera:Bool = false;
 	var strumLine:FlxSprite;
 	var curSong:String = 'Dadbattle';
 	var amountSteps:Int = 0;
@@ -122,7 +123,8 @@ class ChartingState extends MusicBeatState
 				player1: 'bf',
 				player2: 'dad',
 				speed: 1,
-				validScore: false
+				validScore: false,
+				autoCamera: false
 			};
 		}
 
@@ -196,7 +198,13 @@ class ChartingState extends MusicBeatState
 			hitSounds = hitsounds_Check.checked;
 			trace('CHECKED!');
 		};
-
+		var cameraCheck = new FlxUICheckBox(10, 220, null, null, "Automatic Camera Zooms", 100);
+		cameraCheck.checked = _song.autoCamera;
+		cameraCheck.callback = function()
+		{
+			_song.autoCamera = cameraCheck.checked;
+			trace('CHECKED!');
+		};
 		var check_mute_inst = new FlxUICheckBox(10, 200, null, null, "Mute Instrumental (in editor)", 100);
 		check_mute_inst.checked = false;
 		check_mute_inst.callback = function()
@@ -262,6 +270,7 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(stepperBPM);
 		tab_group_song.add(stepperSpeed);
 		tab_group_song.add(hitsounds_Check);
+		tab_group_song.add(cameraCheck);
 		tab_group_song.add(player1DropDown);
 		tab_group_song.add(player2DropDown);
 

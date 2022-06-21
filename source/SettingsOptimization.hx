@@ -14,7 +14,7 @@ import flixel.util.FlxColor;
 import lime.utils.Assets;
 import Note;
 //I stole this whole system from KE lmao
-class SettingsMisc extends MusicBeatState
+class SettingsOptimization extends MusicBeatState
 {
 	var zoomText:String;
 	var selector:FlxText;
@@ -25,12 +25,13 @@ class SettingsMisc extends MusicBeatState
 
 	override function create()
 	{
-		if (FlxG.save.data.optimize == null) {
-			FlxG.save.data.optimize = false;
-		}
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
 		controlsStrings = CoolUtil.coolStringFile(
-			FlxG.save.data.optimize ? "Optimization On" : "Optimization Off");
+			(FlxG.save.data.optimize ? "smaller spritesheets On" : "smaller spritesheets Off")
+			+ "\n" + (FlxG.save.data.bg ? "backgrounds On" : "backgrounds Off")
+			+ "\n" + (FlxG.save.data.characters ? "characters On" : "characters Off")
+			+ "\n" + (FlxG.save.data.details ? "background details on" : "background details off")
+			);
 		
 		trace(controlsStrings);
 		menuBG.color = 0xFFea71fd;
@@ -68,16 +69,37 @@ class SettingsMisc extends MusicBeatState
 			if (controls.ACCEPT)
 			{
 				grpControls.remove(grpControls.members[curSelected]);
-				//switch(curSelected)
-				//{
-				//	case 0:
+				switch(curSelected)
+				{
+					case 0:
 						FlxG.save.data.optimize = !FlxG.save.data.optimize;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.optimize ? 'optimization on' : 'optimization off'), true, false);
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.optimize ? 'smaller spritesheets on' : 'smaller spritesheets off'), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected;
 						grpControls.add(ctrl);
 						trace(FlxG.save.data.optimize);
-				//}
+					case 1:
+						FlxG.save.data.bg = !FlxG.save.data.bg;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.bg ? 'backgrounds on' : 'backgrounds off'), true, false);
+						ctrl.isMenuItem = true;
+						ctrl.targetY = curSelected - 1;
+						grpControls.add(ctrl);
+						trace(FlxG.save.data.bg);
+					case 2:
+						FlxG.save.data.characters = !FlxG.save.data.characters;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.characters ? 'characters on' : 'characters off'), true, false);
+						ctrl.isMenuItem = true;
+						ctrl.targetY = curSelected - 2;
+						grpControls.add(ctrl);
+						trace(FlxG.save.data.characters);
+					case 3:
+						FlxG.save.data.details = !FlxG.save.data.details;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.details ? 'background details on' : 'background details off'), true, false);
+						ctrl.isMenuItem = true;
+						ctrl.targetY = curSelected - 3;
+						grpControls.add(ctrl);
+						trace(FlxG.save.data.details);
+				}
 			}
 	}
 

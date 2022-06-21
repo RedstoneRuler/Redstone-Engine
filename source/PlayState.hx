@@ -171,6 +171,11 @@ class PlayState extends MusicBeatState
 	var bfNote:Bool = false;
 	var opponentNote:Bool = false;
 
+	var sicks:Int = 0;
+	var goods:Int = 0;
+	var bads:Int = 0;
+	var shits:Int = 0;
+
 	static public var canHitOtherNote:Bool = false;
 	static public var canHitNote:Bool = false;
 
@@ -2526,7 +2531,12 @@ class PlayState extends MusicBeatState
 	function updateFC():Void
 	{
 		if(missCount == 0)
-			clearStats = 'FC';
+			if(sicks >= 1 && goods == 0 && bads == 0 && shits == 0)
+				clearStats == 'MFC';
+			else if(bads == 0 && shits == 0)
+				clearStats = 'GFC';
+			else
+				clearStats = 'FC';
 		else if(missCount <= 10)
 			clearStats = 'SDCB';
 		else

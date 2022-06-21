@@ -69,7 +69,7 @@ class FreeplayState extends MusicBeatState
 			
 			addSong('Fresh', 'dad', 120);
 
-			addSong('Dadbattle', 'dad', 180);
+			addSong('Dad-Battle', 'dad', 180);
 		}
 		if (StoryMenuState.weekUnlocked[2] || isDebug)
 		{

@@ -1,7 +1,7 @@
 Tutorial,gf,100,0
 Bopeebo,dad,100,1
 Fresh,dad,120,1
-Dadbattle,dad,180,1
+Dad-Battle,dad,180,1
 Spookeez,spooky,150,2
 South,spooky,165,2
 Monster,monster,2

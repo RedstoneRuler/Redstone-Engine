@@ -225,7 +225,7 @@ class PlayState extends MusicBeatState
 				];
 			case 'fresh':
 				dialogue = ["Not too shabby boy.", ""];
-			case 'dadbattle':
+			case 'dad-battle':
 				dialogue = [
 					"gah you think you're hot stuff?",
 					"If you can beat me here...",
@@ -2482,7 +2482,7 @@ class PlayState extends MusicBeatState
 	}
 	function updateRating():Void
 	{ 
-		var accuracyRound:Int = Math.round(accuracy);
+		var accuracyRound:Int = Math.round(accuracy); //should auto-round
 		var ratingList:Array<String> = [
 			"Perfect!!!",
 			"Sick!!",
@@ -2496,31 +2496,32 @@ class PlayState extends MusicBeatState
 		];
 		// Why can't you use '...' for switch statements
 		// I'm trying to make this look nicer and instead I gotta do this
-			if(accuracy == 100)
+			if(accuracyRound == 100)
 				accuracyRating = ratingList[0];
-			else if(accuracy >= 90.00 && accuracy <= 99.99)
+			else if(accuracyRound >= 90 && accuracyRound <= 99)
 				accuracyRating = ratingList[1];
-			else if(accuracy >= 80.00 && accuracy <= 89.99)
+			else if(accuracyRound >= 80 && accuracyRound <= 89)
 				accuracyRating = ratingList[2];
-			else if(accuracy >= 75.00 && accuracy <= 79.99)
+			else if(accuracyRound >= 75 && accuracyRound <= 79)
 				accuracyRating = ratingList[3];
-			else if(accuracy >= 70.00 && accuracy <= 74.99)
+			else if(accuracyRound >= 70 && accuracyRound <= 74)
 				accuracyRating = ratingList[4];
-			else if(accuracy >= 50.00 && accuracy <= 69.99)
+			else if(accuracyRound >= 50 && accuracyRound <= 69)
 				accuracyRating = ratingList[5];
-			else if(accuracy >= 40.00 && accuracy <= 49.99)
+			else if(accuracyRound >= 40 && accuracyRound <= 49)
 				accuracyRating = ratingList[6];
-			else if(accuracy >= 20.00 && accuracy <= 39.99)
+			else if(accuracyRound >= 20 && accuracyRound <= 39.)
 				accuracyRating = ratingList[7];
-			else if(accuracy >= 0.99 && accuracy <= 19.99)
+			else if(accuracyRound >= 0 && accuracyRound <= 19)
 				accuracyRating = ratingList[8];
-			else if(accuracy > 0.99)
+			else if(accuracyRound > 0)
 				accuracyRating = ratingList[9];
 			if(accuracyRating == null) //Probably means it didn't meet any of these criteria
 				accuracyRating = ratingList[9];
 		// I'm so sorry for this script
 		displayAccuracy = ("" + accuracy); // makin sure the game knows it's converting it into a string
 	}
+	function update
 	private function keyShit():Void
 	{
 		// HOLDING

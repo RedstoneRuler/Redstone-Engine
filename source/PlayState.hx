@@ -1572,22 +1572,22 @@ class PlayState extends MusicBeatState
 		});
 	}
 	function bfNoteShit(daNote:Note):Void
+	{
+		bfNote = true;
+		opponentNote = false;
+		playerStrums.forEach(function(spr:FlxSprite)
 		{
-			bfNote = true;
-			opponentNote = false;
-			playerStrums.forEach(function(spr:FlxSprite)
+			if (Math.abs(daNote.noteData) == spr.ID)
 			{
-				if (Math.abs(daNote.noteData) == spr.ID)
-				{
-					spr.animation.play('confirm', true);
-					if(!curStage.startsWith('school')) {
-						spr.centerOffsets();
-						spr.offset.x -= 13;
-						spr.offset.y -= 13;
-					}
+				spr.animation.play('confirm', true);
+				if(!curStage.startsWith('school')) {
+					spr.centerOffsets();
+					spr.offset.x -= 13;
+					spr.offset.y -= 13;
 				}
-				});
-		}
+			}
+		});
+	}
 	override public function update(elapsed:Float)
 	{
 		FlxG.watch.addQuick('bfNote', bfNote);

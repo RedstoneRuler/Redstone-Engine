@@ -167,6 +167,7 @@ class PlayState extends MusicBeatState
 	var wasPractice:Bool = false;
 	var wasBotplay:Bool = false;
 	var mashVar:Float = 0;
+	var mashLimit:Float;
 
 	var bfNote:Bool = false;
 	var opponentNote:Bool = false;
@@ -1163,6 +1164,11 @@ class PlayState extends MusicBeatState
 		Conductor.songPosition = 0;
 		Conductor.songPosition -= Conductor.crochet * 5;
 
+		// Higher BPMs will typically have more notes, so make the antimash more forgiving if that's the case, as the system does slip up sometimes
+		// and increment the mash var for a proper hit as if it wasn't one
+		mashLimit = 1.5 * (SONG.bpm / 50);
+		FlxG.log.add('THE LIMIT ${mashLimit}');
+		FlxG.log.add(SONG.bpm / 10);
 		var swagCounter:Int = 0;
 
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
@@ -2828,8 +2834,8 @@ class PlayState extends MusicBeatState
 			//if (keyP)
 				//{
 					mashVar += 0.3;
-					if(mashVar > 1.5) {
-						noteMiss(note.noteData);
+					if(mashVar > mashLimit) {
+						//noteMiss(note.noteData);
 					}
 				//}
 		}
@@ -3105,8 +3111,7 @@ class PlayState extends MusicBeatState
 	override function beatHit()
 	{
 		mashVar -= 0.8;
-		if(mashVar < 0)
-			mashVar = 0;
+		if(mashVar < 0) mashVar = 0;
 		if(Conductor.bpm > 140) //There's nothing stopping us from not doing this, but it just looks weird at higher BPMs
 			altbeat = !altbeat;
 		else
@@ -3188,17 +3193,17 @@ class PlayState extends MusicBeatState
 			}
 			else {
 			*/
-			if(altbeat == true || boyfriend.animation.getByName('danceLeft') != null || dad.animation.getByName('danceLeft') != null) {
+			if(altbeat == true || dad.animation.getByName('danceLeft') != null) {
 				if(dad.animation.curAnim.name.contains("idle") || dad.animation.curAnim.name.contains("dance") || dad.animation.curAnim.name.contains('-loop')) {
 					dad.dance();
 				}
 				else if(!dad.animation.curAnim.name.startsWith("sing")) {
 					dad.dance();
 				}
-				if (!boyfriend.animation.curAnim.name.startsWith("sing"))
-				{
-					boyfriend.playAnim('idle', true);
-				}
+			}
+			if ((altbeat == true || boyfriend.animation.getByName('danceLeft') != null) && !boyfriend.animation.curAnim.name.startsWith("sing"))
+			{
+				boyfriend.playAnim('idle', true);
 			}
 			//}	
 		}

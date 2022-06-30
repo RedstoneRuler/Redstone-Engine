@@ -2506,7 +2506,7 @@ class PlayState extends MusicBeatState
 		];
 		// Why can't you use '...' for switch statements
 		// I'm trying to make this look nicer and instead I gotta do this
-			if(accuracyRound == 100)
+			if(accuracy == 100)
 				accuracyRating = ratingList[0];
 			else if(accuracyRound >= 90 && accuracyRound <= 99)
 				accuracyRating = ratingList[1];

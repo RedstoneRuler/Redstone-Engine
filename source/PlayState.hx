@@ -2514,19 +2514,19 @@ class PlayState extends MusicBeatState
 		// I'm trying to make this look nicer and instead I gotta do this
 			if(accuracy == 100)
 				accuracyRating = ratingList[0];
-			else if(accuracyRound > 90 && accuracyRound < 100)
+			else if(accuracyRound >= 90 && accuracyRound < 100)
 				accuracyRating = ratingList[1];
-			else if(accuracyRound > 80 && accuracyRound < 90)
+			else if(accuracyRound >= 80 && accuracyRound < 90)
 				accuracyRating = ratingList[2];
-			else if(accuracyRound > 75 && accuracyRound <= 80)
+			else if(accuracyRound >= 75 && accuracyRound < 80)
 				accuracyRating = ratingList[3];
-			else if(accuracyRound > 70 && accuracyRound < 75)
+			else if(accuracyRound >= 70 && accuracyRound < 75)
 				accuracyRating = ratingList[4];
-			else if(accuracyRound > 50 && accuracyRound < 70)
+			else if(accuracyRound >= 50 && accuracyRound < 70)
 				accuracyRating = ratingList[5];
-			else if(accuracyRound > 40 && accuracyRound < 50)
+			else if(accuracyRound >= 40 && accuracyRound < 50)
 				accuracyRating = ratingList[6];
-			else if(accuracyRound > 20 && accuracyRound < 40)
+			else if(accuracyRound >= 20 && accuracyRound < 40)
 				accuracyRating = ratingList[7];
 			else if(accuracyRound > 0 && accuracyRound < 20)
 				accuracyRating = ratingList[8];

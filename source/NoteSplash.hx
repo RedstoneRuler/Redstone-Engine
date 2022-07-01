@@ -7,6 +7,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 
 class NoteSplash extends FlxSprite {
     var animAdd:String;
+    var hasPixelSplashes:Bool;
     //You do not want to know how long I was going through Week 7's code to find all this.
     //I used a JS beautifier and a lot of CTRL-F to get everything I needed.
     //Then I took that minified JavaScript code from Funkin.js and turned it back into Haxe code.
@@ -21,7 +22,7 @@ class NoteSplash extends FlxSprite {
         setupNoteSplash(xPos, xPos, splashType);
     }
     public function setupNoteSplash(xPos:Float, yPos:Float, ?splashType:Int) {
-        if(PlayState.curSong.toLowerCase() == 'senpai' || PlayState.curSong.toLowerCase() == 'roses' || PlayState.curSong.toLowerCase() == 'thorns')
+        if(PlayState.isPixelStage && hasPixelSplashes)
             animAdd = "-pixel";
         else {
             animAdd = "";
@@ -48,7 +49,8 @@ class NoteSplash extends FlxSprite {
     }
     function setupSprites():Void
     {
-        frames = FlxAtlasFrames.fromSparrow('assets/images/noteSplashesFull.png', 'assets/images/noteSplashesFull.xml');
+        //using the save data directly so it doesn't try to load it from pixel
+        frames = FlxAtlasFrames.fromSparrow('assets/ui_skins/${FlxG.save.data.uiSkin}/noteSplashes.png', 'assets/ui_skins/${FlxG.save.data.uiSkin}/noteSplashes.xml');
         animation.addByPrefix("splash0-0", "note impact 1 purple0", 24, false);
         animation.addByPrefix("splash1-0", "note impact 1  blue0", 24, false);
         animation.addByPrefix("splash2-0", "note impact 1 green0", 24, false);
@@ -68,5 +70,7 @@ class NoteSplash extends FlxSprite {
         animation.addByPrefix("splash1-1-pixel", "note impact 2 blue pixel", 24, false);
         animation.addByPrefix("splash2-1-pixel", "note impact 2 green pixel", 24, false);
         animation.addByPrefix("splash3-1-pixel", "note impact 2 red pixel", 24, false);
+
+        hasPixelSplashes = (animation.getByName("splash0-0-pixel") != null);
     }
 }

@@ -1,6 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<TextureAtlas imagePath="staticStrum.png"><SubTexture name="staticStrum arrowDOWN0000" x="309" y="0" width="157" height="154" frameX="0" frameY="0" frameWidth="157" frameHeight="154" />
-<SubTexture name="staticStrum arrowLEFT0000" x="154" y="0" width="155" height="156" frameX="0" frameY="0" frameWidth="155" frameHeight="156" />
-<SubTexture name="staticStrum arrowRIGHT0000" x="0" y="0" width="154" height="157" frameX="0" frameY="0" frameWidth="154" frameHeight="157" />
-<SubTexture name="staticStrum arrowUP0000" x="0" y="157" width="157" height="154" frameX="0" frameY="0" frameWidth="157" frameHeight="154" />
-</TextureAtlas>

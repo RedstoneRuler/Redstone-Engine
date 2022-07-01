@@ -13,7 +13,7 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
 import Note;
-class SettingsCategories extends MusicBeatState
+class SettingsUI extends MusicBeatState
 {
 	var zoomText:String;
 	var selector:FlxText;
@@ -25,8 +25,8 @@ class SettingsCategories extends MusicBeatState
 	override function create()
 	{
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
-		controlsStrings = CoolUtil.coolStringFile("Gameplay\nGraphics\nOptimization\nConfigure UI Skin");
-
+		controlsStrings = CoolUtil.coolTextFile('assets/ui_skins/UISkinList.txt');
+		
 		trace(controlsStrings);
 		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
@@ -40,10 +40,10 @@ class SettingsCategories extends MusicBeatState
 
 		for (i in 0...controlsStrings.length)
 		{
-			var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i], true, false);
-			controlLabel.isMenuItem = true;
-			controlLabel.targetY = i;
-			grpControls.add(controlLabel);
+				var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i], false, false);
+				controlLabel.isMenuItem = true;
+				controlLabel.targetY = i;
+				grpControls.add(controlLabel);
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 		}
 		super.create();
@@ -53,8 +53,7 @@ class SettingsCategories extends MusicBeatState
 	{
 		super.update(elapsed);
 		if (controls.BACK) {
-			FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 4);
-			FlxG.switchState(new MainMenuState());
+			FlxG.switchState(new SettingsCategories());
 		}
 			if (controls.UP_P)
 				changeSelection(-1);
@@ -63,17 +62,8 @@ class SettingsCategories extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				switch(curSelected)
-				{
-					case 0:
-						FlxG.switchState(new SettingsGameplay());
-					case 1:
-						FlxG.switchState(new SettingsGraphics());
-					case 2:
-						FlxG.switchState(new SettingsOptimization());
-					case 3:
-						FlxG.switchState(new SettingsUI());
-				}
+				FlxG.sound.play('assets/sounds/confirmMenu' + TitleState.soundExt);
+				FlxG.save.data.uiSkin = controlsStrings[curSelected];
 			}
 	}
 

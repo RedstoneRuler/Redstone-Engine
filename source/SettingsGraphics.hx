@@ -13,7 +13,6 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
 import Note;
-//I stole this whole system from KE lmao
 class SettingsGraphics extends MusicBeatState
 {
 	var zoomText:String;

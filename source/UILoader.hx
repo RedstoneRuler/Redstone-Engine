@@ -25,6 +25,7 @@ class UILoader
 	{
 		#if sys
 		if(FileSystem.exists(FileSystem.absolutePath('assets/ui_skins/${PlayState.uiSkin}') + '/' + '${imageName}.png')) {
+			trace('LOADING ${imageName}');
 			var image:BitmapData = BitmapData.fromFile(FileSystem.absolutePath('assets/ui_skins/${PlayState.uiSkin}') + '/' + '${imageName}.png');
 			return FlxGraphic.fromBitmapData(image);
 		}
@@ -39,6 +40,7 @@ class UILoader
 	{
 		#if sys
 		if(FileSystem.exists(FileSystem.absolutePath('assets/ui_skins/${PlayState.uiSkin}') + '/' + '${imageName}.xml')) {
+			trace('LOADING ${imageName}');
 			var image:BitmapData = BitmapData.fromFile(FileSystem.absolutePath('assets/ui_skins/${PlayState.uiSkin}') + '/' + '${imageName}.png');
 			var xml:String = (sys.io.File.getContent('assets/ui_skins/${PlayState.uiSkin}/${imageName}.xml'));
 			return FlxAtlasFrames.fromSparrow(FlxGraphic.fromBitmapData(image), xml);
@@ -55,6 +57,7 @@ class UILoader
 	{
 		#if sys
 		if(FileSystem.exists(FileSystem.absolutePath('assets/ui_skins/${FlxG.save.data.uiSkin}') + '/' + '${imageName}.xml')) {
+			trace('LOADING ${imageName}');
 			var image:BitmapData = BitmapData.fromFile(FileSystem.absolutePath('assets/ui_skins/${FlxG.save.data.uiSkin}') + '/' + '${imageName}.png');
 			var xml:String = (sys.io.File.getContent('assets/ui_skins/${FlxG.save.data.uiSkin}/${imageName}.xml'));
 			return FlxAtlasFrames.fromSparrow(FlxGraphic.fromBitmapData(image), xml);

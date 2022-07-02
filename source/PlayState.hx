@@ -58,7 +58,7 @@ class PlayState extends MusicBeatState
 	public static var practiceMode:Bool = false;
 	public static var isPixelStage:Bool = false;
 	public static var uiSkin:String;
-
+	public static var noteSprite:FlxAtlasFrames;
 	var halloweenLevel:Bool = false;
 
 	private var vocals:FlxSound;
@@ -185,6 +185,15 @@ class PlayState extends MusicBeatState
 	function preloadAssets():Void
 		{
 			var loadAssets:Array<Dynamic> = [];
+			loadAssets.push(UILoader.loadImage('combo'));
+			loadAssets.push(UILoader.loadImage('sick'));
+			loadAssets.push(UILoader.loadImage('good'));
+			loadAssets.push(UILoader.loadImage('bad'));
+			loadAssets.push(UILoader.loadImage('shit'));
+			for(i in 0...9)
+			{
+				loadAssets.push(UILoader.loadImage('num${i}'));
+			}
 			if(FlxG.save.data.details)
 			{
 				if(SONG.song.toLowerCase() == 'stress')
@@ -194,6 +203,7 @@ class PlayState extends MusicBeatState
 	
 	override public function create()
 	{
+		noteSprite = UILoader.loadSparrow('notes');
 		curStage = 'stage';
 		practiceMode = false;
 		wasPractice = false;
@@ -1165,7 +1175,7 @@ class PlayState extends MusicBeatState
 	{
 		preloadAssets();
 		inCutscene = false;
-
+		trace(noteSprite);
 		generateStaticArrows(0);
 		generateStaticArrows(1);
 
@@ -1438,7 +1448,7 @@ class PlayState extends MusicBeatState
 					}
 
 				default:
-					babyArrow.frames = UILoader.loadSparrowDirect('notes');
+					babyArrow.frames = noteSprite;
 					babyArrow.animation.addByPrefix('green', 'arrowUP');
 					babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
 					babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
@@ -2240,7 +2250,6 @@ class PlayState extends MusicBeatState
 		coolText.screenCenter();
 		coolText.x = FlxG.width * 0.55;
 		//
-		var rating:FlxSprite = new FlxSprite();
 		var score:Int = 350;
 		if(FlxG.save.data.bot != true) {
 			if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.9)
@@ -2284,7 +2293,8 @@ class PlayState extends MusicBeatState
 				grpNoteSplashes.add(recycledNote);
 			}
 		}
-		setupNumbers();
+		//setupNumbers();
+		var rating:FlxSprite = new FlxSprite();
 		rating.loadGraphic(UILoader.loadImage(daRating));
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
@@ -2292,16 +2302,15 @@ class PlayState extends MusicBeatState
 		rating.acceleration.y = 550;
 		rating.velocity.y -= FlxG.random.int(140, 175);
 		rating.velocity.x -= FlxG.random.int(0, 10);
+		add(rating);
 
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('combo'));
 		comboSpr.screenCenter();
 		comboSpr.x = coolText.x;
 		comboSpr.acceleration.y = 600;
 		comboSpr.velocity.y -= 150;
-		add(comboSpr); //ninjamuffin forgor 💀
-
 		comboSpr.velocity.x += FlxG.random.int(1, 10);
-		add(rating);
+		add(comboSpr); //ninjamuffin forgor 💀
 
 		if (!PlayState.isPixelStage)
 		{
@@ -2366,7 +2375,9 @@ class PlayState extends MusicBeatState
 		 */
 
 		coolText.text = Std.string(seperatedScore);
-		// add(coolText);
+		#if debug
+		//add(coolText);
+		#end
 
 		FlxTween.tween(rating, {alpha: 0}, 0.2, {
 			startDelay: Conductor.crochet * 0.001

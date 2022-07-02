@@ -48,6 +48,7 @@ class TitleState extends MusicBeatState
 
 	var wackyImage:FlxSprite;
 	var defaultCamZoom:Float = 1;
+	var loadAssets:Array<Dynamic> = [];
 	override public function create():Void
 	{
 		Polymod.init({modRoot: "mods", dirs: ['introMod']});
@@ -106,6 +107,7 @@ class TitleState extends MusicBeatState
 	{
 		SaveData.formatSaveFile();
 		UILoader.initSkin();
+		loadAssets.push(new FlxSprite().loadGraphic(UILoader.loadImage('notes')));
 		if (!initialized)
 		{
 			var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);

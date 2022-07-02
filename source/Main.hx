@@ -99,7 +99,8 @@ class Main extends Sprite
 		*/
 		
 		#if !mobile
-		addChild(new FPS(10, 3, 0xFFFFFF));
+		var fps_mem:FPS_Mem = new FPS_Mem(10, 10, 0xffffff);
+		addChild(fps_mem);
 		#end
 	}
 }

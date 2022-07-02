@@ -157,7 +157,7 @@ class Note extends FlxSprite
 			updateHitbox();
 
 			x -= width / 2;
-			if(PlayState.curStage.startsWith('school'))
+			if(PlayState.isPixelStage)
 				x += 30;
 			if (prevNote.isSustainNote)
 			{
@@ -173,7 +173,7 @@ class Note extends FlxSprite
 						prevNote.animation.play('redhold');
 				}
 				//Fixing hold note clipping
-				if (PlayState.curStage.startsWith('school')) {
+				if (PlayState.isPixelStage) {
 					prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * (PlayState.SONG.speed / 1.2);
 				}
 				else {

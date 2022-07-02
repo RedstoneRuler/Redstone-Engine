@@ -197,6 +197,7 @@ class PlayState extends MusicBeatState
 		curStage = 'stage';
 		practiceMode = false;
 		wasPractice = false;
+		isPixelStage = false;
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -1557,7 +1558,7 @@ class PlayState extends MusicBeatState
 			if (Math.abs(daNote.noteData) == spr.ID)
 			{
 				spr.animation.play('confirm', true);
-				if(!curStage.startsWith('school')) {
+				if(!isPixelStage) {
 					spr.centerOffsets();
 					spr.offset.x -= 13;
 					spr.offset.y -= 13;
@@ -1574,7 +1575,7 @@ class PlayState extends MusicBeatState
 			if (Math.abs(daNote.noteData) == spr.ID)
 			{
 				spr.animation.play('confirm', true);
-				if(!curStage.startsWith('school')) {
+				if(!PlayState.isPixelStage) {
 					spr.centerOffsets();
 					spr.offset.x -= 13;
 					spr.offset.y -= 13;
@@ -2302,7 +2303,7 @@ class PlayState extends MusicBeatState
 		comboSpr.velocity.x += FlxG.random.int(1, 10);
 		add(rating);
 
-		if (!curStage.startsWith('school'))
+		if (!PlayState.isPixelStage)
 		{
 			rating.setGraphicSize(Std.int(rating.width * 0.7));
 			rating.antialiasing = true;
@@ -2332,7 +2333,7 @@ class PlayState extends MusicBeatState
 			numScore.x = coolText.x + (43 * daLoop) - 90;
 			numScore.y += 80;
 
-			if (!curStage.startsWith('school'))
+			if (!PlayState.isPixelStage)
 			{
 				numScore.antialiasing = true;
 				numScore.setGraphicSize(Std.int(numScore.width * 0.5));
@@ -2722,7 +2723,7 @@ class PlayState extends MusicBeatState
 						spr.animation.play('static');
 			}
 
-			if (spr.animation.curAnim.name == 'confirm' && !curStage.startsWith('school'))
+			if (spr.animation.curAnim.name == 'confirm' && !PlayState.isPixelStage)
 			{
 				spr.centerOffsets();
 				spr.offset.x -= 13;

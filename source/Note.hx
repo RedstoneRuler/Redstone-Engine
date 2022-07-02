@@ -85,7 +85,7 @@ class Note extends FlxSprite
 				updateHitbox();
 
 			default:
-				frames = FlxAtlasFrames.fromSparrow('assets/ui_skins/${FlxG.save.data.uiSkin}/notes.png', 'assets/ui_skins/${FlxG.save.data.uiSkin}/notes.xml');
+				frames = UILoader.loadSparrow('notes');
 
 				animation.addByPrefix('greenScroll', 'green0');
 				animation.addByPrefix('redScroll', 'red0');

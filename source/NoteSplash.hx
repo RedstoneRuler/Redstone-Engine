@@ -50,7 +50,7 @@ class NoteSplash extends FlxSprite {
     function setupSprites():Void
     {
         //using the save data directly so it doesn't try to load it from pixel
-        frames = FlxAtlasFrames.fromSparrow('assets/ui_skins/${FlxG.save.data.uiSkin}/noteSplashes.png', 'assets/ui_skins/${FlxG.save.data.uiSkin}/noteSplashes.xml');
+        frames = UILoader.loadSparrowDirect('noteSplashes');
         animation.addByPrefix("splash0-0", "note impact 1 purple0", 24, false);
         animation.addByPrefix("splash1-0", "note impact 1  blue0", 24, false);
         animation.addByPrefix("splash2-0", "note impact 1 green0", 24, false);

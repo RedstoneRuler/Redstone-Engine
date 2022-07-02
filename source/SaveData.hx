@@ -11,9 +11,6 @@ class SaveData
 {
 	public static function formatSaveFile():Void
 	{
-		if (FlxG.save.data.uiSkin == null) {
-			FlxG.save.data.uiSkin = 'default';
-		}
 		if (FlxG.save.data.bot == null) {
 			FlxG.save.data.bot = false;
 		}

@@ -1211,7 +1211,7 @@ class PlayState extends MusicBeatState
 				case 0:
 					FlxG.sound.play('assets/sounds/intro3' + altSuffix + TitleState.soundExt, 0.6);
 				case 1:
-					var ready:FlxSprite = new FlxSprite().loadGraphic('assets/ui_skins/${uiSkin}/ready.png');
+					var ready:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('ready'));
 					ready.scrollFactor.set();
 					ready.updateHitbox();
 
@@ -1229,7 +1229,7 @@ class PlayState extends MusicBeatState
 					});
 					FlxG.sound.play('assets/sounds/intro2' + altSuffix + TitleState.soundExt, 0.6);
 				case 2:
-					var set:FlxSprite = new FlxSprite().loadGraphic('assets/ui_skins/${uiSkin}/set.png');
+					var set:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('set'));
 					set.scrollFactor.set();
 
 					if (isPixelStage)
@@ -1246,7 +1246,7 @@ class PlayState extends MusicBeatState
 					});
 					FlxG.sound.play('assets/sounds/intro1' + altSuffix + TitleState.soundExt, 0.6);
 				case 3:
-					var go:FlxSprite = new FlxSprite().loadGraphic('assets/ui_skins/${uiSkin}/go.png');
+					var go:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('go'));
 					go.scrollFactor.set();
 
 					if (isPixelStage)
@@ -1437,7 +1437,7 @@ class PlayState extends MusicBeatState
 					}
 
 				default:
-					babyArrow.frames = FlxAtlasFrames.fromSparrow('assets/ui_skins/${uiSkin}/notes.png', 'assets/ui_skins/${uiSkin}/notes.xml');
+					babyArrow.frames = UILoader.loadSparrowDirect('notes');
 					babyArrow.animation.addByPrefix('green', 'arrowUP');
 					babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
 					babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
@@ -2284,7 +2284,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 		setupNumbers();
-		rating.loadGraphic('assets/ui_skins/${uiSkin}/${daRating}.png');
+		rating.loadGraphic(UILoader.loadImage(daRating));
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
 		rating.y -= 60;
@@ -2292,7 +2292,7 @@ class PlayState extends MusicBeatState
 		rating.velocity.y -= FlxG.random.int(140, 175);
 		rating.velocity.x -= FlxG.random.int(0, 10);
 
-		var comboSpr:FlxSprite = new FlxSprite().loadGraphic('assets/ui_skins/${uiSkin}/combo.png');
+		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('combo'));
 		comboSpr.screenCenter();
 		comboSpr.x = coolText.x;
 		comboSpr.acceleration.y = 600;
@@ -2327,7 +2327,7 @@ class PlayState extends MusicBeatState
 		var daLoop:Int = 0;
 		for (i in seperatedScore)
 		{
-			var numScore:FlxSprite = new FlxSprite().loadGraphic('assets/ui_skins/${uiSkin}/num${Std.int(i)}.png');
+			var numScore:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('num${Std.int(i)}'));
 			numScore.screenCenter();
 			numScore.x = coolText.x + (43 * daLoop) - 90;
 			numScore.y += 80;

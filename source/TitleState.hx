@@ -105,6 +105,7 @@ class TitleState extends MusicBeatState
 	function startIntro()
 	{
 		SaveData.formatSaveFile();
+		UILoader.initSkin();
 		if (!initialized)
 		{
 			var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);

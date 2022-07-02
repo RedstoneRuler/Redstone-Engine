@@ -31,7 +31,7 @@ class Character extends FlxSprite
 		{
 			curCharacter = 'gf-optimized';
 		}
-		if(isPlayer && curCharacter == 'bf' && FlxG.save.data.optimize == true)
+		if(curCharacter == 'bf' && FlxG.save.data.optimize == true)
 		{
 			curCharacter = 'bf-optimized';
 		}

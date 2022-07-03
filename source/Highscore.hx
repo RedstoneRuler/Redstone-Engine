@@ -6,12 +6,14 @@ class Highscore
 {
 	#if (haxe >= "4.0.0")
 	public static var songScores:Map<String, Int> = new Map();
+	public static var songAccuracy:Map<String, Float> = new Map();
 	#else
 	public static var songScores:Map<String, Int> = new Map<String, Int>();
+	public static var songAccuracy:Map<String, Float> = new Map<String, Float>();
 	#end
 
 
-	public static function saveScore(song:String, score:Int = 0, ?diff:Int = 0):Void
+	public static function saveScore(song:String, score:Int = 0, accuracy:Float = 0, ?diff:Int = 0):Void
 	{
 		var daSong:String = formatSong(song, diff);
 
@@ -28,6 +30,13 @@ class Highscore
 		}
 		else
 			setScore(daSong, score);
+		if (songAccuracy.exists(daSong))
+			{
+				if (songAccuracy.get(daSong) < accuracy)
+					setAccuracy(daSong, accuracy);
+			}
+			else
+				setAccuracy(daSong, accuracy);
 	}
 
 	public static function saveWeekScore(week:Int = 1, score:Int = 0, ?diff:Int = 0):Void
@@ -60,6 +69,14 @@ class Highscore
 		FlxG.save.flush();
 	}
 
+	static function setAccuracy(song:String, accuracy:Float):Void
+		{
+			// Reminder that I don't need to format this song, it should come formatted!
+			songAccuracy.set(song, accuracy);
+			FlxG.save.data.songAccuracy = songAccuracy;
+			FlxG.save.flush();
+		}
+
 	public static function formatSong(song:String, diff:Int):String
 	{
 		var daSong:String = song;
@@ -80,6 +97,14 @@ class Highscore
 		return songScores.get(formatSong(song, diff));
 	}
 
+	public static function getAccuracy(song:String, diff:Int):Float
+		{
+			if (!songAccuracy.exists(formatSong(song, diff)))
+				setAccuracy(formatSong(song, diff), 0);
+	
+			return songAccuracy.get(formatSong(song, diff));
+		}
+
 	public static function getWeekScore(week:Int, diff:Int):Int
 	{
 		if (!songScores.exists(formatSong('week' + week, diff)))
@@ -93,6 +118,10 @@ class Highscore
 		if (FlxG.save.data.songScores != null)
 		{
 			songScores = FlxG.save.data.songScores;
+		}
+		if (FlxG.save.data.songAccuracy != null)
+		{
+			songAccuracy = FlxG.save.data.songAccuracy;
 		}
 	}
 }

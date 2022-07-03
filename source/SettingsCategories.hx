@@ -56,6 +56,7 @@ class SettingsCategories extends MusicBeatState
 	{
 		super.update(elapsed);
 		if (controls.BACK) {
+			FlxG.save.flush();
 			FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 4);
 			FlxG.switchState(new MainMenuState());
 		}

@@ -30,8 +30,8 @@ class SettingsGameplay extends MusicBeatState
 		FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off")
 			+ "\n" + (FlxG.save.data.downscroll ? "Downscroll" : "Upscroll")
 			+ "\n" + (FlxG.save.data.bot ? "autoplay on" : "autoplay off")
-			+ "\n" + (FlxG.save.data.random ? "randomization on" : "randomization off")
-			+ "\n" + "Configure Note Offset");
+			+ "\n" + (FlxG.save.data.random ? "randomization on" : "randomization off"));
+			/*+ "\n" + "Configure Note Offset");*/
 		
 		trace(controlsStrings);
 		versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe + " (Left, Right, Shift, Higher value = Bigger hitbox)";
@@ -96,6 +96,7 @@ class SettingsGameplay extends MusicBeatState
 				}
 		}
 		if (controls.BACK) {
+			FlxG.save.flush();
 			FlxG.switchState(new SettingsCategories());
 		}
 			if (controls.UP_P)

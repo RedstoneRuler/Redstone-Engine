@@ -2147,7 +2147,7 @@ class PlayState extends MusicBeatState
 		if (SONG.validScore && !wasBotplay)
 		{
 			#if !switch
-			Highscore.saveScore(SONG.song, songScore, storyDifficulty);
+			Highscore.saveScore(SONG.song, songScore, accuracy, storyDifficulty);
 			#end
 		}
 
@@ -2508,7 +2508,7 @@ class PlayState extends MusicBeatState
 		// I'm trying to make this look nicer and instead I gotta do this
 			if(accuracy == 100)
 				accuracyRating = ratingList[0];
-			else if(accuracyRound >= 90 && accuracyRound < 100)
+			else if(accuracyRound >= 90 && accuracyRound <= 100)
 				accuracyRating = ratingList[1];
 			else if(accuracyRound >= 80 && accuracyRound < 90)
 				accuracyRating = ratingList[2];

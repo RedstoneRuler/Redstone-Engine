@@ -52,6 +52,7 @@ class SettingsUI extends MusicBeatState
 	{
 		super.update(elapsed);
 		if (controls.BACK) {
+			FlxG.save.flush();
 			FlxG.switchState(new SettingsCategories());
 		}
 			if (controls.UP_P)

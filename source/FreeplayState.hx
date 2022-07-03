@@ -26,7 +26,9 @@ class FreeplayState extends MusicBeatState
 	var scoreText:FlxText;
 	var diffText:FlxText;
 	var lerpScore:Int = 0;
+	var lerpAccuracy:Float = 0;
 	var intendedScore:Int = 0;
+	var intendedAccuracy:Float = 0;
 	var isDebug:Bool = false;
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
@@ -184,12 +186,12 @@ class FreeplayState extends MusicBeatState
 			// songText.screenCenter(X);
 		}
 
-		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
+		scoreText = new FlxText(FlxG.width * 0.56, 5, 0, "", 32);
 		// scoreText.autoSize = false;
 		scoreText.setFormat("assets/fonts/vcr.ttf", 32, FlxColor.WHITE, RIGHT);
 		// scoreText.alignment = RIGHT;
 
-		var scoreBG:FlxSprite = new FlxSprite(scoreText.x - 6, 0).makeGraphic(Std.int(FlxG.width * 0.35), 66, 0xFF000000);
+		var scoreBG:FlxSprite = new FlxSprite(scoreText.x - 6, 0).makeGraphic(Std.int(FlxG.width * 0.6), 66, 0xFF000000);
 		scoreBG.alpha = 0.6;
 		add(scoreBG);
 
@@ -261,11 +263,15 @@ class FreeplayState extends MusicBeatState
 		}
 
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, 0.4));
+		lerpAccuracy = Math.floor(FlxMath.lerp(lerpAccuracy, intendedAccuracy, 0.4));
 
 		if (Math.abs(lerpScore - intendedScore) <= 10)
 			lerpScore = intendedScore;
 
-		scoreText.text = "PERSONAL BEST:" + lerpScore;
+		if (Math.abs(lerpAccuracy - intendedAccuracy) <= 10)
+			lerpAccuracy = intendedAccuracy;
+
+		scoreText.text = 'PERSONAL BEST:${lerpScore}, ${lerpAccuracy}%';
 
 		var upP = controls.UP_P;
 		var downP = controls.DOWN_P;
@@ -295,6 +301,7 @@ class FreeplayState extends MusicBeatState
 		{
 			if(songs[curSelected].toLowerCase() == 'test')
 				curDifficulty = 1;
+
 			var poop:String = Highscore.formatSong(songs[curSelected].toLowerCase(), curDifficulty);
 
 			trace(poop);
@@ -319,6 +326,7 @@ class FreeplayState extends MusicBeatState
 
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected], curDifficulty);
+		intendedAccuracy = Highscore.getAccuracy(songs[curSelected], curDifficulty);
 		#end
 
 		switch (curDifficulty)
@@ -347,6 +355,7 @@ class FreeplayState extends MusicBeatState
 
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected], curDifficulty);
+		intendedAccuracy = Highscore.getAccuracy(songs[curSelected], curDifficulty);
 		// lerpScore = 0;
 		#end
 

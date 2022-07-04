@@ -7,4 +7,5 @@ example_mods/
 CHANGELOG.md
 Modding.md
 source/vscode-project.hxml
-assets/ignore
+assets/ignore/
+assets/images/notes/

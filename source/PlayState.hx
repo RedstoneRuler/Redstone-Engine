@@ -203,7 +203,7 @@ class PlayState extends MusicBeatState
 	
 	override public function create()
 	{
-		noteSprite = UILoader.loadSparrow('notes');
+		noteSprite = UILoader.loadSparrowDirect('notes');
 		curStage = 'stage';
 		practiceMode = false;
 		wasPractice = false;

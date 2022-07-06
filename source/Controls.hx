@@ -525,7 +525,7 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.PAUSE, [ENTER]);
 				inline bindKeys(Control.RESET, [BACKSPACE]);
 			case None: // nothing
-			case Custom: // nothing
+			case Custom:
 		}
 		#else
 		switch (scheme)
@@ -558,7 +558,7 @@ class Controls extends FlxActionSet
 				bindKeys(Control.PAUSE, [ENTER]);
 				bindKeys(Control.RESET, [BACKSPACE]);
 			case None: // nothing
-			case Custom: // nothing
+			case Custom:
 		}
 		#end
 	}

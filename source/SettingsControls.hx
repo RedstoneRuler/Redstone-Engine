@@ -12,26 +12,22 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
-class SettingsOptimization extends MusicBeatState
+class SettingsControls extends MusicBeatState
 {
 	var zoomText:String;
 	var selector:FlxText;
 	var curSelected:Int = 0;
 	var controlsStrings:Array<String> = [];
-
+	var rebinding:Bool = false;
+	var key:FlxKey;
+	var directionToBind:Int;
+	var frameWait:Int = 0;
 	private var grpControls:FlxTypedGroup<Alphabet>;
 
 	override function create()
 	{
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
-		controlsStrings = CoolUtil.coolStringFile(
-			(FlxG.save.data.optimize ? "smaller spritesheets On" : "smaller spritesheets Off")
-			+ "\n" + (FlxG.save.data.bg ? "backgrounds On" : "backgrounds Off")
-			+ "\n" + (FlxG.save.data.characters ? "characters On" : "characters Off")
-			+ "\n" + (FlxG.save.data.details ? "background details on" : "background details off")
-			);
-		
-		trace(controlsStrings);
+		controlsStrings = CoolUtil.coolStringFile('Left: ${FlxG.save.data.leftBind}\nDown: ${FlxG.save.data.downBind}\n Up: ${FlxG.save.data.upBind}\n Right: ${FlxG.save.data.rightBind}');
 		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
@@ -44,7 +40,7 @@ class SettingsOptimization extends MusicBeatState
 
 		for (i in 0...controlsStrings.length)
 		{
-				var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i], true, false);
+				var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i], false, false);
 				controlLabel.isMenuItem = true;
 				controlLabel.targetY = i;
 				grpControls.add(controlLabel);
@@ -56,6 +52,26 @@ class SettingsOptimization extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+		frameWait -= 1;
+		if(rebinding == true && frameWait == 0)
+		{
+			if(FlxG.keys.justPressed.ANY)
+			{
+				switch(directionToBind)
+				{
+					case 0:
+						FlxG.save.data.leftBind = FlxG.keys.justPressed;
+					case 1:
+						FlxG.save.data.downBind = FlxG.keys.justPressed;
+					case 2:
+						FlxG.save.data.upBind = FlxG.keys.justPressed;
+					case 3:
+						FlxG.save.data.rightBind = FlxG.keys.justPressed;
+				}
+				refreshControlStrings();
+				rebinding = false;
+			}
+		}
 		if (controls.BACK) {
 			FlxG.save.flush();
 			FlxG.switchState(new SettingsCategories());
@@ -67,41 +83,29 @@ class SettingsOptimization extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				grpControls.remove(grpControls.members[curSelected]);
-				switch(curSelected)
-				{
-					case 0:
-						FlxG.save.data.optimize = !FlxG.save.data.optimize;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.optimize ? 'smaller spritesheets on' : 'smaller spritesheets off'), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected;
-						grpControls.add(ctrl);
-						trace(FlxG.save.data.optimize);
-					case 1:
-						FlxG.save.data.bg = !FlxG.save.data.bg;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.bg ? 'backgrounds on' : 'backgrounds off'), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 1;
-						grpControls.add(ctrl);
-						trace(FlxG.save.data.bg);
-					case 2:
-						FlxG.save.data.characters = !FlxG.save.data.characters;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.characters ? 'characters on' : 'characters off'), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 2;
-						grpControls.add(ctrl);
-						trace(FlxG.save.data.characters);
-					case 3:
-						FlxG.save.data.details = !FlxG.save.data.details;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.details ? 'background details on' : 'background details off'), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 3;
-						grpControls.add(ctrl);
-						trace(FlxG.save.data.details);
-				}
+				FlxG.sound.play('assets/sounds/confirmMenu' + TitleState.soundExt);
+				rebindKey(curSelected);
 			}
 	}
-
+	function refreshControlStrings():Void
+	{
+		grpControls.clear();
+		controlsStrings = CoolUtil.coolStringFile('Left: ${FlxG.save.data.leftBind}\nDown: ${FlxG.save.data.downBind}\n Up: ${FlxG.save.data.upBind}\n Right: ${FlxG.save.data.rightBind}');
+		for (i in 0...controlsStrings.length)
+			{
+					var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i], false, false);
+					controlLabel.isMenuItem = true;
+					controlLabel.targetY = i;
+					grpControls.add(controlLabel);
+				// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
+			}
+	}
+	function rebindKey(dir:Int)
+	{
+		frameWait = 2;
+		directionToBind = dir;
+		rebinding = true;
+	}
 	var isSettingControl:Bool = false;
 
 	function changeSelection(change:Int = 0)

@@ -11,6 +11,18 @@ class SaveData
 {
 	public static function formatSaveFile():Void
 	{
+		if (FlxG.save.data.leftBind == null) {
+			FlxG.save.data.leftBind = 'A';
+		}
+		if (FlxG.save.data.downBind == null) {
+			FlxG.save.data.downBind = 'S';
+		}
+		if (FlxG.save.data.upBind == null) {
+			FlxG.save.data.upBind = 'W';
+		}
+		if (FlxG.save.data.rightBind == null) {
+			FlxG.save.data.rightBind = 'D';
+		}
 		if (FlxG.save.data.bot == null) {
 			FlxG.save.data.bot = false;
 		}

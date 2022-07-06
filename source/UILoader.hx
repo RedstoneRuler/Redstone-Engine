@@ -33,7 +33,7 @@ class UILoader
 			return FlxGraphic.fromBitmapData(BitmapData.fromFile('assets/ui_skins/default/${imageName}.png'));
 		}
 		#else
-		return BitmapData.fromFile('assets/ui_skins/${PlayState.uiSkin}/${imageName}.png');
+		return FlxGraphic.fromBitmapData(BitmapData.fromFile('assets/ui_skins/${PlayState.uiSkin}/${imageName}.png'));
 		#end
 	}
 	public static function loadSparrow(imageName)

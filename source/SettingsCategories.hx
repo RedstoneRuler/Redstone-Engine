@@ -12,7 +12,6 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
-import Note;
 class SettingsCategories extends MusicBeatState
 {
 	var zoomText:String;
@@ -26,9 +25,9 @@ class SettingsCategories extends MusicBeatState
 	{
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
 		#if sys
-		controlsStrings = CoolUtil.coolStringFile("Gameplay\nGraphics\nOptimization\nConfigure UI Skin");
+		controlsStrings = CoolUtil.coolStringFile("Gameplay\nKeybindings\nGraphics\nOptimization\nConfigure UI Skin");
 		#else
-		controlsStrings = CoolUtil.coolStringFile("Gameplay\nGraphics\nOptimization");
+		controlsStrings = CoolUtil.coolStringFile("Gameplay\nKeybindings\nGraphics\nOptimization");
 		#end
 		trace(controlsStrings);
 		menuBG.color = 0xFFea71fd;
@@ -72,10 +71,12 @@ class SettingsCategories extends MusicBeatState
 					case 0:
 						FlxG.switchState(new SettingsGameplay());
 					case 1:
-						FlxG.switchState(new SettingsGraphics());
+						FlxG.switchState(new SettingsControls());
 					case 2:
-						FlxG.switchState(new SettingsOptimization());
+						FlxG.switchState(new SettingsGraphics());
 					case 3:
+						FlxG.switchState(new SettingsOptimization());
+					case 4:
 						FlxG.switchState(new SettingsUI());
 				}
 			}

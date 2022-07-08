@@ -2502,7 +2502,7 @@ class PlayState extends MusicBeatState
 			"Bad",
 			"Shit",
 			"Awful",
-			"Open your eyes, man!",
+			"Open your eyes, man!"
 		];
 		// Why can't you use '...' for switch statements
 		// I'm trying to make this look nicer and instead I gotta do this

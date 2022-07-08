@@ -23,7 +23,7 @@ class SettingsUI extends MusicBeatState
 
 	override function create()
 	{
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('menuDesat'));
 		controlsStrings = CoolUtil.coolTextFile('assets/ui_skins/UISkinList.txt');
 		
 		trace(controlsStrings);

@@ -23,7 +23,7 @@ class SettingsOptimization extends MusicBeatState
 
 	override function create()
 	{
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('menuDesat'));
 		controlsStrings = CoolUtil.coolStringFile(
 			(FlxG.save.data.optimize ? "smaller spritesheets On" : "smaller spritesheets Off")
 			+ "\n" + (FlxG.save.data.bg ? "backgrounds On" : "backgrounds Off")

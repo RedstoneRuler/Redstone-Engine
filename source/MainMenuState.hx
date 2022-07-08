@@ -54,7 +54,7 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic('assets/images/menuBG.png');
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(UILoader.loadImage('menuBG'));
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0.15;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
@@ -66,7 +66,7 @@ class MainMenuState extends MusicBeatState
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
-		magenta = new FlxSprite(-80).loadGraphic('assets/images/menuDesat.png');
+		magenta = new FlxSprite(-80).loadGraphic(UILoader.loadImage('menuDesat'));
 		magenta.scrollFactor.x = 0;
 		magenta.scrollFactor.y = 0.15;
 		magenta.setGraphicSize(Std.int(magenta.width * 1.1));
@@ -81,10 +81,10 @@ class MainMenuState extends MusicBeatState
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
-		var tex = FlxAtlasFrames.fromSparrow('assets/images/main_menu.png', 'assets/images/main_menu.xml');
+		var tex = UILoader.loadSparrowDirect('main_menu');
 		if(tex == null)
 		{
-			tex = FlxAtlasFrames.fromSparrow('assets/images/FNF_main_menu_assets.png', 'assets/images/FNF_main_menu_assets.xml');
+			tex = UILoader.loadSparrowDirect('FNF_main_menu_assets');
 		}
 		for (i in 0...optionShit.length)
 		{

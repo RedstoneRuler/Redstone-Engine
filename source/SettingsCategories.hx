@@ -23,7 +23,7 @@ class SettingsCategories extends MusicBeatState
 
 	override function create()
 	{
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic('assets/images/menuDesat.png');
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('menuDesat'));
 		#if sys
 		controlsStrings = CoolUtil.coolStringFile("Gameplay\nKeybindings\nGraphics\nOptimization\nConfigure UI Skin");
 		#else

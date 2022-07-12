@@ -924,7 +924,7 @@ class PlayState extends MusicBeatState
 		FlxG.fixedTimestep = false;
 
 		if(FlxG.save.data.downscroll)
-			healthBarBG = new FlxSprite(0, (FlxG.height * 0.9) += 500).loadGraphic('assets/images/healthBar.png');
+			healthBarBG = new FlxSprite(0, (FlxG.height * 2)).loadGraphic('assets/images/healthBar.png');
 		else 
 			healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic('assets/images/healthBar.png');
 
@@ -955,13 +955,20 @@ class PlayState extends MusicBeatState
 		accuracyTxt.scrollFactor.set();
 		add(accuracyTxt);
 
-		iconP1 = new HealthIcon(SONG.player1, true);
+		var iconBF:String;
+		var iconDAD:String;
+
+		iconBF = SONG.player1;
+		iconDAD = SONG.player2;
+		
+		iconP1 = new HealthIcon(iconBF, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
 
-		iconP2 = new HealthIcon(SONG.player2, false);
+		iconP2 = new HealthIcon(iconDAD, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
+		
 		if(FlxG.save.data.splash)
 			grpNoteSplashes.cameras = [camHUD];
 		strumLineNotes.cameras = [camHUD];
@@ -1613,6 +1620,7 @@ class PlayState extends MusicBeatState
 		#if !debug
 		perfectMode = false;
 		#end
+		/*
 		if (FlxG.keys.justPressed.NINE)
 		{
 			if (iconP1.animation.curAnim.name == 'bf-old')
@@ -1620,6 +1628,7 @@ class PlayState extends MusicBeatState
 			else
 				iconP1.animation.play('bf-old');
 		}
+		*/
 
 		if(FlxG.save.data.bg)
 		{

@@ -1,5 +1,10 @@
 package;
-
+#if sys
+import sys.FileSystem;
+import sys.io.File;
+#end
+import openfl.display.BitmapData;
+import flixel.graphics.FlxGraphic;
 import flixel.FlxSprite;
 
 class HealthIcon extends FlxSprite
@@ -9,53 +14,62 @@ class HealthIcon extends FlxSprite
 	public function new(char:String = 'face', isPlayer:Bool = false)
 	{
 		super();
-		loadGraphic('assets/images/iconGrid.png', true, 150, 150);
+		changeIcon(char, isPlayer);
+		scrollFactor.set();
+	}
+	public function changeIcon(char:String, isPlayer:Bool = false)
+	{
+		var icon:String;
+
+		switch(char)
+		{
+			case 'bf-car':
+				icon = 'bf';
+			case 'bf-christmas':
+				icon = 'bf';
+			case 'bf-holding-gf':
+				icon = 'bf';
+			case 'mom-car':
+				icon = 'mom';
+			case 'monster-christmas':
+				icon = 'monster';
+			case 'senpai-angry':
+				icon = 'senpai';		
+			default:
+				icon = char;
+		}
+
+		loadGraphic(loadIcon(icon));
+		loadGraphic(loadIcon(icon), true, Math.floor(width / 2), Math.floor(height));
 
 		antialiasing = true;
-		animation.add('bf', [0, 1, 0], 0, false, isPlayer);
-		animation.add('bf-holding-gf', [0, 1, 0], 0, false, isPlayer);
-		animation.add('bf-optimized', [0, 1, 0], 0, false, isPlayer);
-		animation.add('bf-car', [0, 1, 0], 0, false, isPlayer);
-		animation.add('bf-christmas', [0, 1, 0], 0, false, isPlayer);
-		animation.add('bf-pixel', [21, 21, 21], 0, false, isPlayer);
-		animation.add('spooky', [2, 3, 2], 0, false, isPlayer);
-		animation.add('pico', [4, 5, 4], 0, false, isPlayer);
-		animation.add('mom', [6, 7, 6], 0, false, isPlayer);
-		animation.add('mom-car', [6, 7, 6], 0, false, isPlayer);
-		animation.add('tankman', [8, 9, 8], 0, false, isPlayer);
-		animation.add('face', [10, 11, 10], 0, false, isPlayer);
-		animation.add('dad', [12, 13, 12], 0, false, isPlayer);
-		animation.add('senpai', [22, 22, 22], 0, false, isPlayer);
-		animation.add('senpai-angry', [22, 22, 22], 0, false, isPlayer);
-		animation.add('spirit', [23, 23, 23], 0, false, isPlayer);
-		animation.add('bf-old', [14, 15, 14], 0, false, isPlayer);
-		animation.add('gf', [16, 16, 16], 0, false, isPlayer);
-		animation.add('gf-car', [16, 16, 16], 0, false, isPlayer);
-		animation.add('gf-pixel', [16, 16, 16], 0, false, isPlayer);
-		animation.add('gf-optimized', [16, 16, 16], 0, false, isPlayer);
-		animation.add('parents-christmas', [17, 17, 17], 0, false, isPlayer);
-		animation.add('monster', [19, 20, 19], 0, false, isPlayer);
-		animation.add('monster-christmas', [19, 20, 19], 0, false, isPlayer);
-		animation.add('tylo', [24, 25, 26], 0, false, isPlayer);
-		// Avoids crashes if health head doesn't exist
-		if(char != 'blank')
-		{
-			if(animation.getByName(char) != null) {
-				animation.play(char);
-			}
-			else {
-				animation.play("face");
-			}
-			scrollFactor.set();
-		}
-		else {
-			visible = false;
-		}
+
+		if(width >= (width + (width / 2))) //check if there's room for a winning icon and add it to the animation if there is
+			animation.add('face', [0, 1, 2], 0, false, isPlayer);
+		else 
+			animation.add('face', [0, 1, 0], 0, false, isPlayer);
+
+		animation.play('face');
 	}
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 		if (sprTracker != null)
 			setPosition(sprTracker.x + sprTracker.width + 10, sprTracker.y - 30);
+	}
+	static public function loadIcon(char:String, isPlayer:Bool = false)
+	{
+		//COPIED FROM UI LOADER CUZ I'M LAZY LMFAO
+		#if sys
+		if(FileSystem.exists(FileSystem.absolutePath('assets/images/icons/icon-${char}.png'))) {
+			var image:BitmapData = BitmapData.fromFile(FileSystem.absolutePath('assets/images/icons/icon-${char}.png'));
+			return FlxGraphic.fromBitmapData(image);
+		}
+		else {
+			return FlxGraphic.fromBitmapData(BitmapData.fromFile('assets/images/icons/icon-face.png'));
+		}
+		#else
+		return FlxGraphic.fromBitmapData(BitmapData.fromFile('assets/images/icons/icon-${char}.png'));
+		#end
 	}
 }

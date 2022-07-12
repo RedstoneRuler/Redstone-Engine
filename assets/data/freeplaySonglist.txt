@@ -13,7 +13,7 @@ High,mom,125,4
 Milf,mom,180,4
 Cocoa,parents-christmas,100,5
 Eggnog,parents-christmas,150,5
-Winter-Horrorland,monster-christmas,159,5
+Winter-Horrorland,monster,159,5
 Senpai,senpai,144,6
 Roses,senpai,120,6
 Thorns,spirit,190,6

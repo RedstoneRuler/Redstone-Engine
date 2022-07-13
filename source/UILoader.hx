@@ -36,6 +36,21 @@ class UILoader
 		return FlxGraphic.fromBitmapData(BitmapData.fromFile('assets/ui_skins/${PlayState.uiSkin}/${imageName}.png'));
 		#end
 	}
+	public static function loadImageDirect(imageName:String)
+	{
+		#if sys
+		if(FileSystem.exists(FileSystem.absolutePath('assets/ui_skins/${FlxG.save.data.uiSkin}') + '/' + '${imageName}.png')) {
+		trace('LOADING ${imageName}');
+			var image:BitmapData = BitmapData.fromFile(FileSystem.absolutePath('assets/ui_skins/${FlxG.save.data.uiSkin}') + '/' + '${imageName}.png');
+			return FlxGraphic.fromBitmapData(image);
+		}
+		else {
+			return FlxGraphic.fromBitmapData(BitmapData.fromFile('assets/ui_skins/default/${imageName}.png'));
+		}
+		#else
+		return FlxGraphic.fromBitmapData(BitmapData.fromFile('assets/ui_skins/${FlxG.save.data.uiSkin}/${imageName}.png'));
+		#end
+	}
 	public static function loadSparrow(imageName)
 	{
 		#if sys

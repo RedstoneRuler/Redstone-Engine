@@ -1,5 +1,6 @@
 package;
 
+import lime.app.Application;
 import Controls.KeyboardScheme;
 import Controls.Control;
 import flash.text.TextField;
@@ -72,10 +73,10 @@ class SettingsGraphics extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		var minFPS:Int = 10;
+		var minFPS:Int = 30;
 		var maxFPS:Int;
 		#if html5
-		maxFPS = 60;
+		maxFPS = Application.current.window.displayMode.refreshRate;
 		#else
 		maxFPS = 360;
 		#end

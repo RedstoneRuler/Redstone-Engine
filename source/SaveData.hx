@@ -63,7 +63,7 @@ class SaveData
 			FlxG.save.data.glow = false;
 		}
 		if (FlxG.save.data.fps == null) {
-			#if !html5
+			#if (!html5 || html5 && Application.current.window.displayMode.refreshRate > 60) //For some reason, an equal 60 leads to input lag on html5.
 			FlxG.save.data.fps = Application.current.window.displayMode.refreshRate;
 			#else
 			FlxG.save.data.fps = 59;

@@ -36,10 +36,6 @@ class UILoader
 		return FlxGraphic.fromBitmapData(BitmapData.fromFile('assets/ui_skins/${PlayState.uiSkin}/${imageName}.png'));
 		#end
 	}
-	public static function loadPixelGraphic(imageName:String)
-	{
-		return BitmapData.fromFile(FileSystem.absolutePath('assets/ui_skins/pixel/${imageName}.png'));
-	}
 	public static function loadSparrow(imageName)
 	{
 		#if sys

@@ -20,6 +20,10 @@ class UILoader
 		if (FlxG.save.data.uiSkin == null) {
 			FlxG.save.data.uiSkin = 'default';
 		}
+		#if !sys
+		FlxG.save.data.uiSkin = 'default';
+		#end
+		FlxG.save.flush();
 	}
 	public static function loadImage(imageName:String)
 	{

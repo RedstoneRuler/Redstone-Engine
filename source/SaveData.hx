@@ -72,5 +72,6 @@ class SaveData
 		if (FlxG.save.data.splash == null) {
 			FlxG.save.data.splash = true;
 		}
+		FlxG.save.flush();
 	}
 }

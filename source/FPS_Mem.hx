@@ -26,7 +26,7 @@ class FPS_Mem extends TextField
 
 {
 
-	private var times:Array<Float>;
+	public static var times:Array<Float>;
 
 	private var memPeak:Float = 0;
 

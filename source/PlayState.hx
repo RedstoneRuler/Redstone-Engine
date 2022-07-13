@@ -190,10 +190,17 @@ class PlayState extends MusicBeatState
 			loadAssets.push(UILoader.loadImage('good'));
 			loadAssets.push(UILoader.loadImage('bad'));
 			loadAssets.push(UILoader.loadImage('shit'));
-			for(i in 0...9)
-			{
-				loadAssets.push(UILoader.loadImage('num${i}'));
-			}
+
+			loadAssets.push(UILoader.loadImage('num0'));
+			loadAssets.push(UILoader.loadImage('num1'));
+			loadAssets.push(UILoader.loadImage('num2'));
+			loadAssets.push(UILoader.loadImage('num3'));
+			loadAssets.push(UILoader.loadImage('num4'));
+			loadAssets.push(UILoader.loadImage('num5'));
+			loadAssets.push(UILoader.loadImage('num6'));
+			loadAssets.push(UILoader.loadImage('num7'));
+			loadAssets.push(UILoader.loadImage('num8'));
+			loadAssets.push(UILoader.loadImage('num9'));
 			if(FlxG.save.data.details)
 			{
 				if(SONG.song.toLowerCase() == 'stress')
@@ -258,46 +265,33 @@ class PlayState extends MusicBeatState
 			case 'thorns':
 				dialogue = CoolUtil.coolTextFile('assets/data/thorns/thornsDialogue.txt');
 		}
-		if (SONG.song.toLowerCase() == 'spookeez' || SONG.song.toLowerCase() == 'monster' || SONG.song.toLowerCase() == 'south')
+		switch(SONG.song.toLowerCase())
 		{
-			curStage = "spooky";
-		}
-		if (SONG.song.toLowerCase() == 'pico' || SONG.song.toLowerCase() == 'blammed' || SONG.song.toLowerCase() == 'philly-nice')
-		{
-			curStage = 'philly';
-		}
-		if (SONG.song.toLowerCase() == 'milf' || SONG.song.toLowerCase() == 'satin-panties' || SONG.song.toLowerCase() == 'high')
-		{
-			defaultCamZoom = 0.90;
-			curStage = 'limo';
-		}
-		if (SONG.song.toLowerCase() == 'cocoa' || SONG.song.toLowerCase() == 'eggnog')
-		{
-			defaultCamZoom = 0.80;
-			curStage = 'mall';
-		}
-		if (SONG.song.toLowerCase() == 'winter-horrorland')
-		{
-			curStage = 'mallEvil';
-		}
-		if (SONG.song.toLowerCase() == 'senpai' || SONG.song.toLowerCase() == 'roses')
-		{
-			isPixelStage = true;
-			curStage = 'school';
-		}
-		if (SONG.song.toLowerCase() == 'thorns')
-		{
-			isPixelStage = true;
-			curStage = 'schoolEvil';
-		}
-		if (SONG.song.toLowerCase() == 'ugh' || SONG.song.toLowerCase() == 'guns' || SONG.song.toLowerCase() == 'stress')
-		{
-			defaultCamZoom = 0.9;
-			curStage = "tank";
-			picoStep = Json.parse(openfl.utils.Assets.getText(Paths.json('stress/picospeaker')));
-			tankStep = Json.parse(openfl.utils.Assets.getText(Paths.json('stress/tankSpawn')));
-			tankmanRun = new FlxTypedGroup<TankmenBG>();
-			add(tankmanRun);
+			case 'spookeez' | 'south' | 'monster':
+				curStage = "spooky";
+			case 'pico' | 'philly-nice' | 'blammed':
+				curStage = "philly";
+			case 'satin-panties' | 'high' | 'milf':
+				defaultCamZoom = 0.90;
+				curStage = 'limo';
+			case 'cocoa' | 'eggnog':
+				defaultCamZoom = 0.80;
+				curStage = 'mall';
+			case 'winter-horrorland':
+				curStage = 'mallEvil';
+			case 'senpai' | 'roses':
+				isPixelStage = true;
+				curStage = 'school';
+			case 'thorns':
+				isPixelStage = true;
+				curStage = 'schoolEvil';
+			case 'ugh' | 'guns' | 'stress':
+				defaultCamZoom = 0.9;
+				curStage = "tank";
+				picoStep = Json.parse(openfl.utils.Assets.getText(Paths.json('stress/picospeaker')));
+				tankStep = Json.parse(openfl.utils.Assets.getText(Paths.json('stress/tankSpawn')));
+				tankmanRun = new FlxTypedGroup<TankmenBG>();
+				add(tankmanRun);
 		}
 		if(isPixelStage) {
 			uiSkin = 'pixel';
@@ -913,8 +907,6 @@ class PlayState extends MusicBeatState
 		}
 
 		add(camFollow);
-
-		FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / Application.current.window.frameRate));
 		// FlxG.camera.setScrollBounds(0, FlxG.width, 0, FlxG.height);
 		FlxG.camera.zoom = defaultCamZoom;
 		FlxG.camera.focusOn(camFollow.getPosition());
@@ -1180,7 +1172,6 @@ class PlayState extends MusicBeatState
 
 	function startCountdown():Void
 	{
-		preloadAssets();
 		inCutscene = false;
 		trace(noteSprite);
 		generateStaticArrows(0);
@@ -1296,6 +1287,7 @@ class PlayState extends MusicBeatState
 
 	function startSong():Void
 	{
+		preloadAssets();
 		startingSong = false;
 
 		previousFrameTime = FlxG.game.ticks;
@@ -1753,7 +1745,8 @@ class PlayState extends MusicBeatState
 
 			// Conductor.lastSongPos = FlxG.sound.music.time;
 		}
-
+		FlxG.camera.follow(camFollow, LOCKON, 0.04 * (60 / FPS_Mem.times.length));
+		FlxG.watch.addQuick('FPS', FPS_Mem.times.length);
 		if (generatedMusic && PlayState.SONG.notes[Std.int(curStep / 16)] != null)
 		{
 			if (curBeat % 4 == 0)
@@ -1764,10 +1757,8 @@ class PlayState extends MusicBeatState
 			if (camFollow.x != dad.getMidpoint().x + 150 && (!PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection && SONG.autoCamera != true || opponentNote == true
 				&& SONG.autoCamera == true))
 			{
-				FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / Application.current.window.frameRate));
 				camFollow.setPosition(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
 				// camFollow.setPosition(lucky.getMidpoint().x - 120, lucky.getMidpoint().y + 210);
-
 				switch (dad.curCharacter)
 				{
 					case 'mom':
@@ -1794,9 +1785,7 @@ class PlayState extends MusicBeatState
 			else if ((bfNote == true && opponentNote == false && SONG.autoCamera == true || PlayState.SONG.notes[Std.int(curStep / 16)].mustHitSection && SONG.autoCamera != true)
 				&& camFollow.x != boyfriend.getMidpoint().x - 100)
 			{
-				FlxG.camera.follow(camFollow, LOCKON, 0.04 * (30 / Application.current.window.frameRate));
 				camFollow.setPosition(boyfriend.getMidpoint().x - 100, boyfriend.getMidpoint().y - 100);
-
 				switch (curStage)
 				{
 					case 'limo':
@@ -3066,7 +3055,7 @@ class PlayState extends MusicBeatState
 						gf.playAnim('shoot' + FlxG.random.int(3, 4), true);
 					}
 				}
-				if(FlxG.save.data.details)
+				if(FlxG.save.data.details == true)
 				{
 					//Left tankspawn
 					for (i in 0...tankStep.left.length)

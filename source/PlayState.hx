@@ -2247,7 +2247,7 @@ class PlayState extends MusicBeatState
 		var coolText:FlxText = new FlxText(0, 0, 0, placement, 32);
 		coolText.screenCenter();
 		coolText.x = FlxG.width * 0.55;
-		//
+		
 		var score:Int = 350;
 		if(FlxG.save.data.bot != true) {
 			if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.9)
@@ -2749,16 +2749,20 @@ class PlayState extends MusicBeatState
 		missCount += 1;
 		if(wasPassedNote) {
 			health -= 0.0475;
+			/*
 			if(FlxG.save.data.accuracy == false)
 				accuracy -= 3; //missing a note is a blow to your accuracy
 			else
+			*/
 				hitRate -= 1;
 				updateAccuracy();
 		} else {
 			health -= 0.04;
+			/*
 			if(FlxG.save.data.accuracy == false)
 				accuracy -= 0.5; //missing a note is a blow to your accuracy
 			else
+			*/
 				hitRate -= 0.5;
 				updateAccuracy();
 		}

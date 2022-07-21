@@ -1917,6 +1917,11 @@ class PlayState extends MusicBeatState
 				// i am so fucking sorry for this if condition
 				if(daScroll)
 				{
+					if(daNote.isSustainNote && daNote.animation.curAnim.name.endsWith('end') && daNote.prevNote != null)
+						daNote.y += (daNote.prevNote.height);
+					else if(daNote.isSustainNote)
+						daNote.y += daNote.height / 2;
+
 					if(daNote.isSustainNote && daNote.wasGoodHit)
 					{
 						daNote.kill();

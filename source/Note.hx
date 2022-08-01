@@ -181,7 +181,7 @@ class Note extends FlxSprite
 					prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * (PlayState.SONG.speed / 1.2);
 				}
 				else {
-					prevNote.scale.y *= Conductor.stepCrochet / 100 * (1.5 * PlayState.SONG.speed) - 0.005;
+					prevNote.scale.y *= Conductor.stepCrochet / 100 * (1.5 * PlayState.SONG.speed);
 				}
 				prevNote.updateHitbox();
 				// prevNote.setGraphicSize();

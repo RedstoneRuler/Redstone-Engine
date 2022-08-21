@@ -19,7 +19,7 @@ class PauseSubState extends MusicBeatSubstate
 	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Toggle Hit Sounds', 'Toggle Autoplay', 'Exit to menu'];
 	var curSelected:Int = 0;
 
-	var minFPS:Int = 10;
+	var minFPS:Int = 30;
 	var maxFPS:Int;
 	#if html5
 	var fpsDisplayAddition:Int = 1;
@@ -168,7 +168,7 @@ class PauseSubState extends MusicBeatSubstate
 			changeSelection(1);
 		}
 		#if html5
-		maxFPS = 59;
+		maxFPS = Application.current.window.displayMode.refreshRate;
 		#else
 		maxFPS = 360;
 		#end

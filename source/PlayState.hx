@@ -2868,8 +2868,8 @@ class PlayState extends MusicBeatState
 			opponentNote = false;
 			if (!note.isSustainNote)
 			{
-				popUpScore(note.strumTime, note);
 				combo += 1;
+				popUpScore(note.strumTime, note);			
 			}
 			if (note.noteData >= 0) {
 				health += 0.023;

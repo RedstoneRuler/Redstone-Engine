@@ -54,7 +54,11 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
+		#if sys
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(UILoader.loadImageDirect('menuBG'));
+		#else
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic('assets/ui_skins/menuBG.png');
+		#end
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0.15;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
@@ -66,7 +70,11 @@ class MainMenuState extends MusicBeatState
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
+		#if sys
 		magenta = new FlxSprite(-80).loadGraphic(UILoader.loadImageDirect('menuDesat'));
+		#else
+		magenta:FlxSprite = new FlxSprite(-80).loadGraphic('assets/ui_skins/menuDesat.png');
+		#end
 		magenta.scrollFactor.x = 0;
 		magenta.scrollFactor.y = 0.15;
 		magenta.setGraphicSize(Std.int(magenta.width * 1.1));

@@ -26,7 +26,11 @@ class SettingsControls extends MusicBeatState
 
 	override function create()
 	{
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('menuDesat'));
+		#if sys
+		var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic(UILoader.loadImageDirect('menuDesat'));
+		#else
+		var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic('assets/ui_skins/default/menuDesat.png');
+		#end
 		controlsStrings = CoolUtil.coolStringFile('Left: ${FlxG.save.data.leftBind}\nDown: ${FlxG.save.data.downBind}\n Up: ${FlxG.save.data.upBind}\n Right: ${FlxG.save.data.rightBind}');
 		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));

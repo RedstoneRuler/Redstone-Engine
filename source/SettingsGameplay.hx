@@ -24,7 +24,12 @@ class SettingsGameplay extends MusicBeatState
 
 	override function create()
 	{
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('menuDesat'));
+		#if sys
+		var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic(UILoader.loadImageDirect('menuDesat'));
+		#else
+		var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic('assets/ui_skins/default/menuDesat.png');
+		#end
+		
 		controlsStrings = CoolUtil.coolStringFile((
 		FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off")
 			+ "\n" + (FlxG.save.data.downscroll ? "Downscroll" : "Upscroll")

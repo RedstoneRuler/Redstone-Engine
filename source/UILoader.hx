@@ -44,7 +44,7 @@ class UILoader
 	{
 		#if sys
 		if(FileSystem.exists(FileSystem.absolutePath('assets/ui_skins/${FlxG.save.data.uiSkin}') + '/' + '${imageName}.png')) {
-		trace('LOADING ${imageName}');
+			trace('LOADING ${imageName}');
 			var image:BitmapData = BitmapData.fromFile(FileSystem.absolutePath('assets/ui_skins/${FlxG.save.data.uiSkin}') + '/' + '${imageName}.png');
 			return FlxGraphic.fromBitmapData(image);
 		}

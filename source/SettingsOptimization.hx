@@ -12,6 +12,7 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
+
 class SettingsOptimization extends MusicBeatState
 {
 	var zoomText:String;
@@ -23,7 +24,12 @@ class SettingsOptimization extends MusicBeatState
 
 	override function create()
 	{
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('menuDesat'));
+		#if sys
+		var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic(UILoader.loadImageDirect('menuDesat'));
+		#else
+		var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic('assets/ui_skins/default/menuDesat.png');
+		#end
+		
 		controlsStrings = CoolUtil.coolStringFile(
 			(FlxG.save.data.optimize ? "smaller spritesheets On" : "smaller spritesheets Off")
 			+ "\n" + (FlxG.save.data.bg ? "backgrounds On" : "backgrounds Off")

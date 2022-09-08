@@ -36,6 +36,7 @@ class FreeplayState extends MusicBeatState
 
 	var defaultCamZoom:Float = 1;
 	private var iconArray:Array<HealthIcon> = [];
+
 	override function create()
 	{
 		/* 
@@ -60,98 +61,7 @@ class FreeplayState extends MusicBeatState
 		}
 	
 		//HARDCODED SONG TEMPLATE: addSong('title', 'icon', bpm, week);
-		/*
-		if (StoryMenuState.weekUnlocked[0] || isDebug)
-		{
-			addSong('Tutorial', 'gf', 100);
-		}
-		if (StoryMenuState.weekUnlocked[1] || isDebug)
-		{
-			addSong('Bopeebo', 'dad', 100);
-			
-			addSong('Fresh', 'dad', 120);
 
-			addSong('Dad-Battle', 'dad', 180);
-		}
-		if (StoryMenuState.weekUnlocked[2] || isDebug)
-		{
-			addSong('Spookeez', 'spooky', 150);
-
-			addSong('South', 'spooky', 165);
-
-			addSong('Monster', 'monster', 0);
-		}
-
-		if (StoryMenuState.weekUnlocked[3] || isDebug)
-		{
-			songs.push('Pico');
-			iconList.push('pico');
-			bpmList.push(150);
-
-			songs.push('Philly');
-			iconList.push('pico');
-			bpmList.push(175);
-
-			songs.push('Blammed');
-			iconList.push('pico');
-			bpmList.push(165);
-		}
-
-		if (StoryMenuState.weekUnlocked[4] || isDebug)
-		{
-			songs.push('Satin-Panties');
-			iconList.push('mom');
-			bpmList.push(110);
-
-			songs.push('High');
-			iconList.push('mom');
-			bpmList.push(125);
-
-			songs.push('Milf');
-			iconList.push('mom');
-			bpmList.push(180);
-		}
-
-		if (StoryMenuState.weekUnlocked[5] || isDebug)
-		{
-			songs.push('Cocoa');
-			iconList.push('parents-christmas');
-			bpmList.push(100);
-
-			songs.push('Eggnog');
-			iconList.push('parents-christmas');
-			bpmList.push(150);
-
-			songs.push('Winter-Horrorland');
-			iconList.push('monster');
-			bpmList.push(159);
-		}
-
-		if (StoryMenuState.weekUnlocked[6] || isDebug)
-		{
-			songs.push('Senpai');
-			iconList.push('senpai');
-			bpmList.push(144);
-
-			songs.push('Roses');
-			iconList.push('senpai');
-			bpmList.push(120);
-
-			songs.push('Thorns');
-			iconList.push('spirit');
-			bpmList.push(190);
-		}
-	
-		if (StoryMenuState.weekUnlocked[7] || isDebug)
-		{
-			addSong('Ugh', 'tankman', 160);
-
-			addSong('Guns', 'tankman', 185);
-
-			addSong('Stress', 'tankman', 178);
-		}
-		addSong('Test', 'bf-pixel', 150);
-		*/
 		trace(songs);
 		trace(bpmList);
 		trace(iconList);
@@ -161,7 +71,11 @@ class FreeplayState extends MusicBeatState
 
 		// LOAD CHARACTERS
 
+		#if sys
 		var bg:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImageDirect('menuBGBlue'));
+		#else
+		var bg:FlxSprite = new FlxSprite().loadGraphic('assets/ui_skins/default/menuBGBlue');
+		#end
 		add(bg);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();

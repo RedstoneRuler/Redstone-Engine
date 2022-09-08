@@ -38,7 +38,13 @@ class SettingsGraphics extends MusicBeatState
 			case true:
 				zoomText = "Camera zooms per beat";
 		}
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('menuDesat'));
+
+		#if sys
+		var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic(UILoader.loadImageDirect('menuDesat'));
+		#else
+		var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic('assets/ui_skins/default/menuDesat.png');
+		#end
+		
 		controlsStrings = CoolUtil.coolStringFile(
 			(FlxG.save.data.shaders ? "Shaders on" : "Shaders off")
 			+ "\n" + (FlxG.save.data.glow ? "Note Glow On" : "Note Glow Off")

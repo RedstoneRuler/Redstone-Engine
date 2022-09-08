@@ -39,8 +39,9 @@ class SettingsGraphics extends MusicBeatState
 				zoomText = "Camera zooms per beat";
 		}
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('menuDesat'));
-		controlsStrings = CoolUtil.coolStringFile((
-			FlxG.save.data.glow ? "Note Glow On" : "Note Glow Off")
+		controlsStrings = CoolUtil.coolStringFile(
+			(FlxG.save.data.shaders ? "Shaders on" : "Shaders off")
+			+ "\n" + (FlxG.save.data.glow ? "Note Glow On" : "Note Glow Off")
 			+ "\n" + (zoomText)
 			+ "\n" + (splashText));
 			
@@ -132,26 +133,32 @@ class SettingsGraphics extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-					grpControls.remove(grpControls.members[curSelected]);
+				grpControls.remove(grpControls.members[curSelected]);
 				switch(curSelected)
 				{
 					case 0:
-						FlxG.save.data.glow = !FlxG.save.data.glow;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.glow ? 'note glow on' : 'note glow off'), true, false);
+						FlxG.save.data.shaders = !FlxG.save.data.shaders;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.shaders ? 'shaders on' : 'shaders off'), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected;
 						grpControls.add(ctrl);
 					case 1:
-						FlxG.save.data.zoom = !FlxG.save.data.zoom;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.zoom ? 'camera zooms per beat' : 'camera zooms per measure'), true, false);
+						FlxG.save.data.glow = !FlxG.save.data.glow;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.glow ? 'note glow on' : 'note glow off'), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 1;
 						grpControls.add(ctrl);
 					case 2:
+						FlxG.save.data.zoom = !FlxG.save.data.zoom;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.zoom ? 'camera zooms per beat' : 'camera zooms per measure'), true, false);
+						ctrl.isMenuItem = true;
+						ctrl.targetY = curSelected - 2;
+						grpControls.add(ctrl);
+					case 3:
 						FlxG.save.data.splash = !FlxG.save.data.splash;
 						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.splash ? 'note splashes on' : 'note splashes off'), true, false);
 						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 2;
+						ctrl.targetY = curSelected - 3;
 						grpControls.add(ctrl);
 				}
 			}

@@ -544,56 +544,58 @@ class PlayState extends MusicBeatState
 				var posX = 400;
 				var posY = 200;
 
-				/*
-				var bg:FlxSprite = new FlxSprite(posX, posY);
-				bg.frames = FlxAtlasFrames.fromSparrow('assets/images/weeb/animatedEvilSchool.png', 'assets/images/weeb/animatedEvilSchool.xml');
-				bg.animation.addByPrefix('idle', 'background 2', 24);
-				bg.animation.play('idle');
-				bg.scrollFactor.set(0.8, 0.9);
-				bg.scale.set(6, 6);
-				add(bg);
-				*/
-
-				
-				var bg:FlxSprite = new FlxSprite(posX, posY).loadGraphic('assets/images/weeb/evilSchoolBG.png');
-				bg.scale.set(6, 6);
-				// bg.setGraphicSize(Std.int(bg.width * 6));
-				// bg.updateHitbox();
-				add(bg);
-
-				var fg:FlxSprite = new FlxSprite(posX, posY).loadGraphic('assets/images/weeb/evilSchoolFG.png');
-				fg.scale.set(6, 6);
-				// fg.setGraphicSize(Std.int(fg.width * 6));
-				// fg.updateHitbox();
-				add(fg);
-
-				wiggleShit.effectType = WiggleEffectType.DREAMY;
-				wiggleShit.waveAmplitude = 0.01;
-				wiggleShit.waveFrequency = 60;
-				wiggleShit.waveSpeed = 0.8;
-
-				bg.shader = wiggleShit.shader;
-				fg.shader = wiggleShit.shader;
-
-				var waveSprite = new FlxEffectSprite(bg, [waveEffectBG]);
-				var waveSpriteFG = new FlxEffectSprite(fg, [waveEffectFG]);
-
-				// Using scale since setGraphicSize() doesnt work???
-				waveSprite.scale.set(6, 6);
-				waveSpriteFG.scale.set(6, 6);
-				waveSprite.setPosition(posX + 80, posY + 165);
-				waveSpriteFG.setPosition(posX + 80, posY + 165);
-
-				waveSprite.scrollFactor.set(0.7, 0.8);
-				waveSpriteFG.scrollFactor.set(0.9, 0.8);
-
-				// waveSprite.setGraphicSize(Std.int(waveSprite.width * 6));
-				// waveSprite.updateHitbox();
-				// waveSpriteFG.setGraphicSize(Std.int(fg.width * 6));
-				// waveSpriteFG.updateHitbox();
-
-				add(waveSprite);
-				add(waveSpriteFG);
+				if(FlxG.save.data.shaders == true)
+				{
+					var bg:FlxSprite = new FlxSprite(posX, posY).loadGraphic('assets/images/weeb/evilSchoolBG.png');
+					bg.scale.set(6, 6);
+					// bg.setGraphicSize(Std.int(bg.width * 6));
+					// bg.updateHitbox();
+					add(bg);
+	
+					var fg:FlxSprite = new FlxSprite(posX, posY).loadGraphic('assets/images/weeb/evilSchoolFG.png');
+					fg.scale.set(6, 6);
+					// fg.setGraphicSize(Std.int(fg.width * 6));
+					// fg.updateHitbox();
+					add(fg);
+	
+					wiggleShit.effectType = WiggleEffectType.DREAMY;
+					wiggleShit.waveAmplitude = 0.01;
+					wiggleShit.waveFrequency = 60;
+					wiggleShit.waveSpeed = 0.8;
+	
+					bg.shader = wiggleShit.shader;
+					fg.shader = wiggleShit.shader;
+	
+					var waveSprite = new FlxEffectSprite(bg, [waveEffectBG]);
+					var waveSpriteFG = new FlxEffectSprite(fg, [waveEffectFG]);
+	
+					// Using scale since setGraphicSize() doesnt work???
+					waveSprite.scale.set(6, 6);
+					waveSpriteFG.scale.set(6, 6);
+					waveSprite.setPosition(posX + 80, posY + 165);
+					waveSpriteFG.setPosition(posX + 80, posY + 165);
+	
+					waveSprite.scrollFactor.set(0.7, 0.8);
+					waveSpriteFG.scrollFactor.set(0.9, 0.8);
+	
+					// waveSprite.setGraphicSize(Std.int(waveSprite.width * 6));
+					// waveSprite.updateHitbox();
+					// waveSpriteFG.setGraphicSize(Std.int(fg.width * 6));
+					// waveSpriteFG.updateHitbox();
+	
+					add(waveSprite);
+					add(waveSpriteFG);
+				}
+				else
+				{
+					var bg:FlxSprite = new FlxSprite(posX, posY);
+					bg.frames = FlxAtlasFrames.fromSparrow('assets/images/weeb/animatedEvilSchool.png', 'assets/images/weeb/animatedEvilSchool.xml');
+					bg.animation.addByPrefix('idle', 'background 2', 24);
+					bg.animation.play('idle');
+					bg.scrollFactor.set(0.8, 0.9);
+					bg.scale.set(6, 6);
+					add(bg);
+				}
 			}
 			else if (curStage == 'tank')
 			{

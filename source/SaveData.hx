@@ -63,14 +63,17 @@ class SaveData
 			FlxG.save.data.glow = false;
 		}
 		if (FlxG.save.data.fps == null) {
-			#if (!html5 || html5 && Application.current.window.displayMode.refreshRate > 60) //For some reason, an equal 60 leads to input lag on html5.
+			/*#if (!html5 || html5 && Application.current.window.displayMode.refreshRate > 60) //For some reason, an equal 60 leads to input lag on html5.*/
 			FlxG.save.data.fps = Application.current.window.displayMode.refreshRate;
-			#else
+			/*#else
 			FlxG.save.data.fps = 59;
-			#end
+			#end*/
 		}
 		if (FlxG.save.data.splash == null) {
 			FlxG.save.data.splash = true;
+		}
+		if(FlxG.save.data.shaders == null) {
+			FlxG.save.data.shaders = false;
 		}
 		FlxG.save.flush();
 	}

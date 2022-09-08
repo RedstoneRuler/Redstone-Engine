@@ -57,7 +57,7 @@ class MainMenuState extends MusicBeatState
 		#if sys
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(UILoader.loadImageDirect('menuBG'));
 		#else
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic('assets/ui_skins/menuBG.png');
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic('assets/ui_skins/default/menuBG.png');
 		#end
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0.15;
@@ -73,7 +73,7 @@ class MainMenuState extends MusicBeatState
 		#if sys
 		magenta = new FlxSprite(-80).loadGraphic(UILoader.loadImageDirect('menuDesat'));
 		#else
-		magenta:FlxSprite = new FlxSprite(-80).loadGraphic('assets/ui_skins/menuDesat.png');
+		magenta = new FlxSprite(-80).loadGraphic('assets/ui_skins/default/menuDesat.png');
 		#end
 		magenta.scrollFactor.x = 0;
 		magenta.scrollFactor.y = 0.15;

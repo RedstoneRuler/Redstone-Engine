@@ -9,9 +9,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import Controls.Control;
-/**
-	*DEBUG MODE
- */
+/*DEBUG MODE*/
 class AnimationDebug extends FlxState
 {
 	var bf:Boyfriend;

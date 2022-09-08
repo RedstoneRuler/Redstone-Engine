@@ -39,8 +39,13 @@ class HealthIcon extends FlxSprite
 				icon = char;
 		}
 
-		loadGraphic(loadIcon(icon));
-		loadGraphic(loadIcon(icon), true, Math.floor(width / 2), Math.floor(height));
+		#if sys
+		loadGraphic(loadIcon(icon)); //first load to get the dimensions
+		loadGraphic(loadIcon(icon), true, Math.floor(width / 2), Math.floor(height)); //then load for real
+		#else
+		loadGraphic('assets/images/icons/icon-${char}.png');
+		loadGraphic('assets/images/icons/icon-${char}.png', true, Math.floor(width / 2), Math.floor(height));
+		#end
 
 		antialiasing = true;
 

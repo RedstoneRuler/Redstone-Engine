@@ -76,7 +76,7 @@ class SettingsCategories extends MusicBeatState
 					case 0:
 						FlxG.switchState(new SettingsGameplay());
 					case 1:
-						FlxG.switchState(new SettingsControls());
+						openSubState(new KeyBindMenu());
 					case 2:
 						FlxG.switchState(new SettingsGraphics());
 					case 3:

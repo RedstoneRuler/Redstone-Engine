@@ -23,6 +23,9 @@ class SaveData
 		if (FlxG.save.data.rightBind == null) {
 			FlxG.save.data.rightBind = 'D';
 		}
+		if (FlxG.save.data.killBind == null) {
+			FlxG.save.data.killBind = 'R';
+		}
 		if (FlxG.save.data.bot == null) {
 			FlxG.save.data.bot = false;
 		}
@@ -76,5 +79,6 @@ class SaveData
 			FlxG.save.data.shaders = false;
 		}
 		FlxG.save.flush();
+		PlayerSettings.player1.controls.loadKeyBinds();
 	}
 }

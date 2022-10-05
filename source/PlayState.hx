@@ -3107,12 +3107,13 @@ class PlayState extends MusicBeatState
 	var lightningStrikeBeat:Int = 0;
 	var lightningOffset:Int = 8;
 
-	override function newMeasure()
-	{
-		bfNote = false;
-	}
 	override function beatHit()
 	{
+		notes.forEachAlive(function(daNote:Note)
+		{
+			if(!daNote.mustPress)
+				bfNote = false;
+		});
 		mashVar -= 0.8;
 		if(mashVar < 0) mashVar = 0;
 		if(Conductor.bpm > 140) //There's nothing stopping us from not doing this, but it just looks weird at higher BPMs

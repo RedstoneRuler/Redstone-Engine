@@ -1598,6 +1598,11 @@ class PlayState extends MusicBeatState
 	{
 		FlxG.watch.addQuick('bfNote', bfNote);
 		FlxG.watch.addQuick('opponentNote', opponentNote);
+		if(startedCountdown && wasPractice) {
+			FlxG.sound.music.onComplete = gameOverPractice;
+		} else {
+			FlxG.sound.music.onComplete = endSong;
+		}
 		var refreshRate:Int = Application.current.window.displayMode.refreshRate;
 		if(FlxG.save.data.fps == refreshRate)
 		{
@@ -3042,12 +3047,6 @@ class PlayState extends MusicBeatState
 	}
 	override function stepHit()
 	{
-		//Putting this here so it doesn't count the opening theme for week 6
-		if(wasPractice) {
-			FlxG.sound.music.onComplete = gameOverPractice;
-		} else {
-			FlxG.sound.music.onComplete = endSong;
-		}
 		if(SONG.song.toLowerCase() == 'stress')
 			{
 				//RIGHT

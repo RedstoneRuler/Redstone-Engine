@@ -290,8 +290,6 @@ class PlayState extends MusicBeatState
 				curStage = "tank";
 				picoStep = Json.parse(openfl.utils.Assets.getText(Paths.json('stress/picospeaker')));
 				tankStep = Json.parse(openfl.utils.Assets.getText(Paths.json('stress/tankSpawn')));
-				tankmanRun = new FlxTypedGroup<TankmenBG>();
-				add(tankmanRun);
 		}
 		if(isPixelStage) {
 			uiSkin = 'pixel';
@@ -708,6 +706,8 @@ class PlayState extends MusicBeatState
 				add(tank4);
 				add(tank5);
 				add(tank3);
+				tankmanRun = new FlxTypedGroup<TankmenBG>();
+				add(tankmanRun);
 			}
 			else if(curStage == 'stage')
 			{

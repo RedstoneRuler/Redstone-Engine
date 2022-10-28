@@ -33,7 +33,7 @@ class SettingsOptimization extends MusicBeatState
 		controlsStrings = CoolUtil.coolStringFile(
 			(FlxG.save.data.optimize ? "smaller spritesheets On" : "smaller spritesheets Off")
 			+ "\n" + (FlxG.save.data.bg ? "backgrounds On" : "backgrounds Off")
-			+ "\n" + (FlxG.save.data.characters ? "characters On" : "characters Off")
+			//+ "\n" + (FlxG.save.data.characters ? "characters On" : "characters Off")
 			+ "\n" + (FlxG.save.data.details ? "background details on" : "background details off")
 			);
 		
@@ -90,6 +90,7 @@ class SettingsOptimization extends MusicBeatState
 						ctrl.targetY = curSelected - 1;
 						grpControls.add(ctrl);
 						trace(FlxG.save.data.bg);
+					/*
 					case 2:
 						FlxG.save.data.characters = !FlxG.save.data.characters;
 						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.characters ? 'characters on' : 'characters off'), true, false);
@@ -97,7 +98,8 @@ class SettingsOptimization extends MusicBeatState
 						ctrl.targetY = curSelected - 2;
 						grpControls.add(ctrl);
 						trace(FlxG.save.data.characters);
-					case 3:
+					*/
+					case 2:
 						FlxG.save.data.details = !FlxG.save.data.details;
 						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.details ? 'background details on' : 'background details off'), true, false);
 						ctrl.isMenuItem = true;

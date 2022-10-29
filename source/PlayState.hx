@@ -651,6 +651,9 @@ class PlayState extends MusicBeatState
 				tankWatchtower.scrollFactor.set(0.5, 0.5);
 				tankWatchtower.antialiasing = true;
 				add(tankWatchtower);
+
+				tankmanRun = new FlxTypedGroup<TankmenBG>();
+				add(tankmanRun);
 				
 				tankRolling = new FlxSprite(300,300);
 				tankRolling.frames = Paths.getSparrowAtlas('tankRolling');
@@ -706,8 +709,6 @@ class PlayState extends MusicBeatState
 				add(tank4);
 				add(tank5);
 				add(tank3);
-				tankmanRun = new FlxTypedGroup<TankmenBG>();
-				add(tankmanRun);
 			}
 			else if(curStage == 'stage')
 			{

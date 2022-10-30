@@ -69,8 +69,8 @@ class Main extends Sprite
 
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 		
-		/*
-		var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
+		#if html5
+		var ourSource:String = "assets/videosWebm/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
 
 		#if web
 		var str1:String = "HTML CRAP";
@@ -90,7 +90,7 @@ class Main extends Sprite
 		addChild(webmHandle.webm);
 		GlobalVideo.setWebm(webmHandle);
 		#end
-		*/
+		#end
 		
 		#if !mobile
 		var fps_mem:FPS_Mem = new FPS_Mem(10, 10, 0xffffff);

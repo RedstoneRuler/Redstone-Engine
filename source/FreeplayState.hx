@@ -71,11 +71,7 @@ class FreeplayState extends MusicBeatState
 
 		// LOAD CHARACTERS
 
-		#if sys
 		var bg:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImageDirect('menuBGBlue'));
-		#else
-		var bg:FlxSprite = new FlxSprite().loadGraphic('assets/ui_skins/default/menuBGBlue.png');
-		#end
 		add(bg);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();

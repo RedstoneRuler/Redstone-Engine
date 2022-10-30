@@ -41,7 +41,9 @@ import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
 import openfl.Lib;
-import vlc.MP4Handler;
+#if sys
+import VideoHandler;
+#end
 
 using StringTools;
 
@@ -949,18 +951,13 @@ class PlayState extends MusicBeatState
 		accuracyTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		accuracyTxt.scrollFactor.set();
 		add(accuracyTxt);
-
-		var iconBF:String;
 		var iconDAD:String;
-
-		iconBF = SONG.player1;
-		iconDAD = SONG.player2;
 		
-		iconP1 = new HealthIcon(iconBF, true);
+		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
 
-		iconP2 = new HealthIcon(iconDAD, false);
+		iconP2 = new HealthIcon(SONG.player2, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
 		
@@ -983,18 +980,6 @@ class PlayState extends MusicBeatState
 
 		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
-		#if html5
-		if(FlxG.save.data.fps != null)
-			if(FlxG.save.data.fps == 60) {
-				FlxG.save.data.fps = 59;
-				FlxG.drawFramerate = 59;
-			} else {
-				FlxG.drawFramerate = FlxG.save.data.fps;
-			}
-		else
-			FlxG.drawFramerate = 59;
-		FlxG.updateFramerate = FlxG.drawFramerate;
-		#end
 		if (isStoryMode)
 		{
 			switch (curSong.toLowerCase())
@@ -1055,35 +1040,40 @@ class PlayState extends MusicBeatState
 
 		super.create();
 	}
-	function truncateFloat( number : Float, precision : Int): Float {
+	function truncateFloat( number : Float, precision : Int): Float
+	{
 		var num = number;
 		num = num * Math.pow(10, precision);
 		num = Math.round( num ) / Math.pow(10, precision);
 		return num;
 	}
 	function playCutscene(name:String, ?atend:Bool)
+	{
+		#if sys
+		inCutscene = true;
+	
+		var video:VideoHandler = new VideoHandler();
+		FlxG.sound.music.stop();
+		video.finishCallback = function()
 		{
-			inCutscene = true;
-		
-			var video:MP4Handler = new MP4Handler();
-			FlxG.sound.music.stop();
-			video.finishCallback = function()
+			if (atend == true)
 			{
-				if (atend == true)
-				{
-					if (storyPlaylist.length <= 0)
-						FlxG.switchState(new StoryMenuState());
-					else
-					{
-						SONG = Song.loadFromJson(storyPlaylist[0].toLowerCase());
-						FlxG.switchState(new PlayState());
-					}
-				}
+				if (storyPlaylist.length <= 0)
+					FlxG.switchState(new StoryMenuState());
 				else
-					startCountdown();
+				{
+					SONG = Song.loadFromJson(storyPlaylist[0].toLowerCase());
+					FlxG.switchState(new PlayState());
+				}
 			}
-			video.playVideo('assets/videos/' + name);
+			else
+				startCountdown();
 		}
+		video.playVideo('assets/videos/' + name);
+		#else
+		startCountdown();
+		#end
+	}
 	function schoolIntro(?dialogueBox:DialogueBox):Void
 	{
 		var black:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);

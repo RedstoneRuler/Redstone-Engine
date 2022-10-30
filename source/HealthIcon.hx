@@ -73,8 +73,6 @@ class HealthIcon extends FlxSprite
 		else {
 			return FlxGraphic.fromBitmapData(BitmapData.fromFile('assets/images/icons/icon-face.png'));
 		}
-		#else
-		return FlxGraphic.fromBitmapData(BitmapData.fromFile('assets/images/icons/icon-${char}.png'));
 		#end
 	}
 }

@@ -50,7 +50,8 @@
 	<assets path="assets/music"/>
 	<assets path="assets/songs"/>
 	<assets path="assets/sounds"/>
-	<assets path="assets/videos"/>
+	<assets path="assets/videos" unless="html5"/>
+	<assets path="assets/videosWebm" if="html5"/>
 	<assets path="assets/ui_skins"/>
 	<!-- NOTE FOR FUTURE SELF SINCE FONTS ARE ALWAYS FUCKY 
 		TO FIX ONE OF THEM, I CONVERTED IT TO OTF. DUNNO IF YOU NEED TO
@@ -72,11 +73,11 @@
 	<haxelib name="newgrounds"/>
 	<haxelib name="faxe" if='switch'/>
 	<haxelib name="polymod"/>
-	<haxelib name="hxcodec" />
-	<!--
-	<haxelib name="extension-webm" if="mac"/>
-	<haxelib name="actuate" if="mac"/>
-	-->
+	<haxelib name="hxcodec" unless="html5"/>
+
+	<haxelib name="extension-webm" if="html5"/>
+	<haxelib name="actuate" if="html5"/>
+
 	<!-- Show debug traces for hxCodec -->
 	<haxedef name="HXC_DEBUG_TRACE" if="debug"/>
 

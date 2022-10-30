@@ -98,7 +98,7 @@ class StoryMenuState extends MusicBeatState
 		rankText.size = scoreText.size;
 		rankText.screenCenter(X);
 
-		var ui_tex = UILoader.loadSparrow('storymenu_assets');
+		var ui_tex = UILoader.loadSparrowDirect('storymenu_assets');
 		var yellowBG:FlxSprite = new FlxSprite(0, 56).makeGraphic(FlxG.width, 400, 0xFFF9CF51);
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
@@ -330,8 +330,11 @@ class StoryMenuState extends MusicBeatState
 			{
 				if (FlxG.sound.music != null)
 					FlxG.sound.music.stop();
+				#if html5
+				Cutscene.switchState(new PlayState(), true, PlayState.storyPlaylist[0].toLowerCase());
+				#else
 				FlxG.switchState(new PlayState());
-				//Cutscene.switchState(new PlayState(), true, PlayState.storyPlaylist[0].toLowerCase());
+				#end
 			});
 		}
 		//}

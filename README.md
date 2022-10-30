@@ -22,10 +22,10 @@ A modification of Friday Night Funkin's engine designed to tweak little details 
 ## Build instructions
 The compilation process for this engine is mostly the same as compiling the base game, but there are a few more steps depending on the version you plan on compiling.
 After setting up Haxe, do the following:
-###New Video Codec (hxCodec)
+### New Video Codec (hxCodec)
 - Install hxCodec by running `haxelib git hxCodec https://github.com/polybiusproxy/hxcodec`
 
-###Old Video Codec (Extension-Webm)
+### Old Video Codec (Extension-Webm)
 - Install actuate by running `haxelib install actuate`
 - Install the extension-webm fork by running `haxelib git extension-webm https://github.com/GrowtopiaFli/extension-webm`
 - Finally, run `lime rebuild extension-webm [windows/mac/linux/android]`, depending on device.

@@ -41,6 +41,7 @@ import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
 import openfl.Lib;
+
 #if sys
 import VideoHandler;
 #end

@@ -23,11 +23,6 @@ class PauseSubState extends MusicBeatSubstate
 
 	var minFPS:Int = 30;
 	var maxFPS:Int;
-	#if html5
-	var fpsDisplayAddition:Int = 1;
-	#else
-	var fpsDisplayAddition:Int = 0;
-	#end
 	var pauseMusic:FlxSound;
 	var menuItemsOG:Array<String>;
 	var updatedPractice:Bool = true;
@@ -39,7 +34,7 @@ class PauseSubState extends MusicBeatSubstate
 	];
 	public function new(x:Float, y:Float)
 	{
-		versionShit.text = "Framerate: " + FlxG.save.data.fps + " (Left, Right, Shift)";
+		#if !html5 versionShit.text = "Framerate: " + FlxG.save.data.fps + " (Left, Right, Shift)"; #end
 		super();
 		pauseMusic = new FlxSound().loadEmbedded('assets/music/breakfast' + TitleState.soundExt, true, true);
 		pauseMusic.volume = 0;
@@ -169,14 +164,11 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			changeSelection(1);
 		}
-		#if html5
-		maxFPS = Application.current.window.displayMode.refreshRate;
-		#else
 		maxFPS = 360;
-		#end
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		super.update(elapsed);
+		#if !html5
 		if (FlxG.keys.pressed.SHIFT) {
 			if(FlxG.keys.pressed.RIGHT)
 				{
@@ -215,6 +207,7 @@ class PauseSubState extends MusicBeatSubstate
 				versionShit.text = "Framerate: " + FlxG.save.data.fps;
 			}
 		}
+		#end
 		if (accepted)
 		{
 			var daSelected:String = menuItems[curSelected];

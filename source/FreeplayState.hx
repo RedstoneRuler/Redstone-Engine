@@ -15,8 +15,7 @@ using StringTools;
 class FreeplayState extends MusicBeatState
 {
 	var songs:Array<String> = [];
-	var bpmList:Array<Float> = [];
-	var bpmStrings:Array<String> = [];
+	var colorList:Array<FlxColor> = [];
 	var iconList:Array<String> = [];
 
 	var selector:FlxText;
@@ -36,6 +35,9 @@ class FreeplayState extends MusicBeatState
 
 	var defaultCamZoom:Float = 1;
 	private var iconArray:Array<HealthIcon> = [];
+
+	var bg:FlxSprite;
+	var json:Dynamic; //too lazy to check what the class is for a json, let the game figure it out lmao
 
 	override function create()
 	{
@@ -57,13 +59,13 @@ class FreeplayState extends MusicBeatState
 			var songShit = songStrings[i].split(',');
 			songShit.remove(' ');
 			var songName = songShit[0];
-			addSong(songName, songShit[1], Std.parseInt(songShit[2]), Std.parseInt(songShit[3]));
+			addSong(songName, songShit[1], FlxColor.fromString(songShit[2]), Std.parseInt(songShit[3]));
 		}
 	
-		//HARDCODED SONG TEMPLATE: addSong('title', 'icon', bpm, week);
+		//HARDCODED SONG TEMPLATE: addSong('title', 'icon', color, week);
 
 		trace(songs);
-		trace(bpmList);
+		trace(colorList);
 		trace(iconList);
 
 		songs.remove(''); //if empty strings got in there, just clear them out, they probably came from the text file
@@ -71,7 +73,7 @@ class FreeplayState extends MusicBeatState
 
 		// LOAD CHARACTERS
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImageDirect('menuBGBlue'));
+		bg = new FlxSprite().loadGraphic(UILoader.loadImageDirect('menuDesat'));
 		add(bg);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
@@ -152,13 +154,20 @@ class FreeplayState extends MusicBeatState
 	{
 		super.newMeasure();
 		FlxG.camera.zoom += 0.03;
+		if (json.notes[Math.floor(curStep / 16)] != null)
+		{
+			if (json.notes[Math.floor(curStep / 16)].changeBPM)
+			{
+				Conductor.changeBPM(json.notes[Math.floor(curStep / 16)].bpm);
+			}
+		}
 	}
-	function addSong(song:String, icon:String = 'blank', bpm:Float = 0, week:Int = 0)
+	function addSong(song:String, icon:String = 'blank', color:FlxColor = 0xFF9271FD, week:Int = 0)
 	{
 		if (StoryMenuState.weekUnlocked[week] || isDebug) {
 			songs.push(song);
 			iconList.push(icon);
-			bpmList.push(bpm);
+			colorList.push(color);
 		}
 	}
 	override function update(elapsed:Float)
@@ -253,7 +262,6 @@ class FreeplayState extends MusicBeatState
 	function changeSelection(change:Int = 0)
 	{
 		FlxG.sound.play('assets/sounds/scrollMenu' + TitleState.soundExt, 0.4);
-
 		curSelected += change;
 
 		if (curSelected < 0)
@@ -269,9 +277,12 @@ class FreeplayState extends MusicBeatState
 		// lerpScore = 0;
 		#end
 
+		json = Song.loadFromJson(songs[curSelected].toLowerCase(), songs[curSelected].toLowerCase());
+		bg.color = colorList[curSelected];
+
 		FlxG.sound.playMusic('assets/songs/' + songs[curSelected].toLowerCase() + "/Inst" + TitleState.soundExt, 0);
 
-		Conductor.changeBPM(bpmList[curSelected]);
+		Conductor.changeBPM(json.bpm);
 		var bullShit:Int = 0;
 		
 		for (i in 0...iconArray.length)

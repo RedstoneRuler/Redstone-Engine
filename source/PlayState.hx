@@ -1180,7 +1180,6 @@ class PlayState extends MusicBeatState
 		// and increment the mash var for a proper hit as if it wasn't one
 		mashLimit = 1.5 * (SONG.bpm / 50);
 		FlxG.log.add('THE LIMIT ${mashLimit}');
-		FlxG.log.add(SONG.bpm / 10);
 		var swagCounter:Int = 0;
 
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
@@ -1913,7 +1912,6 @@ class PlayState extends MusicBeatState
 
 				// WIP interpolation shit? Need to fix the pause issue
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
-				// i am so fucking sorry for this if condition
 				if(daScroll)
 				{
 					if(daNote.isSustainNote && daNote.animation.curAnim.name.endsWith('end') && daNote.prevNote != null)
@@ -2750,14 +2748,12 @@ class PlayState extends MusicBeatState
 		if (keyP) {
 			goodNoteHit(note);
 		}
-		else if(FlxG.save.data.ghost) {
-			//if (keyP)
-				//{
-					mashVar += 0.3;
-					if(mashVar > mashLimit) {
-						//noteMiss(note.noteData);
-					}
-				//}
+		else if(FlxG.save.data.ghost)
+		{
+			mashVar += 0.3;
+			if(mashVar > mashLimit) {
+				//noteMiss(note.noteData);
+			}
 		}
 	}
 	function goodNoteHit(note:Note):Void

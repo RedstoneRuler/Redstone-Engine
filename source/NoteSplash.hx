@@ -36,7 +36,7 @@ class NoteSplash extends FlxSprite {
         if(animAdd != "-pixel")
             antialiasing = true;
         animation.play("splash" + splashType + "-" + FlxG.random.int(0,1) + animAdd, true);
-		animation.curAnim.frameRate = FlxG.random.int(22, 26);
+		animation.curAnim.frameRate += FlxG.random.int(-2, 2);
         updateHitbox();
         offset.set(0.3 * width, 0.3 * height);
     }

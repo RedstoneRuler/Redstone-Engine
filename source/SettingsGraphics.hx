@@ -26,12 +26,6 @@ class SettingsGraphics extends MusicBeatState
 
 	override function create()
 	{
-		#if html5
-		if(FlxG.save.data.fps == 60)
-			displayFPS = Std.string(Application.current.window.displayMode.refreshRate);
-		else
-			displayFPS = FlxG.save.data.fps;
-		#end
 		switch(FlxG.save.data.splash) {
 			case false:
 				splashText = "Note Splashes off";

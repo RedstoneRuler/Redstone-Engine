@@ -2061,7 +2061,7 @@ class PlayState extends MusicBeatState
 				keyShit();
 			else {
 				//Otherwise, forbid key inputs but continue to perform basic animation stuff
-				if(boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001){
+				if(boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001) {
 					if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 					{
 						boyfriend.playAnim('idle');

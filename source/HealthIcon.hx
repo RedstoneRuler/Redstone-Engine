@@ -43,7 +43,7 @@ class HealthIcon extends FlxSprite
 		loadGraphic('assets/images/icons/icon-${icon}.png', true, Math.floor(width / 2), Math.floor(height));
 		#end
 
-		antialiasing = false;
+		antialiasing = true;
 
 		if(300 + (width / 2) > 450) //check if there's room for a winning icon and add it to the animation if there is
 			animation.add('face', [0, 1, 2], 0, false, isPlayer);

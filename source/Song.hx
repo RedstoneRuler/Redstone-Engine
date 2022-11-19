@@ -12,6 +12,8 @@ typedef SwagSong =
 	var song:String;
 	var notes:Array<SwagSection>;
 	var bpm:Float;
+	var numerator:Int;
+	var denominator:Int;
 	var needsVoices:Bool;
 	var autoCamera:Bool;
 	var speed:Float;
@@ -26,6 +28,8 @@ class Song
 	public var song:String;
 	public var notes:Array<SwagSection>;
 	public var bpm:Float;
+	public var numerator:Int = 4;
+	public var denominator:Int = 4;
 	public var needsVoices:Bool = true;
 	public var autoCamera:Bool = false;
 	public var speed:Float = 1;
@@ -33,11 +37,13 @@ class Song
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
 
-	public function new(song, notes, bpm)
+	public function new(song, notes, bpm, numerator, denominator)
 	{
 		this.song = song;
 		this.notes = notes;
 		this.bpm = bpm;
+		this.numerator = numerator;
+		this.denominator = denominator;
 	}
 
 	public static function loadFromJson(jsonInput:String, ?folder:String):SwagSong

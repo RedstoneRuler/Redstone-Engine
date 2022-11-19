@@ -241,7 +241,7 @@ class PlayState extends MusicBeatState
 			grpNoteSplashes.add(sploosh);
 		}
 		Conductor.mapBPMChanges(SONG);
-		Conductor.changeBPM(SONG.bpm);
+		Conductor.changeBPM(SONG.bpm, SONG.numerator, SONG.denominator);
 		switch (SONG.song.toLowerCase())
 		{
 			case 'tutorial':
@@ -1299,7 +1299,7 @@ class PlayState extends MusicBeatState
 		var songData = SONG;
 		FlxG.log.add(Conductor.bpm);
 		FlxG.log.add(songData.bpm);
-		Conductor.changeBPM(songData.bpm);
+		Conductor.changeBPM(songData.bpm, songData.numerator, songData.denominator);
 		curSong = songData.song;
 
 		if(SONG.needsVoices) {
@@ -1325,7 +1325,7 @@ class PlayState extends MusicBeatState
 		for (section in noteData)
 		{
 			var dontExtend:Bool = false;
-			var coolSection:Int = Std.int(section.lengthInSteps / 4);
+			var coolSection:Int = Std.int(section.lengthInSteps / Conductor.denominator);
 
 			for (songNotes in section.sectionNotes)
 			{
@@ -3023,7 +3023,7 @@ class PlayState extends MusicBeatState
 		{
 			if (SONG.notes[Math.floor(curStep / 16)].changeBPM)
 			{
-				Conductor.changeBPM(SONG.notes[Math.floor(curStep / 16)].bpm);
+				Conductor.changeBPM(SONG.notes[Math.floor(curStep / 16)].bpm, SONG.numerator, SONG.denominator);
 				FlxG.log.add('CHANGED BPM!');
 			}
 			// else
@@ -3041,7 +3041,7 @@ class PlayState extends MusicBeatState
 			FlxG.camera.zoom += 0.015;
 			camHUD.zoom += 0.03;
 		}
-		else if (camZooming && FlxG.camera.zoom < 1.35 && curBeat % 4 == 0 && FlxG.save.data.zoom == false)
+		else if (camZooming && FlxG.camera.zoom < 1.35 && curBeat % Conductor.numerator == 0 && FlxG.save.data.zoom == false)
 		{
 			FlxG.camera.zoom += 0.015;
 			camHUD.zoom += 0.03;

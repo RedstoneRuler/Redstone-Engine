@@ -119,6 +119,8 @@ class ChartingState extends MusicBeatState
 				song: 'Test',
 				notes: [],
 				bpm: 150,
+				numerator: 4,
+				denominator: 4,
 				needsVoices: true,
 				player1: 'bf',
 				player2: 'dad',
@@ -140,7 +142,7 @@ class ChartingState extends MusicBeatState
 		updateGrid();
 
 		loadSong(_song.song);
-		Conductor.changeBPM(_song.bpm);
+		Conductor.changeBPM(_song.bpm, _song.numerator, _song.denominator);
 		Conductor.mapBPMChanges(_song);
 
 		bpmTxt = new FlxText(1000, 50, 0, "", 16);
@@ -242,6 +244,16 @@ class ChartingState extends MusicBeatState
 		stepperBPM.value = Conductor.bpm;
 		stepperBPM.name = 'song_bpm';
 
+		/*
+		var stepperNumerator:FlxUINumericStepper = new FlxUINumericStepper(100, 65, 1, 4, 1, 142, 0);
+		stepperNumerator.value = Conductor.numerator;
+		stepperNumerator.name = 'song_numerator';
+
+		var stepperDenominator:FlxUINumericStepper = new FlxUINumericStepper(100, 80, 1, 4, 1, 128, 0);
+		stepperDenominator.value = Conductor.denominator;
+		stepperDenominator.name = 'song_denominator';
+		*/
+
 		var characters:Array<String> = CoolUtil.coolTextFile('assets/data/characterList.txt');
 
 		var player1DropDown = new FlxUIDropDownMenu(10, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
@@ -268,6 +280,8 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(reloadSongJson);
 		tab_group_song.add(loadAutosaveBtn);
 		tab_group_song.add(stepperBPM);
+		//tab_group_song.add(stepperNumerator);
+		//tab_group_song.add(stepperDenominator);
 		tab_group_song.add(stepperSpeed);
 		tab_group_song.add(hitsounds_Check);
 		tab_group_song.add(cameraCheck);
@@ -464,6 +478,16 @@ class ChartingState extends MusicBeatState
 				Conductor.mapBPMChanges(_song);
 				Conductor.changeBPM(nums.value);
 			}
+			
+			else if (wname == 'song_numerator')
+			{
+				//Conductor.changeNumerator(Std.int(nums.value));
+			}
+			else if (wname == 'song_denominator')
+			{
+				//Conductor.changeDenominator(Std.int(nums.value));
+			}
+			
 			else if (wname == 'note_susLength')
 			{
 				curSelectedNote[2] = nums.value;
@@ -708,7 +732,9 @@ class ChartingState extends MusicBeatState
 		if (FlxG.keys.justPressed.LEFT || FlxG.keys.justPressed.A)
 			changeSection(curSection - shiftThing);
 
-		bpmTxt.text = bpmTxt.text = Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2))
+		bpmTxt.text = bpmTxt.text =
+			"Time: "
+			+ Std.string(FlxMath.roundDecimal(Conductor.songPosition / 1000, 2))
 			+ " / "
 			+ Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2))
 			+ "\nSection: "

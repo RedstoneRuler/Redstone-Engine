@@ -282,7 +282,11 @@ class FreeplayState extends MusicBeatState
 
 		FlxG.sound.playMusic('assets/songs/' + songs[curSelected].toLowerCase() + "/Inst" + TitleState.soundExt, 0);
 
-		Conductor.changeBPM(json.bpm);
+		if(json != null)
+			Conductor.changeBPM(json.bpm);
+		else
+			Conductor.changeBPM(0);
+		
 		var bullShit:Int = 0;
 		
 		for (i in 0...iconArray.length)

@@ -23,11 +23,7 @@ class HealthIcon extends FlxSprite
 
 		switch(char)
 		{
-			case 'bf-car':
-				icon = 'bf';
-			case 'bf-christmas':
-				icon = 'bf';
-			case 'bf-holding-gf':
+			case 'bf-car' | 'bf-christmas' | 'bf-holding-gf':
 				icon = 'bf';
 			case 'mom-car':
 				icon = 'mom';
@@ -43,13 +39,13 @@ class HealthIcon extends FlxSprite
 		loadGraphic(loadIcon(icon)); //first load to get the dimensions
 		loadGraphic(loadIcon(icon), true, Math.floor(width / 2), Math.floor(height)); //then load for real
 		#else
-		loadGraphic('assets/images/icons/icon-${char}.png');
-		loadGraphic('assets/images/icons/icon-${char}.png', true, Math.floor(width / 2), Math.floor(height));
+		loadGraphic('assets/images/icons/icon-${icon}.png');
+		loadGraphic('assets/images/icons/icon-${icon}.png', true, Math.floor(width / 2), Math.floor(height));
 		#end
 
-		antialiasing = true;
+		antialiasing = false;
 
-		if(width >= (width + (width / 2))) //check if there's room for a winning icon and add it to the animation if there is
+		if(300 + (width / 2) > 450) //check if there's room for a winning icon and add it to the animation if there is
 			animation.add('face', [0, 1, 2], 0, false, isPlayer);
 		else 
 			animation.add('face', [0, 1, 0], 0, false, isPlayer);

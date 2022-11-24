@@ -1,6 +1,7 @@
 # Friday Night Funkin: Redstone Engine
 
 A modification of Friday Night Funkin's engine designed to tweak little details and add small features to make the game feel a bit more polished.
+There are way better engines out there, but this is an option if you wanna use it.
 ## Features
 - Improved input system
 - Customizable note hitboxes

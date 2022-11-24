@@ -53,6 +53,7 @@
 	<assets path="assets/videos" unless="html5"/>
 	<assets path="assets/videosWebm" if="html5"/>
 	<assets path="assets/ui_skins"/>
+
 	<!-- NOTE FOR FUTURE SELF SINCE FONTS ARE ALWAYS FUCKY 
 		TO FIX ONE OF THEM, I CONVERTED IT TO OTF. DUNNO IF YOU NEED TO
 		THEN UHHH I USED THE NAME OF THE FONT WITH SETFORMAT() ON THE TEXT!!!
@@ -132,7 +133,6 @@
 	<icon path="icons/icon16.png" size='16'/>
 	<icon path="icons/icon32.png" size='32'/>
 	<icon path="icons/icon64.png" size='64'/>
-	<icon path="icons/iconOG.png" size='600' />
 	<icon path="icons/iconOG.png"/>
 
 	<!-- <haxedef name="SKIP_TO_PLAYSTATE" if="debug" /> -->

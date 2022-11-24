@@ -58,7 +58,9 @@ class Main extends Sprite
 		{
 			var ratioX:Float = stageWidth / gameWidth;
 			var ratioY:Float = stageHeight / gameHeight;
+			#if (flixel < "5.0.0")
 			zoom = Math.min(ratioX, ratioY);
+			#end
 			gameWidth = Math.ceil(stageWidth / zoom);
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
@@ -67,7 +69,7 @@ class Main extends Sprite
 		initialState = TitleState;
 		#end
 
-		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
+		addChild(new FlxGame(gameWidth, gameHeight, initialState, #if (flixel < "5.0.0") zoom, #end framerate, framerate, skipSplash, startFullscreen));
 		
 		#if html5
 		var ourSource:String = "assets/videosWebm/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";

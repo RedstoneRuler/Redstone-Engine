@@ -52,6 +52,7 @@ class ChartingState extends MusicBeatState
 	var bpmTxt:FlxText;
 
 	var hitSounds:Bool = false;
+	var showSusBpm:Bool = false;
 	var autoCamera:Bool = false;
 	var strumLine:FlxSprite;
 	var curSong:String = 'Dadbattle';
@@ -72,9 +73,8 @@ class ChartingState extends MusicBeatState
 	var _song:SwagSong;
 
 	var typingShit:FlxInputText;
-	/*
-	 * WILL BE THE CURRENT / LAST PLACED NOTE
-	**/
+
+	// WILL BE THE CURRENT / LAST PLACED NOTE
 	var curSelectedNote:Array<Dynamic>;
 
 	var tempBpm:Float = 0;
@@ -126,9 +126,11 @@ class ChartingState extends MusicBeatState
 				player2: 'dad',
 				speed: 1,
 				validScore: false,
-				autoCamera: false
+				autoCamera: false,
 			};
 		}
+
+		//if(_song.susBpm == 100) _song.susBpm = _song.bpm;
 
 		FlxG.mouse.visible = true;
 		FlxG.save.bind('funkin', 'ninjamuffin99');
@@ -200,6 +202,14 @@ class ChartingState extends MusicBeatState
 			hitSounds = hitsounds_Check.checked;
 			trace('CHECKED!');
 		};
+		//var susBpm = new FlxUICheckBox(100, 95, null, null, "Desync Sustain BPM", 100);
+		//susBpm.checked = hitSounds;
+		//susBpm.callback = function()
+		//{
+		//	showSusBpm = susBpm.checked;
+		//	trace('CHECKED!');
+		//};
+
 		var cameraCheck = new FlxUICheckBox(10, 220, null, null, "Automatic Camera Zooms", 100);
 		cameraCheck.checked = _song.autoCamera;
 		cameraCheck.callback = function()
@@ -207,6 +217,7 @@ class ChartingState extends MusicBeatState
 			_song.autoCamera = cameraCheck.checked;
 			trace('CHECKED!');
 		};
+
 		var check_mute_inst = new FlxUICheckBox(10, 200, null, null, "Mute Instrumental (in editor)", 100);
 		check_mute_inst.checked = false;
 		check_mute_inst.callback = function()
@@ -254,15 +265,19 @@ class ChartingState extends MusicBeatState
 		stepperDenominator.name = 'song_denominator';
 		*/
 
+		//var stepperSusBpm:FlxUINumericStepper = new FlxUINumericStepper(10, 95, 1, 1, 1, 9999, 2);
+		//stepperSusBpm.value = _song.susBpm;
+		//stepperSusBpm.name = 'song_susBpm';
+
 		var characters:Array<String> = CoolUtil.coolTextFile('assets/data/characterList.txt');
 
-		var player1DropDown = new FlxUIDropDownMenu(10, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
+		var player1DropDown = new FlxUIDropDownMenu(10, 110, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
 			_song.player1 = characters[Std.parseInt(character)];
 		});
 		player1DropDown.selectedLabel = _song.player1;
 
-		var player2DropDown = new FlxUIDropDownMenu(140, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
+		var player2DropDown = new FlxUIDropDownMenu(140, 110, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
 			_song.player2 = characters[Std.parseInt(character)];
 		});
@@ -282,8 +297,10 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(stepperBPM);
 		//tab_group_song.add(stepperNumerator);
 		//tab_group_song.add(stepperDenominator);
+		//tab_group_song.add(stepperSusBpm);
 		tab_group_song.add(stepperSpeed);
 		tab_group_song.add(hitsounds_Check);
+		//tab_group_song.add(susBpm);
 		tab_group_song.add(cameraCheck);
 		tab_group_song.add(player1DropDown);
 		tab_group_song.add(player2DropDown);
@@ -478,7 +495,13 @@ class ChartingState extends MusicBeatState
 				Conductor.mapBPMChanges(_song);
 				Conductor.changeBPM(nums.value);
 			}
-			
+			/*
+			else if (wname == 'song_susBpm')
+				{
+					_song.susBpm = nums.value; //Std.int
+					Conductor.changeBPM(Conductor.bpm, Conductor.numerator, Conductor.denominator, nums.value);
+				}
+			*/
 			else if (wname == 'song_numerator')
 			{
 				//Conductor.changeNumerator(Std.int(nums.value));
@@ -542,6 +565,7 @@ class ChartingState extends MusicBeatState
 				note.alpha = 1;
 			}
 		});
+		//if(_song.diffSusBpm != showSusBpm) _song.diffSusBpm = showSusBpm;
 		curStep = recalculateSteps();
 
 		Conductor.songPosition = FlxG.sound.music.time;
@@ -555,7 +579,7 @@ class ChartingState extends MusicBeatState
 
 			if (_song.notes[curSection + 1] == null)
 			{
-				addSection();
+				addSection(_song.notes[curSection].lengthInSteps);
 			}
 
 			changeSection(curSection + 1, false);

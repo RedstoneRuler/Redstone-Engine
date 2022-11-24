@@ -77,6 +77,7 @@ class SettingsGraphics extends MusicBeatState
 	
 	override function update(elapsed:Float)
 	{
+		displayFPS = FlxG.save.data.fps;
 		var minFPS:Int = 30;
 		var maxFPS:Int;
 		maxFPS = 360;

@@ -147,20 +147,15 @@ class PlayState extends MusicBeatState
 	public static var changedDifficulty:Bool = false;
 	var accuracy:Float = 100.00;
 	var displayAccuracy:String = '?';
-	var totalNotes:Int = 0;
-	var firstHit:Bool = true;
-	var goneUnder:Bool = false;
-	var goneUnder100:Bool = false;
+	var totalNotes:Float = 0;
 
 	var scoreTxt:FlxText;
 	var missTxt:FlxText;
 	var accuracyTxt:FlxText;
 
-	var wasSickHit:Bool = false;
-
 	var accuracyRating:String = '?';
 	var clearStats:String = '';
-	var hitRate:Float = 1; //Making sure you start at 100% accuracy if you hit a sick note
+	var hitRate:Float = 0;
 	public static var campaignScore:Int = 0;
 
 	var defaultCamZoom:Float = 1.05;
@@ -2310,15 +2305,7 @@ class PlayState extends MusicBeatState
 					hitRate += 0.50;
 				}
 			songScore += score;
-			updateAccuracy(strumtime, daRating, noteDiff);
 		}		
-		/* if (combo > 60)
-				daRating = 'sick';
-			else if (combo > 12)
-				daRating = 'good'
-			else if (combo > 4)
-				daRating = 'bad';
-		 */
 		if(daRating == 'sick') {
 			sicks += 1;
 			hitRate += 1;
@@ -2329,6 +2316,7 @@ class PlayState extends MusicBeatState
 				grpNoteSplashes.add(recycledNote);
 			}
 		}
+		updateAccuracy();
 		//setupNumbers();
 		var rating:FlxSprite = new FlxSprite();
 		rating.loadGraphic(UILoader.loadImage(daRating));
@@ -2432,66 +2420,12 @@ class PlayState extends MusicBeatState
 
 		curSection += 1;
 	}
-	function updateAccuracy(strumtime:Float = 0, daRating:String = '', noteDiff:Float = 0):Void //Not having any arguments means that it's using the modern accuracy system, so no need to account for them.
+	function updateAccuracy():Void
 	{
-		// ALL OF THIS COMMENTED SHIT IS JUST ME GOING IN WAY OVER MY HEAD
-		// I SHOULD PROBABLY JUST REMOVE IT BUT I MIGHT AS WELL LET ALL OF YOU LAUGH AT ME
-		/*
-		//starting you off relatively high
-		if(firstHit == true) {
-			if(daRating == 'sick') {
-				accuracy = 100;
-			}
-			else if(daRating == 'good') {
-				accuracy = Math.round(70 + (noteDiff / 50));
-			}
-			else {
-				accuracy = Math.round(noteDiff / 50);
-			}
-		}
-		//accuracy will improve if note was hit good or sick, otherwise it will lower
-		else if(daRating == 'shit' || daRating == 'bad') {
-			accuracy -= Math.round(noteDiff / 50);
-		}
-		else if(daRating == 'good') {
-			if(FlxG.save.data.noteframe > 7) {
-				accuracy -= Math.round(noteDiff / 70);
-			}
-			else {
-				accuracy += ((Math.abs(Math.round(strumtime - Conductor.songPosition)) / 6));
-			}
-		}
-		else {
-		*/
 		totalNotes += 1;
 		FlxG.watch.addQuick('totalNotes', totalNotes);
-		/*
-		if(FlxG.save.data.accuracy == false) {
-			var greaterThan20:Bool = true;
-			var accuracyDivide:Float;
-			if(accuracy < 1)
-				accuracyDivide = 25; //avoids divide by zero overflows
-			else
-				accuracyDivide = accuracy;
-			if(accuracy < 20)
-				greaterThan20 = false;
-				
-			FlxG.watch.addQuick('Hit', (strumtime - Conductor.songPosition) / 10);
-			FlxG.watch.addQuick('Hit ABS', Math.abs(strumtime - Conductor.songPosition) / 10);
-			FlxG.watch.addQuick('Accuracy Increment', (strumtime - Conductor.songPosition) / 10 / (accuracyDivide / 25) / (totalNotes / 25));
 
-			//some leniency to make 100% accuracy actually possible
-			if(Math.abs(strumtime - Conductor.songPosition) / 10 <= 5.5) {
-				accuracy += Math.abs(strumtime - Conductor.songPosition) / 10 / (greaterThan20 ? (accuracy / 25) : (1)) / (totalNotes / 25);
-			} else {
-				accuracy -= Math.abs(strumtime - Conductor.songPosition) / 10 / (greaterThan20 ? (accuracy / 25) : (1)) / (totalNotes / 25);
-			}
-		} else {
-		*/
-			accuracy = Math.max(0, hitRate / totalNotes * 100);
-		//}
-		//}
-		//firstHit = false;
+		accuracy = 100 / (totalNotes / hitRate);
 		accuracyLogic();
 	}
 	function accuracyLogic():Void
@@ -2506,66 +2440,27 @@ class PlayState extends MusicBeatState
 		}
 		accuracy = FlxMath.roundDecimal(accuracy, 2);
 		updateRating();
-		/*
-		// accuracy can't go back to 100 after going lower
-		if(goneUnder100 && accuracy > 99) {
-			accuracy = 99;
-		}
-		else if(!goneUnder100 && accuracy < 100)
-		{
-			goneUnder100 = true;
-		}
-		
-		// same deal but for 95+ instead
-		if(goneUnder && accuracy > 95) {
-			accuracy = 95;
-		}
-		else if(!goneUnder && accuracy < 95)
-		{
-			goneUnder = true;
-		}
-		*/
 	}
 	function updateRating():Void
 	{ 
-		var accuracyRound:Int = Math.round(accuracy);
-		var ratingList:Array<String> = [
-			"Perfect!!!",
-			"Sick!!",
-			"Great!",
-			"Good",
-			"Average",
-			"Bad",
-			"Shit",
-			"Awful",
-			"Open your eyes, man!"
+		var ratingList:Array<Dynamic> = [
+			["Perfect!!!", 100],
+			["Sick!!", 90],
+			["Great!", 80],
+			["Good", 70],
+			["Average", 60],
+			["Bad", 50],
+			["Shit", 40],
+			["Awful", 30],
+			["Open your eyes, man!", 20],
 		];
-		// Why can't you use '...' for switch statements
-		// I'm trying to make this look nicer and instead I gotta do this
-			if(accuracy == 100)
-				accuracyRating = ratingList[0];
-			else if(accuracyRound >= 90 && accuracyRound <= 100)
-				accuracyRating = ratingList[1];
-			else if(accuracyRound >= 80 && accuracyRound < 90)
-				accuracyRating = ratingList[2];
-			else if(accuracyRound >= 75 && accuracyRound < 80)
-				accuracyRating = ratingList[3];
-			else if(accuracyRound >= 70 && accuracyRound < 75)
-				accuracyRating = ratingList[4];
-			else if(accuracyRound >= 50 && accuracyRound < 70)
-				accuracyRating = ratingList[5];
-			else if(accuracyRound >= 40 && accuracyRound < 50)
-				accuracyRating = ratingList[6];
-			else if(accuracyRound >= 20 && accuracyRound < 40)
-				accuracyRating = ratingList[7];
-			else if(accuracyRound > 0 && accuracyRound < 20)
-				accuracyRating = ratingList[8];
-			else if(accuracyRound > 0)
-				accuracyRating = ratingList[9];
-			if(accuracyRating == null) //Probably means it didn't meet any of these criteria, which is understandable cuz my code sucks
-				accuracyRating = ratingList[9];
-		// I'm so sorry for this script
-		displayAccuracy = ("" + accuracy); // makin sure the game knows it's converting it into a string
+		for(i in 0...ratingList.length) {
+			if(accuracy >= ((ratingList[i])[1])){
+				accuracyRating = ((ratingList[i])[0]);
+				break;
+			}
+		}
+		displayAccuracy = Std.string(accuracy);
 		updateFC();
 	}
 	function updateFC():Void
@@ -2723,15 +2618,14 @@ class PlayState extends MusicBeatState
 			updateAccuracy();
 		} else {
 			health -= 0.04;
-			hitRate -= 0.5;
+			hitRate -= 0.5;	
 			updateAccuracy();
 		}
-		firstHit = false;
 		accuracyLogic();
 		
 		if (combo > 5)
 		{
-				gf.playAnim('sad');
+			gf.playAnim('sad');
 		}
 		combo = 0;
 
@@ -2798,10 +2692,9 @@ class PlayState extends MusicBeatState
 		{
 			bfNote = true;
 			opponentNote = false;
-			if (!note.isSustainNote)
-			{
+			if (!note.isSustainNote) {
 				combo += 1;
-				popUpScore(note.strumTime, note);			
+				popUpScore(note.strumTime, note);
 			}
 			if (note.noteData >= 0) {
 				health += 0.023;

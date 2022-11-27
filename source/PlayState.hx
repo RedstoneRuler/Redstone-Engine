@@ -2452,7 +2452,8 @@ class PlayState extends MusicBeatState
 			["Bad", 50],
 			["Shit", 40],
 			["Awful", 30],
-			["Open your eyes, man!", 20],
+			["You suck", 20],
+			["Open your eyes, man!", 0],
 		];
 		for(i in 0...ratingList.length) {
 			if(accuracy >= ((ratingList[i])[1])){

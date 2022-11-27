@@ -73,6 +73,7 @@ class StoryMenuState extends MusicBeatState
 
 	override function create()
 	{
+		FreeplayState.rate = 1;
 		Conductor.changeBPM(102);
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;

@@ -246,6 +246,15 @@ class TitleState extends MusicBeatState
 	}
 	*/
 	var transitioning:Bool = false;
+	function set_pitch(speed):Void
+	{
+		#if cpp
+		@:privateAccess
+		{
+			lime.media.openal.AL.sourcef(FlxG.sound.music._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, speed);
+		}
+		#end
+	}
 
 	override function update(elapsed:Float)
 	{
@@ -273,17 +282,13 @@ class TitleState extends MusicBeatState
 				pressedEnter = true;
 			#end
 		}
-		if(FlxG.keys.pressed.LEFT) {
-			speed -= 1;
-			bpmModifier -= 1;
-			Conductor.changeBPM(102 + bpmModifier);
-			//set_pitch(speed);
+		if(controls.LEFT) {
+			speed -= 0.01 / (FPS_Mem.times.length / 60);
+			set_pitch(speed);
 		}
-		if(FlxG.keys.pressed.RIGHT) {
-			speed += 1;
-			bpmModifier += 1;
-			Conductor.changeBPM(102 + bpmModifier);
-			//set_pitch(speed);
+		if(controls.RIGHT) {
+			speed += 0.01 / (FPS_Mem.times.length / 60);
+			set_pitch(speed);
 		}
 		if (pressedEnter && !transitioning && skippedIntro)
 		{

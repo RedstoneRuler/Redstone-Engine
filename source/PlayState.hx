@@ -41,6 +41,9 @@ import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
 import openfl.Lib;
+import lime.media.openal.AL;
+import openfl.utils.Future;
+import openfl.media.Sound;
 
 #if sys
 import VideoHandler;
@@ -162,6 +165,8 @@ class PlayState extends MusicBeatState
 
 	var defaultCamZoom:Float = 1.05;
 
+	var startedSong = false;
+
 	// how big to stretch the pixel art assets
 	public static var daPixelZoom:Float = 6;
 
@@ -213,6 +218,8 @@ class PlayState extends MusicBeatState
 	
 	override public function create()
 	{
+		#if !cpp FreeplayState.rate = 1; #end
+		startedSong = false;
 		noteSprite = UILoader.loadSparrowDirect('notes');
 		curStage = 'stage';
 		practiceMode = false;
@@ -241,7 +248,7 @@ class PlayState extends MusicBeatState
 			grpNoteSplashes.add(sploosh);
 		}
 		Conductor.mapBPMChanges(SONG);
-		Conductor.changeBPM(SONG.bpm, SONG.numerator, SONG.denominator);
+		Conductor.changeBPM(SONG.bpm);
 		switch (SONG.song.toLowerCase())
 		{
 			case 'tutorial':
@@ -1289,6 +1296,16 @@ class PlayState extends MusicBeatState
 		if (!paused)
 			FlxG.sound.playMusic("assets/songs/" + SONG.song.toLowerCase() + "/Inst" + TitleState.soundExt, 1, false);
 		vocals.play();
+		#if cpp
+		@:privateAccess
+		{
+			lime.media.openal.AL.sourcef(FlxG.sound.music._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, FreeplayState.rate);
+			if (vocals.playing)
+				lime.media.openal.AL.sourcef(vocals._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, FreeplayState.rate);
+		}
+		trace("pitched inst and vocals to " + FreeplayState.rate + " (stole code from kade engine idc lmao)");
+		#end
+		startedSong = true;
 	}
 
 	var debugNum:Int = 0;
@@ -1299,7 +1316,7 @@ class PlayState extends MusicBeatState
 		var songData = SONG;
 		FlxG.log.add(Conductor.bpm);
 		FlxG.log.add(songData.bpm);
-		Conductor.changeBPM(songData.bpm, songData.numerator, songData.denominator);
+		Conductor.changeBPM(songData.bpm);
 		curSong = songData.song;
 
 		if(SONG.needsVoices) {
@@ -1325,7 +1342,7 @@ class PlayState extends MusicBeatState
 		for (section in noteData)
 		{
 			var dontExtend:Bool = false;
-			var coolSection:Int = Std.int(section.lengthInSteps / Conductor.denominator);
+			var coolSection:Int = Std.int(section.lengthInSteps);
 
 			for (songNotes in section.sectionNotes)
 			{
@@ -1547,6 +1564,18 @@ class PlayState extends MusicBeatState
 		Conductor.songPosition = FlxG.sound.music.time;
 		vocals.time = Conductor.songPosition;
 		vocals.play();
+		#if cpp
+		if(startedSong)
+		{
+			@:privateAccess
+			{
+				lime.media.openal.AL.sourcef(FlxG.sound.music._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, FreeplayState.rate);
+				if (vocals.playing)
+					lime.media.openal.AL.sourcef(vocals._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, FreeplayState.rate);
+			}
+		}
+		#end
+		trace('resynced');
 	}
 
 	private var paused:Bool = false;
@@ -1587,12 +1616,19 @@ class PlayState extends MusicBeatState
 	}
 	override public function update(elapsed:Float)
 	{
+
 		FlxG.watch.addQuick('bfNote', bfNote);
 		FlxG.watch.addQuick('opponentNote', opponentNote);
-		if(startedCountdown && wasPractice) {
-			FlxG.sound.music.onComplete = gameOverPractice;
-		} else {
-			FlxG.sound.music.onComplete = endSong;
+		if(generatedMusic)
+		{
+			if(FlxG.sound.music.length - Conductor.songPosition <= 20)
+			{
+				if(startedCountdown && wasPractice) {
+					gameOverPractice();
+				} else {
+					endSong();
+				}
+			}
 		}
 		var refreshRate:Int = Application.current.window.displayMode.refreshRate;
 		if(FlxG.save.data.fps == refreshRate)
@@ -1724,7 +1760,7 @@ class PlayState extends MusicBeatState
 		else
 		{
 			//Conductor.songPosition = FlxG.sound.music.time;
-			Conductor.songPosition += FlxG.elapsed * 1000;
+			Conductor.songPosition += (FlxG.elapsed * 1000) * FreeplayState.rate;
 
 			if (!paused)
 			{
@@ -1906,9 +1942,9 @@ class PlayState extends MusicBeatState
 					daNote.destroy();
 				}
 				if (daScroll)
-					daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (-0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
+					daNote.y = (strumLine.y - ((Conductor.songPosition - daNote.strumTime)) * (-0.45 * SONG.speed));
 				else
-					daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed, 2)));
+					daNote.y = (strumLine.y - ((Conductor.songPosition - daNote.strumTime)) * (0.45 * SONG.speed));
 
 				// WIP interpolation shit? Need to fix the pause issue
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
@@ -2977,14 +3013,9 @@ class PlayState extends MusicBeatState
 				}
 			}
 		super.stepHit();
-		if (SONG.needsVoices)
-		{
-			if (Math.abs(FlxG.sound.music.time - Conductor.songPosition) > 20
-				|| (SONG.needsVoices && Math.abs(vocals.time - Conductor.songPosition ) > 20))
-			{
-				resyncVocals();
-			}
-		}
+		var gamerValue = 20 * FreeplayState.rate;
+		if (FlxG.sound.music.time > Conductor.songPosition + gamerValue || FlxG.sound.music.time < Conductor.songPosition - gamerValue || FlxG.sound.music.time < 500 && (FlxG.sound.music.time > Conductor.songPosition + 5 || FlxG.sound.music.time < Conductor.songPosition - 5))
+			resyncVocals();
 
 		if (dad.curCharacter == 'spooky' && curStep % 4 == 2)
 		{
@@ -3023,7 +3054,7 @@ class PlayState extends MusicBeatState
 		{
 			if (SONG.notes[Math.floor(curStep / 16)].changeBPM)
 			{
-				Conductor.changeBPM(SONG.notes[Math.floor(curStep / 16)].bpm, SONG.numerator, SONG.denominator);
+				Conductor.changeBPM(SONG.notes[Math.floor(curStep / 16)].bpm);
 				FlxG.log.add('CHANGED BPM!');
 			}
 			// else
@@ -3041,7 +3072,7 @@ class PlayState extends MusicBeatState
 			FlxG.camera.zoom += 0.015;
 			camHUD.zoom += 0.03;
 		}
-		else if (camZooming && FlxG.camera.zoom < 1.35 && curBeat % Conductor.numerator == 0 && FlxG.save.data.zoom == false)
+		else if (camZooming && FlxG.camera.zoom < 1.35 && curBeat % 4 == 0 && FlxG.save.data.zoom == false)
 		{
 			FlxG.camera.zoom += 0.015;
 			camHUD.zoom += 0.03;

@@ -35,15 +35,6 @@ class MainMenuState extends MusicBeatState
 	override function create()
 	{
 		Conductor.changeBPM(102);
-		/* MOVED TO TITLESTATE!
-		#if !html5
-		if (FlxG.save.data.fps == null) {
-			FlxG.save.data.fps = 60;
-		}
-		FlxG.updateFramerate = FlxG.save.data.fps;
-		FlxG.drawFramerate = FlxG.updateFramerate;
-		#end
-		*/
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 

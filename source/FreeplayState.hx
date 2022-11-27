@@ -9,11 +9,16 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
+import lime.media.openal.AL;
+import openfl.utils.Future;
+import openfl.media.Sound;
 
 using StringTools;
 
 class FreeplayState extends MusicBeatState
 {
+	public static var rate:Float = 1.0;
+
 	var songs:Array<String> = [];
 	var colorList:Array<FlxColor> = [];
 	var iconList:Array<String> = [];
@@ -24,6 +29,7 @@ class FreeplayState extends MusicBeatState
 
 	var scoreText:FlxText;
 	var diffText:FlxText;
+	var previewtext:FlxText;
 	var lerpScore:Int = 0;
 	var lerpAccuracy:Float = 0;
 	var intendedScore:Int = 0;
@@ -41,6 +47,7 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{
+		rate = 1;
 		/* 
 			if (FlxG.sound.music != null)
 			{
@@ -110,6 +117,10 @@ class FreeplayState extends MusicBeatState
 		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
 		diffText.font = scoreText.font;
 		add(diffText);
+
+		previewtext = new FlxText(scoreText.x, scoreText.y + 96, 0, "Playback Speed: " + FlxMath.roundDecimal(rate, 2) + "x (Shift, R)", 24);
+		previewtext.font = scoreText.font;
+		#if cpp add(previewtext); #end
 
 		add(scoreText);
 
@@ -205,16 +216,50 @@ class FreeplayState extends MusicBeatState
 			changeSelection(1);
 		}
 
-		if (controls.LEFT_P)
-			changeDiff(-1);
-		if (controls.RIGHT_P)
-			changeDiff(1);
+		if (FlxG.keys.pressed.SHIFT)
+		{
+			if (controls.LEFT_P)
+			{
+				rate -= 0.05;
+			}
+			if (controls.RIGHT_P)
+			{
+				rate += 0.05;
+			}
+			if (controls.RESET)
+			{
+				rate = 1;
+			}
+
+			if (rate > 4)
+			{
+				rate = 4;
+			}
+			else if (rate < 0.25)
+			{
+				rate = 0.25;
+			}
+			previewtext.text = "Playback Speed: " + FlxMath.roundDecimal(rate, 2) + "x (Shift, R)";
+		} else {
+			if (controls.LEFT_P)
+				changeDiff(-1);
+			if (controls.RIGHT_P)
+				changeDiff(1);
+		}
 
 		if (controls.BACK)
 		{
 			FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 4);
 			FlxG.switchState(new MainMenuState());
 		}
+
+		#if cpp
+		@:privateAccess
+		{
+			if (FlxG.sound.music.playing)
+				lime.media.openal.AL.sourcef(FlxG.sound.music._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, rate);
+		}
+		#end
 
 		if (accepted)
 		{

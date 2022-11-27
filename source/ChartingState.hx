@@ -119,8 +119,6 @@ class ChartingState extends MusicBeatState
 				song: 'Test',
 				notes: [],
 				bpm: 150,
-				numerator: 4,
-				denominator: 4,
 				needsVoices: true,
 				player1: 'bf',
 				player2: 'dad',
@@ -144,7 +142,7 @@ class ChartingState extends MusicBeatState
 		updateGrid();
 
 		loadSong(_song.song);
-		Conductor.changeBPM(_song.bpm, _song.numerator, _song.denominator);
+		Conductor.changeBPM(_song.bpm);
 		Conductor.mapBPMChanges(_song);
 
 		bpmTxt = new FlxText(1000, 50, 0, "", 16);
@@ -257,11 +255,11 @@ class ChartingState extends MusicBeatState
 
 		/*
 		var stepperNumerator:FlxUINumericStepper = new FlxUINumericStepper(100, 65, 1, 4, 1, 142, 0);
-		stepperNumerator.value = Conductor.numerator;
+		stepperNumerator.value = ;
 		stepperNumerator.name = 'song_numerator';
 
 		var stepperDenominator:FlxUINumericStepper = new FlxUINumericStepper(100, 80, 1, 4, 1, 128, 0);
-		stepperDenominator.value = Conductor.denominator;
+		stepperDenominator.value = ;
 		stepperDenominator.name = 'song_denominator';
 		*/
 
@@ -499,16 +497,16 @@ class ChartingState extends MusicBeatState
 			else if (wname == 'song_susBpm')
 				{
 					_song.susBpm = nums.value; //Std.int
-					Conductor.changeBPM(Conductor.bpm, Conductor.numerator, Conductor.denominator, nums.value);
+					
 				}
 			*/
 			else if (wname == 'song_numerator')
 			{
-				//Conductor.changeNumerator(Std.int(nums.value));
+				
 			}
 			else if (wname == 'song_denominator')
 			{
-				//Conductor.changeDenominator(Std.int(nums.value));
+				
 			}
 			
 			else if (wname == 'note_susLength')

@@ -2283,21 +2283,21 @@ class PlayState extends MusicBeatState
 		
 		var score:Int = 350;
 		if(FlxG.save.data.bot != true) {
-			if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.9)
+			if (noteDiff > (((FlxG.save.data.noteframe / 60) * 1000) * FreeplayState.rate) * 0.9)
 				{
 					shits += 1;
 					daRating = 'shit';
 					score = 50;
 					hitRate -= 1;
 				}
-				else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.75)
+				else if (noteDiff > (((FlxG.save.data.noteframe / 60) * 1000) * FreeplayState.rate) * 0.75)
 				{
 					bads += 1;
 					daRating = 'bad';
 					score = 100;
 					hitRate -= 0.50;
 				}
-				else if (noteDiff > (FlxG.save.data.noteframe / 60) * 1000 * 0.2)
+				else if (noteDiff > (((FlxG.save.data.noteframe / 60) * 1000) * FreeplayState.rate) * 0.2)
 				{
 					goods += 1;
 					daRating = 'good';

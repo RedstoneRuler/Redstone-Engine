@@ -48,7 +48,7 @@ class SettingsGraphics extends MusicBeatState
 			+ "\n" + (zoomText)
 			+ "\n" + (splashText));
 		
-		#if !html5 versionShit.text = "Framerate: " + displayFPS + " (Left, Right, Shift)"; #end
+		#if !html5 versionShit.text = "Framerate: " + FlxG.save.data.fps + " (Left, Right, Shift)"; #end
 		trace(controlsStrings);
 		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));

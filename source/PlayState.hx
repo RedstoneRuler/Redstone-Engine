@@ -1576,6 +1576,9 @@ class PlayState extends MusicBeatState
 		#end
 		FlxG.sound.music.looped = false;
 		vocals.looped = false;
+		FlxG.sound.music.time = Conductor.songPosition;
+		vocals.time = Conductor.songPosition;
+		trace("SONG POS: " + Conductor.songPosition + " | " + FlxG.sound.music.time + " / " + FlxG.sound.music.length);
 		trace('resynced');
 	}
 
@@ -1617,14 +1620,6 @@ class PlayState extends MusicBeatState
 	}
 	override public function update(elapsed:Float)
 	{
-		while (Conductor.songPosition > 20 && FlxG.sound.music.time < 20)
-		{
-			trace("SONG POS: " + Conductor.songPosition + " | " + FlxG.sound.music.time + " / " + FlxG.sound.music.length);
-
-			FlxG.sound.music.time = Conductor.songPosition;
-			vocals.time = Conductor.songPosition;
-		}
-
 		FlxG.watch.addQuick('bfNote', bfNote);
 		FlxG.watch.addQuick('opponentNote', opponentNote);
 		if(generatedMusic)

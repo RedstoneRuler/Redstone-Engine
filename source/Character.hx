@@ -781,7 +781,7 @@ class Character extends FlxSprite
 
 			if (curCharacter == 'dad')
 				dadVar = 6.1;
-			if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
+			if (holdTimer >= (Conductor.stepCrochet * dadVar * 0.001) / FreeplayState.rate)
 			{
 				dance();
 				holdTimer = 0;

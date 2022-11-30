@@ -99,7 +99,7 @@ class SettingsOptimization extends MusicBeatState
 						FlxG.save.data.details = !FlxG.save.data.details;
 						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.details ? 'background details on' : 'background details off'), true, false);
 						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 3;
+						ctrl.targetY = curSelected - 2;
 						grpControls.add(ctrl);
 						trace(FlxG.save.data.details);
 				}

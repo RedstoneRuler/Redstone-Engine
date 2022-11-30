@@ -213,6 +213,7 @@ class PlayState extends MusicBeatState
 	
 	override public function create()
 	{
+		endingSong = false;
 		#if !cpp FreeplayState.rate = 1; #end
 		startedSong = false;
 		noteSprite = UILoader.loadSparrowDirect('notes');
@@ -1291,6 +1292,8 @@ class PlayState extends MusicBeatState
 		if (!paused)
 			FlxG.sound.playMusic("assets/songs/" + SONG.song.toLowerCase() + "/Inst" + TitleState.soundExt, 1, false);
 		vocals.play();
+		FlxG.sound.music.looped = false;
+		vocals.looped = false;
 		#if cpp
 		@:privateAccess
 		{
@@ -1320,6 +1323,7 @@ class PlayState extends MusicBeatState
 		else {
 			vocals = new FlxSound();
 		}
+		vocals.looped = false;
 
 		FlxG.sound.list.add(vocals);
 
@@ -1570,6 +1574,8 @@ class PlayState extends MusicBeatState
 			}
 		}
 		#end
+		FlxG.sound.music.looped = false;
+		vocals.looped = false;
 		trace('resynced');
 	}
 
@@ -1616,14 +1622,20 @@ class PlayState extends MusicBeatState
 		FlxG.watch.addQuick('opponentNote', opponentNote);
 		if(generatedMusic)
 		{
-			if(FlxG.sound.music.length - Conductor.songPosition <= 20)
+			if(startedSong && !endingSong)
 			{
-				if(startedCountdown && wasPractice) {
-					gameOverPractice();
-				} else {
-					endSong();
+				FlxG.watch.addQuick('Time shit', (FlxG.sound.music.length) - Conductor.songPosition);
+				if ((FlxG.sound.music.length) - Conductor.songPosition <= 0)
+				{
+					endingSong = true;
+					if(startedCountdown && wasPractice) {
+						gameOverPractice();
+					} else {
+						endSong();
+					}
 				}
 			}
+
 		}
 		var refreshRate:Int = Application.current.window.displayMode.refreshRate;
 		if(FlxG.save.data.fps == refreshRate)
@@ -2092,7 +2104,7 @@ class PlayState extends MusicBeatState
 				keyShit();
 			else {
 				//Otherwise, forbid key inputs but continue to perform basic animation stuff
-				if(boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001) {
+				if(boyfriend.holdTimer > ((Conductor.stepCrochet * 4 * 0.001) / FreeplayState.rate)) {
 					if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 					{
 						boyfriend.playAnim('idle');
@@ -2117,7 +2129,7 @@ class PlayState extends MusicBeatState
 
 		#if debug
 		if (FlxG.keys.justPressed.ONE)
-			endSong;
+			endSong();
 		#end
 		FlxG.watch.addQuick("Can Hit Note",PlayState.canHitNote);
 	}
@@ -2172,6 +2184,7 @@ class PlayState extends MusicBeatState
 	}
 	function endSong():Void
 	{
+		endingSong = true;
 		canPause = false;
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;
@@ -2455,12 +2468,14 @@ class PlayState extends MusicBeatState
 			["You suck", 20],
 			["Open your eyes, man!", 0],
 		];
+
 		for(i in 0...ratingList.length) {
 			if(accuracy >= ((ratingList[i])[1])){
 				accuracyRating = ((ratingList[i])[0]);
 				break;
 			}
 		}
+
 		displayAccuracy = Std.string(accuracy);
 		updateFC();
 	}
@@ -2583,7 +2598,7 @@ class PlayState extends MusicBeatState
 			});
 		}
 
-		if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && !holdArray.contains(true))
+		if (boyfriend.holdTimer > (Conductor.stepCrochet * 4 * 0.001) / FreeplayState.rate && !holdArray.contains(true))
 		{
 			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 			{

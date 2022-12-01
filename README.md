@@ -23,14 +23,14 @@ There are way better engines out there, but this is an option if you wanna use i
 ## Build instructions
 The compilation process for this engine is mostly the same as compiling the base game, but there are a few more steps depending on the version you plan on compiling.
 After setting up Haxe, do the following:
-### Windows, Mac, Linux (hxCodec)
+### Windows, Android (hxCodec)
 - Install hxCodec by running `haxelib git hxCodec https://github.com/polybiusproxy/hxcodec`
 
-### HTML5 (Extension-Webm)
+### HTML5, Mac, Linux (Extension-Webm)
 - Install actuate by running `haxelib install actuate`
 - Install the extension-webm fork by running `haxelib git extension-webm https://github.com/GrowtopiaFli/extension-webm`
-- Finally, run `lime rebuild extension-webm [windows/mac/linux/android]`, depending on device.
+- Finally, run `lime rebuild extension-webm [windows/mac/linux/android]`, depending on your platform, **not the platform you're compiling for.**
 
 The rest of the process can be found here: https://github.com/ninjamuffin99/Funkin#build-instructions
 ## Other notes
-This repository probably looks much smaller than what you're used to. Don't worry, I just gitignored a lot of unnecessary files. This will not affect compilation.
+This repository probably looks much smaller than what you're used to. Don't worry, I just gitignored a lot of unnecessary/extra files. This will not affect compilation.

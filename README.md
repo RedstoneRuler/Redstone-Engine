@@ -21,8 +21,10 @@ There are way better engines out there, but this is an option if you wanna use i
 - [PhantomArcade3K](https://twitter.com/phantomarcade3k) and [Evilsk8r](https://twitter.com/evilsk8r) - Art/Animation
 - [Kawai Sprite](https://twitter.com/kawaisprite) - Music
 ## Build instructions
-The compilation process for this engine is mostly the same as compiling the base game, but there are a few more steps depending on the version you plan on compiling.
-After setting up Haxe, do the following:
+The compilation process for this engine is mostly the same as compiling the base game, but there are a few more steps.
+**Install the latest version of Haxe. The bug mentioned on the FNF repo has been fixed.**
+
+After setting up HaxeFlixel, do the following, depending on the version you plan on compiling:
 ### Windows, Android (hxCodec)
 - Install hxCodec by running `haxelib git hxCodec https://github.com/polybiusproxy/hxcodec`
 

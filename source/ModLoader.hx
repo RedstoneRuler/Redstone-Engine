@@ -34,7 +34,10 @@ class ModLoader
 		{
 			if(FileSystem.isDirectory('mods/weeks/${i}'))
 			{
-				weekList.push(i);
+				if(FileSystem.exists('mods/weeks/${i}/config.json'))
+				{
+					weekList.push(i);
+				}
 			}
 		}
 		for(i in 0...weekList.length)

@@ -39,7 +39,7 @@ class ModLoader
 		}
 		for(i in 0...weekList.length)
 		{
-			exclude:Array<String> = File.getContent('mods/weeks/exclude.txt').trim().split('\n')
+			var exclude:Array<String> = File.getContent('mods/weeks/exclude.txt').trim().split('\n');
 			if(exclude.contains(weekList[i]))
 			{
 				weekList.remove(i);
@@ -59,10 +59,13 @@ class ModLoader
 		var weekList = customWeekList();
 		for(i in weekList)
 		{
-			var songData:Array<String> = File.getContent('mods/weeks/${weekList[i]}/freeplay.txt').trim().split('\n');
-			for (i in 0...songData.length)
+			if(FileSystem.exists('mods/weeks/${weekList[i]}/freeplay.txt'))
 			{
-				songList.push(songData[i]);
+				var songData:Array<String> = File.getContent('mods/weeks/${weekList[i]}/freeplay.txt').trim().split('\n');
+				for (i in 0...songData.length)
+				{
+					songList.push(songData[i]);
+				}
 			}
 		}
 		trace(songList);

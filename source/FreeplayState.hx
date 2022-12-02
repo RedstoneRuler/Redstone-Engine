@@ -45,6 +45,8 @@ class FreeplayState extends MusicBeatState
 	var bg:FlxSprite;
 	var json:Dynamic; //too lazy to check what the class is for a json, let the game figure it out lmao
 
+	var songFolders:Array<String> = [];
+
 	override function create()
 	{
 		rate = 1;
@@ -58,9 +60,28 @@ class FreeplayState extends MusicBeatState
 		#if debug
 		isDebug = true;
 		#end
-		//append the text files as long as they exist
+
 		var songStrings:Array<String> = CoolUtil.coolTextFile('assets/data/freeplaySonglist.txt');
-		//songStrings.remove('');
+		var baseStrings = songStrings;
+
+		#if sys
+		var fullDirs:Array<String> = ModLoader.getFreeplayFolders();
+		for(i in 0...baseStrings.length)
+		{
+			songFolders.push('');
+		}
+		for(i in 0...fullDirs.length)
+		{
+			songFolders.push(fullDirs[i]);
+		}
+
+		var customTracks:Array<String> = ModLoader.getFreeplaySongs();
+		for(i in 0...customTracks.length)
+		{
+			songStrings.push(customTracks[i]);
+		}
+		#end
+		
 		for (i in 0...songStrings.length)
 		{
 			var songShit = songStrings[i].split(',');
@@ -322,10 +343,18 @@ class FreeplayState extends MusicBeatState
 		// lerpScore = 0;
 		#end
 
-		json = Song.loadFromJson(songs[curSelected].toLowerCase(), songs[curSelected].toLowerCase());
+		json = Song.loadFromJson(songs[curSelected].toLowerCase(), songs[curSelected].toLowerCase(), (songFolders[curSelected] != ''), songFolders[curSelected]);
 		bg.color = colorList[curSelected];
 
+		#if sys
+		if(songFolders[curSelected] != '') {
+			FlxG.sound.playMusic('mods/weeks/' + songFolders[curSelected] + '/' + songs[curSelected].toLowerCase() + "/Inst" + TitleState.soundExt, 0);
+		} else {
+			FlxG.sound.playMusic('assets/songs/' + songs[curSelected].toLowerCase() + "/Inst" + TitleState.soundExt, 0);
+		}
+		#else
 		FlxG.sound.playMusic('assets/songs/' + songs[curSelected].toLowerCase() + "/Inst" + TitleState.soundExt, 0);
+		#end
 
 		if(json != null)
 			Conductor.changeBPM(json.bpm);

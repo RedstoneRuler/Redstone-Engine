@@ -28,13 +28,13 @@ class UILoader
 	public static function loadImage(imageName:String)
 	{
 		#if sys
-		if(FileSystem.exists(FileSystem.absolutePath('assets/ui_skins/${PlayState.uiSkin}') + '/' + '${imageName}.png')) {
+		if(FileSystem.exists(('mods/ui_skins/${PlayState.uiSkin}') + '/' + '${imageName}.png')) {
 			trace('LOADING ${imageName}');
-			var image:BitmapData = BitmapData.fromFile(FileSystem.absolutePath('assets/ui_skins/${PlayState.uiSkin}') + '/' + '${imageName}.png');
+			var image:BitmapData = BitmapData.fromFile(('mods/ui_skins/${PlayState.uiSkin}') + '/' + '${imageName}.png');
 			return FlxGraphic.fromBitmapData(image);
 		}
 		else {
-			return FlxGraphic.fromBitmapData(BitmapData.fromFile('assets/ui_skins/default/${imageName}.png'));
+			return FlxGraphic.fromBitmapData(BitmapData.fromFile('mods/ui_skins/default/${imageName}.png'));
 		}
 		#else
 		return 'assets/ui_skins/${PlayState.uiSkin}/${imageName}.png';
@@ -43,13 +43,13 @@ class UILoader
 	public static function loadImageDirect(imageName:String)
 	{
 		#if sys
-		if(FileSystem.exists(FileSystem.absolutePath('assets/ui_skins/${FlxG.save.data.uiSkin}') + '/' + '${imageName}.png')) {
+		if(FileSystem.exists(('mods/ui_skins/${FlxG.save.data.uiSkin}') + '/' + '${imageName}.png')) {
 			trace('LOADING ${imageName}');
-			var image:BitmapData = BitmapData.fromFile(FileSystem.absolutePath('assets/ui_skins/${FlxG.save.data.uiSkin}') + '/' + '${imageName}.png');
+			var image:BitmapData = BitmapData.fromFile(('mods/ui_skins/${FlxG.save.data.uiSkin}') + '/' + '${imageName}.png');
 			return FlxGraphic.fromBitmapData(image);
 		}
 		else {
-			return FlxGraphic.fromBitmapData(BitmapData.fromFile('assets/ui_skins/default/${imageName}.png'));
+			return FlxGraphic.fromBitmapData(BitmapData.fromFile('mods/ui_skins/default/${imageName}.png'));
 		}
 		#else
 		return 'assets/ui_skins/default/${imageName}.png';
@@ -58,14 +58,14 @@ class UILoader
 	public static function loadSparrow(imageName)
 	{
 		#if sys
-		if(FileSystem.exists(FileSystem.absolutePath('assets/ui_skins/${PlayState.uiSkin}') + '/' + '${imageName}.xml')) {
+		if(FileSystem.exists(('mods/ui_skins/${PlayState.uiSkin}') + '/' + '${imageName}.xml')) {
 			trace('LOADING ${imageName}');
-			var image:BitmapData = BitmapData.fromFile(FileSystem.absolutePath('assets/ui_skins/${PlayState.uiSkin}') + '/' + '${imageName}.png');
-			var xml:String = (sys.io.File.getContent('assets/ui_skins/${PlayState.uiSkin}/${imageName}.xml'));
+			var image:BitmapData = BitmapData.fromFile(('mods/ui_skins/${PlayState.uiSkin}') + '/' + '${imageName}.png');
+			var xml:String = (File.getContent('mods/ui_skins/${PlayState.uiSkin}/${imageName}.xml'));
 			return FlxAtlasFrames.fromSparrow(FlxGraphic.fromBitmapData(image), xml);
 		}
 		else {
-			return FlxAtlasFrames.fromSparrow('assets/ui_skins/default/${imageName}.png', 'assets/ui_skins/default/${imageName}.xml');
+			return FlxAtlasFrames.fromSparrow('mods/ui_skins/default/${imageName}.png', 'mods/ui_skins/default/${imageName}.xml');
 		}
 		
 		#else
@@ -75,14 +75,14 @@ class UILoader
 	public static function loadSparrowDirect(imageName)
 	{
 		#if sys
-		if(FileSystem.exists(FileSystem.absolutePath('assets/ui_skins/${FlxG.save.data.uiSkin}') + '/' + '${imageName}.xml')) {
+		if(FileSystem.exists(('mods/ui_skins/${FlxG.save.data.uiSkin}') + '/' + '${imageName}.xml')) {
 			trace('LOADING ${imageName}');
-			var image:BitmapData = BitmapData.fromFile(FileSystem.absolutePath('assets/ui_skins/${FlxG.save.data.uiSkin}') + '/' + '${imageName}.png');
-			var xml:String = (sys.io.File.getContent('assets/ui_skins/${FlxG.save.data.uiSkin}/${imageName}.xml'));
+			var image:BitmapData = BitmapData.fromFile(('mods/ui_skins/${FlxG.save.data.uiSkin}') + '/' + '${imageName}.png');
+			var xml:String = (File.getContent('mods/ui_skins/${FlxG.save.data.uiSkin}/${imageName}.xml'));
 			return FlxAtlasFrames.fromSparrow(FlxGraphic.fromBitmapData(image), xml);
 		}
 		else {
-			return FlxAtlasFrames.fromSparrow('assets/ui_skins/default/${imageName}.png', 'assets/ui_skins/default/${imageName}.xml');
+			return FlxAtlasFrames.fromSparrow('mods/ui_skins/default/${imageName}.png', 'mods/ui_skins/default/${imageName}.xml');
 		}
 		#else
 		return FlxAtlasFrames.fromSparrow('assets/ui_skins/default/${imageName}.png', 'assets/ui_skins/default/${imageName}.xml');

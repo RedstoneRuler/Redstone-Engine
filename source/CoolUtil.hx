@@ -2,6 +2,9 @@ package;
 
 import lime.utils.Assets;
 import flixel.FlxG;
+#if sys
+import sys.io.File;
+#end
 
 using StringTools;
 
@@ -17,7 +20,11 @@ class CoolUtil
 
 	public static function coolTextFile(path:String):Array<String>
 	{
+		#if sys
+		var daList:Array<String> = File.getContent(path).trim().split('\n');
+		#else
 		var daList:Array<String> = Assets.getText(path).trim().split('\n');
+		#end
 
 		for (i in 0...daList.length)
 		{

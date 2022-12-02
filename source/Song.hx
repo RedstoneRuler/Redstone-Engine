@@ -4,6 +4,9 @@ import Section.SwagSection;
 import haxe.Json;
 import haxe.format.JsonParser;
 import lime.utils.Assets;
+#if sys
+import sys.io.File;
+#end
 
 using StringTools;
 
@@ -33,22 +36,26 @@ class Song
 	public var player1:String = 'bf';
 	public var player2:String = 'dad';
 
-	public function new(song, notes, bpm, numerator, denominator)
+	public function new(song, notes, bpm)
 	{
 		this.song = song;
 		this.notes = notes;
 		this.bpm = bpm;
 	}
 
-	public static function loadFromJson(jsonInput:String, ?folder:String):SwagSong
+	public static function loadFromJson(jsonInput:String, ?folder:String, customSong:Bool = false, customFolder:String = ''):SwagSong
 	{
-		var rawJson = Assets.getText('assets/data/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase() + '.json').trim();
-
-		while (!rawJson.endsWith("}"))
-		{
-			rawJson = rawJson.substr(0, rawJson.length - 1);
-			// LOL GOING THROUGH THE BULLSHIT TO CLEAN IDK WHATS STRANGE
+		var rawJson:Dynamic;
+		#if sys
+		if(customSong) {
+			trace(('mods/weeks/${customFolder}/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase() + '.json'));
+			rawJson = File.getContent('mods/weeks/${customFolder}/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase() + '.json');
+		} else {
+			rawJson = File.getContent('assets/data/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase() + '.json');
 		}
+		#else
+		rawJson = Assets.getText('assets/data/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase() + '.json').trim();
+		#end
 
 		// FIX THE CASTING ON WINDOWS/NATIVE
 		// Windows???

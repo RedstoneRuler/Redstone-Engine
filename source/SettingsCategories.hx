@@ -78,7 +78,7 @@ class SettingsCategories extends MusicBeatState
 					case 3:
 						FlxG.switchState(new SettingsOptimization());
 					case 4:
-						FlxG.switchState(new SettingsUI());
+						#if sys FlxG.switchState(new SettingsUI()); #end
 				}
 			}
 	}

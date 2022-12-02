@@ -42,17 +42,16 @@
 
 	<assets path="assets/images" />
 	<assets path="assets/data" />
-	<!-- <template path='mods' /> -->
-	
-	<!-- <library name="noPreload" preload='false'/> -->
-	<!-- <library name="noPreload"/> -->
-	<!--I don't get why these were restricted in the first place-->
 	<assets path="assets/music"/>
 	<assets path="assets/songs"/>
 	<assets path="assets/sounds"/>
 	<assets path="assets/videos" unless="html5"/>
 	<assets path="assets/videosWebm" if="html5"/>
-	<assets path="assets/ui_skins"/>
+	<assets path='mods' embed="false" if="desktop"/>
+	<assets path='mods' rename="assets" unless="desktop"/>
+	
+	<!-- <library name="noPreload" preload='false'/> -->
+	<!-- <library name="noPreload"/> -->
 
 	<!-- NOTE FOR FUTURE SELF SINCE FONTS ARE ALWAYS FUCKY 
 		TO FIX ONE OF THEM, I CONVERTED IT TO OTF. DUNNO IF YOU NEED TO

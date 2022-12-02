@@ -55,6 +55,8 @@ class StoryMenuState extends MusicBeatState
 		'TANKMAN'
 	];
 
+	var customWeekDirectories:Array<String> = [];
+
 	var txtWeekTitle:FlxText;
 
 	var curWeek:Int = 0;
@@ -71,8 +73,35 @@ class StoryMenuState extends MusicBeatState
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
 
+	function loadCustomWeeks():Void
+	{
+		while(customWeekDirectories.length < weekData.length)
+		{
+			customWeekDirectories.push(''); //This is a really scuffed way to offset it, but what do I care, it works!
+		}
+		#if sys
+		var customWeeks = ModLoader.customWeekList();
+		for(i in customWeeks)
+		{
+			customWeekDirectories.push(customWeeks[i]);
+			var customWeekData = ModLoader.getWeekConfigs(i);
+
+			var title = customWeekData[0];
+			var songs = customWeekData[1];
+			var locked = customWeekData[2];
+			var characters = customWeekData[3];
+
+			weekData.push(songs);
+			weekNames.push(title);
+			weekCharacters.push(characters);
+			weekUnlocked.push(!locked);
+		}
+		#end
+	}
+
 	override function create()
 	{
+		loadCustomWeeks();
 		FreeplayState.rate = 1;
 		Conductor.changeBPM(102);
 		transIn = FlxTransitionableState.defaultTransIn;
@@ -117,7 +146,7 @@ class StoryMenuState extends MusicBeatState
 
 		for (i in 0...weekData.length)
 		{
-			var weekThing:MenuItem = new MenuItem(0, yellowBG.y + yellowBG.height + 10, i);
+			var weekThing:MenuItem = new MenuItem(0, yellowBG.y + yellowBG.height + 10, i, customWeekDirectories[i]);
 			weekThing.y += ((weekThing.height + 20) * i);
 			weekThing.targetY = i;
 			grpWeekText.add(weekThing);
@@ -292,13 +321,13 @@ class StoryMenuState extends MusicBeatState
 
 	function selectWeek()
 	{
-		//this was dumb anyway
-		/*
-		if(weekData[curWeek] == "Tutorial" && FlxG.save.data.optimize == true) {}else
-		{
-		*/
 		if (weekUnlocked[curWeek])
 		{
+			PlayState.isCustomWeek = (customWeekDirectories[curWeek] != '');
+			if(PlayState.isCustomWeek)
+			{
+				PlayState.sourceFolder = customWeekDirectories[curWeek];
+			}
 			if (stopspamming == false)
 			{
 				FlxG.sound.play('assets/sounds/confirmMenu' + TitleState.soundExt);
@@ -321,10 +350,9 @@ class StoryMenuState extends MusicBeatState
 				case 2:
 					diffic = '-hard';
 			}
-
 			PlayState.storyDifficulty = curDifficulty;
 
-			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase());
+			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic, PlayState.storyPlaylist[0].toLowerCase(), PlayState.isCustomWeek, PlayState.sourceFolder);
 			PlayState.storyWeek = curWeek;
 			PlayState.campaignScore = 0;
 			new FlxTimer().start(1, function(tmr:FlxTimer)
@@ -338,7 +366,6 @@ class StoryMenuState extends MusicBeatState
 				#end
 			});
 		}
-		//}
 	}
 
 	function changeDifficulty(change:Int = 0):Void

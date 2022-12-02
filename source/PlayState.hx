@@ -58,6 +58,8 @@ class PlayState extends MusicBeatState
 	public static var isStoryMode:Bool = false;
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
+	public static var isCustomWeek:Bool = false;
+	public static var sourceFolder:String = '';
 	public static var storyDifficulty:Int = 1;
 	public static var curSong:String = "";
 	public static var deathCount:Int = 0;
@@ -96,6 +98,14 @@ class PlayState extends MusicBeatState
 
 	private var healthBarBG:FlxSprite;
 	private var healthBar:FlxBar;
+
+	var timeBarBG:FlxSprite;
+	var timeBar:FlxBar;
+
+	var songName:FlxText;
+	
+	var songLength:Float;
+	var time:Float;
 
 	private var generatedMusic:Bool = false;
 	private var startingSong:Bool = false;
@@ -213,6 +223,7 @@ class PlayState extends MusicBeatState
 	
 	override public function create()
 	{
+		#if !sys isCustomWeek = false; #end
 		endingSong = false;
 		#if !cpp FreeplayState.rate = 1; #end
 		startedSong = false;
@@ -903,6 +914,11 @@ class PlayState extends MusicBeatState
 
 		generateSong(SONG.song);
 
+		var healthBarPosY = FlxG.height * 0.9;
+
+		if (FlxG.save.data.downscroll)
+			healthBarPosY = 60;
+
 		// add(strumLine);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
@@ -925,11 +941,10 @@ class PlayState extends MusicBeatState
 		FlxG.fixedTimestep = false;
 
 		if(FlxG.save.data.downscroll)
-			healthBarBG = new FlxSprite(0, (FlxG.height * 2)).loadGraphic('assets/images/healthBar.png');
+			healthBarBG = new FlxSprite(0, healthBarPosY).loadGraphic(UILoader.loadImageDirect('bar'));
 		else 
-			healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic('assets/images/healthBar.png');
+			healthBarBG = new FlxSprite(0, healthBarPosY).loadGraphic(UILoader.loadImageDirect('bar'));
 
-		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic('assets/images/healthBar.png');
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
@@ -940,6 +955,32 @@ class PlayState extends MusicBeatState
 		healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
 		// healthBar
 		add(healthBar);
+
+		timeBarBG = new FlxSprite(0, healthBarPosY).loadGraphic(UILoader.loadImageDirect('bar'));
+		timeBarBG.screenCenter(X);
+		timeBarBG.scrollFactor.set();
+		timeBarBG.pixelPerfectPosition = true;
+
+		if (FlxG.save.data.downscroll)
+			timeBarBG.y = FlxG.height * 0.9 + 45;
+		else
+			timeBarBG.y = 10;
+
+		add(timeBarBG);
+
+		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
+			'time', 0, songLength);
+		timeBar.scrollFactor.set();
+		timeBar.createFilledBar(FlxColor.GRAY, FlxColor.LIME);
+		timeBar.pixelPerfectPosition = true;
+		timeBar.numDivisions = 8000;
+		add(timeBar);
+
+		var songName = new FlxText(timeBarBG.x + (timeBarBG.width / 2) - 20, timeBarBG.y, 0, SONG.song, 16);
+		songName.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		songName.scrollFactor.set();
+		add(songName);
+		songName.cameras = [camHUD];
 
 		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 535, healthBarBG.y + 40, 0, "", 20);
 		scoreTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -977,6 +1018,8 @@ class PlayState extends MusicBeatState
 		missTxt.cameras = [camHUD];
 		accuracyTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
+		timeBarBG.cameras = [camHUD];
+		timeBar.cameras = [camHUD];
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -1044,13 +1087,6 @@ class PlayState extends MusicBeatState
 
 		super.create();
 	}
-	function truncateFloat( number : Float, precision : Int): Float
-	{
-		var num = number;
-		num = num * Math.pow(10, precision);
-		num = Math.round( num ) / Math.pow(10, precision);
-		return num;
-	}
 	function playCutscene(name:String, ?atend:Bool)
 	{
 		#if sys
@@ -1066,7 +1102,7 @@ class PlayState extends MusicBeatState
 					FlxG.switchState(new StoryMenuState());
 				else
 				{
-					SONG = Song.loadFromJson(storyPlaylist[0].toLowerCase());
+					SONG = Song.loadFromJson(storyPlaylist[0].toLowerCase(), storyPlaylist[0].toLowerCase(), isCustomWeek, sourceFolder);
 					FlxG.switchState(new PlayState());
 				}
 			}
@@ -1187,23 +1223,8 @@ class PlayState extends MusicBeatState
 
 		startTimer = new FlxTimer().start(Conductor.crochet / 1000, function(tmr:FlxTimer)
 		{
-			/*
-			if(Conductor.bpm > 150) {
-				if(altbeat == true && dad.animation.getByName('danceLeft') == null) {
-					dad.dance();
-				}
-				else if(dad.animation.getByName('danceLeft') != null) {
-					dad.dance();
-				}
-				if(altbeat == true) {
-					boyfriend.playAnim('idle', true);
-				}
-			}
-			else {
-			*/
-				dad.dance();
-				boyfriend.playAnim('idle', true);
-			//}
+			dad.dance();
+			boyfriend.playAnim('idle', true);
 			gf.dance();
 
 			var altSuffix:String = "";
@@ -1290,7 +1311,11 @@ class PlayState extends MusicBeatState
 		lastReportedPlayheadPosition = 0;
 
 		if (!paused)
-			FlxG.sound.playMusic("assets/songs/" + SONG.song.toLowerCase() + "/Inst" + TitleState.soundExt, 1, false);
+			if(!isCustomWeek) {
+				FlxG.sound.playMusic("assets/songs/" + SONG.song.toLowerCase() + "/Inst" + TitleState.soundExt, 1, false);
+			} else {
+				FlxG.sound.playMusic("mods/weeks/" + sourceFolder + '/' + SONG.song.toLowerCase() + "/Inst" + TitleState.soundExt, 1, false);
+			}
 		vocals.play();
 		FlxG.sound.music.looped = false;
 		vocals.looped = false;
@@ -1303,6 +1328,7 @@ class PlayState extends MusicBeatState
 		}
 		trace("pitched inst and vocals to " + FreeplayState.rate + " (stole code from kade engine idc lmao)");
 		#end
+
 		startedSong = true;
 	}
 
@@ -1310,6 +1336,7 @@ class PlayState extends MusicBeatState
 
 	private function generateSong(dataPath:String):Void
 	{
+		songLength = FlxG.sound.music.length;
 		// FlxG.log.add(ChartParser.parse());
 		var songData = SONG;
 		FlxG.log.add(Conductor.bpm);
@@ -1318,7 +1345,11 @@ class PlayState extends MusicBeatState
 		curSong = songData.song;
 
 		if(SONG.needsVoices) {
-			vocals = new FlxSound().loadEmbedded("assets/songs/" + curSong.toLowerCase() + "/Voices" + TitleState.soundExt);
+			if(!isCustomWeek) {
+				vocals = new FlxSound().loadEmbedded("assets/songs/" + curSong.toLowerCase() + "/Voices" + TitleState.soundExt);
+			} else {
+				vocals = new FlxSound().loadEmbedded("mods/weeks/" + sourceFolder + '/' + SONG.song.toLowerCase() + "/Voices" + TitleState.soundExt);
+			}
 		}
 		else {
 			vocals = new FlxSound();
@@ -1622,6 +1653,9 @@ class PlayState extends MusicBeatState
 	{
 		FlxG.watch.addQuick('bfNote', bfNote);
 		FlxG.watch.addQuick('opponentNote', opponentNote);
+
+		time = FlxG.sound.music.time;
+
 		if(generatedMusic)
 		{
 			if(startedSong && !endingSong)
@@ -1647,7 +1681,7 @@ class PlayState extends MusicBeatState
 		{
 		}
 		#if debug
-		if (FlxG.keys.pressed.SPACE) //mouse wheel health easter egg
+		if (FlxG.keys.pressed.SPACE)
 		{
 			health += FlxG.mouse.wheel / 5;
 		}
@@ -1852,17 +1886,8 @@ class PlayState extends MusicBeatState
 
 		if (camZooming)
 		{
-			/*
-			if(FlxG.drawFramerate > 60) {
-				FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95 * (60 / FlxG.drawFramerate));
-				camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95 * (60 / FlxG.drawFramerate));
-			}
-			else {
-			*/
-				FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
-				camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95);
-			//}
-			
+			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
+			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95);	
 		}
 
 		FlxG.watch.addQuick("beatShit", curBeat);
@@ -2174,15 +2199,14 @@ class PlayState extends MusicBeatState
 	{
 		switch(SONG.song.toLowerCase())
 		{
-		// I was gonna do this but then I remembered the kickstarter is over lmfao
-		/*
-		case 'stress':
-			FlxG.switchState(new VideoState('assets/videos/kickstarterTrailer.webm', new PlayState(), 0));
-		*/
-		default:
-			FlxG.switchState(new StoryMenuState());
+			// I was gonna do this but then I remembered the kickstarter is over lmfao
+			/*
+			case 'stress':
+				FlxG.switchState(new VideoState('assets/videos/kickstarterTrailer.webm', new PlayState(), 0));
+			*/
+			default:
+				FlxG.switchState(new StoryMenuState());
 		}
-		
 	}
 	function endSong():Void
 	{
@@ -2251,7 +2275,7 @@ class PlayState extends MusicBeatState
 				FlxTransitionableState.skipNextTransOut = true;
 				prevCamFollow = camFollow;
 
-				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0]);
+				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0], isCustomWeek, sourceFolder);
 				FlxG.sound.music.stop();
 
 				FlxG.switchState(new PlayState());

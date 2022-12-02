@@ -1,5 +1,8 @@
+#if sys
 package;
 
+import sys.FileSystem;
+import sys.io.File;
 import Controls.KeyboardScheme;
 import Controls.Control;
 import flash.text.TextField;
@@ -24,7 +27,14 @@ class SettingsUI extends MusicBeatState
 	override function create()
 	{
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('menuDesat'));
-		controlsStrings = CoolUtil.coolTextFile('assets/ui_skins/UISkinList.txt');
+		var directory:Array<String> = FileSystem.readDirectory('mods/ui_skins/');
+		for(i in 0...directory.length)
+		{
+			if(FileSystem.isDirectory(directory[i]))
+			{
+				controlsStrings.push(directory[i]);
+			}
+		}
 		
 		trace(controlsStrings);
 		menuBG.color = 0xFFea71fd;
@@ -104,3 +114,4 @@ class SettingsUI extends MusicBeatState
 		}
 	}
 }
+#end

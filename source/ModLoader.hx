@@ -40,13 +40,10 @@ class ModLoader
 				}
 			}
 		}
-		for(i in 0...weekList.length)
+		var exclude:Array<String> = File.getContent('mods/weeks/exclude.txt').split('\n');
+		for(i in exclude)
 		{
-			var exclude:Array<String> = File.getContent('mods/weeks/exclude.txt').trim().split('\n');
-			if(exclude.contains(weekList[i]))
-			{
-				weekList.remove(i);
-			}
+			weekList.remove(i);
 		}
 		return weekList;
 	}

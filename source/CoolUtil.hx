@@ -18,6 +18,11 @@ class CoolUtil
 		return difficultyArray[PlayState.storyDifficulty];
 	}
 
+	public static function removeFromString(remove:String = "", string:String = "")
+	{
+		return string.replace(remove, "");
+	}
+
 	public static function coolTextFile(path:String):Array<String>
 	{
 		#if sys

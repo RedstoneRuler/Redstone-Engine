@@ -1594,6 +1594,10 @@ class PlayState extends MusicBeatState
 		Conductor.songPosition = FlxG.sound.music.time;
 		vocals.time = Conductor.songPosition;
 		vocals.play();
+		FlxG.sound.music.looped = false;
+		vocals.looped = false;
+		FlxG.sound.music.time = Conductor.songPosition;
+		vocals.time = Conductor.songPosition;
 		#if cpp
 		if(startedSong)
 		{
@@ -1605,10 +1609,6 @@ class PlayState extends MusicBeatState
 			}
 		}
 		#end
-		FlxG.sound.music.looped = false;
-		vocals.looped = false;
-		FlxG.sound.music.time = Conductor.songPosition;
-		vocals.time = Conductor.songPosition;
 		trace("SONG POS: " + Conductor.songPosition + " | " + FlxG.sound.music.time + " / " + FlxG.sound.music.length);
 		trace('resynced');
 	}

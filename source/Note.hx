@@ -55,7 +55,7 @@ class Note extends FlxSprite
 
 		if(PlayState.isPixelStage)
 		{
-			loadGraphic('assets/ui_skins/pixel/arrows-pixels.png', true, 17, 17);
+			loadGraphic('mods/ui_skins/pixel/arrows-pixels.png', true, 17, 17);
 			animation.add('purpleScroll', [4]);
 			animation.add('blueScroll', [5]);
 			animation.add('greenScroll', [6]);
@@ -68,7 +68,7 @@ class Note extends FlxSprite
 				
 			if (isSustainNote)
 			{
-				loadGraphic('assets/ui_skins/pixel/arrowEnds.png', true, 7, 6);
+				loadGraphic('mods/ui_skins/pixel/arrowEnds.png', true, 7, 6);
 
 				animation.add('purpleholdend', [4]);
 				animation.add('greenholdend', [6]);

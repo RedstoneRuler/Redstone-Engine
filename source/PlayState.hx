@@ -1449,10 +1449,9 @@ class PlayState extends MusicBeatState
 		{
 			// FlxG.log.add(i);
 			var babyArrow:FlxSprite = new FlxSprite(0, strumLine.y);
-			switch (curStage)
+			if(isPixelStage)
 			{
-				case 'school' | 'schoolEvil':
-					babyArrow.loadGraphic('assets/ui_skins/pixel/arrows-pixels.png', true, 17, 17);
+					babyArrow.loadGraphic('mods/ui_skins/pixel/arrows-pixels.png', true, 17, 17);
 					babyArrow.animation.add('green', [6]);
 					babyArrow.animation.add('red', [7]);
 					babyArrow.animation.add('blue', [5]);
@@ -1485,8 +1484,7 @@ class PlayState extends MusicBeatState
 							babyArrow.animation.add('pressed', [7, 11], 12, false);
 							babyArrow.animation.add('confirm', [15, 19], 16, false);
 					}
-
-				default:
+			} else {
 					babyArrow.frames = noteSprite;
 					babyArrow.animation.addByPrefix('green', 'arrowUP');
 					babyArrow.animation.addByPrefix('blue', 'arrowDOWN');

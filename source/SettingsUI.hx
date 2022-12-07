@@ -27,7 +27,7 @@ class SettingsUI extends MusicBeatState
 	override function create()
 	{
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(UILoader.loadImage('menuDesat'));
-		var directory:Array<String> = FileSystem.readDirectory('mods/ui_skins/');
+		var directory:Array<String> = FileSystem.readDirectory('mods/ui_skins');
 		for(i in 0...directory.length)
 		{
 			if(FileSystem.isDirectory(directory[i]))

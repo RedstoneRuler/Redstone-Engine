@@ -347,6 +347,7 @@ class FreeplayState extends MusicBeatState
 		bg.color = colorList[curSelected];
 
 		#if sys
+		trace(songFolders[curSelected]);
 		if(songFolders[curSelected] != '') {
 			FlxG.sound.playMusic('mods/weeks/' + songFolders[curSelected] + '/' + songs[curSelected].toLowerCase() + "/Inst" + TitleState.soundExt, 0);
 		} else {

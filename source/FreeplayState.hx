@@ -290,7 +290,7 @@ class FreeplayState extends MusicBeatState
 			var poop:String = Highscore.formatSong(songs[curSelected].toLowerCase(), curDifficulty);
 
 			trace(poop);
-			PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].toLowerCase());
+			PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].toLowerCase(), (songFolders[curSelected] != ''), songFolders[curSelected]);
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = curDifficulty;
 			FlxG.switchState(new PlayState());
@@ -349,8 +349,10 @@ class FreeplayState extends MusicBeatState
 		#if sys
 		trace(songFolders[curSelected]);
 		if(songFolders[curSelected] != '') {
+			trace('softcoded!');
 			FlxG.sound.playMusic('mods/weeks/' + songFolders[curSelected] + '/' + songs[curSelected].toLowerCase() + "/Inst" + TitleState.soundExt, 0);
 		} else {
+			trace('hardcoded!');
 			FlxG.sound.playMusic('assets/songs/' + songs[curSelected].toLowerCase() + "/Inst" + TitleState.soundExt, 0);
 		}
 		#else

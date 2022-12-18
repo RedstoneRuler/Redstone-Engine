@@ -49,8 +49,10 @@ class Song
 		#if sys
 		if(customSong) {
 			trace(('mods/weeks/${customFolder}/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase() + '.json'));
+			trace('loading softcoded json');
 			rawJson = File.getContent('mods/weeks/${customFolder}/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase() + '.json');
 		} else {
+			trace('loading hardcoded json');
 			rawJson = File.getContent('assets/data/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase() + '.json');
 		}
 		#else

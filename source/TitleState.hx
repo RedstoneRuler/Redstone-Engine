@@ -157,7 +157,7 @@ class TitleState extends MusicBeatState
 		logoBl.frames = UILoader.loadSparrowDirect('logo');
 		logoBl.antialiasing = true;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
-		logoBl.animation.play('bump');
+		logoBl.animation.play('bump', true);
 		logoBl.updateHitbox();
 		// logoBl.screenCenter();
 		// logoBl.color = FlxColor.BLACK;

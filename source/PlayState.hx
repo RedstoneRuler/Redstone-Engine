@@ -2509,8 +2509,7 @@ class PlayState extends MusicBeatState
 			clearStats = 'MFC';
 			if(goods != 0 || bads != 0 || shits != 0)
 			{
-				if(goods != 0)
-					clearStats = 'GFC';
+				clearStats = 'GFC';
 				if(bads != 0 || shits != 0)
 					clearStats = 'FC';
 			}

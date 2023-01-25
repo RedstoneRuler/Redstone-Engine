@@ -73,10 +73,13 @@
 	<haxelib name="newgrounds"/>
 	<haxelib name="faxe" if='switch'/>
 	<haxelib name="polymod"/>
-	<haxelib name="hxcodec" unless="html5"/>
+	<haxelib name="hxcpp-debug-server" if="desktop"/>
 
-	<haxelib name="extension-webm" if="html5"/>
-	<haxelib name="actuate" if="html5"/>
+	
+	<haxelib name="hxcodec" if="desktop || android"/>
+
+	<haxelib name="extension-webm" unless="desktop || android"/>
+	<haxelib name="actuate" unless="desktop || android" />
 
 	<!-- Show debug traces for hxCodec -->
 	<haxedef name="HXC_DEBUG_TRACE" if="debug"/>

@@ -1651,6 +1651,7 @@ class PlayState extends MusicBeatState
 	{
 		FlxG.watch.addQuick('bfNote', bfNote);
 		FlxG.watch.addQuick('opponentNote', opponentNote);
+		FlxG.watch.addQuick('elapsed', elapsed);
 
 		time = FlxG.sound.music.time;
 
@@ -1754,8 +1755,8 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
-		iconP1.setGraphicSize(Std.int(FlxMath.lerp(iconP1.width, 150, 0.09 / (FPS_Mem.times.length / 144))));
-		iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP2.width, 150, 0.09 / (FPS_Mem.times.length / 144))));
+		iconP1.setGraphicSize(Std.int(FlxMath.lerp(iconP1.width, 150, 0.09 / (FPS_Mem.highestFramerate / 144))));
+		iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP2.width, 150, 0.09 / (FPS_Mem.highestFramerate / 144))));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
@@ -1820,8 +1821,8 @@ class PlayState extends MusicBeatState
 
 			// Conductor.lastSongPos = FlxG.sound.music.time;
 		}
-		FlxG.camera.follow(camFollow, LOCKON, 0.04 * (60 / FPS_Mem.times.length));
-		FlxG.watch.addQuick('FPS', FPS_Mem.times.length);
+		FlxG.camera.follow(camFollow, LOCKON, 0.04 * (60 / FPS_Mem.highestFramerate));
+		FlxG.watch.addQuick('FPS', FPS_Mem.highestFramerate);
 		if (generatedMusic && PlayState.SONG.notes[Std.int(curStep / 16)] != null)
 		{
 			if (curBeat % 4 == 0)
@@ -1884,7 +1885,7 @@ class PlayState extends MusicBeatState
 
 		if (camZooming)
 		{
-			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
+			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, (0.95 ));
 			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95);	
 		}
 

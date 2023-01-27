@@ -1,7 +1,6 @@
 #if sys
 package;
 
-import Section.SwagSection;
 import haxe.Json;
 import haxe.format.JsonParser;
 #if sys

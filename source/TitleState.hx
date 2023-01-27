@@ -58,11 +58,9 @@ class TitleState extends MusicBeatState
 		PlayerSettings.init();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
-		#if sys
-		creditsText = File.getContent('mods/data/introCredits.txt').split('\n');
-		#else
-		creditsText = Assets.getText('assets/data/introCredits.txt').split('\n');
-		#end
+
+		creditsText = CoolUtil.coolTextFile('assets/data/introCredits.txt');
+
 		// DEBUG BULLSHIT
 
 		super.create();
@@ -224,11 +222,7 @@ class TitleState extends MusicBeatState
 
 	function getIntroTextShit():Array<Array<String>>
 	{
-		#if sys
-		var fullText:String = File.getContent('mods/data/introText.txt');
-		#else
 		var fullText:String = Assets.getText('assets/data/introText.txt');
-		#end
 
 		var firstArray:Array<String> = fullText.split('\n');
 		var swagGoodArray:Array<Array<String>> = [];

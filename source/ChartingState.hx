@@ -267,11 +267,7 @@ class ChartingState extends MusicBeatState
 		//stepperSusBpm.value = _song.susBpm;
 		//stepperSusBpm.name = 'song_susBpm';
 
-		#if sys
-		var characters:Array<String> = CoolUtil.coolTextFile('mods/data/characterList.txt');
-		#else
 		var characters:Array<String> = CoolUtil.coolTextFile('assets/data/characterList.txt');
-		#end
 
 		var player1DropDown = new FlxUIDropDownMenuCustom(10, 110, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String)
 		{

@@ -13,6 +13,10 @@ class CoolUtil
 	public static var difficultyArray:Array<String> = ['EASY', "NORMAL", "HARD"];
 	public static var version:String = '1.6.0';
 
+	public static function frameDelta():Float
+	{
+		return (FPS_Mem.times.length / 60);
+	}
 	public static function difficultyString():String
 	{
 		return difficultyArray[PlayState.storyDifficulty];
@@ -69,5 +73,17 @@ class CoolUtil
 	public static function coolLerp(a:Float, b:Float, ratio:Float)
 	{
 		return a + camLerpShit(ratio) * (b - a);
+	}
+
+	inline public static function boundTo(value:Float, min:Float, max:Float):Float {
+		return Math.max(min, Math.min(max, value));
+	}
+
+	public static function addZeros(v:String, length:Int, end:Bool = false) {
+		var r = v;
+		while(r.length < length) {
+			r = end ? r + '0': '0$r';
+		}
+		return r;
 	}
 }

@@ -23,6 +23,7 @@ class Note extends FlxSprite
 	public var wasGoodHit:Bool = false;
 	public var prevNote:Note;
 	public var altNote:Bool = false;
+	var noteTimer:Float = 0;
 
 	public var sustainLength:Float = 0;
 	public var isSustainNote:Bool = false;
@@ -135,6 +136,7 @@ class Note extends FlxSprite
 
 		// trace(prevNote);
 		var daScroll:Bool = FlxG.save.data.downscroll;
+		noteTimer = 0;
 		if (isSustainNote && prevNote != null)
 		{
 			noteScore * 0.2;
@@ -191,6 +193,7 @@ class Note extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
+		
 		var daScroll:Bool = FlxG.save.data.downscroll;
 		var hitBox:Float;
 		super.update(elapsed);
@@ -246,9 +249,14 @@ class Note extends FlxSprite
 			}
 			else
 			{
-				queueNoteCancel();
 				PlayState.canHitOtherNote = false;
 				canBeHit = false;
+				if(canBeHit == false) {
+					noteTimer += elapsed;
+						if(noteTimer > 1 && !canBeHit) {
+							PlayState.canHitNote = false;
+						}
+				}
 			}
 			if (strumTime < Conductor.songPosition - (((hitBox / 60) * 1000) * FreeplayState.rate))
 			{
@@ -273,20 +281,5 @@ class Note extends FlxSprite
 				alpha = 0.3;
 			}
 		}
-	}
-	function queueNoteCancel():Void
-	{
-		/*
-		if(canBeHit == false) {
-			new FlxTimer().start(2, function(tmr:FlxTimer)
-			{
-				if(canBeHit == false) {
-					*/
-					PlayState.canHitNote = false;
-					/*
-				}
-			});
-		}
-		*/
 	}
 }

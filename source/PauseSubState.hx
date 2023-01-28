@@ -245,8 +245,10 @@ class PauseSubState extends MusicBeatSubstate
 				case "Toggle Hit Sounds":
 					FlxG.save.data.hitSounds = !FlxG.save.data.hitSounds;
 					updatedhitSounds = false;
+					FlxG.save.flush();
 				case "Toggle Autoplay":
 					FlxG.save.data.bot = !FlxG.save.data.bot;
+					FlxG.save.flush();
 				case "Exit to menu":
 					FlxG.switchState(new MainMenuState());
 			}

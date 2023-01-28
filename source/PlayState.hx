@@ -1698,7 +1698,7 @@ class PlayState extends MusicBeatState
 		{
 			if(startedSong && !endingSong)
 			{
-				if ((FlxG.sound.music.length) - Conductor.songPosition <= 0)
+				if (Conductor.songPosition >= songLength)
 				{
 					endingSong = true;
 					if(startedCountdown && wasPractice) {

@@ -1343,6 +1343,10 @@ class PlayState extends MusicBeatState
 			if (vocals.playing)
 				lime.media.openal.AL.sourcef(vocals._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, FreeplayState.rate);
 		}
+		FlxG.sound.music.loopTime = FlxG.sound.music.length / FreeplayState.rate;
+		vocals.loopTime = FlxG.sound.music.length / FreeplayState.rate;
+		FlxG.sound.music.endTime = FlxG.sound.music.length / FreeplayState.rate;
+		vocals.endTime = FlxG.sound.music.length / FreeplayState.rate;
 		trace("pitched inst and vocals to " + FreeplayState.rate + " (stole code from kade engine idc lmao)");
 		#end
 
@@ -1622,6 +1626,10 @@ class PlayState extends MusicBeatState
 					lime.media.openal.AL.sourcef(vocals._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, FreeplayState.rate);
 			}
 		}
+		FlxG.sound.music.loopTime = FlxG.sound.music.length / FreeplayState.rate;
+		vocals.loopTime = FlxG.sound.music.length / FreeplayState.rate;
+		FlxG.sound.music.endTime = FlxG.sound.music.length / FreeplayState.rate;
+		vocals.endTime = FlxG.sound.music.length / FreeplayState.rate;
 		#end
 		trace("SONG POS: " + Conductor.songPosition + " | " + FlxG.sound.music.time + " / " + FlxG.sound.music.length);
 		trace('resynced');

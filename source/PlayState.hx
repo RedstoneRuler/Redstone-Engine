@@ -109,7 +109,7 @@ class PlayState extends MusicBeatState
 
 	var songLength:Float;
 
-	private var generatedMusic:Bool = false;
+	private var generatedSong:Bool = false;
 	private var startingSong:Bool = false;
 
 	private var iconP1:HealthIcon;
@@ -1455,7 +1455,7 @@ class PlayState extends MusicBeatState
 
 		unspawnNotes.sort(sortByShit);
 
-		generatedMusic = true;
+		generatedSong = true;
 	}
 
 	function sortByShit(Obj1:Note, Obj2:Note):Int
@@ -1673,7 +1673,7 @@ class PlayState extends MusicBeatState
 	}
 	override public function update(elapsed:Float)
 	{
-		if(startedSong)
+		if(generatedSong)
 		{
 			//This is mostly just Psych Engine stuff but made cooler
 			var length = '${Math.floor(FlxG.sound.music.length / 60000)}:${CoolUtil.addZeros(Std.string(Math.floor(FlxG.sound.music.length / 1000) % 60), 2)}';
@@ -1702,7 +1702,7 @@ class PlayState extends MusicBeatState
 
 		globalElapsed = elapsed;
 
-		if(generatedMusic)
+		if(generatedSong)
 		{
 			if(startedSong && !endingSong)
 			{
@@ -1866,7 +1866,7 @@ class PlayState extends MusicBeatState
 			// Conductor.lastSongPos = FlxG.sound.music.time;
 		}
 		FlxG.watch.addQuick('FPS', FPS_Mem.highestFramerate);
-		if (generatedMusic && PlayState.SONG.notes[Std.int(curStep / 16)] != null)
+		if (generatedSong && PlayState.SONG.notes[Std.int(curStep / 16)] != null)
 		{
 			if (curBeat % 4 == 0)
 			{
@@ -1998,7 +1998,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (generatedMusic)
+		if (generatedSong)
 		{
 			var daScroll:Bool = FlxG.save.data.downscroll;
 			notes.forEachAlive(function(daNote:Note)
@@ -2575,7 +2575,7 @@ class PlayState extends MusicBeatState
 		holdArray = [controls.LEFT, controls.DOWN, controls.UP, controls.RIGHT];
 		releaseArray = [controls.LEFT_R, controls.DOWN_R, controls.UP_R, controls.RIGHT_R];
 
-		if (pressArray.contains(true) && generatedMusic)
+		if (pressArray.contains(true) && generatedSong)
 		{
 			boyfriend.holdTimer = 0;
 
@@ -2652,7 +2652,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 		
-		if (holdArray.contains(true) && !boyfriend.stunned && generatedMusic)
+		if (holdArray.contains(true) && !boyfriend.stunned && generatedSong)
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{
@@ -2998,7 +2998,7 @@ class PlayState extends MusicBeatState
 			FlxG.camera.zoom += 0.015;
 			camHUD.zoom += 0.03;
 		}
-		if (generatedMusic)
+		if (generatedSong)
 		{
 			notes.sort(FlxSort.byY, FlxSort.DESCENDING);
 		}

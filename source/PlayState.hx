@@ -202,6 +202,7 @@ class PlayState extends MusicBeatState
 	var holdArray:Array<Bool>;
 	var releaseArray:Array<Bool>;
 
+	var possibleNotes:Array<Note>;
 
 	static public var canHitOtherNote:Bool = false;
 	static public var canHitNote:Bool = false;
@@ -1103,6 +1104,46 @@ class PlayState extends MusicBeatState
 
 		super.create();
 	}
+
+	function updateCamera(opponent:Bool = false)
+	{
+		// gave up and stole dave and bambi's code lmao
+		var bfplaying:Bool = false;
+		if (opponent)
+		{
+			notes.forEachAlive(function(daNote:Note)
+			{
+				if (!bfplaying)
+				{
+					if (daNote.mustPress)
+					{
+						bfplaying = true;
+					}
+				}
+			});
+			if (bfplaying)
+			{
+				return;
+			}
+		}
+		if (opponent)
+		{
+			opponentNote = true;
+			bfNote = false;
+
+			if (SONG.song.toLowerCase() == 'tutorial')
+			{
+				tweenCamIn();
+			}
+		}
+	
+		if (!opponent)
+		{
+			opponentNote = false;
+			bfNote = true;
+		}
+
+	}
 	function playCutscene(name:String, ?atend:Bool)
 	{
 		#if sys
@@ -1641,6 +1682,7 @@ class PlayState extends MusicBeatState
 
 	function dadNoteShit(daNote:Note):Void
 	{
+		updateCamera(true);
 		opponentStrums.forEach(function(spr:FlxSprite)
 		{
 			if (Math.abs(daNote.noteData) == spr.ID)
@@ -1656,8 +1698,7 @@ class PlayState extends MusicBeatState
 	}
 	function bfNoteShit(daNote:Note):Void
 	{
-		bfNote = true;
-		opponentNote = false;
+		updateCamera(false);
 		playerStrums.forEach(function(spr:FlxSprite)
 		{
 			if (Math.abs(daNote.noteData) == spr.ID)
@@ -2084,10 +2125,7 @@ class PlayState extends MusicBeatState
 						botHit(daNote);
 					}
 					else {
-						if(bfNote == false)
-							opponentNote = true;
-						else
-							opponentNote = false;
+						updateCamera(true);
 						dadNoteShit(daNote);
 					}
 					if (SONG.song != 'Tutorial')
@@ -2126,7 +2164,7 @@ class PlayState extends MusicBeatState
 					if (SONG.needsVoices)
 						vocals.volume = 1;
 
-					//if(!daNote.isSustainNote)
+					if(!daNote.isSustainNote)
 						daNote.kill();
 						notes.remove(daNote, true);
 						daNote.destroy();
@@ -2579,7 +2617,7 @@ class PlayState extends MusicBeatState
 		{
 			boyfriend.holdTimer = 0;
 
-			var possibleNotes:Array<Note> = [];
+			possibleNotes = [];
 
 			var ignoreList:Array<Int> = [];
 
@@ -2754,8 +2792,7 @@ class PlayState extends MusicBeatState
 	{
 		if (!note.wasGoodHit)
 		{
-			bfNote = true;
-			opponentNote = false;
+			updateCamera(false);
 			if (!note.isSustainNote) {
 				combo += 1;
 				popUpScore(note.strumTime, note);
@@ -2985,12 +3022,6 @@ class PlayState extends MusicBeatState
 
 	override function beatHit()
 	{
-		notes.forEachAlive(function(daNote:Note)
-		{
-			if(!daNote.mustPress)
-				bfNote = false;
-		});
-		
 		altbeat = true;
 		super.beatHit();
 

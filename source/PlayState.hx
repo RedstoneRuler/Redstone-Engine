@@ -2355,9 +2355,9 @@ class PlayState extends MusicBeatState
 				FlxG.sound.music.stop();
 
 				#if (windows || android)
-				Cutscene.switchState(new PlayState(), true, PlayState.storyPlaylist[0].toLowerCase());
-				#else
 				FlxG.switchState(new PlayState());
+				#else
+				Cutscene.switchState(new PlayState(), true, PlayState.storyPlaylist[0].toLowerCase());
 				#end
 			}
 		}

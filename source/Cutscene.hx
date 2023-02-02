@@ -17,7 +17,7 @@ import haxe.io.Path;
 
 class Cutscene extends MusicBeatState
 {
-	//DEPRECATED, DO NOT USE UNLESS YOU KNOW WHAT YOU ARE DOING!
+	#if (!windows && !android)
 	var SONG:SwagSong;
 	inline static var MIN_TIME = 1.0;
 	
@@ -59,4 +59,5 @@ class Cutscene extends MusicBeatState
 		
 		return target;
 	}
+	#end
 }

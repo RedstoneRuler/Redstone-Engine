@@ -1384,10 +1384,6 @@ class PlayState extends MusicBeatState
 			if (vocals.playing)
 				lime.media.openal.AL.sourcef(vocals._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, FreeplayState.rate);
 		}
-		FlxG.sound.music.loopTime = FlxG.sound.music.length / FreeplayState.rate;
-		vocals.loopTime = FlxG.sound.music.length / FreeplayState.rate;
-		FlxG.sound.music.endTime = FlxG.sound.music.length / FreeplayState.rate;
-		vocals.endTime = FlxG.sound.music.length / FreeplayState.rate;
 		trace("pitched inst and vocals to " + FreeplayState.rate + " (stole code from kade engine idc lmao)");
 		#end
 
@@ -2551,14 +2547,6 @@ class PlayState extends MusicBeatState
 	}
 	function accuracyLogic():Void
 	{
-		//For some reason FlxMath.bound causes it to turn into infinity?
-		//idk what's going on there but whatever lmfao
-		if(accuracy > 100) {
-			accuracy = 100;
-		}
-		if(accuracy < 0) {
-			accuracy = 0;
-		}
 		accuracy = FlxMath.roundDecimal(accuracy, 2);
 		updateRating();
 	}

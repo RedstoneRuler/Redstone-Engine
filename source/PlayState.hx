@@ -2354,8 +2354,11 @@ class PlayState extends MusicBeatState
 				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0], isCustomWeek, sourceFolder);
 				FlxG.sound.music.stop();
 
+				#if (windows || android)
+				Cutscene.switchState(new PlayState(), true, PlayState.storyPlaylist[0].toLowerCase());
+				#else
 				FlxG.switchState(new PlayState());
-				//Cutscene.switchState(new PlayState(), true, PlayState.storyPlaylist[0].toLowerCase());
+				#end
 			}
 		}
 		else

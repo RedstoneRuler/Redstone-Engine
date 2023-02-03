@@ -2398,21 +2398,21 @@ class PlayState extends MusicBeatState
 					shits += 1;
 					daRating = 'shit';
 					score = 50;
-					hitRate -= 1;
+					hitRate += 0.25;
 				}
 				else if (noteDiff > (((FlxG.save.data.noteframe / 60) * 1000) * FreeplayState.rate) * 0.75)
 				{
 					bads += 1;
 					daRating = 'bad';
 					score = 100;
-					hitRate -= 0.50;
+					hitRate += 0.50;
 				}
 				else if (noteDiff > (((FlxG.save.data.noteframe / 60) * 1000) * FreeplayState.rate) * 0.2)
 				{
 					goods += 1;
 					daRating = 'good';
 					score = 200;
-					hitRate += 0.50;
+					hitRate += 0.75;
 				}
 			songScore += score;
 		}		
@@ -2722,14 +2722,9 @@ class PlayState extends MusicBeatState
 		missCount += 1;
 		if(wasPassedNote) {
 			health -= 0.0475;
-			hitRate -= 1;
-			updateAccuracy();
 		} else {
 			health -= 0.04;
-			hitRate -= 0.5;	
-			updateAccuracy();
 		}
-		accuracyLogic();
 		
 		if (combo > 5)
 		{

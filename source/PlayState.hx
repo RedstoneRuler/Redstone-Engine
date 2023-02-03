@@ -2543,6 +2543,7 @@ class PlayState extends MusicBeatState
 	}
 	function accuracyLogic():Void
 	{
+		if(accuracy < 0) accuracy = 0;
 		accuracy = FlxMath.roundDecimal(accuracy, 2);
 		updateRating();
 	}

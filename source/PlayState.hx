@@ -2138,17 +2138,7 @@ class PlayState extends MusicBeatState
 					}
 					if(!daNote.mustPress) // Preventing dad from singing bf's notes with autoplay on
 					{
-						switch (Math.abs(daNote.noteData))
-						{
-							case 0:
-								dad.playAnim('singLEFT' + altAnim, true);
-							case 1:
-								dad.playAnim('singDOWN' + altAnim, true);
-							case 2:
-								dad.playAnim('singUP' + altAnim, true);
-							case 3:
-								dad.playAnim('singRIGHT' + altAnim, true);
-						}
+						dad.playAnim('sing' + anim + altAnim, true);
 					}
 					if(!daNote.mustPress)
 						dad.holdTimer = 0;

@@ -17,6 +17,7 @@ class Note extends FlxSprite
 	public var strumTime:Float = 0;
 
 	public var mustPress:Bool = false;
+	public var note:String = '';
 	public var noteData:Int = 0;
 	public var canBeHit:Bool = false;
 	public var tooLate:Bool = false;
@@ -114,25 +115,19 @@ class Note extends FlxSprite
 			antialiasing = true;
 		}
 
-		switch (noteData)
-		{
+		switch (noteData) {
 			case 0:
-				x += swagWidth * 0;
-				if(!isSustainNote)
-					animation.play('purpleScroll');
+				note = 'purple';
 			case 1:
-				x += swagWidth * 1;
-				if(!isSustainNote)
-					animation.play('blueScroll');
+				note = 'blue';
 			case 2:
-				x += swagWidth * 2;
-				if(!isSustainNote)
-					animation.play('greenScroll');
+				note = 'green';
 			case 3:
-				x += swagWidth * 3;
-				if(!isSustainNote)
-					animation.play('redScroll');
+				note = 'red';
 		}
+
+		animation.play('${note}Scroll');
+		x += swagWidth * noteData;
 
 		// trace(prevNote);
 		var daScroll:Bool = FlxG.save.data.downscroll;
@@ -144,17 +139,7 @@ class Note extends FlxSprite
 
 			x += width / 2;
 
-			switch (noteData)
-			{
-				case 2:
-					animation.play('greenholdend');
-				case 3:
-					animation.play('redholdend');
-				case 1:
-					animation.play('blueholdend');
-				case 0:
-					animation.play('purpleholdend');
-			}
+			animation.play('${note}holdend');
 
 			if(daScroll) {
 				flipY = true;
@@ -167,18 +152,8 @@ class Note extends FlxSprite
 				x += 30;
 			if (prevNote.isSustainNote)
 			{
-				switch (prevNote.noteData)
-				{
-					case 0:
-						prevNote.animation.play('purplehold');
-					case 1:
-						prevNote.animation.play('bluehold');
-					case 2:
-						prevNote.animation.play('greenhold');
-					case 3:
-						prevNote.animation.play('redhold');
-				}
-				//Fixing hold note clipping
+				prevNote.animation.play('${note}hold');
+
 				if (PlayState.isPixelStage) {
 					prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * (PlayState.SONG.speed / 1.2);
 				}
@@ -193,42 +168,22 @@ class Note extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
-		
 		var daScroll:Bool = FlxG.save.data.downscroll;
 		var hitBox:Float;
 		super.update(elapsed);
 		if (mustPress && FlxG.save.data.bot != true)
 		{
-			if(FlxG.save.data.glow) {
-				if(!isSustainNote) {
-					if(canBeHit == true) {
-						switch (noteData)
-						{
-							case 0:
-								animation.play('purpleScrollGlow');
-							case 1:
-								animation.play('blueScrollGlow');
-							case 2:							
-								animation.play('greenScrollGlow');
-							case 3:
-								animation.play('redScrollGlow');
-						}
-					}
-					else {
-						switch (noteData)
-						{
-							case 0:
-								animation.play('purpleScroll');
-							case 1:
-								animation.play('blueScroll');
-							case 2:
-								animation.play('greenScroll');
-							case 3:
-								animation.play('redScroll');
-						}
-					}
+			if(!isSustainNote)
+			{
+				var glow:String = '';
+				if(FlxG.save.data.glow && canBeHit) {
+					glow = 'Glow';
 				}
+
+				animation.play('${note}Scroll${glow}');
 			}
+
+			// Shrink the hitbox on clipped sustain notes, reduces input dropping?????
 			if(isSustainNote && !daScroll && !PlayState.canHitOtherNote) {
 				hitBox = 5;
 			}
@@ -238,7 +193,8 @@ class Note extends FlxSprite
 			else {
 				hitBox = FlxG.save.data.noteframe;
 			}
-			// The * 0.5 is so that its easier to hit them too late, instead of too early
+
+			// The * 0.5 is so that it's easier to hit them too late, instead of too early
 			if (strumTime > Conductor.songPosition - (((hitBox / 60) * 1000) * FreeplayState.rate) && strumTime < Conductor.songPosition + (((hitBox / 60) * 1000) * FreeplayState.rate) * 0.5)
 			{
 				PlayState.canHitNote = true;

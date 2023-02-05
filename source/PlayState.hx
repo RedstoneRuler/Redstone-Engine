@@ -1804,12 +1804,12 @@ class PlayState extends MusicBeatState
 			wasBotplay = true;
 		}
 		if(FlxG.save.data.bot != true) {
-			scoreTxt.text = "Score: " + songScore;
-			missTxt.text = "Misses: " + missCount;
+			scoreTxt.text = 'Score: ${songScore}';
+			missTxt.text = 'Misses: ${missCount}';
 			if(displayAccuracy == '?')
-				accuracyTxt.text = "Accuracy: " + displayAccuracy;
+				accuracyTxt.text = 'Accuracy: ?';
 			else
-				accuracyTxt.text = "Accuracy: " + displayAccuracy + "% - " + accuracyRating + ' (${clearStats})';
+				accuracyTxt.text = 'Accuracy: ${displayAccuracy} % - ${accuracyRating} (${clearStats})';
 		} else{
 			scoreTxt.text = "";
 			missTxt.text = "AUTOPLAY ON";
@@ -2129,7 +2129,7 @@ class PlayState extends MusicBeatState
 					{
 						if (SONG.notes[Math.floor(curStep / 16)].altAnim) {
 							altAnim = '-alt';
-						} else if(SONG.notes[Math.floor(curStep / 16)].altAnim2 && dad.animation.getByName('sing' + anim + '-alt') != null) {
+						} else if(SONG.notes[Math.floor(curStep / 16)].altAnim2 && dad.animation.getByName('sing${anim}-alt') != null) {
 							altAnim = '-alt';
 						}
 					}
@@ -2138,7 +2138,7 @@ class PlayState extends MusicBeatState
 					}
 					if(!daNote.mustPress) // Preventing dad from singing bf's notes with autoplay on
 					{
-						dad.playAnim('sing' + anim + altAnim, true);
+						dad.playAnim('sing${anim}${altAnim}', true);
 					}
 					if(!daNote.mustPress)
 						dad.holdTimer = 0;

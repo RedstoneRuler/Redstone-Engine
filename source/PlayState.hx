@@ -998,7 +998,7 @@ class PlayState extends MusicBeatState
 		add(timeMeter);
 		timeMeter.cameras = [camHUD];
 
-		 new FlxText(healthBarBG.x + healthBarBG.width - 535, healthBarBG.y + 40, 0, "", 20);
+		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 535, healthBarBG.y + 40, 0, "", 20);
 		scoreTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		add(scoreTxt);

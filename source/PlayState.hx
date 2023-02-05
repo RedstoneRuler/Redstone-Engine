@@ -1809,7 +1809,7 @@ class PlayState extends MusicBeatState
 			if(displayAccuracy == '?')
 				accuracyTxt.text = 'Accuracy: ?';
 			else
-				accuracyTxt.text = 'Accuracy: ${displayAccuracy} % - ${accuracyRating} (${clearStats})';
+				accuracyTxt.text = 'Accuracy: ${displayAccuracy}% - ${accuracyRating} (${clearStats})';
 		} else{
 			scoreTxt.text = "";
 			missTxt.text = "AUTOPLAY ON";

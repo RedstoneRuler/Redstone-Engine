@@ -998,7 +998,7 @@ class PlayState extends MusicBeatState
 		add(timeMeter);
 		timeMeter.cameras = [camHUD];
 
-		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 535, healthBarBG.y + 40, 0, "", 20);
+		 new FlxText(healthBarBG.x + healthBarBG.width - 535, healthBarBG.y + 40, 0, "", 20);
 		scoreTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		add(scoreTxt);
@@ -1012,7 +1012,13 @@ class PlayState extends MusicBeatState
 		accuracyTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		accuracyTxt.scrollFactor.set();
 		add(accuracyTxt);
-		var iconDAD:String;
+
+		scoreTxt.screenCenter(X);
+		missTxt.screenCenter(X);
+		accuracyTxt.screenCenter(X);
+
+		scoreTxt.x -= 200;
+		accuracyTxt.x += 200;
 		
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
@@ -1815,6 +1821,7 @@ class PlayState extends MusicBeatState
 			missTxt.text = "AUTOPLAY ON";
 			accuracyTxt.text = "";
 		}
+
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
 			persistentUpdate = false;

@@ -76,10 +76,10 @@
 	<haxelib name="hxcpp-debug-server" if="desktop"/>
 
 	
-	<haxelib name="hxcodec" if="desktop || android"/>
+	<haxelib name="hxcodec" if="windows || android"/>
 
-	<haxelib name="extension-webm" unless="desktop || android"/>
-	<haxelib name="actuate" unless="desktop || android" />
+	<haxelib name="extension-webm" unless="windows || android"/>
+	<haxelib name="actuate" unless="windows || android" />
 
 	<!-- Show debug traces for hxCodec -->
 	<haxedef name="HXC_DEBUG_TRACE" if="debug"/>

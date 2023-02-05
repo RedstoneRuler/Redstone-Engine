@@ -1,4 +1,4 @@
-#if html5
+#if (!windows && !android)
 package;
 
 import flixel.FlxState;

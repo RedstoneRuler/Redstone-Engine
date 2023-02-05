@@ -45,7 +45,7 @@ import lime.media.openal.AL;
 import openfl.utils.Future;
 import openfl.media.Sound;
 
-#if sys
+#if (windows || android)
 import VideoHandler;
 #end
 
@@ -1146,7 +1146,7 @@ class PlayState extends MusicBeatState
 	}
 	function playCutscene(name:String, ?atend:Bool)
 	{
-		#if sys
+		#if (windows || android)
 		inCutscene = true;
 	
 		var video:VideoHandler = new VideoHandler();

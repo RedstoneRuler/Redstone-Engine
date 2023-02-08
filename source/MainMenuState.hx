@@ -92,12 +92,7 @@ class MainMenuState extends MusicBeatState
 			menuItem.scrollFactor.set();
 			menuItem.antialiasing = true;
 		}
-		if(FlxG.drawFramerate >= 60) {
-			FlxG.camera.follow(camFollow, null, 0.06 * (60 / FlxG.drawFramerate));
-		}
-		else {
-			FlxG.camera.follow(camFollow, null, 0.06);
-		}
+		FlxG.camera.follow(camFollow, null, 0.06);
 
 		// NG.core.calls.event.logEvent('swag').send();
 
@@ -117,7 +112,7 @@ class MainMenuState extends MusicBeatState
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 		FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
-		if (FlxG.keys.justPressed.F){FlxG.fullscreen = !FlxG.fullscreen;}
+		if (FlxG.keys.justPressed.F) {FlxG.fullscreen = !FlxG.fullscreen;}
 		super.update(elapsed);
 		if (FlxG.sound.music.volume < 0.8)
 		{
@@ -223,12 +218,6 @@ class MainMenuState extends MusicBeatState
 			if (spr.ID == curSelected)
 			{
 				spr.animation.play('selected');
-				if(FlxG.drawFramerate > 60) {
-					FlxG.camera.follow(camFollow, null, 0.06 * (60 / FlxG.drawFramerate));
-				}
-				else {
-					FlxG.camera.follow(camFollow, null, 0.06);
-				}
 				camFollow.setPosition(spr.getGraphicMidpoint().x, spr.getGraphicMidpoint().y);
 			}
 

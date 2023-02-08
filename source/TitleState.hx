@@ -45,7 +45,6 @@ class TitleState extends MusicBeatState
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
 	var speed:Float = 1;
-	var bpmModifier:Float = 0;
 	var curWacky:Array<String> = [];
 	var creditsText:Array<String> = [];
 
@@ -234,22 +233,7 @@ class TitleState extends MusicBeatState
 
 		return swagGoodArray;
 	}
-	/*
-	function getCreditTextShit():Array<Array<String>>
-	{
-		var fullText:String = Assets.getText('assets/data/introCredits.txt');
 	
-		var firstArray:Array<String> = fullText.split('\n');
-		var swagGoodArray:Array<Array<String>> = [];
-	
-		for (i in firstArray)
-		{
-			swagGoodArray.push(i.split('--'));
-		}
-	
-		return swagGoodArray;
-	}
-	*/
 	var transitioning:Bool = false;
 	function set_pitch(speed):Void
 	{
@@ -288,11 +272,11 @@ class TitleState extends MusicBeatState
 			#end
 		}
 		if(controls.LEFT) {
-			speed -= 0.01 / (FPS_Mem.times.length / 60);
+			speed -= 0.01 * elapsed;
 			set_pitch(speed);
 		}
 		if(controls.RIGHT) {
-			speed += 0.01 / (FPS_Mem.times.length / 60);
+			speed += 0.01 * elapsed;
 			set_pitch(speed);
 		}
 		if (pressedEnter && !transitioning && skippedIntro)

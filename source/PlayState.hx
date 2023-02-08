@@ -2060,9 +2060,9 @@ class PlayState extends MusicBeatState
 					daNote.destroy();
 				}
 				if (daScroll)
-					daNote.y = (strumLine.y - ((Conductor.songPosition - daNote.strumTime)) * (-0.45 * SONG.speed));
+					daNote.y = strumLine.y - (Conductor.songPosition - daNote.strumTime) * (-0.45 * SONG.speed);
 				else
-					daNote.y = (strumLine.y - ((Conductor.songPosition - daNote.strumTime)) * (0.45 * SONG.speed));
+					daNote.y = strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * SONG.speed);
 
 				// WIP interpolation shit? Need to fix the pause issue
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));

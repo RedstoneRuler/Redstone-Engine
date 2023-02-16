@@ -1012,13 +1012,6 @@ class PlayState extends MusicBeatState
 		accuracyTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		accuracyTxt.scrollFactor.set();
 		add(accuracyTxt);
-
-		scoreTxt.screenCenter(X);
-		missTxt.screenCenter(X);
-		accuracyTxt.screenCenter(X);
-
-		scoreTxt.x -= 200;
-		accuracyTxt.x += 200;
 		
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);

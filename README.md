@@ -3,13 +3,13 @@
 A modification of Friday Night Funkin's engine designed to tweak little details and add small features to make the game feel a bit more polished.
 There are way better engines out there, but this is an option if you wanna use it.
 ## Features
-- Improved input system
-- Customizable note hitboxes
-- Notes glow when they can be hit
+- Lower latency
 - Decimal BPM support
 - Randomization
 - Powerful optimization system
 - Improved animations
+- Custom UI skin support
+- Softcoded modding support (WIP)
 - And more!
 ## Feature requests
 - Is there something you want in the engine? Open an issue or a pull request to increase your chances of it being added!

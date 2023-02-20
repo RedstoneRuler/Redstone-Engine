@@ -202,6 +202,8 @@ class PlayState extends MusicBeatState
 
 	var possibleNotes:Array<Note>;
 
+	var lastPos:Float;
+
 	function preloadAssets():Void
 		{
 			var loadAssets:Array<Dynamic> = [];
@@ -1731,6 +1733,12 @@ class PlayState extends MusicBeatState
 		{
 			if(startedSong && !endingSong)
 			{
+				if(Conductor.songPosition < lastPos - 80)
+				{
+					trace('SONG TRIED TO ROLL BACK');
+					Conductor.songPosition = lastPos;
+					FlxG.sound.music.time = lastPos;
+				}
 				if ((FlxG.sound.music.length) - Conductor.songPosition <= 0)
 				{
 					endingSong = true;
@@ -1741,7 +1749,7 @@ class PlayState extends MusicBeatState
 					}
 				}
 			}
-
+			lastPos = Conductor.songPosition;
 		}
 		var refreshRate:Int = Application.current.window.displayMode.refreshRate;
 		if(FlxG.save.data.fps == refreshRate)
@@ -2966,7 +2974,10 @@ class PlayState extends MusicBeatState
 
 	override function beatHit()
 	{
-		altbeat = true;
+		if(Conductor.bpm > 160)
+			altbeat = !altbeat;
+		else
+			altbeat = true;
 		super.beatHit();
 
 		if(camZooming && FlxG.save.data.zoom == true) {

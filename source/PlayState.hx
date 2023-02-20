@@ -1268,9 +1268,7 @@ class PlayState extends MusicBeatState
 		Conductor.songPosition = 0;
 		Conductor.songPosition -= Conductor.crochet * 5;
 
-		// Higher BPMs will typically have more notes, so make the antimash more forgiving if that's the case, as the system does slip up sometimes
-		// and increment the mash var for a proper hit as if it wasn't one
-		mashLimit = 3; //1.5 * (SONG.bpm / 50);
+		mashLimit = 2;
 		FlxG.log.add('THE LIMIT ${mashLimit}');
 		var swagCounter:Int = 0;
 

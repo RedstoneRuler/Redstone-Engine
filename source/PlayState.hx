@@ -194,8 +194,6 @@ class PlayState extends MusicBeatState
 	var bads:Int = 0;
 	var shits:Int = 0;
 
-	var globalElapsed:Float;
-
 	var disableSprites:Bool = false;
 
 	var pressArray:Array<Bool>;
@@ -203,9 +201,6 @@ class PlayState extends MusicBeatState
 	var releaseArray:Array<Bool>;
 
 	var possibleNotes:Array<Note>;
-
-	static public var canHitOtherNote:Bool = false;
-	static public var canHitNote:Bool = false;
 
 	function preloadAssets():Void
 		{
@@ -1732,13 +1727,11 @@ class PlayState extends MusicBeatState
 		FlxG.watch.addQuick('mash var', mashVar);
 		FlxG.watch.addQuick('mash limit', mashLimit);
 
-		globalElapsed = elapsed;
-
 		if(generatedSong)
 		{
 			if(startedSong && !endingSong)
 			{
-				if (Conductor.songPosition >= songLength)
+				if ((FlxG.sound.music.length) - Conductor.songPosition <= 0)
 				{
 					endingSong = true;
 					if(startedCountdown && wasPractice) {
@@ -1832,8 +1825,8 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
-		iconP1.setGraphicSize(Std.int(FlxMath.lerp(iconP1.width, 150, 0.09 / (FPS_Mem.times.length / 144))));
-		iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP2.width, 150, 0.09 / (FPS_Mem.times.length / 144))));
+		iconP1.setGraphicSize(Std.int(FlxMath.lerp(iconP1.width, 150, 0.85 / (FPS_Mem.times.length / 144))));
+		iconP2.setGraphicSize(Std.int(FlxMath.lerp(iconP2.width, 150, 0.85 / (FPS_Mem.times.length / 144))));
 
 		iconP1.updateHitbox();
 		iconP2.updateHitbox();
@@ -2059,42 +2052,39 @@ class PlayState extends MusicBeatState
 
 				// WIP interpolation shit? Need to fix the pause issue
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
-				if(daScroll)
-				{
-					if(daNote.isSustainNote && daNote.animation.curAnim.name.endsWith('end') && daNote.prevNote != null)
-						daNote.y += (daNote.prevNote.height);
-					else if(daNote.isSustainNote)
-						daNote.y += daNote.height / 2;
+				var strumLineMid = strumLine.y + Note.swagWidth / 2;
 
-					if(daNote.isSustainNote && daNote.wasGoodHit)
-					{
-						daNote.kill();
-						notes.remove(daNote, true);
-						daNote.destroy();
-					}
-				}
-				else
+				if(daNote.isSustainNote)
 				{
-					if (daNote.isSustainNote && (daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2) && (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
+					if(daScroll)
 					{
-						if(daNote.isSustainNote) {
-							var swagRect:FlxRect;
-							swagRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
-							swagRect.y /= daNote.scale.y;
-							swagRect.height -= swagRect.y;
+						if (daNote.animation.curAnim.name.endsWith("end") && daNote.prevNote != null)
+							daNote.y += daNote.prevNote.height;
+						else
+							daNote.y += daNote.height / 2;
+	
+						if ((!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit)))
+							&& daNote.y - daNote.offset.y * daNote.scale.y + daNote.height >= strumLineMid)
+						{
+							// clipRect is applied to graphic itself so use frame Heights
+							var swagRect:FlxRect = new FlxRect(0, 0, daNote.frameWidth, daNote.frameHeight);
+		
+							swagRect.height = (strumLineMid - daNote.y) / daNote.scale.y;
+							swagRect.y = daNote.frameHeight - swagRect.height;
 							daNote.clipRect = swagRect;
 						}
-						if(!daNote.isSustainNote && daNote.mustPress || canHitOtherNote && daNote.mustPress) // For false positives, to prevent input dropping
+					}
+					else
+					{
+						if (daNote.isSustainNote
+							&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit)))
+							&& daNote.y <= strumLineMid)
 						{
-							daNote.kill();
-							notes.remove(daNote, true);
-							daNote.destroy();
-						}
-						if(daNote.prevNote.isSustainNote && daNote.mustPress && !daNote.isSustainNote) //Same here
-						{
-							daNote.prevNote.kill();
-							notes.remove(daNote.prevNote, true);
-							daNote.prevNote.destroy();
+							var swagRect:FlxRect = new FlxRect(0, 0, daNote.width / daNote.scale.x, daNote.height / daNote.scale.y);
+
+							swagRect.y = (strumLineMid - daNote.y) / daNote.scale.y;
+							swagRect.height -= swagRect.y;
+							daNote.clipRect = swagRect;
 						}
 					}
 				}
@@ -2587,95 +2577,88 @@ class PlayState extends MusicBeatState
 		holdArray = [controls.LEFT, controls.DOWN, controls.UP, controls.RIGHT];
 		releaseArray = [controls.LEFT_R, controls.DOWN_R, controls.UP_R, controls.RIGHT_R];
 
-		if (pressArray.contains(true) && generatedSong)
-		{
-			boyfriend.holdTimer = 0;
-
-			possibleNotes = [];
-
-			var ignoreList:Array<Int> = [];
-
-			notes.forEachAlive(function(daNote:Note)
-			{
-				if (daNote.canBeHit && daNote.mustPress)
-				{
-					// the sorting probably doesn't need to be in here? who cares lol
-					possibleNotes.push(daNote);
-					possibleNotes.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
-
-					ignoreList.push(daNote.noteData);
-				}
-			});
-
-			if (possibleNotes.length > 0)
-			{
-				var daNote = possibleNotes[0];
-				
-				// Jump notes
-				if (possibleNotes.length >= 2)
-				{
-					if (possibleNotes[0].strumTime == possibleNotes[1].strumTime)
-					{
-						for (coolNote in possibleNotes)
-						{
-							if (pressArray[coolNote.noteData])
-								goodNoteHit(coolNote);
-							else
-							{
-								var inIgnoreList:Bool = false;
-								for (shit in 0...ignoreList.length)
-								{
-									if (pressArray[ignoreList[shit]])
-										inIgnoreList = true;
-								}
-								if (!inIgnoreList)
-								{
-									badNoteCheck();
-								}
-							}
-						}
-					}
-					else if (possibleNotes[0].noteData == possibleNotes[1].noteData)
-					{
-						noteCheck(pressArray[daNote.noteData], daNote);
-					}
-					else
-					{
-						for (coolNote in possibleNotes)
-						{
-							noteCheck(pressArray[coolNote.noteData], coolNote);
-						}
-					}
-				}
-				else // regular notes?
-				{
-					noteCheck(pressArray[daNote.noteData], daNote);
-				}
-				if (daNote.wasGoodHit)
-				{
-					daNote.kill();
-					notes.remove(daNote, true);
-					daNote.destroy();
-				}
-			}
-			else
-			{
-				badNoteCheck();
-			}
-		}
-		
+		// HOLDS, check for sustain notes
 		if (holdArray.contains(true) && generatedSong)
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{
-				if (daNote.canBeHit && daNote.mustPress && daNote.isSustainNote && FlxG.save.data.bot == false)
-				{
-					if(holdArray[daNote.noteData])
-						goodNoteHit(daNote);
-				}
+				if (daNote.isSustainNote && daNote.canBeHit && daNote.mustPress && holdArray[daNote.noteData])
+					goodNoteHit(daNote);
 			});
 		}
 
+		// PRESSES, check for note hits
+		if (pressArray.contains(true) && generatedSong)
+		{
+			boyfriend.holdTimer = 0;
+	
+			var possibleNotes:Array<Note> = []; // notes that can be hit
+			var directionList:Array<Int> = []; // directions that can be hit
+			var dumbNotes:Array<Note> = []; // notes to kill later
+	
+			notes.forEachAlive(function(daNote:Note)
+			{
+				if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit)
+				{
+					if (directionList.contains(daNote.noteData))
+					{
+						for (coolNote in possibleNotes)
+						{
+							if (coolNote.noteData == daNote.noteData && Math.abs(daNote.strumTime - coolNote.strumTime) < 10)
+							{ // if it's the same note twice at < 10ms distance, just delete it
+								// EXCEPT u cant delete it in this loop cuz it fucks with the collection lol
+								dumbNotes.push(daNote);
+								break;
+							}
+							else if (coolNote.noteData == daNote.noteData && daNote.strumTime < coolNote.strumTime)
+							{ // if daNote is earlier than existing note (coolNote), replace
+								possibleNotes.remove(coolNote);
+								possibleNotes.push(daNote);
+								break;
+							}
+						}
+					}
+					else
+					{
+						possibleNotes.push(daNote);
+						directionList.push(daNote.noteData);
+					}
+				}
+			});
+	
+			for (note in dumbNotes)
+			{
+				FlxG.log.add("killing dumb ass note at " + note.strumTime);
+				note.kill();
+				notes.remove(note, true);
+				note.destroy();
+			}
+	
+			possibleNotes.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
+	
+			if (perfectMode)
+				goodNoteHit(possibleNotes[0]);
+			else if (possibleNotes.length > 0)
+			{
+				for (shit in 0...pressArray.length)
+				{ // if a direction is hit that shouldn't be
+					if (pressArray[shit] && !directionList.contains(shit))
+						noteMiss(shit);
+				}
+				for (coolNote in possibleNotes)
+					{
+					if (pressArray[coolNote.noteData])
+						goodNoteHit(coolNote);
+				}
+			}
+			else
+			{
+				for (shit in 0...pressArray.length)
+					if (pressArray[shit] && !FlxG.save.data.ghost)
+						noteMiss(shit);
+			}
+		}
+		
 		if (boyfriend.holdTimer > (Conductor.stepCrochet * 4 * 0.001) / FreeplayState.rate && !holdArray.contains(true))
 		{
 			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
@@ -2735,8 +2718,6 @@ class PlayState extends MusicBeatState
 				boyfriend.playAnim('singRIGHTmiss', true);
 		}
 	}
-
-	function badNoteCheck() { if(!FlxG.save.data.ghost) for(i in 0...pressArray.length) if(pressArray[i] == true) noteMiss(i); } // fuck you
 
 	function noteCheck(keyP:Bool, note:Note):Void
 	{

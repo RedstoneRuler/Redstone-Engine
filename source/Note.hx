@@ -183,11 +183,8 @@ class Note extends FlxSprite
 				animation.play('${note}Scroll${glow}');
 			}
 
-			// Shrink the hitbox on clipped sustain notes, reduces input dropping?????
-			if(isSustainNote && !daScroll && !PlayState.canHitOtherNote) {
-				hitBox = 5;
-			}
-			else if (isSustainNote && daScroll) {
+			// Hitting held notes really early looks weird with the clipping
+			if (isSustainNote) {
 				hitBox = 10;
 			}
 			else {
@@ -197,22 +194,11 @@ class Note extends FlxSprite
 			// The * 0.5 is so that it's easier to hit them too late, instead of too early
 			if (strumTime > Conductor.songPosition - (((hitBox / 60) * 1000) * FreeplayState.rate) && strumTime < Conductor.songPosition + (((hitBox / 60) * 1000) * FreeplayState.rate) * 0.5)
 			{
-				PlayState.canHitNote = true;
-				if(!isSustainNote) {
-					PlayState.canHitOtherNote = true;
-				}
 				canBeHit = true;
 			}
 			else
 			{
-				PlayState.canHitOtherNote = false;
 				canBeHit = false;
-				if(canBeHit == false) {
-					noteTimer += elapsed;
-						if(noteTimer > 1 && !canBeHit) {
-							PlayState.canHitNote = false;
-						}
-				}
 			}
 			if (strumTime < Conductor.songPosition - (((hitBox / 60) * 1000) * FreeplayState.rate))
 			{
@@ -228,8 +214,6 @@ class Note extends FlxSprite
 				wasGoodHit = true;
 			}
 		}
-		if(FlxG.save.data.bot == true)
-			PlayState.canHitOtherNote = false;
 
 		if (tooLate)
 		{

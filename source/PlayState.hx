@@ -2650,7 +2650,7 @@ class PlayState extends MusicBeatState
 			{
 				for (shit in 0...pressArray.length)
 				{ // if a direction is hit that shouldn't be
-					if (pressArray[shit] && !directionList.contains(shit))
+					if (pressArray[shit] && !directionList.contains(shit) && !FlxG.save.data.ghost)
 						noteMiss(shit);
 				}
 				for (coolNote in possibleNotes)

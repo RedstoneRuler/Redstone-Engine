@@ -74,7 +74,7 @@ class SaveData
 		if(FlxG.save.data.shaders == null) {
 			FlxG.save.data.shaders = false;
 		}
-		if(FlxG.save.data.fps > 30) {
+		if(FlxG.save.data.fps < 30) {
 			FlxG.save.data.fps = 60; // FAILSAFE!
 		}
 		FlxG.save.flush();

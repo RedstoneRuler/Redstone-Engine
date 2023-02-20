@@ -77,10 +77,9 @@ class SettingsGraphics extends MusicBeatState
 	
 	override function update(elapsed:Float)
 	{
-		displayFPS = FlxG.save.data.fps;
 		var minFPS:Int = 30;
 		var maxFPS:Int;
-		maxFPS = 360;
+		maxFPS = 500;
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		super.update(elapsed);
@@ -93,7 +92,7 @@ class SettingsGraphics extends MusicBeatState
 					if (FlxG.updateFramerate >= maxFPS) { FlxG.updateFramerate = maxFPS; }
 					FlxG.drawFramerate = (FlxG.updateFramerate);
 					FlxG.save.data.fps = FlxG.drawFramerate;
-					versionShit.text = "Framerate: " + displayFPS;
+					versionShit.text = "Framerate: " + FlxG.save.data.fps;
 				}
 			
 				if(FlxG.keys.pressed.LEFT)
@@ -102,7 +101,7 @@ class SettingsGraphics extends MusicBeatState
 					if (FlxG.updateFramerate <= minFPS) { FlxG.updateFramerate = minFPS; }
 					FlxG.drawFramerate = (FlxG.updateFramerate);
 					FlxG.save.data.fps = FlxG.drawFramerate;
-					versionShit.text = "Framerate: " + displayFPS;
+					versionShit.text = "Framerate: " + FlxG.save.data.fps;
 				}
 		}
 		else {
@@ -112,7 +111,7 @@ class SettingsGraphics extends MusicBeatState
 				if (FlxG.updateFramerate >= maxFPS) { FlxG.updateFramerate = maxFPS; }
 				FlxG.drawFramerate = (FlxG.updateFramerate);
 				FlxG.save.data.fps = FlxG.drawFramerate;
-				versionShit.text = "Framerate: " + displayFPS;
+				versionShit.text = "Framerate: " + FlxG.save.data.fps;
 			}
 
 			if(FlxG.keys.justPressed.LEFT)
@@ -121,7 +120,7 @@ class SettingsGraphics extends MusicBeatState
 				if (FlxG.updateFramerate <= minFPS) { FlxG.updateFramerate = minFPS; }
 				FlxG.drawFramerate = (FlxG.updateFramerate);
 				FlxG.save.data.fps = FlxG.drawFramerate;
-				versionShit.text = "Framerate: " + displayFPS;
+				versionShit.text = "Framerate: " + FlxG.save.data.fps;
 			}
 		}
 		#end

@@ -55,16 +55,17 @@ class Main extends Sprite
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
+		#if (flixel < "5.0.0")
 		if (zoom == -1)
 		{
 			var ratioX:Float = stageWidth / gameWidth;
 			var ratioY:Float = stageHeight / gameHeight;
-			#if (flixel < "5.0.0")
+			
 			zoom = Math.min(ratioX, ratioY);
-			#end
 			gameWidth = Math.ceil(stageWidth / zoom);
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
+		#end
 
 		#if !debug
 		initialState = TitleState;
@@ -73,7 +74,7 @@ class Main extends Sprite
 		FlxG.log.redirectTraces = true;
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, #if (flixel < "5.0.0") zoom, #end framerate, framerate, skipSplash, startFullscreen));
 		
-		#if html5
+		#if (!windows && !android)
 		var ourSource:String = "assets/videosWebm/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
 
 		#if web

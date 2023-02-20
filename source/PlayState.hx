@@ -2225,8 +2225,6 @@ class PlayState extends MusicBeatState
 	}
 	function gameOver(gitaroo:Bool = false):Void
 	{
-		boyfriend.stunned = true;
-
 		persistentUpdate = false;
 		persistentDraw = false;
 		paused = true;
@@ -2247,16 +2245,14 @@ class PlayState extends MusicBeatState
 	}
 	function gameOverPractice():Void
 	{
-			boyfriend.stunned = true;
+		persistentUpdate = false;
+		persistentDraw = false;
+		paused = true;
 	
-			persistentUpdate = false;
-			persistentDraw = false;
-			paused = true;
+		vocals.stop();
+		FlxG.sound.music.stop();
 	
-			vocals.stop();
-			FlxG.sound.music.stop();
-	
-			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+		openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 	}
 	function finishWeek():Void
 	{
@@ -2668,7 +2664,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 		
-		if (holdArray.contains(true) && !boyfriend.stunned && generatedSong)
+		if (holdArray.contains(true) && generatedSong)
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{
@@ -2727,13 +2723,6 @@ class PlayState extends MusicBeatState
 
 		FlxG.sound.play('assets/sounds/missnote' + FlxG.random.int(1, 3) + TitleState.soundExt, FlxG.random.float(0.1, 0.2));
 
-		boyfriend.stunned = true;
-
-		// get stunned for 5 seconds
-		new FlxTimer().start(5 / 60, function(tmr:FlxTimer)
-		{
-			boyfriend.stunned = false;
-		});
 		switch (direction)
 		{
 			case 0:

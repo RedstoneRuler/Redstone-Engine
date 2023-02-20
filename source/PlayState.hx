@@ -2650,8 +2650,15 @@ class PlayState extends MusicBeatState
 			{
 				for (shit in 0...pressArray.length)
 				{ // if a direction is hit that shouldn't be
-					if (pressArray[shit] && !directionList.contains(shit) && !FlxG.save.data.ghost)
-						noteMiss(shit);
+					if (pressArray[shit] && !directionList.contains(shit))
+						if(!FlxG.save.data.ghost)
+							noteMiss(shit);
+						else {
+							mashVar += 0.3;
+							if(mashVar > mashLimit) {
+								noteMiss(shit, true);
+							}
+						}
 				}
 				for (coolNote in possibleNotes)
 					{
@@ -2727,19 +2734,6 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	function noteCheck(keyP:Bool, note:Note):Void
-	{
-		if (keyP) {
-			goodNoteHit(note);
-		}
-		else if(FlxG.save.data.ghost)
-		{
-			mashVar += 0.3;
-			if(mashVar > mashLimit) {
-				noteMiss(0, true);
-			}
-		}
-	}
 	function goodNoteHit(note:Note):Void
 	{
 		if (!note.wasGoodHit)

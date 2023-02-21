@@ -2967,10 +2967,12 @@ class PlayState extends MusicBeatState
 
 	override function beatHit()
 	{
-		if(Conductor.bpm * FreeplayState.rate > 160)
-			altbeat = !altbeat;
-		else
+		// nice if condition
+		if(curBeat % CoolUtil.closest2Multiple(Math.floor((Conductor.bpm * FreeplayState.rate / 100) + 1)) == 0)
 			altbeat = true;
+		else
+			altbeat = false;
+		
 		super.beatHit();
 
 		if(camZooming && FlxG.save.data.zoom == true) {

@@ -2967,7 +2967,7 @@ class PlayState extends MusicBeatState
 
 	override function beatHit()
 	{
-		if(Conductor.bpm > 160)
+		if(Conductor.bpm * FreeplayState.rate > 160)
 			altbeat = !altbeat;
 		else
 			altbeat = true;

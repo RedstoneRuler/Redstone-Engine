@@ -1,7 +1,16 @@
 package;
 
-import lime.utils.Assets;
 import flixel.FlxG;
+import flixel.graphics.FlxGraphic;
+import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.math.FlxMath;
+import flixel.math.FlxPoint;
+import flixel.math.FlxRect;
+import flixel.system.FlxAssets.FlxGraphicAsset;
+import haxe.Json;
+import lime.math.Rectangle;
+import lime.utils.Assets;
+
 #if sys
 import sys.io.File;
 #end
@@ -11,7 +20,7 @@ using StringTools;
 class CoolUtil
 {
 	public static var difficultyArray:Array<String> = ['EASY', "NORMAL", "HARD"];
-	public static var version:String = '1.6.0';
+	public static var version:String = '1.7.0-beta';
 
 	public static function frameDelta():Float
 	{
@@ -65,14 +74,14 @@ class CoolUtil
 		return dumbArray;
 	}
 
-	public static function camLerpShit(ratio:Float)
+	 public static function camLerpShit(lerp:Float):Float
 	{
-		return FlxG.elapsed / (1 / 60) * ratio;
+		return lerp * (FlxG.elapsed / (1 / 60));
 	}
 	
-	public static function coolLerp(a:Float, b:Float, ratio:Float)
+	public static function coolLerp(a:Float, b:Float, ratio:Float):Float
 	{
-		return a + camLerpShit(ratio) * (b - a);
+		return FlxMath.lerp(a, b, camLerpShit(ratio));
 	}
 
 	inline public static function boundTo(value:Float, min:Float, max:Float):Float {

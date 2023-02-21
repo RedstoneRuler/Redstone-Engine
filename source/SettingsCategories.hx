@@ -19,6 +19,8 @@ class SettingsCategories extends MusicBeatState
 	var curSelected:Int = 0;
 	var controlsStrings:Array<String> = [];
 
+	public static var fromPause:Bool;
+
 	private var grpControls:FlxTypedGroup<Alphabet>;
 
 	override function create()
@@ -57,8 +59,12 @@ class SettingsCategories extends MusicBeatState
 		super.update(elapsed);
 		if (controls.BACK) {
 			FlxG.save.flush();
-			FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 4);
-			FlxG.switchState(new MainMenuState());
+			if(fromPause)
+				FlxG.switchState(new PlayState());
+			else {
+				FlxG.sound.playMusic('assets/music/freakyMenu' + TitleState.soundExt, 4);
+				FlxG.switchState(new MainMenuState());
+			}
 		}
 			if (controls.UP_P)
 				changeSelection(-1);

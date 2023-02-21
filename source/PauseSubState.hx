@@ -18,7 +18,7 @@ class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "", 12);
-	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Toggle Hit Sounds', 'Toggle Autoplay', 'Exit to menu'];
+	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Options', 'Toggle Practice Mode', 'Toggle Hit Sounds', 'Toggle Autoplay', 'Exit to menu'];
 	var curSelected:Int = 0;
 
 	var minFPS:Int = 30;
@@ -234,7 +234,8 @@ class PauseSubState extends MusicBeatSubstate
 				case "Restart Song":
 					FlxG.resetState();
 				case "Options":
-					openSubState(new OptionsMenuSubstate());
+					SettingsCategories.fromPause = true;
+					FlxG.switchState(new SettingsCategories());
 				case "Change Difficulty":
 					menuItemsOG = menuItems;
 					menuItems = difficultyChoices;

@@ -30,7 +30,7 @@ class FreeplayState extends MusicBeatState
 	var scoreText:FlxText;
 	var diffText:FlxText;
 	var previewtext:FlxText;
-	var lerpScore:Int = 0;
+	var lerpScore:Float = 0;
 	var lerpAccuracy:Float = 0;
 	var intendedScore:Int = 0;
 	var intendedAccuracy:Float = 0;
@@ -43,6 +43,8 @@ class FreeplayState extends MusicBeatState
 	private var iconArray:Array<HealthIcon> = [];
 
 	var bg:FlxSprite;
+	var scoreBG:FlxSprite;
+
 	var json:Dynamic; //too lazy to check what the class is for a json, let the game figure it out lmao
 
 	var songFolders:Array<String> = [];
@@ -131,9 +133,13 @@ class FreeplayState extends MusicBeatState
 		scoreText.setFormat("assets/fonts/vcr.ttf", 32, FlxColor.WHITE, RIGHT);
 		// scoreText.alignment = RIGHT;
 
-		var scoreBG:FlxSprite = new FlxSprite(scoreText.x - 6, 0).makeGraphic(Std.int(FlxG.width * 0.6), 66, 0xFF000000);
-		scoreBG.alpha = 0.6;
+		scoreBG = new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, 66, 0x99000000);
+		scoreBG.antialiasing = false;
+		scoreBG.scale.x = FlxG.width - scoreText.x + 6;
+		scoreBG.x = FlxG.width - scoreBG.scale.x / 2;
 		add(scoreBG);
+		
+
 
 		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
 		diffText.font = scoreText.font;
@@ -177,11 +183,13 @@ class FreeplayState extends MusicBeatState
 
 		super.create();
 	}
+
 	override function beatHit()
 	{
 		super.beatHit();
 		FlxG.camera.zoom += 0.015; // mid fight masses style zooming per song bpm
 	}
+
 	override function newMeasure()
 	{
 		super.newMeasure();
@@ -194,6 +202,7 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 	}
+
 	function addSong(song:String, icon:String = 'blank', color:FlxColor = 0xFF9271FD, week:Int = 0)
 	{
 		if (StoryMenuState.weekUnlocked[week] || isDebug) {
@@ -202,27 +211,28 @@ class FreeplayState extends MusicBeatState
 			colorList.push(color);
 		}
 	}
+
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+		
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
+
 		FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
+
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
 
-		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, 0.4));
-		lerpAccuracy = Math.floor(FlxMath.lerp(lerpAccuracy, intendedAccuracy, 0.4));
+		lerpScore = CoolUtil.coolLerp(lerpScore, intendedScore, 0.4);
+		lerpAccuracy = CoolUtil.coolLerp(lerpAccuracy, intendedAccuracy, 0.4);
+		bg.color = colorList[curSelected];
 
-		if (Math.abs(lerpScore - intendedScore) <= 10)
-			lerpScore = intendedScore;
+		positionHighscore();
 
-		if (Math.abs(lerpAccuracy - intendedAccuracy) <= 10)
-			lerpAccuracy = intendedAccuracy;
-
-		scoreText.text = 'PERSONAL BEST:${lerpScore}, ${lerpAccuracy}%';
+		scoreText.text = 'PERSONAL BEST: ${Math.round(lerpScore)}, ${FlxMath.roundDecimal(lerpAccuracy, 2)}%';
 
 		var upP = controls.UP_P;
 		var downP = controls.DOWN_P;
@@ -260,7 +270,7 @@ class FreeplayState extends MusicBeatState
 			{
 				rate = 0.25;
 			}
-			previewtext.text = "Playback Speed: " + FlxMath.roundDecimal(rate, 2) + "x (Shift, R)";
+			previewtext.text = "Playback Speed: " + FlxMath.roundDecimal(rate, 2) + "x (Shift, R)\n(Custom rates cannot get their scores saved.)";
 		} else {
 			if (controls.LEFT_P)
 				changeDiff(-1);
@@ -300,6 +310,16 @@ class FreeplayState extends MusicBeatState
 		}
 	}
 
+	function positionHighscore()
+	{
+		scoreText.x = FlxG.width - scoreText.width - 6;
+		scoreBG.scale.x = FlxG.width - scoreText.x + 6;
+		scoreBG.x = FlxG.width - scoreBG.scale.x / 2;
+	
+		diffText.x = Std.int(scoreBG.x + scoreBG.width / 2);
+		diffText.x -= (diffText.width / 2);
+	}
+	
 	function changeDiff(change:Int = 0)
 	{
 		curDifficulty += change;
@@ -314,15 +334,10 @@ class FreeplayState extends MusicBeatState
 		intendedAccuracy = Highscore.getAccuracy(songs[curSelected], curDifficulty);
 		#end
 
-		switch (curDifficulty)
-		{
-			case 0:
-				diffText.text = "EASY";
-			case 1:
-				diffText.text = 'NORMAL';
-			case 2:
-				diffText.text = "HARD";
-		}
+		PlayState.storyDifficulty = curDifficulty;
+
+		diffText.text = "< " + CoolUtil.difficultyString() + " >";
+		positionHighscore();
 	}
 
 	function changeSelection(change:Int = 0)
@@ -344,7 +359,6 @@ class FreeplayState extends MusicBeatState
 		#end
 
 		json = Song.loadFromJson(songs[curSelected].toLowerCase(), songs[curSelected].toLowerCase(), (songFolders[curSelected] != ''), songFolders[curSelected]);
-		bg.color = colorList[curSelected];
 
 		#if sys
 		trace(songFolders[curSelected]);

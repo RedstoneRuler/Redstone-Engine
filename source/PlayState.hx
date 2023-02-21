@@ -2265,7 +2265,7 @@ class PlayState extends MusicBeatState
 		canPause = false;
 		FlxG.sound.music.volume = 0;
 		vocals.volume = 0;
-		if (SONG.validScore && !wasBotplay)
+		if (SONG.validScore && !wasBotplay && FreeplayState.rate == 1)
 		{
 			#if !switch
 			Highscore.saveScore(SONG.song, songScore, accuracy, storyDifficulty);
@@ -2289,7 +2289,7 @@ class PlayState extends MusicBeatState
 
 				StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
 
-				if (SONG.validScore && !wasBotplay)
+				if (SONG.validScore && !wasBotplay && FreeplayState.rate == 1)
 				{
 					NGio.unlockMedal(60961);
 					Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);

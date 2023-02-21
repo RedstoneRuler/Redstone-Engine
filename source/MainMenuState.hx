@@ -185,6 +185,7 @@ class MainMenuState extends MusicBeatState
 										FlxG.switchState(new FreeplayState());
 										trace("Freeplay Menu Selected");
 									case 'options':
+										SettingsCategories.fromPause = false;
 										FlxG.sound.playMusic('assets/music/optionsMenu' + TitleState.soundExt, 4);
 										FlxG.switchState(new SettingsCategories());
 										trace("Options Menu Selected");

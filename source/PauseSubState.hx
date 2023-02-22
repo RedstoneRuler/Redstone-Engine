@@ -17,7 +17,6 @@ import lime.app.Application;
 class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
-	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "", 12);
 	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Options', 'Toggle Practice Mode', 'Toggle Hit Sounds', 'Toggle Autoplay', 'Exit to menu'];
 	var curSelected:Int = 0;
 
@@ -30,11 +29,8 @@ class PauseSubState extends MusicBeatSubstate
 	var difficultyChoices = [
 		"Easy", "Normal", "Hard"
 	];
-	var leftHoldTimer:Float;
-	var rightHoldTimer:Float;
 	public function new(x:Float, y:Float)
 	{
-		#if !html5 versionShit.text = "Framerate: " + FlxG.save.data.fps + " (Left, Right)"; #end
 		super();
 		pauseMusic = new FlxSound().loadEmbedded('assets/music/breakfast' + TitleState.soundExt, true, true);
 		pauseMusic.volume = 0;
@@ -164,30 +160,8 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			changeSelection(1);
 		}
-		versionShit.text = "Framerate: " + FlxG.save.data.fps;
-		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		super.update(elapsed);
-
-		#if !html5
-		if(FlxG.keys.pressed.LEFT) {
-			if(leftHoldTimer == 0 || leftHoldTimer >= 0.5) {
-				SaveData.setFrameRate(FlxG.save.data.fps - 1);
-			}
-			leftHoldTimer += elapsed;
-		} else {
-			leftHoldTimer = 0;
-		}
-
-		if(FlxG.keys.pressed.RIGHT) {
-			if(rightHoldTimer == 0 || rightHoldTimer >= 0.5) {
-				SaveData.setFrameRate(FlxG.save.data.fps + 1);
-			}
-			rightHoldTimer += elapsed;
-		} else {
-			rightHoldTimer = 0;
-		}
-		#end
+		
 		if (accepted)
 		{
 			var daSelected:String = menuItems[curSelected];

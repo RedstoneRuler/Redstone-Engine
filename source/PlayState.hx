@@ -1266,7 +1266,7 @@ class PlayState extends MusicBeatState
 		Conductor.songPosition = 0;
 		Conductor.songPosition -= Conductor.crochet * 5;
 
-		mashLimit = 2;
+		mashLimit = 1.5;
 		FlxG.log.add('THE LIMIT ${mashLimit}');
 		var swagCounter:Int = 0;
 

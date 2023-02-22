@@ -1816,6 +1816,7 @@ class PlayState extends MusicBeatState
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
 			FlxG.camera.zoom = defaultCamZoom;
+			camHUD.zoom = 1;
 			persistentUpdate = false;
 			persistentDraw = true;
 			paused = true;

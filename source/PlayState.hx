@@ -2768,13 +2768,16 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-			playerStrums.forEach(function(spr:FlxSprite)
+			if(FlxG.save.data.strumAnimBF)
 			{
-				if (Math.abs(note.noteData) == spr.ID)
+				playerStrums.forEach(function(spr:FlxSprite)
 				{
-					spr.animation.play('confirm', true);
-				}
-			});
+					if (Math.abs(note.noteData) == spr.ID)
+					{
+						spr.animation.play('confirm', true);
+					}
+				});
+			}
 
 			note.wasGoodHit = true;
 			vocals.volume = 1;

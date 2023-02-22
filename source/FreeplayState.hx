@@ -219,7 +219,7 @@ class FreeplayState extends MusicBeatState
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 
-		FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
+		FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1));
 
 		if (FlxG.sound.music.volume < 0.7)
 		{
@@ -270,7 +270,7 @@ class FreeplayState extends MusicBeatState
 			{
 				rate = 0.25;
 			}
-			previewtext.text = "Playback Speed: " + FlxMath.roundDecimal(rate, 2) + "x (Shift, R)\n(Custom rates cannot get their scores saved.)";
+			previewtext.text = "Playback Speed: " + FlxMath.roundDecimal(rate, 2) + "x (Shift, R)";
 		} else {
 			if (controls.LEFT_P)
 				changeDiff(-1);

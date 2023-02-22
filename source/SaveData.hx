@@ -9,6 +9,22 @@ using StringTools;
 
 class SaveData
 {
+	public static function setFrameRate(targetFPS:Float = 60)
+	{
+		var minFPS = 30;
+		var maxFPS = 500;
+		FlxG.save.data.fps = targetFPS;
+		if (FlxG.save.data.fps > maxFPS)
+		{
+			FlxG.save.data.fps = maxFPS;
+		}
+		if (FlxG.save.data.fps < minFPS)
+		{
+			FlxG.save.data.fps = minFPS;
+		}
+		FlxG.updateFramerate = FlxG.save.data.fps;
+		FlxG.drawFramerate = FlxG.updateFramerate;
+	}
 	public static function formatSaveFile():Void
 	{
 		if (FlxG.save.data.leftBind == null) {
@@ -74,7 +90,7 @@ class SaveData
 		if(FlxG.save.data.shaders == null) {
 			FlxG.save.data.shaders = false;
 		}
-		if(FlxG.save.data.fps < 30) {
+		if(FlxG.save.data.fps < 30 || FlxG.save.data.fps == null) {
 			FlxG.save.data.fps = 60; // FAILSAFE!
 		}
 		FlxG.save.flush();

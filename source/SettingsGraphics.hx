@@ -22,6 +22,8 @@ class SettingsGraphics extends MusicBeatState
 	var controlsStrings:Array<String> = [];
 	var displayFPS:String;
 	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "", 12);
+	var leftHoldTimer:Float;
+	var rightHoldTimer:Float;
 	private var grpControls:FlxTypedGroup<Alphabet>;
 
 	override function create()
@@ -48,7 +50,7 @@ class SettingsGraphics extends MusicBeatState
 			+ "\n" + (zoomText)
 			+ "\n" + (splashText));
 		
-		#if !html5 versionShit.text = "Framerate: " + FlxG.save.data.fps + " (Left, Right, Shift)"; #end
+		#if !html5 versionShit.text = "Framerate: " + FlxG.save.data.fps + " (Left, Right)"; #end
 		trace(controlsStrings);
 		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
@@ -77,51 +79,28 @@ class SettingsGraphics extends MusicBeatState
 	
 	override function update(elapsed:Float)
 	{
-		var minFPS:Int = 30;
-		var maxFPS:Int;
-		maxFPS = 500;
+		versionShit.text = "Framerate: " + FlxG.save.data.fps;
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		super.update(elapsed);
 
 		#if !html5
-		if (FlxG.keys.pressed.SHIFT) {
-			if(FlxG.keys.pressed.RIGHT)
-				{
-					FlxG.updateFramerate += 1;
-					if (FlxG.updateFramerate >= maxFPS) { FlxG.updateFramerate = maxFPS; }
-					FlxG.drawFramerate = (FlxG.updateFramerate);
-					FlxG.save.data.fps = FlxG.drawFramerate;
-					versionShit.text = "Framerate: " + FlxG.save.data.fps;
-				}
-			
-				if(FlxG.keys.pressed.LEFT)
-				{
-					FlxG.updateFramerate -= 1;
-					if (FlxG.updateFramerate <= minFPS) { FlxG.updateFramerate = minFPS; }
-					FlxG.drawFramerate = (FlxG.updateFramerate);
-					FlxG.save.data.fps = FlxG.drawFramerate;
-					versionShit.text = "Framerate: " + FlxG.save.data.fps;
-				}
+		if(FlxG.keys.pressed.LEFT) {
+			if(leftHoldTimer == 0 || leftHoldTimer >= 0.5) {
+				SaveData.setFrameRate(FlxG.save.data.fps - 1);
+			}
+			leftHoldTimer += elapsed;
+		} else {
+			leftHoldTimer = 0;
 		}
-		else {
-			if(FlxG.keys.justPressed.RIGHT)
-			{
-				FlxG.updateFramerate += 1;
-				if (FlxG.updateFramerate >= maxFPS) { FlxG.updateFramerate = maxFPS; }
-				FlxG.drawFramerate = (FlxG.updateFramerate);
-				FlxG.save.data.fps = FlxG.drawFramerate;
-				versionShit.text = "Framerate: " + FlxG.save.data.fps;
-			}
 
-			if(FlxG.keys.justPressed.LEFT)
-			{
-				FlxG.updateFramerate -= 1;
-				if (FlxG.updateFramerate <= minFPS) { FlxG.updateFramerate = minFPS; }
-				FlxG.drawFramerate = (FlxG.updateFramerate);
-				FlxG.save.data.fps = FlxG.drawFramerate;
-				versionShit.text = "Framerate: " + FlxG.save.data.fps;
+		if(FlxG.keys.pressed.RIGHT) {
+			if(rightHoldTimer == 0 || rightHoldTimer >= 0.5) {
+				SaveData.setFrameRate(FlxG.save.data.fps + 1);
 			}
+			rightHoldTimer += elapsed;
+		} else {
+			rightHoldTimer = 0;
 		}
 		#end
 		if (controls.BACK) {

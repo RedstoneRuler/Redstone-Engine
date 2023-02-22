@@ -137,8 +137,7 @@ class TitleState extends MusicBeatState
 		}
 		#if sys
 		if(FlxG.save.data.fps != null) {
-			FlxG.updateFramerate = FlxG.save.data.fps;
-			FlxG.drawFramerate = FlxG.updateFramerate;
+			SaveData.setFrameRate(FlxG.save.data.fps);
 		}
 		#end
 		Conductor.changeBPM(102);
@@ -247,7 +246,7 @@ class TitleState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
+		FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1));
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);

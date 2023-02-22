@@ -67,6 +67,7 @@ class PlayState extends MusicBeatState
 	public static var isPixelStage:Bool = false;
 	public static var uiSkin:String;
 	public static var noteSprite:FlxAtlasFrames;
+	
 	var halloweenLevel:Bool = false;
 
 	private var vocals:FlxSound;
@@ -82,7 +83,6 @@ class PlayState extends MusicBeatState
 	private var curSection:Int = 0;
 
 	private var camFollow:FlxObject;
-	private var camFollowPos:FlxObject;
 
 	private static var prevCamFollow:FlxObject;
 
@@ -115,7 +115,7 @@ class PlayState extends MusicBeatState
 	private var iconP1:HealthIcon;
 	private var iconP2:HealthIcon;
 	private var camHUD:FlxCamera;
-	private var camGame:FlxCamera;
+	private var camGame:SwagCamera;
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 
@@ -243,7 +243,7 @@ class PlayState extends MusicBeatState
 		wasPractice = false;
 		isPixelStage = false;
 		// var gameCam:FlxCamera = FlxG.camera;
-		camGame = new FlxCamera();
+		camGame = new SwagCamera();
 		camHUD = new FlxCamera();
 		camHUD.bgColor.alpha = 0;
 
@@ -932,7 +932,6 @@ class PlayState extends MusicBeatState
 		// add(strumLine);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
-		camFollowPos = new FlxObject(0, 0, 1, 1);
 
 		camFollow.setPosition(camPos.x, camPos.y);
 
@@ -943,10 +942,9 @@ class PlayState extends MusicBeatState
 		}
 
 		add(camFollow);
-		add(camFollowPos);
 		// FlxG.camera.setScrollBounds(0, FlxG.width, 0, FlxG.height);
 		FlxG.camera.zoom = defaultCamZoom;
-		FlxG.camera.follow(camFollowPos, LOCKON, 1);
+		FlxG.camera.follow(camFollow, LOCKON, 0.04);
 		FlxG.camera.focusOn(camFollow.getPosition());
 
 		FlxG.worldBounds.set(0, 0, FlxG.width, FlxG.height);
@@ -1817,6 +1815,7 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
+			FlxG.camera.zoom = defaultCamZoom;
 			persistentUpdate = false;
 			persistentDraw = true;
 			paused = true;
@@ -1832,10 +1831,12 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
-		iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width, 0.85)));
-		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.85)));
-
+		var mult:Float = FlxMath.lerp(1, iconP1.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+		iconP1.scale.set(mult, mult);
 		iconP1.updateHitbox();
+
+		var mult:Float = FlxMath.lerp(1, iconP2.scale.x, CoolUtil.boundTo(1 - (elapsed * 9), 0, 1));
+		iconP2.scale.set(mult, mult);
 		iconP2.updateHitbox();
 
 		var iconOffset:Int = 26;
@@ -1958,13 +1959,11 @@ class PlayState extends MusicBeatState
 				}
 			}
 		}
-		var lerpVal:Float = CoolUtil.boundTo(elapsed * 2.4, 0, 1);
-		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.getPosition().x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.getPosition().y, lerpVal));
-
+		
 		if (camZooming)
 		{
-			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
-			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, 0.95);	
+			FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1));
+			camHUD.zoom = FlxMath.lerp(1, camHUD.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1));
 		}
 
 		FlxG.watch.addQuick("beatShit", curBeat);

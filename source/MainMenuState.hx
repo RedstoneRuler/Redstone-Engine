@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.FlxCamera;
 import flixel.math.FlxMath;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
@@ -32,9 +33,16 @@ class MainMenuState extends MusicBeatState
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 	var defaultCamZoom:Float = 1;
+	var camGame:SwagCamera;
 	override function create()
 	{
+		camGame = new SwagCamera();
+
+		FlxG.cameras.reset(camGame);
+		FlxCamera.defaultCameras = [camGame];
+
 		Conductor.changeBPM(102);
+
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
@@ -111,7 +119,7 @@ class MainMenuState extends MusicBeatState
 	{
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
-		FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, 0.95);
+		FlxG.camera.zoom = FlxMath.lerp(defaultCamZoom, FlxG.camera.zoom, CoolUtil.boundTo(1 - (elapsed * 3.125), 0, 1));
 		if (FlxG.keys.justPressed.F) {FlxG.fullscreen = !FlxG.fullscreen;}
 		super.update(elapsed);
 		if (FlxG.sound.music.volume < 0.8)

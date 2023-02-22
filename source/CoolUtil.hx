@@ -21,11 +21,7 @@ class CoolUtil
 {
 	public static var difficultyArray:Array<String> = ['EASY', "NORMAL", "HARD"];
 	public static var version:String = '1.7.0-beta';
-
-	public static function frameDelta():Float
-	{
-		return (FPS_Mem.times.length / 60);
-	}
+	
 	public static function difficultyString():String
 	{
 		return difficultyArray[PlayState.storyDifficulty];

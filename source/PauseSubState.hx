@@ -21,8 +21,6 @@ class PauseSubState extends MusicBeatSubstate
 	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Options', 'Toggle Practice Mode', 'Toggle Hit Sounds', 'Toggle Autoplay', 'Exit to menu'];
 	var curSelected:Int = 0;
 
-	var minFPS:Int = 30;
-	var maxFPS:Int;
 	var pauseMusic:FlxSound;
 	var menuItemsOG:Array<String>;
 	var updatedPractice:Bool = true;
@@ -32,9 +30,11 @@ class PauseSubState extends MusicBeatSubstate
 	var difficultyChoices = [
 		"Easy", "Normal", "Hard"
 	];
+	var leftHoldTimer:Float;
+	var rightHoldTimer:Float;
 	public function new(x:Float, y:Float)
 	{
-		#if !html5 versionShit.text = "Framerate: " + FlxG.save.data.fps + " (Left, Right, Shift)"; #end
+		#if !html5 versionShit.text = "Framerate: " + FlxG.save.data.fps + " (Left, Right)"; #end
 		super();
 		pauseMusic = new FlxSound().loadEmbedded('assets/music/breakfast' + TitleState.soundExt, true, true);
 		pauseMusic.volume = 0;
@@ -164,48 +164,28 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			changeSelection(1);
 		}
-		maxFPS = 500;
+		versionShit.text = "Framerate: " + FlxG.save.data.fps;
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		super.update(elapsed);
-		#if !html5
-		if (FlxG.keys.pressed.SHIFT) {
-			if(FlxG.keys.pressed.RIGHT)
-				{
-					FlxG.updateFramerate += 1;
-					if (FlxG.updateFramerate >= maxFPS) { FlxG.updateFramerate = maxFPS; }
-					FlxG.drawFramerate = (FlxG.updateFramerate);
-					FlxG.save.data.fps = FlxG.drawFramerate;
-					versionShit.text = "Framerate: " + FlxG.save.data.fps;
-				}
-			
-				if(FlxG.keys.pressed.LEFT)
-				{
-					FlxG.updateFramerate -= 1;
-					if (FlxG.updateFramerate <= minFPS) { FlxG.updateFramerate = minFPS; }
-					FlxG.drawFramerate = (FlxG.updateFramerate);
-					FlxG.save.data.fps = FlxG.drawFramerate;
-					versionShit.text = "Framerate: " + FlxG.save.data.fps;
-				}
-		}
-		else {
-			if(FlxG.keys.justPressed.RIGHT)
-			{
-				FlxG.updateFramerate += 1;
-				if (FlxG.updateFramerate >= maxFPS) { FlxG.updateFramerate = maxFPS; }
-				FlxG.drawFramerate = (FlxG.updateFramerate);
-				FlxG.save.data.fps = FlxG.drawFramerate;
-				versionShit.text = "Framerate: " + FlxG.save.data.fps;
-			}
 
-			if(FlxG.keys.justPressed.LEFT)
-			{
-				FlxG.updateFramerate -= 1;
-				if (FlxG.updateFramerate <= minFPS) { FlxG.updateFramerate = minFPS; }
-				FlxG.drawFramerate = (FlxG.updateFramerate);
-				FlxG.save.data.fps = FlxG.drawFramerate;
-				versionShit.text = "Framerate: " + FlxG.save.data.fps;
+		#if !html5
+		if(FlxG.keys.pressed.LEFT) {
+			if(leftHoldTimer == 0 || leftHoldTimer >= 0.5) {
+				SaveData.setFrameRate(FlxG.save.data.fps - 1);
 			}
+			leftHoldTimer += elapsed;
+		} else {
+			leftHoldTimer = 0;
+		}
+
+		if(FlxG.keys.pressed.RIGHT) {
+			if(rightHoldTimer == 0 || rightHoldTimer >= 0.5) {
+				SaveData.setFrameRate(FlxG.save.data.fps + 1);
+			}
+			rightHoldTimer += elapsed;
+		} else {
+			rightHoldTimer = 0;
 		}
 		#end
 		if (accepted)

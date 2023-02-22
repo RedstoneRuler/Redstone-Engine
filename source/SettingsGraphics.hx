@@ -30,11 +30,10 @@ class SettingsGraphics extends MusicBeatState
 	{
 		switch(FlxG.save.data.splash) {
 			case false:
-				splashText = "Note Splashes off";
+				splashText = "Note Splashes Off";
 			case true:
-				splashText = "Note Splashes on";
+				splashText = "Note Splashes On";
 		}
-		// this used to be an integer but i couldn't get it to work so... yeah
 		switch(FlxG.save.data.zoom) {
 			case false:
 				zoomText = "Camera zooms per measure";
@@ -45,7 +44,9 @@ class SettingsGraphics extends MusicBeatState
 		var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic(UILoader.loadImageDirect('menuDesat'));
 		
 		controlsStrings = CoolUtil.coolStringFile(
-			(FlxG.save.data.shaders ? "Shaders on" : "Shaders off")
+			(FlxG.save.data.shaders ? "Shaders On" : "Shaders Off")
+			+ "\n" + (FlxG.save.data.strumAnimDad ? "Animated Opponent Strums" : "Static Opponent Strums")
+			+ "\n" + (FlxG.save.data.strumAnimBF ? "Animated Player Strums" : "Static Player Strums")
 			+ "\n" + (FlxG.save.data.glow ? "Note Glow On" : "Note Glow Off")
 			+ "\n" + (zoomText)
 			+ "\n" + (splashText));
@@ -119,27 +120,39 @@ class SettingsGraphics extends MusicBeatState
 				{
 					case 0:
 						FlxG.save.data.shaders = !FlxG.save.data.shaders;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.shaders ? 'shaders on' : 'shaders off'), true, false);
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.shaders ? "Shaders On" : "Shaders Off"), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected;
 						grpControls.add(ctrl);
 					case 1:
-						FlxG.save.data.glow = !FlxG.save.data.glow;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.glow ? 'note glow on' : 'note glow off'), true, false);
+						FlxG.save.data.strumAnimDad = !FlxG.save.data.strumAnimDad;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.strumAnimDad ? "Animated Opponent Strums" : "Static Opponent Strums"), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 1;
 						grpControls.add(ctrl);
 					case 2:
-						FlxG.save.data.zoom = !FlxG.save.data.zoom;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.zoom ? 'camera zooms per beat' : 'camera zooms per measure'), true, false);
+						FlxG.save.data.strumAnimBF = !FlxG.save.data.strumAnimBF;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.strumAnimBF ? "Animated Player Strums" : "Static Player Strums"), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 2;
 						grpControls.add(ctrl);
 					case 3:
-						FlxG.save.data.splash = !FlxG.save.data.splash;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.splash ? 'note splashes on' : 'note splashes off'), true, false);
+						FlxG.save.data.glow = !FlxG.save.data.glow;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.glow ? "Note Glow On" : "Note Glow Off"), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 3;
+						grpControls.add(ctrl);
+					case 4:
+						FlxG.save.data.zoom = !FlxG.save.data.zoom;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.zoom ? 'Camera zooms per beat' : 'Camera zooms per measure'), true, false);
+						ctrl.isMenuItem = true;
+						ctrl.targetY = curSelected - 4;
+						grpControls.add(ctrl);
+					case 5:
+						FlxG.save.data.splash = !FlxG.save.data.splash;
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.splash ? 'Note Splashes On' : 'Note Splashes Off'), true, false);
+						ctrl.isMenuItem = true;
+						ctrl.targetY = curSelected - 5;
 						grpControls.add(ctrl);
 				}
 			}

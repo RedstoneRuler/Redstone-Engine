@@ -90,6 +90,12 @@ class SaveData
 		if(FlxG.save.data.shaders == null) {
 			FlxG.save.data.shaders = false;
 		}
+		if(FlxG.save.data.strumAnimDad == null) {
+			FlxG.save.data.strumAnimDad = true;
+		}
+		if(FlxG.save.data.strumAnimBF == null) {
+			FlxG.save.data.strumAnimBF = true;
+		}
 		if(FlxG.save.data.fps < 30 || FlxG.save.data.fps == null) {
 			FlxG.save.data.fps = 60; // FAILSAFE!
 		}

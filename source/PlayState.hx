@@ -1664,7 +1664,7 @@ class PlayState extends MusicBeatState
 	var startedCountdown:Bool = false;
 	var canPause:Bool = true;
 
-	function dadNoteShit(daNote:Note):Void
+	function opponentStrumAnim(daNote:Note):Void
 	{
 		updateCamera(true);
 		opponentStrums.forEach(function(spr:FlxSprite)
@@ -1680,7 +1680,7 @@ class PlayState extends MusicBeatState
 			}
 		});
 	}
-	function bfNoteShit(daNote:Note):Void
+	function playerStrumAnim(daNote:Note):Void
 	{
 		updateCamera(false);
 		playerStrums.forEach(function(spr:FlxSprite)
@@ -2110,12 +2110,14 @@ class PlayState extends MusicBeatState
 							anim = 'RIGHT';
 					}
 					if(daNote.mustPress == true) {
-						bfNoteShit(daNote);
+						if(FlxG.save.data.strumAnimBF)
+							playerStrumAnim(daNote);
 						botHit(daNote);
 					}
 					else {
 						updateCamera(true);
-						dadNoteShit(daNote);
+						if(FlxG.save.data.strumAnimDad)
+							opponentStrumAnim(daNote);
 					}
 					if (SONG.song != 'Tutorial')
 						camZooming = true;
@@ -2681,22 +2683,25 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		playerStrums.forEach(function(spr:FlxSprite)
+		if(FlxG.save.data.strumAnimBF)
 		{
-			if (pressArray[spr.ID] && spr.animation.curAnim.name != 'confirm')
-				spr.animation.play('pressed');
-			if (releaseArray[spr.ID])
-				spr.animation.play('static');
-
-			if (spr.animation.curAnim.name == 'confirm' && !PlayState.isPixelStage)
+			playerStrums.forEach(function(spr:FlxSprite)
 			{
-				spr.centerOffsets();
-				spr.offset.x -= 13;
-				spr.offset.y -= 13;
-			}
-			else
-				spr.centerOffsets();
-		});
+				if (pressArray[spr.ID] && spr.animation.curAnim.name != 'confirm')
+					spr.animation.play('pressed');
+				if (releaseArray[spr.ID])
+					spr.animation.play('static');
+
+				if (spr.animation.curAnim.name == 'confirm' && !PlayState.isPixelStage)
+				{
+					spr.centerOffsets();
+					spr.offset.x -= 13;
+					spr.offset.y -= 13;
+				}
+				else
+					spr.centerOffsets();
+			});
+		}
 	}
 
 	function noteMiss(direction:Int = 1, wasPassedNote:Bool = false):Void

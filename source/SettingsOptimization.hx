@@ -27,10 +27,10 @@ class SettingsOptimization extends MusicBeatState
 		var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic(UILoader.loadImageDirect('menuDesat'));
 		
 		controlsStrings = CoolUtil.coolStringFile(
-			(FlxG.save.data.optimize ? "smaller spritesheets On" : "smaller spritesheets Off")
-			+ "\n" + (FlxG.save.data.bg ? "backgrounds On" : "backgrounds Off")
-			//+ "\n" + (FlxG.save.data.characters ? "characters On" : "characters Off")
-			+ "\n" + (FlxG.save.data.details ? "background details on" : "background details off")
+			(FlxG.save.data.optimize ? "Smaller Spritesheets On" : "Smaller Spritesheets Off")
+			+ "\n" + (FlxG.save.data.bg ? "Backgrounds On" : "Backgrounds Off")
+			//+ "\n" + (FlxG.save.data.characters ? "Characters On" : "Characters Off")
+			+ "\n" + (FlxG.save.data.details ? "Background Details On" : "Background Details Off")
 			);
 		
 		trace(controlsStrings);
@@ -74,14 +74,14 @@ class SettingsOptimization extends MusicBeatState
 				{
 					case 0:
 						FlxG.save.data.optimize = !FlxG.save.data.optimize;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.optimize ? 'smaller spritesheets on' : 'smaller spritesheets off'), true, false);
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.optimize ? "Smaller Spritesheets On" : "Smaller Spritesheets Off"), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected;
 						grpControls.add(ctrl);
 						trace(FlxG.save.data.optimize);
 					case 1:
 						FlxG.save.data.bg = !FlxG.save.data.bg;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.bg ? 'backgrounds on' : 'backgrounds off'), true, false);
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.bg ? "Backgrounds On" : "Backgrounds Off"), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 1;
 						grpControls.add(ctrl);
@@ -89,7 +89,7 @@ class SettingsOptimization extends MusicBeatState
 					/*
 					case 2:
 						FlxG.save.data.characters = !FlxG.save.data.characters;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.characters ? 'characters on' : 'characters off'), true, false);
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.characters ? "Characters On" : "Characters Off"), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 2;
 						grpControls.add(ctrl);
@@ -97,7 +97,7 @@ class SettingsOptimization extends MusicBeatState
 					*/
 					case 2:
 						FlxG.save.data.details = !FlxG.save.data.details;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.details ? 'background details on' : 'background details off'), true, false);
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.details ? "Background Details On" : "Background Details Off"), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 2;
 						grpControls.add(ctrl);

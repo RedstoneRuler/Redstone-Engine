@@ -18,6 +18,8 @@ class SettingsGameplay extends MusicBeatState
 	var selector:FlxText;
 	var curSelected:Int = 0;
 	var controlsStrings:Array<String> = [];
+	var leftHoldTimer:Float;
+	var rightHoldTimer:Float;
 
 	private var grpControls:FlxTypedGroup<Alphabet>;
 	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "", 12);
@@ -29,12 +31,12 @@ class SettingsGameplay extends MusicBeatState
 		controlsStrings = CoolUtil.coolStringFile((
 		FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off")
 			+ "\n" + (FlxG.save.data.downscroll ? "Downscroll" : "Upscroll")
-			+ "\n" + (FlxG.save.data.bot ? "autoplay on" : "autoplay off")
-			+ "\n" + (FlxG.save.data.random ? "randomization on" : "randomization off"));
+			+ "\n" + (FlxG.save.data.bot ? "Autoplay On" : "Autoplay Off")
+			+ "\n" + (FlxG.save.data.random ? "Randomization On" : "Randomization Off"));
 			/*+ "\n" + "Configure Note Offset");*/
 		
 		trace(controlsStrings);
-		versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe + " (Left, Right, Shift, Higher value = Bigger hitbox)";
+		versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe + " (Left, Right, Higher value = Bigger hitbox)";
 		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
@@ -64,36 +66,24 @@ class SettingsGameplay extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe;
 		super.update(elapsed);
-		if (FlxG.keys.pressed.SHIFT) {
-			if(FlxG.keys.pressed.RIGHT)
-				{
-					FlxG.save.data.noteframe += 1;
-					if (FlxG.save.data.noteframe >= 40) { FlxG.save.data.noteframe = 40; }
-					versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe;
-				}
-			
-				if(FlxG.keys.pressed.LEFT)
-				{
-					FlxG.save.data.noteframe -= 1;
-					if (FlxG.save.data.noteframe <= 1) { FlxG.save.data.noteframe = 1; }
-					versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe;
-				}
+		if(FlxG.keys.pressed.LEFT) {
+			if(leftHoldTimer == 0 || leftHoldTimer >= 0.5) {
+				FlxG.save.data.noteframe += 1;
+			}
+			leftHoldTimer += elapsed;
+		} else {
+			leftHoldTimer = 0;
 		}
-		else {
-			if(FlxG.keys.justPressed.RIGHT)
-				{
-					FlxG.save.data.noteframe += 1;
-					if (FlxG.save.data.noteframe >= 30) { FlxG.save.data.noteframe = 30; }
-					versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe;
-				}
-			
-				if(FlxG.keys.justPressed.LEFT)
-				{
-					FlxG.save.data.noteframe -= 1;
-					if (FlxG.save.data.noteframe <= 1) { FlxG.save.data.noteframe = 1; }
-					versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe;
-				}
+
+		if(FlxG.keys.pressed.RIGHT) {
+			if(rightHoldTimer == 0 || rightHoldTimer >= 0.5) {
+				FlxG.save.data.noteframe -= 1;
+			}
+			rightHoldTimer += elapsed;
+		} else {
+			rightHoldTimer = 0;
 		}
 		if (controls.BACK) {
 			FlxG.save.flush();
@@ -113,25 +103,25 @@ class SettingsGameplay extends MusicBeatState
 				{
 					case 0:
 						FlxG.save.data.ghost = !FlxG.save.data.ghost;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.ghost ? 'ghost tapping on' : 'ghost tapping off'), true, false);
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off"), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected;
 						grpControls.add(ctrl);
 					case 1:
 						FlxG.save.data.downscroll = !FlxG.save.data.downscroll;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.downscroll ? 'downscroll' : 'upscroll'), true, false);
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.downscroll ? "Downscroll" : "Upscroll"), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 1;
 						grpControls.add(ctrl);
 					case 2:
 						FlxG.save.data.bot = !FlxG.save.data.bot;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.bot ? 'autoplay on' : 'autoplay off'), true, false);
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.bot ? "Autoplay On" : "Autoplay Off"), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 2;
 						grpControls.add(ctrl);
 					case 3:
 						FlxG.save.data.random = !FlxG.save.data.random;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.random ? 'randomization on' : 'randomization off'), true, false);
+						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.random ? "Randomization On" : "Randomization Off"), true, false);
 						ctrl.isMenuItem = true;
 						ctrl.targetY = curSelected - 3;
 						grpControls.add(ctrl);

@@ -2704,6 +2704,7 @@ class PlayState extends MusicBeatState
 		vocals.volume = 0;
 		missCount += 1;
 		totalNotes++;
+		updateAccuracy();
 		if(wasPassedNote) {
 			health -= 0.0475;
 		} else {

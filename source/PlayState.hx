@@ -1138,6 +1138,7 @@ class PlayState extends MusicBeatState
 		}
 
 	}
+	
 	function playCutscene(name:String, ?atend:Bool)
 	{
 		#if (windows || android)

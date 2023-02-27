@@ -50,13 +50,13 @@ class Song
 		if(customSong) {
 			trace(('mods/weeks/${customFolder}/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase() + '.json'));
 			trace('loading softcoded json');
-			rawJson = File.getContent('mods/weeks/${customFolder}/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase() + '.json');
+			rawJson = File.getContent(ModLoader.json(jsonInput, folder, customFolder));
 		} else {
 			trace('loading hardcoded json');
-			rawJson = File.getContent('assets/data/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase() + '.json');
+			rawJson = File.getContent(Paths.json(folder.toLowerCase() + '/' + jsonInput.toLowerCase())).trim();
 		}
 		#else
-		rawJson = Assets.getText('assets/data/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase() + '.json').trim();
+		rawJson = Assets.getText(Paths.json(folder.toLowerCase() + '/' + jsonInput.toLowerCase())).trim();
 		#end
 
 		// FIX THE CASTING ON WINDOWS/NATIVE

@@ -364,13 +364,13 @@ class FreeplayState extends MusicBeatState
 		trace(songFolders[curSelected]);
 		if(songFolders[curSelected] != '') {
 			trace('softcoded!');
-			FlxG.sound.playMusic('mods/weeks/' + songFolders[curSelected] + '/' + songs[curSelected].toLowerCase() + "/Inst" + TitleState.soundExt, 0);
+			FlxG.sound.playMusic(ModLoader.inst(songFolders[curSelected], songs[curSelected].toLowerCase()), 0);
 		} else {
 			trace('hardcoded!');
-			FlxG.sound.playMusic('assets/songs/' + songs[curSelected].toLowerCase() + "/Inst" + TitleState.soundExt, 0);
+			FlxG.sound.playMusic(Paths.inst(songs[curSelected].toLowerCase()), 0);
 		}
 		#else
-		FlxG.sound.playMusic('assets/songs/' + songs[curSelected].toLowerCase() + "/Inst" + TitleState.soundExt, 0);
+		FlxG.sound.playMusic(Paths.inst(songs[curSelected].toLowerCase()), 0);
 		#end
 
 		if(json != null)

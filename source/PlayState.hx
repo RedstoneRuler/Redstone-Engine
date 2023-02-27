@@ -1361,11 +1361,15 @@ class PlayState extends MusicBeatState
 		lastReportedPlayheadPosition = 0;
 
 		if (!paused)
+		{
 			if(!isCustomWeek) {
-				FlxG.sound.playMusic("assets/songs/" + SONG.song.toLowerCase() + "/Inst" + TitleState.soundExt, 1, false);
+				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song.toLowerCase()), 1, false);
 			} else {
-				FlxG.sound.playMusic("mods/weeks/" + sourceFolder + '/' + SONG.song.toLowerCase() + "/Inst" + TitleState.soundExt, 1, false);
+				#if sys
+				FlxG.sound.playMusic(ModLoader.inst(sourceFolder, SONG.song.toLowerCase()), 1, false);
+				#end
 			}
+		}
 		vocals.play();
 		songLength = FlxG.sound.music.length;
 		FlxG.sound.music.looped = false;
@@ -1396,9 +1400,11 @@ class PlayState extends MusicBeatState
 
 		if(SONG.needsVoices) {
 			if(!isCustomWeek) {
-				vocals = new FlxSound().loadEmbedded("assets/songs/" + curSong.toLowerCase() + "/Voices" + TitleState.soundExt);
+				vocals = new FlxSound().loadEmbedded(Paths.voices(curSong.toLowerCase()));
 			} else {
-				vocals = new FlxSound().loadEmbedded("mods/weeks/" + sourceFolder + '/' + SONG.song.toLowerCase() + "/Voices" + TitleState.soundExt);
+				#if sys
+				vocals = new FlxSound().loadEmbedded(ModLoader.voices(sourceFolder, curSong.toLowerCase()));
+				#end
 			}
 		}
 		else {

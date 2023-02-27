@@ -32,8 +32,8 @@ class SettingsGameplay extends MusicBeatState
 		FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off")
 			+ "\n" + (FlxG.save.data.downscroll ? "Downscroll" : "Upscroll")
 			+ "\n" + (FlxG.save.data.bot ? "Autoplay On" : "Autoplay Off")
-			+ "\n" + (FlxG.save.data.random ? "Randomization On" : "Randomization Off"));
-			/*+ "\n" + "Configure Note Offset");*/
+			+ "\n" + (FlxG.save.data.random ? "Randomization On" : "Randomization Off"))
+			/*+ "\n" + "Configure Note Offset")*/;
 		
 		trace(controlsStrings);
 		versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe + " (Left, Right, Higher value = Bigger hitbox)";
@@ -69,19 +69,19 @@ class SettingsGameplay extends MusicBeatState
 		versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe;
 		super.update(elapsed);
 		if(FlxG.keys.pressed.LEFT) {
-			if(leftHoldTimer == 0 || leftHoldTimer >= 0.5) {
-				FlxG.save.data.noteframe += 1;
+			if(leftHoldTimer % 1 == 0 && FlxG.save.data.noteframe > 1) {
+				FlxG.save.data.noteframe -= 1;
 			}
-			leftHoldTimer += elapsed;
+			leftHoldTimer += elapsed * 2;
 		} else {
 			leftHoldTimer = 0;
 		}
 
 		if(FlxG.keys.pressed.RIGHT) {
-			if(rightHoldTimer == 0 || rightHoldTimer >= 0.5) {
-				FlxG.save.data.noteframe -= 1;
+			if(rightHoldTimer % 1 == 0 && FlxG.save.data.noteframe < 40) {
+				FlxG.save.data.noteframe += 1;
 			}
-			rightHoldTimer += elapsed;
+			rightHoldTimer += elapsed * 2;
 		} else {
 			rightHoldTimer = 0;
 		}

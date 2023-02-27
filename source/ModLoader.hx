@@ -14,6 +14,18 @@ using StringTools;
 
 class ModLoader
 {
+	public static function inst(sourceFolder:String, song:String)
+	{
+		return "mods/weeks/" + sourceFolder + '/' + song.toLowerCase() + "/Inst.ogg";
+	}
+	public static function voices(sourceFolder:String, song:String)
+	{
+		return "mods/weeks/" + sourceFolder + '/' + song.toLowerCase() + "/Voices.ogg";
+	}
+	public static function json(jsonInput:String, folder:String, customFolder:String = '')
+	{
+		return 'mods/weeks/${customFolder}/' + folder.toLowerCase() + '/' + jsonInput.toLowerCase() + '.json';
+	}
 	public static function loadImage(file:String, directory:String)
 	{
 		trace('LOADING ${file}');

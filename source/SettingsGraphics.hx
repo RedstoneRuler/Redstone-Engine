@@ -1,6 +1,5 @@
 package;
 
-import lime.app.Application;
 import Controls.KeyboardScheme;
 import Controls.Control;
 import flash.text.TextField;
@@ -13,45 +12,27 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
+
+using StringTools;
 class SettingsGraphics extends MusicBeatState
 {
-	var zoomText:String;
-	var splashText:String;
 	var selector:FlxText;
 	var curSelected:Int = 0;
-	var controlsStrings:Array<String> = [];
-	var displayFPS:String;
-	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "", 12);
+	var controlsStrings:Array<Array<Dynamic>> = [];
+
+	private var grpControls:FlxTypedGroup<Alphabet>;
+	private var grpChecks:Array<CheckboxThingie> = [];
+	private var grpStrings:Array<String> = [];
+	
 	var leftHoldTimer:Float;
 	var rightHoldTimer:Float;
-	private var grpControls:FlxTypedGroup<Alphabet>;
 
 	override function create()
 	{
-		switch(FlxG.save.data.splash) {
-			case false:
-				splashText = "Note Splashes Off";
-			case true:
-				splashText = "Note Splashes On";
-		}
-		switch(FlxG.save.data.zoom) {
-			case false:
-				zoomText = "Camera zooms per measure";
-			case true:
-				zoomText = "Camera zooms per beat";
-		}
-
 		var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic(UILoader.loadImageDirect('menuDesat'));
 		
-		controlsStrings = CoolUtil.coolStringFile(
-			(FlxG.save.data.shaders ? "Shaders On" : "Shaders Off")
-			+ "\n" + (FlxG.save.data.strumAnimDad ? "Animated Opponent Strums" : "Static Opponent Strums")
-			+ "\n" + (FlxG.save.data.strumAnimBF ? "Animated Player Strums" : "Static Player Strums")
-			+ "\n" + (FlxG.save.data.glow ? "Note Glow On" : "Note Glow Off")
-			+ "\n" + (zoomText)
-			+ "\n" + (splashText));
+		controlsStrings = [#if sys ['Framerate Cap', 'fps'], #end ['Shaders', 'shaders'], ['Note Splashes', 'splash'], ['Glowing Notes', 'glow'], ['Beat-Based Zooming', 'zoom'], ['Animate Opponent Strums', 'strumAnimDad'], ['Animate Player Strums', 'strumAnimBF']];
 		
-		#if !html5 versionShit.text = "Framerate: " + FlxG.save.data.fps + " (Left, Right)"; #end
 		trace(controlsStrings);
 		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
@@ -63,102 +44,108 @@ class SettingsGraphics extends MusicBeatState
 		grpControls = new FlxTypedGroup<Alphabet>();
 		add(grpControls);
 
-		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(versionShit);
 		for (i in 0...controlsStrings.length)
 		{
-			var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i], true, false);
+			var controlLabel:Alphabet = new Alphabet(90, 320, controlsStrings[i][0], true, false);
 			controlLabel.isMenuItem = true;
-			controlLabel.targetY = i;
+			controlLabel.targetY = i - curSelected;
+			controlLabel.visible = false;
 			grpControls.add(controlLabel);
-			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
-		}
 
+			if(Std.is(Reflect.field(FlxG.save.data, controlsStrings[i][1]), Bool)) {
+				var checkBox:CheckboxThingie = new CheckboxThingie(controlLabel.x + 100, controlLabel.targetY, Reflect.field(FlxG.save.data, controlsStrings[i][1]));
+				checkBox.sprTracker = controlLabel;
+				checkBox.visible = false;
+				grpChecks.push(checkBox);
+				grpStrings.push(controlsStrings[i][1]);
+				add(checkBox);
+			} else {
+				controlLabel.text = '${controlsStrings[i][0]} ${Reflect.field(FlxG.save.data, controlsStrings[i][1])}';
+			}
+		}
+		
 		super.create();
 	}
 	
 	override function update(elapsed:Float)
 	{
-		versionShit.text = "Framerate: " + FlxG.save.data.fps;
-		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		grpControls.forEach(function(controlLabel:Alphabet) {
+			if(controlLabel.visible == false) {
+				controlLabel.visible = true;
+			}
+		});
+		for(i in 0...grpChecks.length)
+		{
+			if(grpChecks[i].visible == false)
+				grpChecks[i].visible = true;
+		}
 		super.update(elapsed);
-
-		#if !html5
-		if(FlxG.keys.pressed.LEFT) {
-			if(leftHoldTimer == 0 || leftHoldTimer >= 0.5) {
-				SaveData.setFrameRate(FlxG.save.data.fps - 1);
-			}
-			leftHoldTimer += elapsed;
-		} else {
-			leftHoldTimer = 0;
+		if(Std.is(Reflect.field(FlxG.save.data, controlsStrings[curSelected][1]), Bool))
+		{
+			if (controls.ACCEPT)
+				{
+					var setState = !Reflect.field(FlxG.save.data, controlsStrings[curSelected][1]);
+					Reflect.setField(FlxG.save.data, controlsStrings[curSelected][1], setState);
+					grpChecks[getCheckId(controlsStrings[curSelected][1])].daValue = setState;
+					FlxG.log.add('SET VALUE TO ${setState}');
+				}
 		}
-
-		if(FlxG.keys.pressed.RIGHT) {
-			if(rightHoldTimer == 0 || rightHoldTimer >= 0.5) {
-				SaveData.setFrameRate(FlxG.save.data.fps + 1);
+		else
+		{	
+			if(controls.LEFT) {
+				if(leftHoldTimer == 0 || leftHoldTimer >= 0.5) {
+					var ogVal = Reflect.field(FlxG.save.data, controlsStrings[curSelected][1]);
+					SaveData.setFrameRate(FlxG.save.data.fps - 1);
+					updateDisplay(ogVal);
+				}
+				leftHoldTimer += elapsed;
+			} else {
+				leftHoldTimer = 0;
 			}
-			rightHoldTimer += elapsed;
-		} else {
-			rightHoldTimer = 0;
+			if(controls.RIGHT) {
+				if(rightHoldTimer == 0 || rightHoldTimer >= 0.5) {
+					var ogVal = Reflect.field(FlxG.save.data, controlsStrings[curSelected][1]);
+					SaveData.setFrameRate(FlxG.save.data.fps + 1);
+					updateDisplay(ogVal);
+				}
+				rightHoldTimer += elapsed;
+			} else {
+				rightHoldTimer = 0;
+			}
+			FlxG.watch.addQuick('left hold timer', leftHoldTimer);
+			FlxG.watch.addQuick('right hold timer', rightHoldTimer);
 		}
-		#end
 		if (controls.BACK) {
 			FlxG.save.flush();
 			FlxG.switchState(new SettingsCategories());
 		}
-			if (controls.UP_P)
-				changeSelection(-1);
-			if (controls.DOWN_P)
-				changeSelection(1);
-
-			if (controls.ACCEPT)
-			{
-				grpControls.remove(grpControls.members[curSelected]);
-				switch(curSelected)
-				{
-					case 0:
-						FlxG.save.data.shaders = !FlxG.save.data.shaders;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.shaders ? "Shaders On" : "Shaders Off"), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected;
-						grpControls.add(ctrl);
-					case 1:
-						FlxG.save.data.strumAnimDad = !FlxG.save.data.strumAnimDad;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.strumAnimDad ? "Animated Opponent Strums" : "Static Opponent Strums"), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 1;
-						grpControls.add(ctrl);
-					case 2:
-						FlxG.save.data.strumAnimBF = !FlxG.save.data.strumAnimBF;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.strumAnimBF ? "Animated Player Strums" : "Static Player Strums"), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 2;
-						grpControls.add(ctrl);
-					case 3:
-						FlxG.save.data.glow = !FlxG.save.data.glow;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.glow ? "Note Glow On" : "Note Glow Off"), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 3;
-						grpControls.add(ctrl);
-					case 4:
-						FlxG.save.data.zoom = !FlxG.save.data.zoom;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.zoom ? 'Camera zooms per beat' : 'Camera zooms per measure'), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 4;
-						grpControls.add(ctrl);
-					case 5:
-						FlxG.save.data.splash = !FlxG.save.data.splash;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.splash ? 'Note Splashes On' : 'Note Splashes Off'), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 5;
-						grpControls.add(ctrl);
-				}
-			}
+		if (controls.UP_P)
+			changeSelection(-1);
+		if (controls.DOWN_P)
+			changeSelection(1);
 	}
 
-	var isSettingControl:Bool = false;
+	function getCheckId(val:String)
+	{
+		for(i in 0...grpStrings.length)
+		{
+			if(grpStrings[i] == val)
+				return i;
+		}
+		return -1; //why do i need this? i don't even know
+	}
+
+	function updateDisplay(ogVal:Dynamic)
+	{
+		// just bruteforce the right control label lmao
+		grpControls.forEach(function(controlLabel:Alphabet)
+		{
+			if(controlLabel.text.contains(Std.string(ogVal)))
+			{
+				controlLabel.text = '${controlsStrings[curSelected][0]} ${Reflect.field(FlxG.save.data, controlsStrings[curSelected][1])}';
+			}
+		});
+	}
 
 	function changeSelection(change:Int = 0)
 	{

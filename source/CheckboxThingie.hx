@@ -1,41 +1,49 @@
-package ui;
+package;
 
 import flixel.FlxSprite;
-
 class CheckboxThingie extends FlxSprite
 {
 	public var daValue(default, set):Bool;
+	public var sprTracker:FlxSprite;
 
-	override public function new(x:Float, y:Float, state:Bool = false)
+	public function new(x:Float, y:Float, daValue:Bool = false)
 	{
 		super(x, y);
+
 		frames = Paths.getSparrowAtlas('checkboxThingie');
 		animation.addByPrefix('static', 'Check Box unselected', 24, false);
 		animation.addByPrefix('checked', 'Check Box selecting animation', 24, false);
+
 		antialiasing = true;
+
 		setGraphicSize(Std.int(width * 0.7));
 		updateHitbox();
-		daValue = state;
+
+		this.daValue = daValue;
 	}
 
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
 		switch (animation.curAnim.name)
 		{
-			case 'checked':
-				offset.set(17, 70);
 			case 'static':
 				offset.set();
+			case 'checked':
+				offset.set(17, 70);
 		}
+		if (sprTracker != null)
+			setPosition(sprTracker.x + sprTracker.width + 10, sprTracker.y - 30);
 	}
 
-	function set_daValue(state:Bool)
+	function set_daValue(value:Bool):Bool
 	{
-		if (state)
+		if (value)
 			animation.play('checked', true);
 		else
 			animation.play('static');
-		return state;
+
+		return value;
 	}
 }

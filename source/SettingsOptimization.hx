@@ -13,25 +13,22 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
 
+using StringTools;
 class SettingsOptimization extends MusicBeatState
 {
-	var zoomText:String;
 	var selector:FlxText;
 	var curSelected:Int = 0;
-	var controlsStrings:Array<String> = [];
+	var controlsStrings:Array<Array<Dynamic>> = [];
 
 	private var grpControls:FlxTypedGroup<Alphabet>;
+	private var grpChecks:Array<CheckboxThingie> = [];
+	private var grpStrings:Array<String> = [];
 
 	override function create()
 	{
 		var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic(UILoader.loadImageDirect('menuDesat'));
 		
-		controlsStrings = CoolUtil.coolStringFile(
-			(FlxG.save.data.optimize ? "Smaller Spritesheets On" : "Smaller Spritesheets Off")
-			+ "\n" + (FlxG.save.data.bg ? "Backgrounds On" : "Backgrounds Off")
-			//+ "\n" + (FlxG.save.data.characters ? "Characters On" : "Characters Off")
-			+ "\n" + (FlxG.save.data.details ? "Background Details On" : "Background Details Off")
-			);
+		controlsStrings = [['Smaller Spritesheets', 'optimize'], ['Backgrounds', 'bg'], ['Background Details', 'details']];
 		
 		trace(controlsStrings);
 		menuBG.color = 0xFFea71fd;
@@ -46,67 +43,94 @@ class SettingsOptimization extends MusicBeatState
 
 		for (i in 0...controlsStrings.length)
 		{
-				var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i], true, false);
-				controlLabel.isMenuItem = true;
-				controlLabel.targetY = i;
-				grpControls.add(controlLabel);
-			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
+			var controlLabel:Alphabet = new Alphabet(90, 320, controlsStrings[i][0], true, false);
+			controlLabel.isMenuItem = true;
+			controlLabel.targetY = i - curSelected;
+			controlLabel.visible = false;
+			grpControls.add(controlLabel);
+	
+			if(Std.is(Reflect.field(FlxG.save.data, controlsStrings[i][1]), Bool)) {
+				var checkBox:CheckboxThingie = new CheckboxThingie(controlLabel.x + 100, controlLabel.targetY, Reflect.field(FlxG.save.data, controlsStrings[i][1]));
+				checkBox.sprTracker = controlLabel;
+				checkBox.visible = false;
+				grpChecks.push(checkBox);
+				grpStrings.push(controlsStrings[i][1]);
+				add(checkBox);
+			} else {
+				controlLabel.text = '${controlsStrings[i][0]} ${Reflect.field(FlxG.save.data, controlsStrings[i][1])}';
+			}
 		}
+		
 		super.create();
 	}
-
+	
 	override function update(elapsed:Float)
 	{
+		grpControls.forEach(function(controlLabel:Alphabet) {
+			if(controlLabel.visible == false) {
+				controlLabel.visible = true;
+			}
+		});
+		for(i in 0...grpChecks.length)
+		{
+			if(grpChecks[i].visible == false)
+				grpChecks[i].visible = true;
+		}
 		super.update(elapsed);
+		if(Std.is(Reflect.field(FlxG.save.data, controlsStrings[curSelected][1]), Bool))
+		{
+			if (controls.ACCEPT)
+				{
+					var setState = !Reflect.field(FlxG.save.data, controlsStrings[curSelected][1]);
+					Reflect.setField(FlxG.save.data, controlsStrings[curSelected][1], setState);
+					grpChecks[getCheckId(controlsStrings[curSelected][1])].daValue = setState;
+					FlxG.log.add('SET VALUE TO ${setState}');
+				}
+		}
+		else
+		{	
+			if(controls.LEFT_P) {
+				var ogVal = Reflect.field(FlxG.save.data, controlsStrings[curSelected][1]);
+				Reflect.setField(FlxG.save.data, controlsStrings[curSelected][1], ogVal - 1);
+				updateDisplay(ogVal);
+			}
+			if(controls.RIGHT_P) {
+				var ogVal = Reflect.field(FlxG.save.data, controlsStrings[curSelected][1]);
+				Reflect.setField(FlxG.save.data, controlsStrings[curSelected][1], ogVal + 1);
+				updateDisplay(ogVal);
+			}
+		}
 		if (controls.BACK) {
 			FlxG.save.flush();
 			FlxG.switchState(new SettingsCategories());
 		}
-			if (controls.UP_P)
-				changeSelection(-1);
-			if (controls.DOWN_P)
-				changeSelection(1);
-
-			if (controls.ACCEPT)
-			{
-				grpControls.remove(grpControls.members[curSelected]);
-				switch(curSelected)
-				{
-					case 0:
-						FlxG.save.data.optimize = !FlxG.save.data.optimize;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.optimize ? "Smaller Spritesheets On" : "Smaller Spritesheets Off"), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected;
-						grpControls.add(ctrl);
-						trace(FlxG.save.data.optimize);
-					case 1:
-						FlxG.save.data.bg = !FlxG.save.data.bg;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.bg ? "Backgrounds On" : "Backgrounds Off"), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 1;
-						grpControls.add(ctrl);
-						trace(FlxG.save.data.bg);
-					/*
-					case 2:
-						FlxG.save.data.characters = !FlxG.save.data.characters;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.characters ? "Characters On" : "Characters Off"), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 2;
-						grpControls.add(ctrl);
-						trace(FlxG.save.data.characters);
-					*/
-					case 2:
-						FlxG.save.data.details = !FlxG.save.data.details;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.details ? "Background Details On" : "Background Details Off"), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 2;
-						grpControls.add(ctrl);
-						trace(FlxG.save.data.details);
-				}
-			}
+		if (controls.UP_P)
+			changeSelection(-1);
+		if (controls.DOWN_P)
+			changeSelection(1);
 	}
 
-	var isSettingControl:Bool = false;
+	function getCheckId(val:String)
+	{
+		for(i in 0...grpStrings.length)
+		{
+			if(grpStrings[i] == val)
+				return i;
+		}
+		return -1; //why do i need this? i don't even know
+	}
+
+	function updateDisplay(ogVal:Dynamic)
+	{
+		// just bruteforce the right control label lmao
+		grpControls.forEach(function(controlLabel:Alphabet)
+		{
+			if(controlLabel.text.contains(Std.string(ogVal)))
+			{
+				controlLabel.text = '${controlsStrings[curSelected][0]} ${Reflect.field(FlxG.save.data, controlsStrings[curSelected][1])}';
+			}
+		});
+	}
 
 	function changeSelection(change:Int = 0)
 	{

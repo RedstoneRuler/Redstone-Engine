@@ -12,31 +12,25 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
+
+using StringTools;
 class SettingsGameplay extends MusicBeatState
 {
-	var zoomText:String;
 	var selector:FlxText;
 	var curSelected:Int = 0;
-	var controlsStrings:Array<String> = [];
-	var leftHoldTimer:Float;
-	var rightHoldTimer:Float;
+	var controlsStrings:Array<Array<Dynamic>> = [];
 
 	private var grpControls:FlxTypedGroup<Alphabet>;
-	var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "", 12);
+	private var grpChecks:Array<CheckboxThingie> = [];
+	private var grpStrings:Array<String> = [];
 
 	override function create()
 	{
 		var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic(UILoader.loadImageDirect('menuDesat'));
 		
-		controlsStrings = CoolUtil.coolStringFile((
-		FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off")
-			+ "\n" + (FlxG.save.data.downscroll ? "Downscroll" : "Upscroll")
-			+ "\n" + (FlxG.save.data.bot ? "Autoplay On" : "Autoplay Off")
-			+ "\n" + (FlxG.save.data.random ? "Randomization On" : "Randomization Off"))
-			/*+ "\n" + "Configure Note Offset")*/;
+		controlsStrings = [['Ghost Tapping', 'ghost'], ['Downscroll', 'downscroll'], ['Autoplay', 'bot'], ['Randomization', 'random'], ['Hitbox size', 'noteframe']];
 		
 		trace(controlsStrings);
-		versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe + " (Left, Right, Higher value = Bigger hitbox)";
 		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
@@ -49,88 +43,94 @@ class SettingsGameplay extends MusicBeatState
 
 		for (i in 0...controlsStrings.length)
 		{
-			var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i], true, false);
+			var controlLabel:Alphabet = new Alphabet(90, 320, controlsStrings[i][0], true, false);
 			controlLabel.isMenuItem = true;
-			controlLabel.targetY = i;
+			controlLabel.targetY = i - curSelected;
+			controlLabel.visible = false;
 			grpControls.add(controlLabel);
-			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
+
+			if(Std.is(Reflect.field(FlxG.save.data, controlsStrings[i][1]), Bool)) {
+				var checkBox:CheckboxThingie = new CheckboxThingie(controlLabel.x + 100, controlLabel.targetY, Reflect.field(FlxG.save.data, controlsStrings[i][1]));
+				checkBox.sprTracker = controlLabel;
+				checkBox.visible = false;
+				grpChecks.push(checkBox);
+				grpStrings.push(controlsStrings[i][1]);
+				add(checkBox);
+			} else {
+				controlLabel.text = '${controlsStrings[i][0]} ${Reflect.field(FlxG.save.data, controlsStrings[i][1])}';
+			}
 		}
-
-
-		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(versionShit);
 		
 		super.create();
 	}
 
 	override function update(elapsed:Float)
 	{
-		versionShit.text = "Note Hitbox: " + FlxG.save.data.noteframe;
-		super.update(elapsed);
-		if(FlxG.keys.pressed.LEFT) {
-			if(leftHoldTimer % 1 == 0 && FlxG.save.data.noteframe > 1) {
-				FlxG.save.data.noteframe -= 1;
+		grpControls.forEach(function(controlLabel:Alphabet) {
+			if(controlLabel.visible == false) {
+				controlLabel.visible = true;
 			}
-			leftHoldTimer += elapsed * 2;
-		} else {
-			leftHoldTimer = 0;
+		});
+		for(i in 0...grpChecks.length)
+		{
+			if(grpChecks[i].visible == false)
+				grpChecks[i].visible = true;
 		}
-
-		if(FlxG.keys.pressed.RIGHT) {
-			if(rightHoldTimer % 1 == 0 && FlxG.save.data.noteframe < 40) {
-				FlxG.save.data.noteframe += 1;
+		super.update(elapsed);
+		if(Std.is(Reflect.field(FlxG.save.data, controlsStrings[curSelected][1]), Bool))
+		{
+			if (controls.ACCEPT)
+				{
+					var setState = !Reflect.field(FlxG.save.data, controlsStrings[curSelected][1]);
+					Reflect.setField(FlxG.save.data, controlsStrings[curSelected][1], setState);
+					grpChecks[getCheckId(controlsStrings[curSelected][1])].daValue = setState;
+					FlxG.log.add('SET VALUE TO ${setState}');
+				}
+		}
+		else
+		{	
+			if(controls.LEFT) {
+				var ogVal = Reflect.field(FlxG.save.data, controlsStrings[curSelected][1]);
+				Reflect.setField(FlxG.save.data, controlsStrings[curSelected][1], ogVal - 1);
+				updateDisplay(ogVal);
 			}
-			rightHoldTimer += elapsed * 2;
-		} else {
-			rightHoldTimer = 0;
+			if(controls.RIGHT) {
+				var ogVal = Reflect.field(FlxG.save.data, controlsStrings[curSelected][1]);
+				Reflect.setField(FlxG.save.data, controlsStrings[curSelected][1], ogVal + 1);
+				updateDisplay(ogVal);
+			}
 		}
 		if (controls.BACK) {
 			FlxG.save.flush();
 			FlxG.switchState(new SettingsCategories());
 		}
-			if (controls.UP_P)
-				changeSelection(-1);
-			if (controls.DOWN_P)
-				changeSelection(1);
-
-			if (controls.ACCEPT)
-			{
-				if(curSelected != 4) {
-					grpControls.remove(grpControls.members[curSelected]);
-				}
-				switch(curSelected)
-				{
-					case 0:
-						FlxG.save.data.ghost = !FlxG.save.data.ghost;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.ghost ? "Ghost Tapping On" : "Ghost Tapping Off"), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected;
-						grpControls.add(ctrl);
-					case 1:
-						FlxG.save.data.downscroll = !FlxG.save.data.downscroll;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.downscroll ? "Downscroll" : "Upscroll"), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 1;
-						grpControls.add(ctrl);
-					case 2:
-						FlxG.save.data.bot = !FlxG.save.data.bot;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.bot ? "Autoplay On" : "Autoplay Off"), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 2;
-						grpControls.add(ctrl);
-					case 3:
-						FlxG.save.data.random = !FlxG.save.data.random;
-						var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, (FlxG.save.data.random ? "Randomization On" : "Randomization Off"), true, false);
-						ctrl.isMenuItem = true;
-						ctrl.targetY = curSelected - 3;
-						grpControls.add(ctrl);
-					case 4:
-						FlxG.switchState(new LatencyState());
-				}
-			}
+		if (controls.UP_P)
+			changeSelection(-1);
+		if (controls.DOWN_P)
+			changeSelection(1);
 	}
-	var isSettingControl:Bool = false;
+
+	function getCheckId(val:String)
+	{
+		for(i in 0...grpStrings.length)
+		{
+			if(grpStrings[i] == val)
+				return i;
+		}
+		return -1; //why do i need this? i don't even know
+	}
+
+	function updateDisplay(ogVal:Dynamic)
+	{
+		// just bruteforce the right control label lmao
+		grpControls.forEach(function(controlLabel:Alphabet)
+		{
+			if(controlLabel.text.contains(Std.string(ogVal)))
+			{
+				controlLabel.text = '${controlsStrings[curSelected][0]} ${Reflect.field(FlxG.save.data, controlsStrings[curSelected][1])}';
+			}
+		});
+	}
 
 	function changeSelection(change:Int = 0)
 	{

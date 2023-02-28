@@ -45,10 +45,11 @@ class SettingsCategories extends MusicBeatState
 
 		for (i in 0...controlsStrings.length)
 		{
-			var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i], true, false);
+			var controlLabel:Alphabet = new Alphabet(90, 320, controlsStrings[i], true, false);
 			controlLabel.isMenuItem = true;
-			controlLabel.targetY = i;
+			controlLabel.targetY = i - curSelected;
 			grpControls.add(controlLabel);
+			controlLabel.visible = false;
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 		}
 		super.create();
@@ -56,6 +57,11 @@ class SettingsCategories extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		grpControls.forEach(function(controlLabel:Alphabet) {
+			if(controlLabel.visible == false) {
+				controlLabel.visible = true;
+			}
+		});
 		super.update(elapsed);
 		if (controls.BACK) {
 			FlxG.save.flush();

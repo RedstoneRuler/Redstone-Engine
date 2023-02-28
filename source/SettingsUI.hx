@@ -17,7 +17,6 @@ import flixel.util.FlxColor;
 import lime.utils.Assets;
 class SettingsUI extends MusicBeatState
 {
-	var zoomText:String;
 	var selector:FlxText;
 	var curSelected:Int = 0;
 	var controlsStrings:Array<String> = [];
@@ -49,10 +48,10 @@ class SettingsUI extends MusicBeatState
 
 		for (i in 0...controlsStrings.length)
 		{
-				var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i], false, false);
-				controlLabel.isMenuItem = true;
-				controlLabel.targetY = i;
-				grpControls.add(controlLabel);
+			var controlLabel:Alphabet = new Alphabet(0, (70 * i) + 30, controlsStrings[i], false, false);
+			controlLabel.isMenuItem = true;
+			controlLabel.targetY = i;
+			grpControls.add(controlLabel);
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 		}
 		super.create();

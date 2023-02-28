@@ -111,13 +111,15 @@ class FreeplayState extends MusicBeatState
 
 		for (i in 0...songs.length)
 		{
-			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, songs[i], true, false);
+			var songText:Alphabet = new Alphabet(90, 320, songs[i], true);
 			songText.isMenuItem = true;
-			songText.targetY = i;
+			songText.targetY = i - curSelected;
+			songText.visible = false;
 			grpSongs.add(songText);
 
 			var icon:HealthIcon = new HealthIcon(iconList[i]);
 			icon.sprTracker = songText;
+			icon.visible = false;
 
 			// using a FlxGroup is too much fuss!
 			iconArray.push(icon);
@@ -214,6 +216,16 @@ class FreeplayState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		grpSongs.forEach(function(song:Alphabet) {
+			if(song.visible == false) {
+				song.visible = true;
+			}
+		});
+		for(i in 0...iconArray.length)
+		{
+			if(iconArray[i].visible == false)
+			iconArray[i].visible = true;
+		}
 		super.update(elapsed);
 		
 		if (FlxG.sound.music != null)

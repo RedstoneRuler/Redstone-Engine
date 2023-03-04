@@ -2547,7 +2547,7 @@ class PlayState extends MusicBeatState
 			["Great!", 80],
 			["Good", 70],
 			["Average", 60],
-			["Mid", 50]
+			["Mid", 50],
 			["Bad", 40],
 			["Shit", 30],
 			["Awful", 20],

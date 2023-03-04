@@ -2984,7 +2984,7 @@ class PlayState extends MusicBeatState
 	override function beatHit()
 	{
 		// nice if condition
-		if(curBeat % CoolUtil.closest2Multiple(Math.floor((Conductor.bpm * FreeplayState.rate / 100) + 1)) == 0)
+		if(CoolUtil.closest2Multiple(Math.floor(((Conductor.bpm * FreeplayState.rate) / 100) + 1)) == 0 || curBeat % CoolUtil.closest2Multiple(Math.floor(((Conductor.bpm * FreeplayState.rate) / 100) + 1)) == 0)
 			altbeat = true;
 		else
 			altbeat = false;

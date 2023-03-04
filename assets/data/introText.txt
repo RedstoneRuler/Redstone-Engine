@@ -46,7 +46,6 @@ warning--choking hazard
 devin chat--what an honorable man
 kickstarter exclusive--intro text
 cussing--we have it
-modified base input system--but it works
 trying to softcode stuff--i'm not a very good coder
 don't look at the mem counter--during thorns
 flunkin mode--coming soon

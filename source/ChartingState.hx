@@ -410,10 +410,10 @@ class ChartingState extends MusicBeatState
 			// vocals.stop();
 		}
 
-		FlxG.sound.playMusic(Paths.inst(PlayState.daSong.toLowerCase()), 0.6);
+		FlxG.sound.playMusic(Paths.inst(daSong.toLowerCase()), 0.6);
 
 		if (_song.needsVoices)
-			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.daSong.toLowerCase()));
+			vocals = new FlxSound().loadEmbedded(Paths.voices(daSong.toLowerCase()));
 		else
 			vocals = new FlxSound();
 		FlxG.sound.list.add(vocals);

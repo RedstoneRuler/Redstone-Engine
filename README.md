@@ -6,8 +6,7 @@ There are way better engines out there, but this is an option if you wanna use i
 Development of this engine has temporarily stopped, so there are quite a few bugs at the moment. I will resume development once I finish work on a different project, so stay tuned for that I suppose.
 ## Features
 - Lower latency
-- Decimal BPM support
-- Randomization
+- Randomized charts
 - Powerful optimization system
 - Improved animations
 - Custom UI skin support

@@ -3,7 +3,7 @@
 A modification of Friday Night Funkin's engine full of random features that I thought might be cool.
 There are way better engines out there, but this is an option if you wanna use it.
 ## Please note
-Development of this engine has temporarily stopped, so there are quite a few bugs at the moment. I will resume development once I finish work on a different project, so stay tuned for that I suppose.
+This engine is a buggy, outdated nightmare full of terrible code. I am most likely not coming back to this anytime soon.
 ## Features
 - Lower latency
 - Randomized charts

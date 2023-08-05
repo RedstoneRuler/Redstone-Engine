@@ -3,7 +3,7 @@
 A modification of Friday Night Funkin's engine full of random features that I thought might be cool.
 There are way better engines out there, but this is an option if you wanna use it.
 ## Please note
-This engine is a buggy, outdated nightmare full of terrible code. I am most likely not coming back to this anytime soon.
+This engine is a buggy, outdated nightmare full of terrible code. I am most likely not coming back to this anytime soon. The rest of the README below is outdated and likely inaccurate due to age.
 ## Features
 - Lower latency
 - Randomized charts
@@ -12,8 +12,6 @@ This engine is a buggy, outdated nightmare full of terrible code. I am most like
 - Custom UI skin support
 - Softcoded modding support (WIP)
 - And more!
-## Feature requests
-- Is there something you want in the engine? Open an issue or a pull request to increase your chances of it being added!
 ## Engine Credits
 - [RedstoneRuler](https://twitter.com/redstoneruler2) - Programming
 - The various other FNF projects that I sto- er, "borrowed" artwork/code from. (Hey listen they're open source too so anything goes)
@@ -35,5 +33,3 @@ After setting up HaxeFlixel, do the following, depending on the version you plan
 - Finally, run `lime rebuild extension-webm [windows/mac/linux/android]`, depending on your platform, **not the platform you're compiling for.**
 
 The rest of the process can be found here: https://github.com/ninjamuffin99/Funkin#build-instructions
-## Other notes
-This repository probably looks much smaller than what you're used to. Don't worry, I just gitignored a lot of unnecessary/extra files. This will not affect compilation.

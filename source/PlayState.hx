@@ -45,8 +45,11 @@ import lime.media.openal.AL;
 import openfl.utils.Future;
 import openfl.media.Sound;
 
-#if (windows || android)
-import VideoHandler;
+#if (desktop || android)
+	#if (hxCodec < "2.6.0") import vlc.VideoHandler;
+	#elseif (hxCodec >= "2.6.1") import hxcodec.VideoHandler as VideoHandler;
+	#elseif (hxCodec == "2.6.0") import VideoHandler as VideoHandler;
+	#else import hxcodec.flixel.FlxVideo as VideoHandler; #end
 #end
 
 using StringTools;
@@ -162,8 +165,6 @@ class PlayState extends MusicBeatState
 	var totalNotes:Float = 0;
 
 	var scoreTxt:FlxText;
-	var missTxt:FlxText;
-	var accuracyTxt:FlxText;
 
 	var accuracyRating:String = '?';
 	var clearStats:String = '';
@@ -996,18 +997,7 @@ class PlayState extends MusicBeatState
 		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 535, healthBarBG.y + 40, 0, "", 20);
 		scoreTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
-		add(scoreTxt);
 
-		missTxt = new FlxText(healthBarBG.x + healthBarBG.width - 350, healthBarBG.y + 40, 0, "", 20);
-		missTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		missTxt.scrollFactor.set();
-		add(missTxt);
-
-		accuracyTxt = new FlxText(healthBarBG.x + healthBarBG.width - 200, healthBarBG.y + 40, 0, "", 20);
-		accuracyTxt.setFormat("assets/fonts/vcr.ttf", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		accuracyTxt.scrollFactor.set();
-		add(accuracyTxt);
-		
 		iconP1 = new HealthIcon(SONG.player1, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
@@ -1015,6 +1005,8 @@ class PlayState extends MusicBeatState
 		iconP2 = new HealthIcon(SONG.player2, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
+
+		add(scoreTxt);
 		
 		if(FlxG.save.data.splash)
 			grpNoteSplashes.cameras = [camHUD];
@@ -1025,8 +1017,6 @@ class PlayState extends MusicBeatState
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
-		missTxt.cameras = [camHUD];
-		accuracyTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 		timeMeter.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
@@ -1142,28 +1132,48 @@ class PlayState extends MusicBeatState
 	function playCutscene(name:String, ?atend:Bool)
 	{
 		#if (windows || android)
-		inCutscene = true;
-	
-		var video:VideoHandler = new VideoHandler();
-		FlxG.sound.music.stop();
-		video.finishCallback = function()
-		{
-			if (atend == true)
-			{
-				if (storyPlaylist.length <= 0)
-					FlxG.switchState(new StoryMenuState());
-				else
+			inCutscene = true;
+		
+			var video:VideoHandler = new VideoHandler();
+			FlxG.sound.music.stop();
+			#if(hxCodec < "3.0.0")
+				video.finishCallback = function()
 				{
-					SONG = Song.loadFromJson(storyPlaylist[0].toLowerCase(), storyPlaylist[0].toLowerCase(), isCustomWeek, sourceFolder);
-					FlxG.switchState(new PlayState());
+					if (atend == true)
+					{
+						if (storyPlaylist.length <= 0)
+							FlxG.switchState(new StoryMenuState());
+						else
+						{
+							PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase(), PlayState.storyPlaylist[0], isCustomWeek, sourceFolder);
+							FlxG.switchState(new PlayState());
+						}
+					}
+					else
+						startCountdown();
 				}
-			}
-			else
-				startCountdown();
-		}
-		video.playVideo('assets/videos/' + name);
+				video.playVideo('assets/videos/' + name);
+			#else
+				video.play('assets/videos/' + name);
+				video.onEndReached.add(function()
+				{
+					video.dispose();
+					if (atend == true)
+						{
+							if (storyPlaylist.length <= 0)
+								FlxG.switchState(new StoryMenuState());
+							else
+							{
+								PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase(), PlayState.storyPlaylist[0], isCustomWeek, sourceFolder);
+								FlxG.switchState(new PlayState());
+							}
+						}
+						else
+							startCountdown();
+				}, true);
+			#end
 		#else
-		startCountdown();
+			startCountdown();
 		#end
 	}
 	function schoolIntro(?dialogueBox:DialogueBox):Void
@@ -1375,12 +1385,8 @@ class PlayState extends MusicBeatState
 		FlxG.sound.music.looped = false;
 		vocals.looped = false;
 		#if cpp
-		@:privateAccess
-		{
-			lime.media.openal.AL.sourcef(FlxG.sound.music._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, FreeplayState.rate);
-			if (vocals.playing)
-				lime.media.openal.AL.sourcef(vocals._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, FreeplayState.rate);
-		}
+		vocals.pitch = FreeplayState.rate;
+		FlxG.sound.music.pitch = FreeplayState.rate;
 		trace("pitched inst and vocals to " + FreeplayState.rate + " (stole code from kade engine idc lmao)");
 		#end
 
@@ -1504,7 +1510,7 @@ class PlayState extends MusicBeatState
 		for (i in 0...4)
 		{
 			// FlxG.log.add(i);
-			var babyArrow:FlxSprite = new FlxSprite(0, strumLine.y);
+			var babyArrow:FlxSprite = new FlxSprite(42, strumLine.y);
 			if(isPixelStage)
 			{
 					babyArrow.loadGraphic('mods/ui_skins/pixel/arrows-pixels.png', true, 17, 17);
@@ -1652,17 +1658,13 @@ class PlayState extends MusicBeatState
 		vocals.looped = false;
 		FlxG.sound.music.time = Conductor.songPosition;
 		vocals.time = Conductor.songPosition;
-		#if cpp
+
 		if(startedSong)
 		{
-			@:privateAccess
-			{
-				lime.media.openal.AL.sourcef(FlxG.sound.music._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, FreeplayState.rate);
-				if (vocals.playing)
-					lime.media.openal.AL.sourcef(vocals._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, FreeplayState.rate);
-			}
+			vocals.pitch = FreeplayState.rate;
+			FlxG.sound.music.pitch = FreeplayState.rate;
 		}
-		#end
+		
 		trace("SONG POS: " + Conductor.songPosition + " | " + FlxG.sound.music.time + " / " + FlxG.sound.music.length);
 		trace('resynced');
 	}
@@ -1807,17 +1809,16 @@ class PlayState extends MusicBeatState
 		if(FlxG.save.data.bot == true) {
 			wasBotplay = true;
 		}
+
+		scoreTxt.screenCenter(X);
 		if(FlxG.save.data.bot != true) {
-			scoreTxt.text = 'Score: ${songScore}';
-			missTxt.text = 'Misses: ${missCount}';
 			if(displayAccuracy == '?')
-				accuracyTxt.text = 'Accuracy: ?';
-			else
-				accuracyTxt.text = 'Accuracy: ${displayAccuracy}% - ${accuracyRating} (${clearStats})';
+				scoreTxt.text = 'Score: ${songScore} | Misses: ${missCount} | Accuracy: ? | Rating: ?';
+			else {
+				scoreTxt.text = 'Score: ${songScore} | Misses: ${missCount} | Accuracy: ${displayAccuracy}% | Rating: ${accuracyRating} (${clearStats})';
+			}
 		} else{
-			scoreTxt.text = "";
-			missTxt.text = "AUTOPLAY ON";
-			accuracyTxt.text = "";
+			scoreTxt.text = "AUTOPLAY ON";
 		}
 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
@@ -2245,7 +2246,7 @@ class PlayState extends MusicBeatState
 			FlxG.switchState(new GitarooPause());
 		}
 		else
-			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y, curStage == 'tank'));
+			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
 		// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 	}
@@ -2300,7 +2301,6 @@ class PlayState extends MusicBeatState
 
 				if (SONG.validScore && !wasBotplay && FreeplayState.rate == 1)
 				{
-					NGio.unlockMedal(60961);
 					Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
 				}
 

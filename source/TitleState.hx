@@ -64,13 +64,6 @@ class TitleState extends MusicBeatState
 
 		super.create();
 
-		NGio.noLogin(APIStuff.API);
-
-		#if ng
-		var ng:NGio = new NGio(APIStuff.API, APIStuff.EncKey);
-		trace('NEWGROUNDS LOL');
-		#end
-
 		FlxG.save.bind('funkin', 'ninjamuffin99');
 
 		Highscore.load();
@@ -236,12 +229,7 @@ class TitleState extends MusicBeatState
 	var transitioning:Bool = false;
 	function set_pitch(speed):Void
 	{
-		#if cpp
-		@:privateAccess
-		{
-			lime.media.openal.AL.sourcef(FlxG.sound.music._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, speed);
-		}
-		#end
+		FlxG.sound.music.pitch = speed;
 	}
 
 	override function update(elapsed:Float)
@@ -271,23 +259,15 @@ class TitleState extends MusicBeatState
 			#end
 		}
 		if(controls.LEFT) {
-			speed -= 0.01 * elapsed;
+			speed -= 1 * elapsed;
 			set_pitch(speed);
 		}
 		if(controls.RIGHT) {
-			speed += 0.01 * elapsed;
+			speed += 1 * elapsed;
 			set_pitch(speed);
 		}
 		if (pressedEnter && !transitioning && skippedIntro)
 		{
-			#if !switch
-			NGio.unlockMedal(60960);
-
-			// If it's Friday according to da clock
-			if (Date.now().getDay() == 5)
-				NGio.unlockMedal(61034);
-			#end
-
 			titleText.animation.play('press');
 
 			FlxG.camera.flash(FlxColor.WHITE, 1);

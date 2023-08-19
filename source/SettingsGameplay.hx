@@ -28,7 +28,7 @@ class SettingsGameplay extends MusicBeatState
 	{
 		var menuBG:FlxSprite = new FlxSprite(-80).loadGraphic(UILoader.loadImageDirect('menuDesat'));
 		
-		controlsStrings = [['Ghost Tapping', 'ghost'], ['Downscroll', 'downscroll'], ['Autoplay', 'bot'], ['Randomization', 'random'], ['Hitbox size', 'noteframe']];
+		controlsStrings = [['Ghost Tapping', 'ghost'], ['Downscroll', 'downscroll'], ['Autoplay', 'bot'], ['Randomization', 'random']];
 		
 		trace(controlsStrings);
 		menuBG.color = 0xFFea71fd;

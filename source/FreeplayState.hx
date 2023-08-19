@@ -296,13 +296,7 @@ class FreeplayState extends MusicBeatState
 			FlxG.switchState(new MainMenuState());
 		}
 
-		#if cpp
-		@:privateAccess
-		{
-			if (FlxG.sound.music.playing)
-				lime.media.openal.AL.sourcef(FlxG.sound.music._channel.__source.__backend.handle, lime.media.openal.AL.PITCH, rate);
-		}
-		#end
+		FlxG.sound.music.pitch = rate;
 
 		if (accepted)
 		{

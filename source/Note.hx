@@ -46,7 +46,7 @@ class Note extends FlxSprite
 		this.prevNote = prevNote;
 		isSustainNote = sustainNote;
 		this.altNote = altNote;
-		x += 50;
+		x += 50 + 42;
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= 999999;
 		this.strumTime = strumTime;

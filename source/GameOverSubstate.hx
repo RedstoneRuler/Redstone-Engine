@@ -14,28 +14,24 @@ class GameOverSubstate extends MusicBeatSubstate
 	var camFollow:FlxObject;
 
 	var stageSuffix:String = "";
-	var tank:Bool = false;
-	public function new(x:Float, y:Float, tank:Bool = false)
+
+	public function new(x:Float, y:Float)
 	{
 		PlayState.deathCount += 1;
 		var daStage = PlayState.curStage;
 		var daBf:String = '';
-		this.tank = tank;
-		if(FlxG.save.data.optimize == true && daStage != 'school' && daStage != 'schoolEvil') {
+
+		if(FlxG.save.data.optimize == true && !PlayState.isPixelStage) {
 			daBf = 'bf-dead';
 		}
 		else {
 			switch (daStage)
 			{
-				case 'school':
-					stageSuffix = '-pixel';
-					daBf = 'bf-pixel-dead';
-				case 'schoolEvil':
-					stageSuffix = '-pixel';
-					daBf = 'bf-pixel-dead';
 				default:
 					if(PlayState.curSong.toLowerCase() == 'stress')
 						daBf = 'bf-holding-gf-dead';
+					else if(PlayState.isPixelStage)
+						daBf = 'bf-pixel-dead';
 					else
 						daBf = 'bf';
 			}
@@ -87,8 +83,9 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished)
 		{
-			if(tank == true)
+			if(PlayState.curStage == 'tank')
 				FlxG.sound.play('assets/sounds/jeffGameover/jeffGameover-' + FlxG.random.int(1, 25) + '.ogg');
+
 			FlxG.sound.playMusic('assets/music/gameOver' + stageSuffix + TitleState.soundExt, 0.5);
 		}
 

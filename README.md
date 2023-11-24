@@ -1,7 +1,6 @@
 # Friday Night Funkin: Redstone Engine
 
-A modification of Friday Night Funkin's engine full of random features that I thought might be cool.
-There are way better engines out there, but this is an option if you wanna use it.
+A modification of Friday Night Funkin's engine full of random features that I thought might be cool, developed as a way of learning HaxeFlixel.
 ## Please note
 This engine is a buggy, outdated nightmare full of terrible code and poorly thought-out mechanics. I am most likely not coming back to this anytime soon. The rest of the README below is outdated and likely inaccurate due to age.
 ## Features

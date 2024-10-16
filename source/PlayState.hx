@@ -205,6 +205,9 @@ class PlayState extends MusicBeatState
 
 	var lastPos:Float;
 
+	var inst:Sound;
+	var voices:Sound;
+
 	function preloadAssets():Void
 		{
 			var loadAssets:Array<Dynamic> = [];
@@ -1373,10 +1376,10 @@ class PlayState extends MusicBeatState
 		if (!paused)
 		{
 			if(!isCustomWeek) {
-				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song.toLowerCase()), 1, false);
+				FlxG.sound.playMusic(Paths.inst(SONG.song.toLowerCase()), 1, false);
 			} else {
 				#if sys
-				FlxG.sound.playMusic(ModLoader.inst(sourceFolder, SONG.song.toLowerCase()), 1, false);
+				FlxG.sound.playMusic(inst, 1, false);
 				#end
 			}
 		}
@@ -1409,7 +1412,13 @@ class PlayState extends MusicBeatState
 				vocals = new FlxSound().loadEmbedded(Paths.voices(curSong.toLowerCase()));
 			} else {
 				#if sys
-				vocals = new FlxSound().loadEmbedded(ModLoader.voices(sourceFolder, curSong.toLowerCase()));
+				inst = ModLoader.inst(sourceFolder, SONG.song.toLowerCase());
+				voices = ModLoader.voices(sourceFolder, curSong.toLowerCase());
+
+				trace(inst);
+				trace(voices);
+
+				vocals = new FlxSound().loadEmbedded(voices);
 				#end
 			}
 		}

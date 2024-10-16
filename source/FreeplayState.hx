@@ -309,6 +309,10 @@ class FreeplayState extends MusicBeatState
 			PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].toLowerCase(), (songFolders[curSelected] != ''), songFolders[curSelected]);
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = curDifficulty;
+
+			PlayState.isCustomWeek = (songFolders[curSelected] != '');
+			PlayState.sourceFolder = songFolders[curSelected];
+
 			FlxG.switchState(new PlayState());
 			if (FlxG.sound.music != null) {
 				FlxG.sound.music.stop();

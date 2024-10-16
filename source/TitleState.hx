@@ -24,7 +24,6 @@ import flixel.util.FlxTimer;
 import io.newgrounds.NG;
 import lime.app.Application;
 import openfl.Assets;
-import polymod.Polymod;
 import openfl.Lib;
 import lime.media.openal.AL;
 import openfl.media.Sound;
@@ -51,9 +50,7 @@ class TitleState extends MusicBeatState
 	var wackyImage:FlxSprite;
 	var defaultCamZoom:Float = 1;
 	override public function create():Void
-	{
-		Polymod.init({modRoot: "mods", dirs: ['introMod']});
-		
+	{		
 		PlayerSettings.init();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());

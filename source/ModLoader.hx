@@ -3,24 +3,22 @@ package;
 
 import sys.FileSystem;
 import sys.io.File;
-import flixel.FlxG;
 import flixel.graphics.FlxGraphic;
-import openfl.Lib;
 import openfl.display.BitmapData;
-import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
+import openfl.media.Sound;
 
 using StringTools;
 
 class ModLoader
 {
-	public static function inst(sourceFolder:String, song:String)
+	public static function inst(sourceFolder:String, song:String):Sound
 	{
-		return "mods/weeks/" + sourceFolder + '/' + song.toLowerCase() + "/Inst.ogg";
+		return Sound.fromFile("mods/weeks/" + sourceFolder + '/' + song.toLowerCase() + "/Inst.ogg");
 	}
-	public static function voices(sourceFolder:String, song:String)
+	public static function voices(sourceFolder:String, song:String):Sound
 	{
-		return "mods/weeks/" + sourceFolder + '/' + song.toLowerCase() + "/Voices.ogg";
+		return Sound.fromFile("mods/weeks/" + sourceFolder + '/' + song.toLowerCase() + "/Voices.ogg");
 	}
 	public static function json(jsonInput:String, folder:String, customFolder:String = '')
 	{

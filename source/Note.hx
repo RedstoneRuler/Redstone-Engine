@@ -5,7 +5,6 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.math.FlxMath;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
-import polymod.format.ParseRules.TargetSignatureElement;
 import flixel.FlxG;
 import flixel.util.FlxTimer;
 import PlayState;
@@ -88,7 +87,7 @@ class Note extends FlxSprite
 		}
 		else
 		{
-			frames = PlayState.noteSprite;
+			frames = UILoader.loadSparrowDirect('notes');
 
 			animation.addByPrefix('greenScroll', 'green0');
 			animation.addByPrefix('redScroll', 'red0');

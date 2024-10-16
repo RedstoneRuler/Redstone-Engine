@@ -410,12 +410,35 @@ class ChartingState extends MusicBeatState
 			// vocals.stop();
 		}
 
-		FlxG.sound.playMusic(Paths.inst(daSong.toLowerCase()), 0.6);
+		if (!PlayState.isCustomWeek)
+		{
+			FlxG.sound.playMusic(Paths.inst(daSong.toLowerCase()), 1, false);
+		}
+		else
+		{
+			#if sys
+			FlxG.sound.playMusic(ModLoader.inst(PlayState.sourceFolder, daSong.toLowerCase()), 1, false);
+			#end
+		}
 
 		if (_song.needsVoices)
-			vocals = new FlxSound().loadEmbedded(Paths.voices(daSong.toLowerCase()));
+		{
+			if (!PlayState.isCustomWeek)
+			{
+				vocals = new FlxSound().loadEmbedded(Paths.voices(daSong.toLowerCase()));
+			}
+			else
+			{
+				#if sys
+				vocals = new FlxSound().loadEmbedded(ModLoader.voices(PlayState.sourceFolder, daSong.toLowerCase()));
+				#end
+			}
+		}
 		else
+		{
 			vocals = new FlxSound();
+		}
+		
 		FlxG.sound.list.add(vocals);
 
 		FlxG.sound.music.pause();
@@ -1134,7 +1157,7 @@ class ChartingState extends MusicBeatState
 
 	function loadJson(song:String):Void
 	{
-		PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
+		PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase(), PlayState.isCustomWeek, PlayState.sourceFolder);
 		FlxG.resetState();
 	}
 
